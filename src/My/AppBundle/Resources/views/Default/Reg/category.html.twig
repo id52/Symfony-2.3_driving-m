@@ -1,0 +1,48 @@
+<form id="reg_category" action="{{ path('reg') }}" method="post">
+    <div class="title1">
+        <h1>Обучение в автошколе</h1>
+    </div>
+
+    <ul class="steps">
+        <li class="bg1 active"><span><span>1</span> Шаг:</span> Категория прав</li>
+        <li class="bg2"><span><span>2</span> Шаг:</span> Вариант оплаты</li>
+        <li class="bg3"><span><span>3</span> Шаг:</span> Оплата</li>
+    </ul>
+
+    {% if settings['reginfo_1'] is defined %}
+    <div class="text-info">
+        <div class="in">{{ settings['reginfo_1']|raw }}</div>
+    </div>
+    {% endif %}
+
+    <div class="selection">
+        <div class="img"><img src="/m/images/payment/car.jpg" alt=" "></div>
+        <div class="text">
+            <h2>Укажите категорию для обучения:</h2>
+            <div class="select-hold">
+                <select class="customSelect select-category select-view2" id="category" name="category">
+                    {% for cid, category in categories %}
+                        <option data-img="{{ category.image ? category.image.webPath|imagine_filter('category') : '' }}" value="{{ cid }}"{{ cid == category_id ? ' selected="selected"' : '' }}>Обучение на права категории «{{ category.name }}»</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="select-hold2">
+                <select class="customSelect select-category" id="with_at" name="with_at">
+                    <option id="with_at_0" data-img="/m/images/payment/pic-hand.png" value="0">
+                        Механическая коробка передач
+                    </option>
+                    <option id="with_at_1" data-img="/m/images/payment/pic-auto.png" value="1"
+                        {% if with_at %} selected="selected" {% endif %}
+                    >
+                        Автоматическая коробка передач
+                    </option>
+                </select>
+                <div class="arr"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="go">
+        <span class="btn2">Продолжить <input value="" type="submit"></span>
+    </div>
+</form>

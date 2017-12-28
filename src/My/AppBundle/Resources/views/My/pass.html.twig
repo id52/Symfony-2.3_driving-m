@@ -1,0 +1,100 @@
+{% extends 'AppBundle::layout_new.html.twig' %}
+
+{% block content %}
+<nav class="path">
+    <a href="{{ path('homepage') }}">{{ 'titles.homepage'|trans }}</a>
+    » <strong>{{ 'titles.pass'|trans }}</strong>
+</nav>
+
+<div class="mainContent permit-container">
+    <div class="title">
+        <h1>Пропуск на занятия по теории в классе</h1>
+    </div>
+
+    <div class="permit-b-1">
+        <p>Автошкола при МГТУ им. Баумана позволяет проходить теоретическое обучение двумя параллельными способами: дистанционно и в классе. При этом занятия онлайн и в классе можно совмещать: учитесь так, как удобно именно Вам!</p>
+    </div>
+
+    <div class="title-2">Чтобы создать пропуск, сначала выберите наиболее удобный для Вас филиал:</div>
+
+    <p>Для того, чтобы посещать занятия в классе, Вам нужно выбрать удобный филиал и создать пропуск, который будет действителен на всё время обучения. Если Вы захотите сменить филиал, это можно будет сделать через {{ settings.pass_time_recreating~' '~'fdays'|transchoice(settings.pass_time_recreating) }} после того, как был создан предыдущий пропуск.</p>
+
+    <div class="permit-tabs">
+        <div class="permit-tabs-links">
+            <a href="#permit-list-select" class="selected"><span>Список</span></a>
+            <a href="#permit-map-select"><span>На карте</span></a>
+        </div>
+
+        <div class="permit-tab" id="permit-list-select">
+            <ul>
+                {% set cnt = 1 %}
+                {% for filial in filials %}
+                    {% if filial.active %}
+                        <li data-id="{{ filial.id }}"><span>{{ filial.title }}</span></li>
+                        {% if cnt and not cnt % 4 %}
+                            </ul><ul>
+                        {% endif %}
+                        {% set cnt = cnt + 1 %}
+                    {% endif %}
+                {% endfor %}
+            </ul>
+
+            <p>
+                Теперь Вы можете создать новый пропуск для выбранного филиала, либо оставить в силе свой старый пропуск.<br>
+                <span class="permit-attention">ВНИМАНИЕ!</span> Сменить филиал можно не ранее, чем через <b>{{ settings.pass_time_recreating~' '~'fdays'|transchoice(settings.pass_time_recreating) }}</b> после создания предыдущего пропуска.
+            </p>
+
+            <form action="">
+                <input type="hidden" name="filial_id" id="filial_id">
+                <button type="submit" id="filial_create_btn" class="permit-create-btn">Создать пропуск</button>
+            </form>
+        </div>
+
+        <div class="permit-tab" id="permit-map-select" style="display:none">
+            <div>
+                <img src="{{ map_path }}" alt="карта метро" border="0" />
+                {% for filial in filials %}
+                    {% if filial.image %}
+                        {% if filial.active %}
+                            <a href="{{ path('my_pass', { filial_id: filial.id }) }}" style="left:{{ filial.coords['x'] }}px;top:{{ filial.coords['y'] }}px"><img src="{{ filial.image.webPath }}" alt="{{ filial.title }}"></a>
+                        {% else %}
+                            <span style="left:{{ filial.coords['x'] }}px;top:{{ filial.coords['y'] }}px;opacity:{{ 1-settings.opacity_not_active_pass_filials/100 }}"><img src="{{ filial.image.webPath }}" alt="{{ filial.title }}"></span>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block js %}
+<script>
+$(function() {
+    $('.permit-tabs-links > a').click(function() {
+        var link = $(this);
+        link.parent().find('a').removeClass('selected');
+        link.addClass('selected');
+        $('.permit-tab').hide();
+        $(link.attr('href')).show();
+        return false;
+    });
+
+    $('#filial_create_btn').attr('disabled', 'disabled');
+
+    $('li', '#permit-list-select')
+        .click(function() {
+            $('li.selected', '#permit-list-select').removeClass('selected');
+            $(this).addClass('selected');
+            $('#filial_id').val($(this).data('id'));
+            $('#filial_create_btn').removeAttr('disabled');
+        })
+        .each(function() {
+            if ($('#filial_id').val() == $(this).data('id')) {
+                $(this).addClass('selected');
+                $('#filial_create_btn').removeAttr('disabled');
+            }
+        });
+});
+</script>
+{% endblock js %}

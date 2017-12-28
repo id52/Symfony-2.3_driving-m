@@ -1,0 +1,18 @@
+{% extends 'AppBundle::admin.html.twig' %}
+
+{% block content %}
+    <h3>{{ 'admin.promo_add_keys_title'|trans({ '%campaign%': entity.name }) }}</h3>
+    <hr>
+
+    {{ form_start(form) }}
+    {{ form_rest(form) }}
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-success">
+            <i class="fa fa-download"></i>
+            <span>{{ 'admin.buttons.save'|trans }}</span>
+        </button>
+        <a class="btn pull-right" href="{{ path('admin_promo_activations', { id: entity.id }) }}"><i class="fa fa-arrow-left"></i> {{ 'admin.buttons.back_to_list'|trans }}</a>
+    </div>
+    {{ form_end(form) }}
+{% endblock content %}

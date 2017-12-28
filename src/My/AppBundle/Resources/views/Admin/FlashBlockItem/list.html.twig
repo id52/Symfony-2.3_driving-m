@@ -1,0 +1,44 @@
+{% extends 'AppBundle::admin.html.twig' %}
+
+{% block content %}
+    <a href="{{ path(router_item_add, { key: block.key }) }}" class="btn pull-right btn-h1">
+        <i class="fa fa-plus"></i>
+        {{ ('admin.'~entity_name_s~'_add')|trans }}
+    </a>
+    <h3>{{ ('admin.'~entity_name_s~'_list')|trans({ '%name%': block.title }) }}</h3>
+    <hr>
+
+    {% if pagerfanta.currentPageResults|length %}
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>{{ 'flash_block_item_category'|trans({}, 'flash_block_item') }}</th>
+                <th>{{ 'flash_block_item_title'|trans({}, 'flash_block_item') }}</th>
+                <th class="min_col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for entity in pagerfanta.currentPageResults %}
+                <tr>
+                    <td class="min_col">{{ categories[entity.category] }}</td>
+                    <td>{{ entity.parent ? '&nbsp;└&nbsp;&nbsp;' : '' }}{{ entity.title }}</td>
+                    <td class="min_col">
+                        <a href="{{ path(router_root~'_up', { id: entity.id, key: block.key }) }}" class="nodecor text-info"><i class="fa fa-arrow-up"></i></a>
+                        <a href="{{ path(router_root~'_down', { id: entity.id, key: block.key }) }}" class="nodecor text-info"><i class="fa fa-arrow-down"></i></a>
+                        <a href="{{ path(router_item_edit, { id: entity.id, key: block.key }) }}" class="nodecor text-success"><i class="fa fa-pencil-square-o"></i></a>
+                        <a href="{{ path(router_item_delete, { id: entity.id, key: block.key }) }}" class="nodecor text-error" onclick="return confirm('{{ 'you_sure'|trans }}')"><i class="fa fa-times"></i></a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        {{ 'no_data'|trans }}
+    {% endif %}
+    {% if pagerfanta.haveToPaginate %}
+        {{ pagerfanta(pagerfanta, 'twitter_bootstrap_translated', { prev_message: '←', next_message: '→' }) }}
+    {% endif %}
+
+    <hr>
+    <a class="btn pull-right" href="{{ path('admin_flash_blocks') }}"><i class="fa fa-arrow-left"></i> Вернуться к списку flash-блоков</a>
+{% endblock content %}

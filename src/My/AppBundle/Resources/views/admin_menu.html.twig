@@ -1,0 +1,390 @@
+{% if is_granted('ROLE_MOD') %}
+{% set route = app.request.get('_route') %}
+{%
+    set menu = [
+        {
+            roles: ['ROLE_ADMIN'],
+            name: 'Основное',
+            children: [
+                {
+                    name: 'Настройки',
+                    children: [
+                        {
+                            name: 'Общие',
+                            routes: ['admin_settings_common'],
+                        },
+                        {
+                            name: 'Регистрация',
+                            routes: ['admin_settings_registration'],
+                        },
+                        {
+                            name: 'Оплаты',
+                            routes: ['admin_settings_payments'],
+                        },
+                    ],
+                },
+                {
+                    name: 'Регионы',
+                    routes: ['admin_regions', 'admin_region_add', 'admin_region_edit'],
+                },
+                {
+                    name: 'Места вождения',
+                    routes: ['admin_region_places', 'admin_region_place_add', 'admin_region_place_edit'],
+                },
+                {
+                    name: 'Категории прав',
+                    routes: ['admin_categories', 'admin_category_add', 'admin_category_edit'],
+                },
+                {
+                    name: 'Услуги',
+                    routes: ['admin_services', 'admin_service_add', 'admin_service_edit'],
+                },
+                {
+                    name: 'Веб-группы',
+                    routes: ['admin_webgroups', 'admin_webgroup_add', 'admin_webgroup_edit'],
+                },
+            ],
+        },
+        {
+            roles: ['ROLE_MOD_CONTENT'],
+            name: 'Контент',
+            children: [
+                {
+                    name: 'Главная',
+                    children: [
+                        {
+                            name: 'Видео',
+                            routes: ['admin_index_video'],
+                        },
+                        {
+                            roles: ['ROLE_ADMIN'],
+                            name: 'Настройки',
+                            routes: ['admin_index_settings'],
+                        },
+                    ],
+                },
+                {
+                    name: 'Статьи',
+                    children: [
+                        {
+                            name: 'Список',
+                            routes: ['admin_articles', 'admin_article_add', 'admin_article_edit'],
+                        },
+                        {
+                            roles: ['ROLE_ADMIN'],
+                            name: 'Настройки',
+                            routes: ['admin_articles_settings'],
+                        },
+                    ],
+                },
+                {
+                    name: 'Филиалы',
+                    children: [
+                        {
+                            name: 'Карта',
+                            routes: ['admin_filials_maps'],
+                        },
+                        {
+                            name: 'Список',
+                            routes: ['admin_filials', 'admin_filial_add', 'admin_filial_edit'],
+                        },
+                        {
+                            roles: ['ROLE_ADMIN'],
+                            name: 'Настройки',
+                            routes: ['admin_filials_settings'],
+                        },
+                    ],
+                },
+                {
+                    name: 'Площадки',
+                    children: [
+                        {
+                            name: 'Карта',
+                            routes: ['admin_sites_maps'],
+                        },
+                        {
+                            name: 'Список',
+                            routes: ['admin_sites', 'admin_site_add', 'admin_site_edit'],
+                        },
+                        {
+                            roles: ['ROLE_ADMIN'],
+                            name: 'Настройки',
+                            routes: ['admin_sites_settings'],
+                        },
+                    ],
+                },
+                {
+                    name: 'Новости',
+                    routes: ['admin_news', 'admin_news_add', 'admin_news_edit'],
+                },
+                {
+                    name: 'Важная информация',
+                    routes: ['admin_infos', 'admin_info_add', 'admin_info_edit'],
+                },
+                {
+                    name: 'Вопросы-ответы',
+                    routes: ['admin_faqs', 'admin_faq_add', 'admin_faq_edit'],
+                },
+                {
+                    name: 'Спец предложения',
+                    children: [
+                        {
+                            name: 'Общие',
+                            routes: ['admin_offers', 'admin_offer_add', 'admin_offer_edit'],
+                        },
+                        {
+                            name: 'Для студентов',
+                            routes: ['admin_offer_students', 'admin_offer_students_add', 'admin_offer_students_edit'],
+                        },
+                    ],
+                },
+                {
+                    name: 'Офисы',
+                    routes: ['admin_offices', 'admin_office_add', 'admin_office_edit'],
+                },
+                {
+                    roles: ['ROLE_ADMIN'],
+                    name: 'Отзывы',
+                    routes: ['admin_reviews'],
+                },
+                {
+                    roles: ['ROLE_ADMIN'],
+                    name: 'Как это работает',
+                    routes: ['admin_how_work_list', 'admin_how_work_add', 'admin_how_work_edit'],
+                },
+            ],
+        },
+        {
+            roles: ['ROLE_TRANSLATOR_TJ', 'ROLE_TRANSLATOR_UZ', 'ROLE_TRANSLATOR_KG'],
+            name: 'Перевод вопросов',
+            children: [
+                {
+                    roles: ['ROLE_TRANSLATOR_TJ'],
+                    name: 'Таджикский',
+                    routes: ['admin_question_translations_tj', 'admin_question_translation_edit_tj'],
+                },
+                {
+                    roles: ['ROLE_TRANSLATOR_UZ'],
+                    name: 'Узбекский',
+                    routes: ['admin_question_translations_uz', 'admin_question_translation_edit_uz'],
+                },
+                {
+                    roles: ['ROLE_TRANSLATOR_KG'],
+                    name: 'Киргизский',
+                    routes: ['admin_question_translations_kg', 'admin_question_translation_edit_kg'],
+                },
+            ]
+        },
+        {
+            roles: ['ROLE_MOD_CONTENT'],
+            name: 'Обучение',
+            children: [
+                {
+                    name: 'Версии',
+                    routes: ['admin_training_versions', 'admin_training_version_add', 'admin_training_version_edit'],
+                },
+                {
+                    name: 'Предметы',
+                    children: [
+                        {
+                            name: 'Список',
+                            routes: ['admin_subjects', 'admin_subject_add', 'admin_subject_edit'],
+                        },
+                        {
+                            roles: ['ROLE_ADMIN'],
+                            name: 'Настройки',
+                            routes: ['admin_subjects_settings'],
+                        },
+                    ],
+                },
+                {
+                    name: 'Темы',
+                    children: [
+                        {
+                            name: 'Список',
+                            routes: ['admin_themes', 'admin_theme_add', 'admin_theme_edit'],
+                        },
+                        {
+                            roles: ['ROLE_ADMIN'],
+                            name: 'Настройки',
+                            routes: ['admin_themes_settings'],
+                        },
+                        {
+                            name: 'Flash-блоки',
+                            routes: ['admin_flash_blocks', 'admin_flash_block_add', 'admin_flash_block_edit', 'admin_flash_block_items', 'admin_flash_block_item_add', 'admin_flash_block_item_edit'],
+                        },
+                    ],
+                },
+                {
+                    name: 'Вопросы',
+                    routes: ['admin_questions', 'admin_question_add', 'admin_question_edit'],
+                },
+                {
+                    name: 'Срезы',
+                    children: [
+                        {
+                            name: 'Список',
+                            routes: ['admin_slices', 'admin_slice_add', 'admin_slice_edit'],
+                        },
+                        {
+                            roles: ['ROLE_ADMIN'],
+                            name: 'Настройки',
+                            routes: ['admin_slices_settings'],
+                        },
+                    ],
+                },
+                {
+                    roles: ['ROLE_ADMIN'],
+                    name: 'Настройки',
+                    routes: ['admin_training_settings'],
+                },
+            ],
+        },
+        {
+            roles: ['ROLE_MOD_ADD_USER', 'ROLE_MOD_PRECHECK_USERS', 'ROLE_MOD_PARADOX_USERS'],
+            name: 'Пользователи',
+            children: [
+                {
+                    roles: ['ROLE_MOD_ADD_USER'],
+                    name: 'Добавить',
+                    routes: ['admin_users_add'],
+                },
+                {
+                    roles: ['ROLE_MOD_ADD_USER'],
+                    name: 'Добавить быстро',
+                    routes: ['admin_users_add_simple'],
+                },
+                {
+                    roles: ['ROLE_MOD_ADD_USER'],
+                    name: 'Пользователи с запрещёнными предметами',
+                    routes: ['admin_users_with_closed_subjects', 'admin_user_with_closed_subjects'],
+                },
+                {
+                    roles: ['ROLE_ADMIN'],
+                    name: 'Доступ',
+                    routes: ['admin_users_access', 'admin_users_access_edit'],
+                },
+                {
+                    roles: ['ROLE_MOD_PRECHECK_USERS'],
+                    name: 'Проверка',
+                    routes: ['admin_precheck_users', 'admin_precheck_user_view', 'admin_precheck_user_edit'],
+                },
+                {
+                    roles: ['ROLE_MOD_PARADOX_USERS'],
+                    name: 'В Paradox',
+                    routes: ['admin_paradox_users', 'admin_paradox_user_view', 'admin_paradox_user_set'],
+                },
+                {
+                    roles: ['ROLE_ADMIN'],
+                    name: 'Настройки',
+                    routes: ['admin_users_settings'],
+                },
+            ],
+        },
+        {
+            roles: ['ROLE_MOD_SUPPORT', 'ROLE_MOD_TEACHER'],
+            name: 'Обратная связь',
+            children: [
+                {
+                    name: 'Диалоги',
+                    routes: ['admin_support_dialogs', 'admin_support_dialog_show'],
+                },
+                {
+                    roles: ['ROLE_ADMIN'],
+                    name: 'Статистика',
+                    routes: ['admin_support_statistics'],
+                },
+                {
+                    roles: ['ROLE_ADMIN'],
+                    name: 'Категории',
+                    routes: ['admin_support_categories', 'admin_support_category_add', 'admin_support_category_edit'],
+                },
+                {
+                    roles: ['ROLE_ADMIN'],
+                    name: 'Преподаватели',
+                    routes: ['admin_support_teachers', 'admin_support_teacher_add', 'admin_support_teacher_edit'],
+                },
+                {
+                    roles: ['ROLE_ADMIN'],
+                    name: 'Праздники',
+                    routes: ['admin_support_holidays'],
+                },
+                {
+                    roles: ['ROLE_ADMIN'],
+                    name: 'Настройки',
+                    routes: ['admin_support_settings'],
+                },
+            ],
+        },
+        {
+            roles: ['ROLE_MOD_MAILING'],
+            name: 'Рассылки',
+            children: [
+                {
+                    name: 'Список',
+                    routes: ['admin_mailing', 'admin_mailing_add', 'admin_mailing_create', 'admin_mailing_edit'],
+                },
+                {
+                    name: 'Контрольные email',
+                    routes: ['admin_test_emails', 'admin_test_email_add', 'admin_test_email_edit'],
+                },
+            ],
+        },
+        {
+            roles: ['ROLE_ADMIN'],
+            name: 'Пропуски',
+            children: [
+                {
+                    name: 'Карта',
+                    routes: ['admin_pass_filials_maps'],
+                },
+                {
+                    name: 'Список',
+                    routes: ['admin_pass_filials', 'admin_pass_filial_add', 'admin_pass_filial_edit'],
+                },
+                {
+                    name: 'Настройки',
+                    routes: ['admin_pass_filials_settings'],
+                },
+            ],
+        },
+        {
+            roles: ['ROLE_MOD_PROMO'],
+            name: 'Промо-кампании',
+            routes: ['admin_promos', 'admin_promo_add', 'admin_promo_edit', 'admin_promo_activations', 'admin_promo_add_keys', 'admin_promo_add_activations' ],
+        },
+        {
+            roles: ['ROLE_MOD_ACCOUNTANT'],
+            name: 'Возврат средств',
+            routes: ['admin_revert_money_user_list', 'admin_revert_money_user_card', 'admin_revert_money_revert', 'psb_info_revert'],
+        },
+    ]
+%}
+{% macro menu(route, els, num = '') %}
+    {% import _self as this %}
+    {% for el in els %}
+        {% set cur_num = num ? (num~'.'~loop.index) : loop.index %}
+        {% if el.divider is defined %}
+            <li class="divider"></li>
+        {% else %}
+            {% if el.roles is not defined or is_granted(el.roles) %}
+                {% if el.children is defined %}
+                    <li>
+                        <span data-num="{{ cur_num }}"><i class="fa fa-caret-down"></i> {{ el.name }}</span>
+                        <ul>{{ this.menu(route, el.children, cur_num) }}</ul>
+                    </li>
+                {% else %}
+                    <li{{ route in el.routes ? ' class="active"' : '' }}><a href="{{ path(el.routes[0]) }}"><i class="fa fa-angle-double-right"></i> {{ el.name }}</a></li>
+                {% endif %}
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+{% endmacro %}
+
+<div class="span3" style="margin:0;padding:0">
+<ul id="menu" class="nav nav-list well menu">
+    {% import _self as this %}
+    {{ this.menu(route, menu) }}
+</ul>
+</div>
+{% endif %}

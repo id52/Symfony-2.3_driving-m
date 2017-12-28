@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{% block title %}{{ 'project.name'|trans }} — {{ 'project.slogan'|trans }}{% endblock %}</title>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400,300,300italic,400italic,700,700italic&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/m/css/print.css">
+</head>
+<body>
+
+<div class="container">
+    <div>
+        <img class="logo" src="/m/images/logo-dark-blue.png" alt="Автошкола МГТУ">
+        <div class="phones">
+            +7 ({{ settings['contacts_phone1_prefix'] }}) {{ settings['contacts_phone1'] }}<br/>
+            +7 ({{ settings['contacts_phone2_prefix'] }}) {{ settings['contacts_phone2'] }}
+        </div>
+    </div>
+
+    <table class="title">
+        <tr><td></td><td class="title-t">Филиал</td><td></td></tr>
+    </table>
+
+    <div class="title-2">{{ filial.title }}</div>
+
+    <div class="title-3">
+        {{ filial.region }}, {{ filial.address }}
+        {% if filial.station %}
+        <br/>м. {{ filial.station }}
+        {% endif %}
+    </div>
+
+    <div class="container-2">
+        {% if filial.addressGeo or filial.mapCode %}
+        <div class="map">
+            <div class="map-in" id="map"></div>
+        </div>
+        {% endif %}
+        <div class="comments-title"><label for="comment">Коментарии:</label></div>
+        <textarea id="comment" class="comment"></textarea>
+        <a href="javascript:window.print()" class="button">Печать</a>
+    </div>
+</div>
+
+{% if filial.addressGeo or filial.mapCode %}
+<script src="/m/js/jquery.js"></script>
+<script src="//api-maps.yandex.ru/2.1/?lang=ru-RU"></script>
+<script type="text/javascript">
+{% if filial.addressGeo %}
+var init = function() {
+    ymaps.geocode('{{ filial.region~', '~filial.addressGeo }}', { results: 1 }).then(function(res) {
+        var coords = res.geoObjects.get(0).geometry.getCoordinates();
+
+        var myMap = new ymaps.Map('map', { center: coords, zoom: 16 }, { suppressMapOpenBlock: true });
+
+        var myPlacemark = new ymaps.Placemark(coords,
+            {
+                hintContent: '{{ filial.title }}',
+                balloonContent: '<b>{{ filial.title }}</b><br>{{ filial.activePhones|join('<br>')|raw }}<br>г. {{ filial.region }} {{ filial.station ? (' (м. '~filial.station~')') : '' }}, {{ filial.address }}'
+            },
+            { preset: 'islands#dotIcon', iconColor: '#025C91' }
+        );
+        myMap.geoObjects.add(myPlacemark);
+    });
+};
+ymaps.ready(init);
+{% else %}
+{{ filial.mapCode|raw }}
+{% endif %}
+</script>
+{% endif %}
+
+{% if settings['counters_yandex'] is defined %}
+<script>{{ settings['counters_yandex']|raw }}</script>
+{% endif %}
+
+</body>
+</html>

@@ -1,0 +1,53 @@
+My\AppBundle\Entity\Subject:
+    type: entity
+    table: subjects
+    repositoryClass: My\AppBundle\Repository\SubjectRepository
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        title:
+            type: string
+        brief_description:
+            type: string
+            nullable: true
+        description:
+            type: text
+            nullable: true
+    oneToOne:
+        image:
+            targetEntity: Image
+            mappedBy: subject
+            cascade: [ all ]
+    oneToMany:
+        themes:
+            targetEntity: Theme
+            mappedBy: subject
+        exams_logs:
+            targetEntity: ExamLog
+            mappedBy: subject
+    manyToMany:
+        versions:
+            targetEntity: TrainingVersion
+            inversedBy: subjects
+            joinTable:
+                name: training_versions_subjects
+                joinColumns:
+                    subject_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    version_id:
+                        referencedColumnName: id
+        closed_users:
+            targetEntity: User
+            inversedBy: closed_subjects
+            joinTable:
+                name: closed_users__closed_subjects
+                joinColumns:
+                    subject_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    user_id:
+                        referencedColumnName: id

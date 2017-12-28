@@ -1,0 +1,24 @@
+My\AppBundle\Entity\TestKnowledgeLog:
+    type: entity
+    table: tests_knowledge_logs
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        started_at:
+            type: datetime
+        ended_at:
+            type: datetime
+            nullable: true
+        questions:
+            type: array
+        answers:
+            type: array
+        passed:
+            type: boolean
+    manyToOne:
+        user:
+            targetEntity: User
+            inversedBy: tests_knowledge_logs

@@ -1,0 +1,21 @@
+My\AppBundle\Entity\ServicePrice:
+    type: entity
+    table: services_prices
+    repositoryClass: My\AppBundle\Repository\ServicePriceRepository
+    id:
+        service:
+            associationKey: true
+        region:
+            associationKey: true
+    fields:
+        price:
+            type: integer
+        active:
+            type: boolean
+    manyToOne:
+        service:
+            targetEntity: Service
+            inversedBy: regions_prices
+        region:
+            targetEntity: Region
+            inversedBy: services_prices

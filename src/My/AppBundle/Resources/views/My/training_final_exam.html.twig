@@ -1,0 +1,257 @@
+{% extends "AppBundle::layout_new.html.twig" %}
+
+{% block start_content %}
+    {% if not settings['ticket_test_old_style'] and part == 1 %}
+        <link href="{{ asset('bundles/app/css/training-test.css') }}" rel="stylesheet" type="text/css">
+    {% endif %}
+
+<div id="helper" class="modal helper">
+    <div class="title">{{ 'help_title'|trans }}</div>
+    {{ help_btn|raw }}
+    <div class="bottom links"><span class="link bg-green check-link btn-close">Спасибо, все понятно</span></div>
+    <span class="close"></span>
+</div>
+
+<div id="modal-max-errors" class="modal border-red">
+    <div class="notice bg-sad">
+        <div class="title">Вы не сдали</div>
+        {{ settings['training_final_exam_max_errors']|raw }}
+        <div class="links">
+            <a class="bg-red" href="{{ path('my_trainings') }}">{{ 'training.final_exam.back_to_list'|trans }}</a>
+        </div>
+    </div>
+    <span class="close"></span>
+</div>
+
+<div id="modal-complete" class="modal border-green">
+    <div class="notice bg-prize">
+        <div class="title">Поздравляем</div>
+        {{ settings['training_final_exam_complete']|replace({'%certificate_link%': path('my_certificate')})|raw }}
+        <div class="links">
+            <a class="bg-green" href="{{ path('my_trainings') }}">{{ 'training.final_exam.back_to_list'|trans }}</a>
+        </div>
+    </div>
+    <span class="close"></span>
+</div>
+
+<div id="modal-quit" class="modal border-red wid2">
+    <div class="notice center">
+        <div class="title">Прервать тест</div>
+        Вы уверены что хотите прервать тест?
+        <div class="links">
+            <a class="bg-green" href="{{ path('my_training_final_exam_quit') }}">Да</a>
+            <a class="bg-red" href="#">Нет</a>
+        </div>
+    </div>
+    <span class="close"></span>
+</div>
+
+<div id="modal-timeout" class="modal">
+    <div class="notice bg-time">
+        <div class="title">Время закончилось</div>
+        {{ settings['training_slice_timeout']|raw }}
+        <div class="links">
+            <a class="bg-red" href="{{ path('my_training_final_exam_quit') }}">{{ 'training.final_exam.back_to_list'|trans }}</a>
+        </div>
+    </div>
+    <span class="close"></span>
+</div>
+
+<div class="modal border-red reg-done" id="errors-modal">
+    <div class="content">
+    </div>
+    <div class="links">
+        <a class="bg-red" href="{{ path('my_training_final_exam_quit') }}">
+            {{ 'training.final_exam.back_to_list'|trans }}
+        </a>
+    </div>
+    <span class="close"></span>
+</div>
+{% endblock start_content %}
+
+{% block content %}
+<nav class="path">
+    <a href="{{ path('homepage') }}">{{ 'titles.homepage'|trans }}</a>
+    » <a href="{{ path('my_trainings') }}">{{ 'titles.trainings'|trans }}</a>
+    » <strong>{{ 'final_exam'|trans }}</strong>
+</nav>
+
+<div class="mainContent">
+    <section id="test-content" class="test">
+        {% if settings['ticket_test_old_style'] or part == 2 %}
+            {% include 'AppBundle:My:training_final_exam_in.html.twig' %}
+        {% else %}
+            {% include 'AppBundle:My:training_final_exam_with_tiles.html.twig' %}
+        {% endif %}
+    </section>
+</div>
+{% endblock content %}
+
+{% block js %}
+<script src="/v2/js/jquery.countdown.js"></script>
+<script>
+$(function() {
+    var test = function() {
+        var timer = $('.timer, .b_countdown');
+        if (timer.length) {
+            timer.countdown({
+                until: timer.data('seconds-left'),
+                {% if settings['ticket_test_old_style'] or part == 2 %}
+                    layout: '{mn}{sep}{snn}',
+                {% else %}
+                    layout: '<span class="minutes">{mn}</span>{sep} <span class="seconds">{snn}</span>',
+                {% endif %}
+                onExpiry: function() {
+                    error('timeout');
+                }
+            });
+        }
+
+        var error = function(type, popup_error_window) {
+            switch (type) {
+                case 'longtime':
+                    location.assign('{{ path('my_training_final_exam') }}');
+                    break;
+                case 'timeout':
+                    $.simplebox('#modal-timeout', { overlay: { opacity: 0.5 } });
+                    break;
+                case 'error_popup':
+                    switch (popup_error_window) {
+                        case 'max_errors_questions':
+                            $('#errors-modal > .content').html('{{ settings['max_errors_questions_text']|replace({ "\n": ' ', "\r": ' ' })|raw }}');
+                            break;
+                        case 'max_errors_questions_block':
+                            $('#errors-modal > .content').html('{{ settings['max_errors_questions_block_text']|replace({ "\n": ' ', "\r": ' ' })|raw }}');
+                            break;
+                        case 'max_errors_additional_questions':
+                            $('#errors-modal > .content').html('{{ settings['max_errors_additional_questions_text']|replace({ "\n": ' ', "\r": ' ' })|raw }}');
+                            break;
+                        case 'max_errors_ticket':
+                            $('#errors-modal > .content').html('{{ settings['max_errors_ticket_text']|replace({ "\n": ' ', "\r": ' ' })|raw }}');
+                            break;
+                        default:
+                            $('#errors-modal > .content').html('Вы допустили максимальное количество ошибок в вопросах.');
+                    }
+                    $.simplebox('#errors-modal', { overlay: { opacity: 0.5 } });
+                    break;
+                default:
+            }
+        };
+
+        var modal_quit = $('#modal-quit');
+        $('.bg-red', modal_quit).click(function(e) {
+            e.preventDefault();
+            $.simplebox.close();
+        });
+
+        var modal_error = $('#modal-error');
+        $('.bg-red', modal_error).click(function(e) {
+            e.preventDefault();
+            $.simplebox.close();
+        });
+
+        $('.exit-link').click(function(e) {
+            e.preventDefault();
+            $.simplebox('#modal-quit', { overlay: { opacity: 0.5 } });
+        });
+
+        $('.help-link').click(function(e) {
+            e.preventDefault();
+            $.simplebox('#helper', { overlay: { opacity: 0.5 } });
+        });
+
+        $('#helper').find('.check-link').click(function() {
+            $.simplebox.close();
+        });
+
+
+        $('.answer').find('input').removeAttr('disabled');
+        $('.answer-link.bg-red').hide();
+
+        var is_continue = false;
+        var form = $('form');
+
+        form.submit(function(e) {
+            e.preventDefault();
+
+            $('.error-fill-in', this).remove();
+
+            if ($('input[name="answer"]:checked', this).length == 0) {
+                var fillInDiv = '<div class="error-fill-in">Необходимо выбрать вариант ответа.</div>';
+                $('.bottom.links', this).before(fillInDiv);
+                return;
+            }
+
+            $('.answer-link').hide();
+            if (is_continue) {
+                {% if settings['ticket_test_old_style'] or part == 2 %}
+                    $.getJSON('{{ path('my_training_final_exam_next_question_ajax') }}', function(data) {
+                        if (data.refresh) {
+                            location.assign('{{ path('my_training_final_exam') }}');
+                        } else if (data.error) {
+                            error(data.error, data.popup_error_window);
+                        } else if (data.complete) {
+                            $.simplebox('#modal-complete', { overlay: { opacity: 0.5 } });
+                        } else {
+                            $('#test-content').html(data.content);
+                            test();
+                        }
+                    });
+                {% endif %}
+            } else {
+                $.post(form.attr('action'), form.serialize(), function(data) {
+                    if (data.error) {
+                        error(data.error, data.popup_error_window);
+                    } else {
+                        var answer = $('#answer_' + data.c_answer).closest('.answer');
+                        if (data.correct) {
+                            answer.addClass('ok');
+                            answer.append('<div class="err-text">Верный ответ</div>');
+                        } else {
+                            answer.addClass('error');
+                            answer.append('<div class="err-text">Неверный ответ</div>');
+                            $('.errors').find('span').html(data.errors);
+                        }
+                        is_continue = true;
+                        $('.answer-link.bg-red').show();
+                        $('.answer').find('input').attr('disabled', 'disabled');
+                    }
+                }, 'json');
+            }
+        });
+
+
+        {% if not settings['ticket_test_old_style'] and part == 1 %}
+            $('a', '.b_question_block').click(function(e) {
+                e.preventDefault();
+                $.getJSON($(this).attr('href'), function(data) {
+                    if (data.refresh) {
+                        location.assign('{{ path('my_training_final_exam') }}');
+                    } else {
+                        $('#test-content').html(data.content);
+                    }
+                }).done(function() {
+                    test();
+                });
+            });
+
+            $('#choose_another').click(function(e) {
+                e.preventDefault();
+                $.getJSON('{{ path('my_training_final_exam_next_question_ajax') }}')
+                    .done(function(data) {
+                        if (data.refresh) {
+                            location.assign('{{ path('my_training_final_exam') }}');
+                        } else if (data.error) {
+                            error(data.error, data.popup_error_window);
+                        } else {
+                            $('#test-content').html(data.content);
+                            test();
+                        }
+                    });
+            });
+        {% endif %}
+    };
+    test();
+});
+</script>
+{% endblock js %}

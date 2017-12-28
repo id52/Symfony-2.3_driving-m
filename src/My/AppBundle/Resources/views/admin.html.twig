@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+<head>
+    <title>{% block title %}{{ 'project.name'|trans }} — {{ 'project.slogan'|trans }}{% endblock %}</title>
+    <meta charset="{{ _charset }}">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="icon" href="/favicon.ico">
+    <link href="/bundles/app/css/main.css" rel="stylesheet">
+    {% block css '' %}
+</head>
+<body>
+
+{% include 'AppBundle::_server_label.html.twig' %}
+
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="brand" href="{{ path('admin') }}">
+                <i class="fa fa-dashboard"></i>
+                {{ 'project.admin'|trans }}
+            </a>
+            <div class="pull-right auth">
+                {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                    {{ app.user.fullName }}
+                    | <a href="{{ path('homepage') }}">{{ 'on_site'|trans }}</a>
+                    | <a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="span3">
+            {% include 'AppBundle::admin_menu.html.twig' only %}
+        </div>
+        <div class="span9">
+
+        {% for key, messages in app.session.flashbag.all() %}
+            {% for message in messages %}
+                <div class="alert alert-{{ key }}">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    {{ message|trans }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+
+        {% block content '' %}
+
+        </div>
+    </div>
+    <hr>
+    <footer>
+        © {{ 'project.name'|trans }} {{ 'now'|date('Y') }}
+    </footer>
+</div>
+
+<script src="/bundles/app/js/main.js"></script>
+<!--[if lt IE 9]>
+<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<script>
+$(function() {
+    $.cookie.json = true;
+    var states = $.cookie('admin_menu_states') || {};
+    var menu = $('#menu');
+    menu.on('click', 'span', function() {
+        var fa = $('.fa', $(this));
+        var num = $(this).data('num');
+        if (fa.hasClass('fa-caret-down')) {
+            $(this).closest('li').find('>ul').slideUp();
+            fa.removeClass('fa-caret-down').addClass('fa-caret-right');
+            states[num] = 1;
+            $.cookie('admin_menu_states', states, { expires: 365, path: '/' });
+        } else if (fa.hasClass('fa-caret-right')) {
+            $(this).closest('li').find('>ul').slideDown();
+            fa.removeClass('fa-caret-right').addClass('fa-caret-down');
+            states[num] = 0;
+            $.cookie('admin_menu_states', states, { expires: 365, path: '/' });
+        }
+    });
+    $('span', menu).each(function() {
+        var num = $(this).data('num');
+        if (states.hasOwnProperty(num) && states[num] == 1) {
+            var fa = $('.fa', $(this));
+            $(this).closest('li').find('>ul').hide();
+            fa.removeClass('fa-caret-down').addClass('fa-caret-right');
+        }
+    });
+});
+</script>
+
+{% block js '' %}
+
+</body>
+</html>

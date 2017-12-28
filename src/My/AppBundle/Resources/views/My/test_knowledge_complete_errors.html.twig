@@ -1,0 +1,18 @@
+{% extends 'AppBundle::layout_new.html.twig' %}
+
+{% block content %}
+    <div class="main_t">
+        <h1>{{ 'test_knowledge.max_errors'|trans }}</h1>
+    </div>
+    <div id="test">
+        <div class="form_unswer">
+            <div class="alert-error clear">
+                {{ settings['training_test_knowledge_max_errors']|raw }}
+            </div>
+            <br />
+            {% include 'AppBundle:My:_stat.html.twig' %}
+            <br />
+            <input type="button" onclick="document.location.href = '{{ path('my_test_knowledge') }}';" value="{{ 'test_knowledge_return'|trans }}" class="pull_left red_btn">
+        </div>
+    </div>
+{% endblock content %}

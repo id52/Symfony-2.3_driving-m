@@ -1,0 +1,33 @@
+<form class="form-horizontal styled" action="{{ path('fos_user_registration_register') }}" {{ form_enctype(registration_form) }} method="POST">
+    {{ form_widget(registration_form) }}
+
+    <div class="form-actions">
+        <button class="green_btn" type="submit">{{ 'registration.submit'|trans({}, 'FOSUserBundle') }}</button>
+    </div>
+    <script>
+        var categories = {{ categories|json_encode|raw }};
+        var categoriesTree = {{ categoriesTree|json_encode|raw }};
+        function updateCategoriesSelect() {
+            var categoriesElement = $('#fos_user_registration_form_category');
+            var region = $('#fos_user_registration_form_region').val();
+
+            //empty category select element but dont remove first option
+            $('#fos_user_registration_form_category option:not(:first)').remove();
+            if (categoriesTree[region]) {
+                for (var i in categoriesTree[region]) {
+                    if (categories[categoriesTree[region][i]]) {
+                        $('<option></option>')
+                                .attr('value', categoriesTree[region][i])
+                                .text(categories[categoriesTree[region][i]])
+                                .appendTo(categoriesElement);
+                    }
+                }
+            }
+        }
+        $(document).ready(function() {
+            //update categories list for every region
+            $('#fos_user_registration_form_region').change(updateCategoriesSelect);
+            updateCategoriesSelect();
+        });
+    </script>
+</form>

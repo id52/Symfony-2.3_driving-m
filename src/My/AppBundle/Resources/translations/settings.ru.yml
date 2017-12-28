@@ -1,0 +1,826 @@
+settings_counters_yandex: Код счётчика Яндекс.Метрики
+
+settings_contacts: Контакты
+settings_contacts_help: |
+    Контактные данные
+settings_contacts_email: Контактный e-mail
+settings_contacts_phone1: Контактный телефон 1
+settings_contacts_phone2: Контактный телефон 2
+settings_coupons_phone1: Купонный телефон 1
+settings_coupons_phone2: Купонный телефон 2
+
+settings_socials: Ссылки на соцсети
+settings_socials_help: |
+    Ссылки на соцсети
+settings_socials_vk: Вконтакте
+settings_socials_facebook: Facebook
+settings_socials_twitter: Twitter
+
+settings_profile_messages: Сообщения в профиле
+settings_profile_final_exam: Текст о сдаче финального экзамена с ссылкой (вставьте %certificate_link% для замены на адрес для скачивания)
+
+settings_training_test_messages: Сообщения в тесте как в ГИБДД по билетам
+settings_training_test_timeout: Время закончилось
+settings_training_test_complete: Тестирование завершено
+settings_training_test_long_time: Долго отсутствовал
+settings_training_test_max_errors: Много ошибок
+
+settings_training_test_knowledge_messages: Сообщения в тесте как в ГИБДД по темам
+settings_training_test_knowledge_timeout: Время закончилось
+settings_training_test_knowledge_complete: Тестирование завершено
+settings_training_test_knowledge_long_time: Долго отсутствовал
+settings_training_test_knowledge_max_errors: Много ошибок
+
+settings_training_test_statistics: Статистика тестов как в ГИБДД
+settings_training_test_statistics_empty: Сообщение об отсутствии статистики
+
+settings_help_btns: Кнопки помощи
+settings_trainings_help_btn: В обучении
+settings_training_help_btn: В предмете «%subject%»
+settings_theme_help_btn: В темах
+settings_question_help_btn: В вопросах
+
+settings_birthday_greeting: '[E-mail] Письмо поздравления с днем рождения'
+settings_birthday_greeting_help: |
+    В день рождение пользователю приходит письмо на почту с поздравлением и генерацией рендомного промокода
+settings_birthday_greeting_title: Заголовок
+settings_birthday_greeting_title_help: |
+    {{ last_name }} — фамилия<br>
+    {{ first_name }} — имя<br>
+    {{ patronymic }} — отчество
+settings_birthday_greeting_text: Текст
+settings_birthday_greeting_text_help: |
+    {{ dear }} — «уважаемый/ая»<br>
+    {{ last_name }} — фамилия<br>
+    {{ first_name }} — имя<br>
+    {{ patronymic }} — отчество<br>
+    {{ sign_x }} — Подпись № X<br>
+    {{ promo }} — промокод<br>
+    {{ date }} — дата окончания действия промокода
+
+settings_signs: Подписи
+settings_signs_help: |
+    Используются для текстов в разделе "уведомления"
+settings_sign: Текст подписи
+
+settings_lock_unlock: '[Email] Письма о блокировке/разблокировке'
+settings_lock_unlock_help: Высылаются, когда пользователя блокируют из панели администрациии.
+
+settings_lock_user_enabled: Включено?
+settings_lock_user_title: Заголовок
+settings_lock_user_text: Текст
+settings_lock_user_text_help: |
+    {{ dear }} — «уважаемый/ая»<br>
+    {{ last_name }} — фамилия<br>
+    {{ first_name }} — имя<br>
+    {{ patronymic }} — отчество<br>
+    {{ sign_x }} — Подпись № X
+
+settings_unlock_user_enabled: Включено?
+settings_unlock_user_title: Заголовок
+settings_unlock_user_text: Текст
+settings_unlock_user_text_help: |
+    {{ dear }} — «уважаемый/ая»<br>
+    {{ last_name }} — фамилия<br>
+    {{ first_name }} — имя<br>
+    {{ patronymic }} — отчество<br>
+    {{ sign_x }} — Подпись № X
+
+settings_errors: Ошибки
+settings_errors_help: Редактирование различных оповещений об ошибках на сайте.
+settings_error_account_locked: Для заблокированного пользователя
+settings_error_account_locked_help: |
+    Отображается для заблокированного пользователя при попытке авторизации.<br>
+    {{ last_name }} — фамилия<br>
+    {{ first_name }} — имя<br>
+    {{ patronymic }} — отчество<br>
+
+settings_registration_info: Текст информирования пользователя перед регистрацией
+settings_reginfo_1: Текст описания первого шага регистрации
+settings_reginfo_2: Текст описания второго шага регистрации
+settings_reginfo_3_offline: Текст описания третьего шага регистрации (в офисе)
+settings_offline_print_text: Текст в конце квитанции на оплату в кассе
+settings_reginfo_3_online: Текст описания третьего шага регистрации (онлайн)
+settings_registration_text: Текст рядом с формой регистрации
+settings_registration_checkemail_text: Текст на странице после регистрации о том, что письмо отправлено
+settings_registration_checkemail_text_help: |
+    {{ email }} — e-mail<br>
+    {{ sign_x }} — подпись № X
+
+settings_confirmation_registration: '[Email] Подтверждение регистрации'
+settings_confirmation_registration_help: |
+    Текст письма которое приходит пользователю после регистрации в системе
+settings_confirmation_registration_enabled: Включено?
+settings_confirmation_registration_title: Заголовок
+settings_confirmation_registration_text: Текст
+settings_confirmation_registration_text_help: |
+    {{ link_confirm }} — ссылка подтверждения регистрации<br>
+    {{ dear }} — «уважаемый/ая»<br>
+    {{ last_name }} — фамилия<br>
+    {{ first_name }} — имя<br>
+    {{ patronymic }} — отчество<br>
+    {{ sign_x }} — подпись № X
+
+settings_confirmed_registration: '[Text] Текст на странице после регистрации при оплате полного курса обучения со скидкой 25%'
+settings_confirmed_registration_help: |
+    после регистрации переход по ссылке валидации из письма, пользователь попадает на страницу с описанием дальнейших действий.
+settings_confirmed_registration_title: Заголовок
+settings_confirmed_registration_text: Текст
+settings_confirmed_registration_text_help: |
+    {{ last_name }} — фамилия<br>
+    {{ first_name }} — имя<br>
+    {{ patronymic }} — отчество<br>
+    {{ dear }} — «Уважаемый/ая»<br>
+    {{ sign_x }} — подпись № X<br>
+    {{ training_period }} — срок обучения<br>
+    {{ proc_discount }} — процент (процент скидки, число)<br>
+    {{ sum_full }} — сумма (стоимость обучения без скидки (теория+вождение)<br>
+    {{ sum_discount }} — сумма скидки (сумма которую он сэкономит)<br>
+    {{ sum_pay }} — сумма к оплате (сумма которую нужно оплатить)<br>
+    {{ sum_teor }} — сумма теория (стоимость теории без скидки)<br>
+    {{ sum_drv }} — сумма вождение (стоимость вождения без скидки)
+
+settings_confirmed_registration_2: '[Text] Текст на странице после регистрации при оплате в рассрочку со скидкой 10%'
+settings_confirmed_registration_2_help: |
+    после регистрации переход по ссылке валидации из письма, пользователь попадает на страницу с описанием дальнейших действий.
+settings_confirmed_registration_2_title: Заголовок
+settings_confirmed_registration_2_text: Текст
+settings_confirmed_registration_2_text_help: |
+    {{ last_name }} — фамилия<br>
+    {{ first_name }} — имя<br>
+    {{ patronymic }} — отчество<br>
+    {{ dear }} — «Уважаемый/ая»<br>
+    {{ sign_x }} — подпись № X<br>
+    {{ training_period }} — срок обучения<br>
+    {{ proc_discount }} — процент (процент скидки, число)<br>
+    {{ sum_full }} — сумма (стоимость обучения без скидки (теория+вождение)<br>
+    {{ sum_discount }} — сумма скидки (сумма которую он сэкономит)<br>
+    {{ sum_pay }} — сумма к оплате (сумма которую нужно оплатить)<br>
+    {{ sum_teor }} — сумма теория (стоимость теории без скидки)<br>
+    {{ sum_drv }} — сумма вождение (стоимость вождения без скидки)<br>
+    {{ full_price_10 }} - Полная стоимость со скидкой 10%
+
+settings_confirmed_registration_3: '[Text] Текст на странице после регистрации (50/50 т.ч.)'
+settings_confirmed_registration_3_help: |
+    после регистрации переход по ссылке валидации из письма, пользователь попадает на страницу с описанием дальнейших действий.
+settings_confirmed_registration_3_title: Заголовок
+settings_confirmed_registration_3_text: Текст
+settings_confirmed_registration_3_text_help: |
+    {{ last_name }} — фамилия<br>
+    {{ first_name }} — имя<br>
+    {{ patronymic }} — отчество<br>
+    {{ dear }} — «Уважаемый/ая»<br>
+    {{ sign_x }} — подпись № X<br>
+    {{ training_period }} — срок обучения<br>
+    {{ proc_discount }} — процент (процент скидки, число)<br>
+    {{ sum_full }} — сумма (стоимость обучения без скидки (теория+вождение)<br>
+    {{ sum_discount }} — сумма скидки (сумма которую он сэкономит)<br>
+    {{ sum_pay }} — сумма к оплате (сумма которую нужно оплатить)<br>
+    {{ sum_teor }} — сумма теория (стоимость теории без скидки)<br>
+    {{ sum_drv }} — сумма вождение (стоимость вождения без скидки)<br>
+    {{ sum_teor_1 }} — сумма теория 1часть (стоимость теоретического курса 1 часть оплаты)<br>
+    {{ sum_teor_2 }} — сумма теория 2часть (стоимость теоретического курса 2 часть оплаты)<br>
+    {{ demo_period }} — срок тестового периода (на какой срок даем пользователю доступ к обучению)
+
+settings_resetting_password: '[Email] Сброс пароля'
+settings_resetting_password_help: |
+    текст письма, если пользователь забыл пароль.
+settings_resetting_password_enabled: Включено?
+settings_resetting_password_title: Заголовок
+settings_resetting_password_text: Текст
+settings_resetting_password_text_help: |
+    {{ link_reset }} — ссылка сброса пароля<br>
+    {{ dear }} — «уважаемый/ая»<br>
+    {{ last_name }} — фамилия<br>
+    {{ first_name }} — имя<br>
+    {{ patronymic }} — отчество<br>
+    {{ sign_x }} — Подпись № X
+
+settings_payments_mobile_not_confirmed: '[Text] Номер мобильного телефона не подтверждён'
+settings_payments_mobile_not_confirmed_help: |
+    сообщение если пользователь хочет совершить вторую оплату, но его номер телефона не валедирован.
+settings_payments_mobile_not_confirmed_title: Заголовок
+settings_payments_mobile_not_confirmed_text: Текст
+
+settings_after_confirm_mobile: '[Notify] Подтверждения номера мобильного телефона'
+settings_after_confirm_mobile_help: |
+    это сообщение будет у пользователя в Уведомлениях после подтверждения мобильного телефона.
+settings_after_confirm_mobile_enabled: Включено?
+settings_after_confirm_mobile_title: Заголовок
+settings_after_confirm_mobile_text: Текст
+
+settings_after_confirm_mobile_email: '[Email] Подтверждения номера мобильного телефона'
+settings_after_confirm_mobile_email_help: |
+    это сообщение придет пользователю на почту после подтверждения мобильного телефона
+settings_after_confirm_mobile_email_enabled: Включено?
+settings_after_confirm_mobile_email_title: Заголовок
+settings_after_confirm_mobile_email_text: Текст
+settings_after_confirm_mobile_email_text_help: |
+    {{ dear }} — «уважаемый/ая»<br>
+    {{ last_name }} — фамилия<br>
+    {{ first_name }} — имя<br>
+    {{ patronymic }} — отчество<br>
+    {{ sign_x }} — Подпись № X
+
+settings_notfull: '[Text] Профиль не заполнен'
+settings_notfull_help: |
+    уведомление о том, что профиль не заполнен
+settings_notfull_text: Текст
+settings_notfull_text_help: |
+    {{ last_name }} — фамилия<br>
+    {{ first_name }} — имя<br>
+    {{ patronymic }} — отчество<br>
+
+settings_payment_success: Сообщение об успешной оплате
+settings_payment_fail: Сообщение об неудавшейся оплате
+
+settings_access_time: Время доступа к сайту
+settings_access_time_after_1_payment: После оплаты теории
+settings_access_time_after_2_payment: После полной оплаты теории
+settings_access_time_after_2_payment_less: Должно быть больше, чем после оплаты теории
+settings_access_time_after_3_payment: После оплаты вождения
+settings_access_time_after_3_payment_less: Должно быть больше, чем после оплаты экзаменов
+
+settings_access_time_end_popup: За сколько до окончания доступа показывать попап
+settings_access_time_end_popup_help: За какое количество дней, до окончания действия доступа к обучению, показывать попап
+settings_access_time_end_popup_after_2_payment: После полной оплаты теории
+
+settings_access_time_end_notify: За сколько до окончания доступа высылать письма
+settings_access_time_end_notify_help: За какое количество дней, до окончания действия доступа к обучению, высылать письма и писать уведомления
+settings_access_time_end_notify_after_1_payment: После оплаты теории
+settings_access_time_end_notify_after_2_payment: После полной оплаты теории
+settings_access_time_end_notify_after_3_payment: После оплаты вождения
+
+settings_no_payments: '[Email] Оповещение об отсутствии оплат'
+settings_no_payments_help: |
+    Письмо отправляется тем, кто не сделал ни одной оплаты через N дней.
+settings_no_payments_enabled: Включено?
+settings_no_payments_title: Заголовок
+settings_no_payments_text: Текст
+settings_no_payments_text_help: |
+    {{ dear }} — «уважаемый/ая»<br>
+    {{ last_name }} — фамилия<br>
+    {{ first_name }} — имя<br>
+    {{ patronymic }} — отчество<br>
+    {{ sign_x }} — Подпись № X<br>
+    {{ price }} — Сумма первой оплаты без скидки<br>
+    {{ discount }} — Скидка по промокоду<br>
+    {{ new_price }} — Сумма первой оплаты со скидкой<br>
+    {{ promo_key }} — Промокод<br>
+    {{ promo_expiration }} — Дата истечения срока действия Промокода<br>
+    {{ unsubscribe_link }} — Ссылка (адрес) для отписки от автоматической рассылки<br>
+    {{ demo_period }} — срок ознакомительного доступа
+
+
+settings_training_without_2_payment: '[Text] Не оплачен доступ к экзаменам'
+settings_training_without_2_payment_help: |
+    При нажатии на на кнопку сдачи тестов всплывает окно предупреждение о том, что не был оплачен доступ к экзаменам.<br><br>
+settings_training_without_2_payment_title: Заголовок
+settings_training_without_2_payment_text: Текст
+
+settings_training_without_3_payment: '[Text] Не оплачено вождение'
+settings_training_without_3_payment_help: |
+    При нажатии на на кнопку сдачи итогового экзамена всплывает окно предупреждение о том, что не была произведена оплата вождения.<br><br>
+settings_training_without_3_payment_title: Заголовок
+settings_training_without_3_payment_text: Текст
+settings_training_without_3_payment_text_help: |
+    {{ demo_period }} — срок ознакомительного доступа
+
+settings_first_payment: '[Text] На странице оплаты полного курса обучения со скидкой 25%'
+settings_first_payment_help: Этот текст отображается на странице подтверждения платежа, пользователю который выбрал полный курс обучения со скидкой 25%
+settings_first_payment_text: Текст
+settings_first_payment_text_help: |
+    {{ last_name }} — фамилия<br>
+    {{ first_name }} — имя<br>
+    {{ patronymic }} — отчество<br>
+    {{ dear }} — «Уважаемый/ая»<br>
+    {{ demo_period }} — срок ознакомительного доступа
+
+settings_first_payment_2: '[Text] На странице оплаты в рассрочку со скидкой 10%'
+settings_first_payment_2_help: Этот текст отображается на странице подтверждения платежа, пользователю который выбрал оплату в рассрочку со скидкой 10%
+settings_first_payment_2_text: Текст
+settings_first_payment_2_text_help: |
+    {{ last_name }} — фамилия<br>
+    {{ first_name }} — имя<br>
+    {{ patronymic }} — отчество<br>
+    {{ dear }} — «Уважаемый/ая»<br>
+    {{ demo_period }} — срок ознакомительного доступа
+
+settings_after_1_payment: '[Notify] Уведомление после оплаты полного курса обучения со скидкой 25%'
+settings_after_1_payment_help: Уведомление которое отображается в личном кабинете пользователя, после оплаты полного курса обучения со скидкой 25%
+settings_after_1_payment_enabled: Включено?
+settings_after_1_payment_title: Заголовок
+settings_after_1_payment_text: Текст
+settings_after_1_payment_text_help: |
+    {{ last_name }} — фамилия<br>
+    {{ first_name }} — имя<br>
+    {{ patronymic }} — отчество<br>
+    {{ dear }} — «Уважаемый/ая»<br>
+    {{ sign_x }} — подпись № X<br>
+    {{ training_period }} — срок обучения<br>
+    {{ proc_discount }} — процент (процент скидки, число)<br>
+    {{ sum_full }} — сумма (стоимость обучения без скидки (теория+вождение)<br>
+    {{ sum_discount }} — сумма скидки (сумма которую он сэкономит)<br>
+    {{ sum_pay }} — сумма к оплате (сумма которую нужно оплатить)<br>
+    {{ sum_teor }} — сумма теория (стоимость теории без скидки)<br>
+    {{ sum_drv }} — сумма вождение (стоимость вождения без скидки)<br>
+    {{ btn_trainings }} — кнопка перехода в раздел обучения<br>
+    {{ btn_profile_edit }} — кнопка перехода в редактирование профиля<br>
+    {{ demo_period }} — срок ознакомительного доступа
+
+settings_after_1_payment_email: '[Email] Письмо после оплаты полного курса обучения со скидкой 25%'
+settings_after_1_payment_email_help: Письмо которое пользователь получает на зарегистрированную почту, после оплаты полного курса обучения со скидкой 25%
+settings_after_1_payment_email_enabled: Включено?
+settings_after_1_payment_email_title: Заголовок
+settings_after_1_payment_email_text: Текст
+settings_after_1_payment_email_text_help: |
+    {{ dear }} — «уважаемый/ая»<br>
+    {{ last_name }} — фамилия<br>
+    {{ first_name }} — имя<br>
+    {{ patronymic }} — отчество<br>
+    {{ sign_x }} — Подпись № X<br>
+    {{ demo_period }} — срок ознакомительного доступа
+
+settings_after_1_payment_2: '[Notify] Уведомление после оплаты в рассрочку со скидкой 10%'
+settings_after_1_payment_2_help: Уведомление которое отображается в личном кабинете пользователя, после оплаты в рассрочку со скидкой 10%
+settings_after_1_payment_2_enabled: Включено?
+settings_after_1_payment_2_title: Заголовок
+settings_after_1_payment_2_text: Текст
+settings_after_1_payment_2_text_help: |
+    {{ last_name }} — фамилия<br>
+    {{ first_name }} — имя<br>
+    {{ patronymic }} — отчество<br>
+    {{ dear }} — «Уважаемый/ая»<br>
+    {{ sign_x }} — подпись № X<br>
+    {{ training_period }} — срок обучения<br>
+    {{ proc_discount }} — процент (процент скидки, число)<br>
+    {{ sum_full }} — сумма (стоимость обучения без скидки (теория+вождение)<br>
+    {{ sum_discount }} — сумма скидки (сумма которую он сэкономит)<br>
+    {{ sum_pay }} — сумма к оплате (сумма которую нужно оплатить)<br>
+    {{ sum_teor }} — сумма теория (стоимость теории без скидки)<br>
+    {{ sum_drv }} — сумма вождение (стоимость вождения без скидки)<br>
+    {{ btn_trainings }} — кнопка перехода в раздел обучения<br>
+    {{ btn_profile_edit }} — кнопка перехода в редактирование профиля<br>
+    {{ demo_period }} — срок ознакомительного доступа
+
+settings_after_1_payment_2_email: '[Email] Письмо после оплаты в рассрочку со скидкой 10%'
+settings_after_1_payment_2_email_help: Письмо которое пользователь получает на зарегистрированную почту, после оплаты в рассрочку со скидкой 10%
+settings_after_1_payment_2_email_enabled: Включено?
+settings_after_1_payment_2_email_title: Заголовок
+settings_after_1_payment_2_email_text: Текст
+settings_after_1_payment_2_email_text_help: |
+    {{ dear }} — «уважаемый/ая»<br>
+    {{ last_name }} — фамилия<br>
+    {{ first_name }} — имя<br>
+    {{ patronymic }} — отчество<br>
+    {{ sign_x }} — Подпись № X<br>
+    {{ demo_period }} — срок ознакомительного доступа
+
+settings_after_2_payment: '[Notify] После оплаты экзаменов'
+settings_after_2_payment_help: |
+    Уведомление после оплаты экзаменов в личный кабинет пользователя
+settings_after_2_payment_enabled: Включено?
+settings_after_2_payment_title: Заголовок
+settings_after_2_payment_text: Текст
+
+settings_after_2_payment_email: '[Email] После оплаты экзаменов'
+settings_after_2_payment_email_enabled: Включено?
+settings_after_2_payment_email_title: Заголовок
+settings_after_2_payment_email_text: Текст
+settings_after_2_payment_email_text_help: |
+    {{ dear }} — «уважаемый/ая»<br>
+    {{ last_name }} — фамилия<br>
+    {{ first_name }} — имя<br>
+    {{ patronymic }} — отчество<br>
+    {{ sign_x }} — Подпись № X
+
+settings_after_3_payment: '[Notify] Уведомление После оплаты вождения'
+settings_after_3_payment_help: Уведомление отображается в ЛК пользователя оплатившего только вождение. После оплаты теории со скидкой 10%
+settings_after_3_payment_text_help: |
+    {{ demo_period }} — срок ознакомительного доступа
+
+settings_after_3_payment_enabled: Включено?
+settings_after_3_payment_title: Заголовок
+settings_after_3_payment_text: Текст
+
+settings_after_3_payment_email: '[Email] Письмо После оплаты вождения'
+settings_after_3_payment_email_help: Письмо приходит на почтовый ящик пользователя оплатившего только вождение. После оплаты теории со скидкой 10%
+settings_after_3_payment_email_enabled: Включено?
+settings_after_3_payment_email_title: Заголовок
+settings_after_3_payment_email_text: Текст
+settings_after_3_payment_email_text_help: |
+    {{ dear }} — «уважаемый/ая»<br>
+    {{ last_name }} — фамилия<br>
+    {{ first_name }} — имя<br>
+    {{ patronymic }} — отчество<br>
+    {{ sign_x }} — Подпись № X<br>
+    {{ demo_period }} — срок ознакомительного доступа
+
+settings_after_payment: '[Notify] После любой другой оплаты'
+settings_after_payment_help: |
+    Уведомление в линый кабинет пользователя после других оплат
+settings_after_payment_enabled: Включено?
+settings_after_payment_title: Заголовок
+settings_after_payment_text: Текст
+
+settings_after_payment_email: '[Email] После любой другой оплаты'
+settings_after_payment_email_help: |
+    Письмо на почту пользователя после любой другой оплаты
+settings_after_payment_email_enabled: Включено?
+settings_after_payment_email_title: Заголовок
+settings_after_payment_email_text: Текст
+settings_after_payment_email_text_help: |
+    {{ dear }} — «уважаемый/ая»<br>
+    {{ last_name }} — фамилия<br>
+    {{ first_name }} — имя<br>
+    {{ patronymic }} — отчество<br>
+    {{ sign_x }} — Подпись № X
+
+settings_before_access_time_end_after_1_payment: '[Notify] До окончания периода после оплаты теории'
+settings_before_access_time_end_after_1_payment_help: |
+    Уведомление в личный кабинет пользователя до окончания периода после оплаты теории<br><br>
+settings_before_access_time_end_after_1_payment_enabled: Включено?
+settings_before_access_time_end_after_1_payment_title: Заголовок
+settings_before_access_time_end_after_1_payment_text: Текст
+
+settings_before_access_time_end_after_1_payment_email: '[Email] До окончания периода после оплаты теории'
+settings_before_access_time_end_after_1_payment_email_help: |
+    Сообщение на почту пользователя до окончания периода после оплаты теории
+settings_before_access_time_end_after_1_payment_email_enabled: Включено?
+settings_before_access_time_end_after_1_payment_email_title: Заголовок
+settings_before_access_time_end_after_1_payment_email_text: Текст
+settings_before_access_time_end_after_1_payment_email_text_help: |
+    {{ dear }} — «уважаемый/ая»<br>
+    {{ last_name }} — фамилия<br>
+    {{ first_name }} — имя<br>
+    {{ patronymic }} — отчество<br>
+    {{ sign_x }} — Подпись № X
+
+settings_after_access_time_end_after_1_payment: '[Email] После окончания периода после оплаты теории'
+settings_after_access_time_end_after_1_payment_help: |
+    Сообщение на почту пользователя после окончания периода после оплаты теории
+settings_after_access_time_end_after_1_payment_enabled: Включено?
+settings_after_access_time_end_after_1_payment_title: Заголовок
+settings_after_access_time_end_after_1_payment_text: Текст
+settings_after_access_time_end_after_1_payment_text_help: |
+    {{ link_unsubscribe }} — ссылка для отписки<br>
+    {{ dear }} — «уважаемый/ая»<br>
+    {{ last_name }} — фамилия<br>
+    {{ first_name }} — имя<br>
+    {{ patronymic }} — отчество<br>
+    {{ sign_x }} — Подпись № X
+
+settings_before_access_time_end_after_2_payment_popup: '[Popup] Сообщение об окончании периода после оплаты в рассрочку со скидкой 10%'
+settings_before_access_time_end_after_2_payment_popup_help: Сообщает пользователю, о том что период доступа к обучению заканчивается, что нужно оплатить Вождение и продолжить заниматься.
+settings_before_access_time_end_after_2_payment_popup_title: Заголовок
+settings_before_access_time_end_after_2_payment_popup_text: Текст
+settings_before_access_time_end_after_2_payment_popup_text_help: |
+    {{ dear }} — «уважаемый/ая»<br>
+    {{ last_name }} — фамилия<br>
+    {{ first_name }} — имя<br>
+    {{ patronymic }} — отчество<br>
+    {{ sign_x }} — подпись № X<br>
+    {{ end_date }} — дата когда заканчивается срок<br>
+    {{ days_before_end }} — количество дней до окончания срока<br>
+    {{ sum }} — сумма к оплате<br>
+    {{ demo_period }} — срок ознакомительного доступа
+
+settings_before_access_time_end_after_2_payment: '[Notify] Уведомление об окончании периода после оплаты в рассрочку со скидкой 10%'
+settings_before_access_time_end_after_2_payment_help: В уведомлении сообщается пользователю, о том что период доступа к обучению заканчивается, что нужно оплатить Вождение и продолжить заниматься.
+settings_before_access_time_end_after_2_payment_text_help: |
+    {{ demo_period }} — срок ознакомительного доступа
+settings_before_access_time_end_after_2_payment_enabled: Включено?
+settings_before_access_time_end_after_2_payment_title: Заголовок
+settings_before_access_time_end_after_2_payment_text: Текст
+
+settings_before_access_time_end_after_2_payment_email: '[Email] Письмо об окончании периода после оплаты в рассрочку со скидкой 10%'
+settings_before_access_time_end_after_2_payment_email_help: В письме сообщается пользователю, о том что период доступа к обучению заканчивается, что нужно оплатить Вождение и продолжить заниматься.
+settings_before_access_time_end_after_2_payment_email_enabled: Включено?
+settings_before_access_time_end_after_2_payment_email_title: Заголовок
+settings_before_access_time_end_after_2_payment_email_text: Текст
+settings_before_access_time_end_after_2_payment_email_text_help: |
+    {{ dear }} — «уважаемый/ая»<br>
+    {{ last_name }} — фамилия<br>
+    {{ first_name }} — имя<br>
+    {{ patronymic }} — отчество<br>
+    {{ sign_x }} — Подпись № X<br>
+    {{ demo_period }} — срок ознакомительного доступа
+
+settings_after_access_time_end_after_2_payment: '[Email] Письмо о закончившемся периоде обучения после оплаты теории'
+settings_after_access_time_end_after_2_payment_help: В письме сообщается пользователю, о том что период доступа к обучению закончился, что нужно оплатить Вождение и продолжить заниматься.
+settings_after_access_time_end_after_2_payment_enabled: Включено?
+settings_after_access_time_end_after_2_payment_title: Заголовок
+settings_after_access_time_end_after_2_payment_text: Текст
+settings_after_access_time_end_after_2_payment_text_help: |
+    {{ link_unsubscribe }} — ссылка для отписки<br>
+    {{ dear }} — «уважаемый/ая»<br>
+    {{ last_name }} — фамилия<br>
+    {{ first_name }} — имя<br>
+    {{ patronymic }} — отчество<br>
+    {{ sign_x }} — Подпись № X<br>
+    {{ demo_period }} — срок ознакомительного доступа
+
+settings_before_access_time_end_after_3_payment: '[Notify] Уведомление об окончании доступа к теоретическому курсу по истечению года'
+settings_before_access_time_end_after_3_payment_help: Уведомление пользователю который оплатил полный курс обучения со скидкой 25% и пользователю который оплатил вождение отдельно, сообщаем, что доступ к теоретическому курсу скоро закроется.
+settings_before_access_time_end_after_3_payment_text_help: |
+    {{ demo_period }} — срок ознакомительного доступа
+settings_before_access_time_end_after_3_payment_enabled: Включено?
+settings_before_access_time_end_after_3_payment_title: Заголовок
+settings_before_access_time_end_after_3_payment_text: Текст
+
+settings_before_access_time_end_after_3_payment_email: '[Email] Письмо об окончании доступа к теоретическому курсу по истечению года'
+settings_before_access_time_end_after_3_payment_email_help: Письмо пользователю который оплатил полный курс обучения со скидкой 25% и пользователю который оплатил вождение отдельно, сообщаем, что доступ к теоретическому курсу скоро закроется.
+settings_before_access_time_end_after_3_payment_email_enabled: Включено?
+settings_before_access_time_end_after_3_payment_email_title: Заголовок
+settings_before_access_time_end_after_3_payment_email_text: Текст
+settings_before_access_time_end_after_3_payment_email_text_help: |
+    {{ dear }} — «уважаемый/ая»<br>
+    {{ last_name }} — фамилия<br>
+    {{ first_name }} — имя<br>
+    {{ patronymic }} — отчество<br>
+    {{ sign_x }} — Подпись № X<br>
+    {{ demo_period }} — срок ознакомительного доступа
+
+settings_after_access_time_end_after_3_payment: '[Email] Письмо о закончившимся доступе к теоретическому курсу по истечении года'
+settings_after_access_time_end_after_3_payment_help: Письмо пользователю который оплатил полный курс обучения со скидкой 25% и пользователю который оплатил вождение отдельно, сообщаем, что доступ к теоретическому курсу закрыт.
+settings_after_access_time_end_after_3_payment_enabled: Включено?
+settings_after_access_time_end_after_3_payment_title: Заголовок
+settings_after_access_time_end_after_3_payment_text: Текст
+settings_after_access_time_end_after_3_payment_text_help: |
+    {{ link_unsubscribe }} — ссылка для отписки<br>
+    {{ dear }} — «уважаемый/ая»<br>
+    {{ last_name }} — фамилия<br>
+    {{ first_name }} — имя<br>
+    {{ patronymic }} — отчество<br>
+    {{ sign_x }} — Подпись № X<br>
+    {{ demo_period }} — срок ознакомительного доступа
+
+settings_landing_title: Title
+settings_landing_keywords: Meta keywords
+settings_landing_description: Meta description
+
+settings_article_styles: Дополнительные стили
+
+settings_opacity_not_active_filials: Прозрачность неактивных
+
+settings_opacity_not_active_sites: Прозрачность неактивных
+
+settings_exam: Экзамены
+settings_exam_tickets: Кол-во билетов
+settings_exam_questions_in_ticket: Вопросов в билете
+settings_exam_not_repeat_questions_in_tickets: Не повторять в разных билетах?
+settings_exam_shuffle: Перемешивать вопросы в билетах?
+settings_exam_max_errors_in_ticket: Ошибок в билете
+settings_exam_ticket_time: Время на билет
+settings_exam_shuffle_answers: Перемешивать ответы?
+settings_exam_retake_time: Время между пересдачами
+
+settings_training_exam_messages: Сообщения в экзаменах
+settings_training_exam_success: Верно ответили на вопрос
+settings_training_exam_error: Неверно ответили на вопрос
+settings_training_exam_timeout: Время закончилось
+settings_training_exam_complete: Экзамен завершён
+settings_training_exam_long_time: Долго отсутствовал
+settings_training_exam_max_errors: Много ошибок
+settings_training_exam_retake: Пересдача не возможна
+
+settings_after_all_slices: '[Notify] После всех срезов по предмету «%subject%»'
+settings_after_all_slices_help: |
+    Уведомление в Личный кабинет пользователя о сдачи всех срезов по теме «%subject%»
+settings_after_all_slices_enabled: Включено?
+settings_after_all_slices_title: Заголовок
+settings_after_all_slices_text: Текст
+
+settings_after_all_slices_email: '[Email] После всех срезов по предмету «%subject%»'
+settings_after_all_slices_email_help: |
+    Сообщение на почту пользователя о сдачи всех срезов по теме «%subject%»"
+settings_after_all_slices_email_enabled: Включено?
+settings_after_all_slices_email_title: Заголовок
+settings_after_all_slices_email_text: Текст
+settings_after_all_slices_email_text_help: |
+    {{ dear }} — «уважаемый/ая»<br>
+    {{ last_name }} — фамилия<br>
+    {{ first_name }} — имя<br>
+    {{ patronymic }} — отчество<br>
+    {{ sign_x }} — Подпись № X
+
+settings_after_fail_exam: '[Notify] После провала экзамена по предмету «%subject%»'
+settings_after_fail_exam_help: |
+    Уведомление в линый кабинет пользователя после провала экзамена «%subject%»"
+settings_after_fail_exam_enabled: Включено?
+settings_after_fail_exam_title: Заголовок
+settings_after_fail_exam_text: Текст
+
+settings_after_fail_exam_email: '[Email] После провала экзамена по предмету «%subject%»'
+settings_after_fail_exam_email_help: |
+    Сообщение на почту пользователя после провала экзамена «%subject%»"
+settings_after_fail_exam_email_enabled: Включено?
+settings_after_fail_exam_email_title: Заголовок
+settings_after_fail_exam_email_text: Текст
+settings_after_fail_exam_email_text_help: |
+    {{ dear }} — «уважаемый/ая»<br>
+    {{ last_name }} — фамилия<br>
+    {{ first_name }} — имя<br>
+    {{ patronymic }} — отчество<br>
+    {{ sign_x }} — Подпись № X
+
+settings_after_exam: '[Notify] После экзамена по предмету «%subject%»'
+settings_after_exam_help: |
+    Уведомление в личный кабинет пользователя после экзамена по предмету «%subject%»"
+settings_after_exam_enabled: Включено?
+settings_after_exam_title: Заголовок
+settings_after_exam_text: Текст
+
+settings_after_exam_email: '[Email] После экзамена по предмету «%subject%»'
+settings_after_exam_email_help: |
+    сообщение на почту пользователя после сдачи экзамена «%subject%»"
+settings_after_exam_email_enabled: Включено?
+settings_after_exam_email_title: Заголовок
+settings_after_exam_email_text: Текст
+settings_after_exam_email_text_help: |
+    {{ dear }} — «уважаемый/ая»<br>
+    {{ last_name }} — фамилия<br>
+    {{ first_name }} — имя<br>
+    {{ patronymic }} — отчество<br>
+    {{ sign_x }} — Подпись № X
+
+settings_theme_test: Тесты
+settings_theme_test_correct_answers: Правильных ответов
+settings_theme_test_correct_answers_in_row: Подряд?
+settings_theme_test_questions_method: Повторная выдача вопросов
+settings_theme_test_questions_method_same_order: В том же порядке
+settings_theme_test_questions_method_shuffle: Вперемешку
+settings_theme_test_time: Время
+settings_theme_test_shuffle_answers: Перемешивать ответы?
+
+settings_training_theme_test_messages: Сообщения в тестировании после темы
+settings_training_theme_test_success: Верно ответили на вопрос
+settings_training_theme_test_error: Неверно ответили на вопрос
+settings_training_theme_test_timeout: Время закончилось
+settings_training_theme_test_complete_next: Тестирование завершено, но есть следующая тема
+settings_training_theme_test_complete_list: Тестирование завершено, но нет следующей темы
+settings_training_theme_test_long_time: Долго отсутствовал
+
+settings_slice: Срезы
+settings_slice_tickets: Кол-во билетов
+settings_slice_questions_in_ticket: Вопросов в билете
+settings_slice_not_repeat_questions_in_tickets: Не повторять в разных билетах?
+settings_slice_max_errors_in_ticket: Ошибок в билете
+settings_slice_ticket_time: Время на билет
+settings_slice_shuffle_answers: Перемешивать ответы?
+
+settings_training_slice_messages: Сообщения в срезах
+settings_training_slice_success: Верно ответили на вопрос
+settings_training_slice_error: Неверно ответили на вопрос
+settings_training_slice_timeout: Время закончилось
+settings_training_slice_complete: Срез завершён
+settings_training_slice_long_time: Долго отсутствовал
+settings_training_slice_max_errors: Много ошибок
+
+settings_final_exam_1: Итоговый экзамен (часть 1)
+settings_final_exam_1_tickets: Кол-во билетов
+settings_final_exam_1_shuffle: Перемешивать вопросы в билетах?
+settings_final_exam_1_max_errors_in_ticket: Ошибок в билете
+settings_final_exam_1_ticket_time: Время на билет
+settings_final_exam_1_shuffle_answers: Перемешивать ответы?
+settings_final_exam_1_extra_time: "Добавочное время для блока"
+
+settings_final_exam_2: Итоговый экзамен (часть 2)
+settings_final_exam_2_tickets: Кол-во билетов
+settings_final_exam_2_questions_in_ticket: Вопросов в билете
+settings_final_exam_2_not_repeat_questions_in_tickets: Не повторять в разных билетах?
+settings_final_exam_2_max_errors_in_ticket: Ошибок в билете
+settings_final_exam_2_ticket_time: Время на билет
+settings_final_exam_2_shuffle_answers: Перемешивать ответы?
+
+settings_training_final_exam_messages: Сообщения в финальном экзамене
+settings_training_final_exam_description: Описание
+settings_training_final_exam_success: Верно ответили на вопрос
+settings_training_final_exam_error: Неверно ответили на вопрос
+settings_training_final_exam_timeout: Время закончилось
+settings_training_final_exam_complete: Финальный экзамен завершён
+settings_training_final_exam_long_time: Долго отсутствовал
+settings_training_final_exam_max_errors: Много ошибок
+settings_training_final_exam_retake: Пересдача не возможна
+settings_training_final_exam_denied: Не доступен
+settings_training_final_exam_passed: Уже прошли (%certificate_link% заменится на адрес для скачивания сертификата)
+
+settings_after_all_exams: '[Notify] После всех экзаменов по предметам'
+settings_after_all_exams_help: |
+    Уведомление в личный кабинет пользователя после всех экзаменов по предметам
+settings_after_all_exams_enabled: Включено?
+settings_after_all_exams_title: Заголовок
+settings_after_all_exams_text: Текст
+
+settings_after_all_exams_email: '[Email] После всех экзаменов по предметам'
+settings_after_all_exams_email_help: |
+    Сообщение на почту пользователя после всех экзаменов по предметам
+settings_after_all_exams_email_enabled: Включено?
+settings_after_all_exams_email_title: Заголовок
+settings_after_all_exams_email_text: Текст
+settings_after_all_exams_email_text_help: |
+    {{ dear }} — «уважаемый/ая»<br>
+    {{ last_name }} — фамилия<br>
+    {{ first_name }} — имя<br>
+    {{ patronymic }} — отчество<br>
+    {{ sign_x }} — Подпись № X
+
+settings_close_final_exam: '[Popup] Заблокирован доступ к Итоговому экзамену'
+settings_close_final_exam_title: Заголовок
+settings_close_final_exam_text: Текст
+settings_close_final_exam_text_help: |
+    {{ dear }} — «уважаемый/ая»<br>
+    {{ last_name }} — фамилия<br>
+    {{ first_name }} — имя<br>
+    {{ patronymic }} — отчество<br>
+    {{ sign_x }} — Подпись № X
+
+settings_closed_subject: '[Popup] Заблокирован доступ к Предмету'
+settings_closed_subject_title: Заголовок
+settings_closed_subject_text: Текст
+settings_closed_subject_text_help: |
+    {{ dear }} — «уважаемый/ая»<br>
+    {{ last_name }} — фамилия<br>
+    {{ first_name }} — имя<br>
+    {{ patronymic }} — отчество<br>
+    {{ sign_x }} — Подпись № X
+
+settings_after_final_exam: '[Notify] После финального экзамена'
+settings_after_final_exam_help: |
+    Уведомление в личный кабинет пользователя после финального экзамена
+settings_after_final_exam_enabled: Включено?
+settings_after_final_exam_title: Заголовок
+settings_after_final_exam_text: Текст
+
+settings_after_final_exam_email: '[Email] После финального экзамена'
+settings_after_final_exam_email_help: |
+    Сообщение на почту пользователя после финального экзамена
+settings_after_final_exam_email_enabled: Включено?
+settings_after_final_exam_email_title: Заголовок
+settings_after_final_exam_email_text: Текст
+settings_after_final_exam_email_text_help: |
+    {{ dear }} — «уважаемый/ая»<br>
+    {{ last_name }} — фамилия<br>
+    {{ first_name }} — имя<br>
+    {{ patronymic }} — отчество<br>
+    {{ sign_x }} — Подпись № X
+
+settings_add_user: Письмо пользователю, созданного через админку
+settings_add_user_title: Заголовок
+settings_add_user_text: Текст
+settings_add_user_text_help: |
+    {{ dear }} — «уважаемый/ая»<br>
+    {{ last_name }} — фамилия<br>
+    {{ first_name }} — имя<br>
+    {{ patronymic }} — отчество<br>
+    {{ phone }} — телефон<br>
+    {{ email }} — e-mail<br>
+    {{ password }} — пароль<br>
+    {{ category }} — название категории прав<br>
+    {{ kpp }} — АКПП/МКПП<br>
+    {{ url }} — ссылка для активации<br>
+    {{ sign_x }} — Подпись № X
+
+settings_support_days_to_answer: Дней для ответа
+
+settings_support_answered_email: Оповещение об ответе
+settings_support_answered_email_help: Письмо-оповещение об ответе на запрос в службу поддержки.
+settings_support_answered_email_enabled: Включено?
+settings_support_answered_email_title: Заголовок
+settings_support_answered_email_text: Текст
+settings_support_answered_email_text_help: |
+    {{ dear }} — «уважаемый/ая»<br>
+    {{ last_name }} — фамилия<br>
+    {{ first_name }} — имя<br>
+    {{ patronymic }} — отчество<br>
+    {{ sign_x }} — Подпись № X
+
+settings_support_answered_email_admin: Оповещение о новом диалоге от администрации
+settings_support_answered_email_admin_help: Письмо-оповещение о новом диалоге от администрации в службе поддержки.
+settings_support_answered_email_admin_enabled: Включено?
+settings_support_answered_email_admin_title: Заголовок
+settings_support_answered_email_admin_text: Текст
+settings_support_answered_email_admin_text_help: |
+    {{ dear }} — «уважаемый/ая»<br>
+    {{ last_name }} — фамилия<br>
+    {{ first_name }} — имя<br>
+    {{ patronymic }} — отчество<br>
+    {{ sign_x }} — Подпись № X
+
+settings_no_payments_notify: Напоминания об отсутствии оплат
+settings_no_payments_notify_help: |
+    <b>После регистрации</b>: если пользователь не сделал ни одной оплаты, то высылаем ему письма через указанное число дней.
+settings_notify_no_payments: Отправлять письмо через
+settings_notify_no_payments_promo_expiration: Время действия купона (соот. № письма)
+settings_notify_no_payments_promo_discount: Скидка купона (соот. № письма)
+
+settings_opacity_not_active_pass_filials: Прозрачность неактивных
+settings_pass_time_recreating: Пропуск можно пересоздать через
+
+settings_max_errors_questions_text: 'Максимальное количество ошибок в основных вопросах'
+settings_max_errors_questions_block_text: 'Максимальное количество ошибок в основных вопросах в одном блоке'
+settings_max_errors_additional_questions_text: 'Максимальное количество ошибок в дополнительных вопросах'
+settings_max_errors_ticket_text: 'Максимальное количество ошибок в билете'
+
+settings_ticket_test_old_style_title: "Тесты по билетам"
+settings_ticket_test_old_style: "Старый стиль теста по билетам"

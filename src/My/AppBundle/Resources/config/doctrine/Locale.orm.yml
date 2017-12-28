@@ -1,0 +1,16 @@
+My\AppBundle\Entity\Locale:
+    type: entity
+    table: locales
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        code:
+            type: string
+    oneToMany:
+        questions_i18n:
+            targetEntity: QuestionI18N
+            mappedBy: locale
+            cascade: [ all ]

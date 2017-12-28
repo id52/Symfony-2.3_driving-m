@@ -1,0 +1,68 @@
+{% extends 'AppBundle::admin.html.twig' %}
+{% trans_default_domain 'question' %}
+
+{% block content %}
+    <h3>Перевод вопроса</h3>
+    <hr>
+
+    <div class="control-group">
+        <label class="control-label"></label>
+        {% if question.image.webPath is defined %}
+            <div class="controls">
+                <img src="{{ question.image.webPath }}" width="auto"/>
+            </div>
+        {% endif %}
+    </div>
+
+    {{ form_start(form) }}
+
+    <div class="control-group">
+        <label class="control-label">Оригинал вопроса</label>
+        <div class="controls">
+            {{ question.text }}
+        </div>
+    </div>
+
+    {{ form_row(form.text) }}
+
+    <div class="control-group">
+        <label class="control-label">Оригинал описания</label>
+        <div class="controls">
+            {{ question.description }}
+        </div>
+    </div>
+
+    {{ form_row(form.description) }}
+
+    <div class="control-group">
+        <label class="control-label">{{ 'question_answers'|trans }}:</label>
+        <div class="controls" id="answers">
+            <table class="table table-condensed">
+            {% for answer in answers %}
+                <tr  {% if answer.correct %}class="tr-success" {% endif %}>
+                    <td>{{ answer.title }}</td>
+                    <td>
+                        <input name="answers[{{ loop.index0 }}]" value="{{ answer.title_i18n }}" required='required'>
+                    </td>
+                </tr>
+            {% endfor %}
+            </table>
+        </div>
+    </div>
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-success">
+            <i class="fa fa-download"></i>
+            <span>{{ 'admin.buttons.save'|trans({}, 'messages') }}</span>
+        </button>
+
+        {% if locale == 'uz' %}
+            <a class="btn pull-right" href="{{ path('admin_question_translations_uz') ~'?'~query_string }}"><i class="fa fa-arrow-left"></i> {{ 'admin.buttons.back_to_list'|trans({}, 'messages') }}</a>
+        {% elseif locale == 'tj' %}
+            <a class="btn pull-right" href="{{ path('admin_question_translations_tj') ~'?'~query_string }}"><i class="fa fa-arrow-left"></i> {{ 'admin.buttons.back_to_list'|trans({}, 'messages') }}</a>
+        {% elseif locale == 'kg' %}
+            <a class="btn pull-right" href="{{ path('admin_question_translations_kg') ~'?'~query_string }}"><i class="fa fa-arrow-left"></i> {{ 'admin.buttons.back_to_list'|trans({}, 'messages') }}</a>
+        {% endif %}
+    </div>
+    {{ form_end(form) }}
+{% endblock content %}

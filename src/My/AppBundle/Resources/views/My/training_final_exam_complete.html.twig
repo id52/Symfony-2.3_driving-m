@@ -1,0 +1,20 @@
+{% extends 'AppBundle::layout_new.html.twig' %}
+
+{% block content %}
+    <div class="main_t">
+        <div class="breadcrumbs">
+            <div class="bread_bod">
+                <a href="{{ path('my_trainings') }}">{{ 'menu.training'|trans }}</a>
+                <span class="this">/ {{ 'final_exam'|trans }}</span>
+            </div>
+        </div>
+        <h2>{{ 'training.final_exam.complete'|trans }}</h2>
+    </div>
+    <div id="test">
+        <div class="form_unswer">
+            <div class="alert-success clear">
+                {{ settings['training_final_exam_complete']|replace({'%certificate_link%': path('my_certificate')})|raw }}
+            </div>
+        </div>
+    </div>
+{% endblock content %}

@@ -1,0 +1,26 @@
+{% extends 'AppBundle:Admin:_settings.html.twig' %}
+{% trans_default_domain 'settings' %}
+
+{% block fields %}
+    <div class="control-group">
+        <label class="control-label">{{ 'settings_opacity_not_active_pass_filials'|trans }}:</label>
+        <div class="controls">
+            <div class="input-append">
+                {{ form_widget(form.opacity_not_active_pass_filials, { attr: { class: 'span1' } }) }}
+                <span class="add-on">%</span>
+            </div>
+            {{ form_errors(form.opacity_not_active_pass_filials) }}
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">{{ 'settings_pass_time_recreating'|trans }}:</label>
+        <div class="controls">
+            <div class="input-append">
+                {{ form_widget(form.pass_time_recreating, { attr: { class: 'span1' } }) }}
+                <span class="add-on">{{ 'days'|trans({}, 'messages') }}</span>
+            </div>
+            {{ form_errors(form.pass_time_recreating) }}
+        </div>
+    </div>
+{% endblock fields %}

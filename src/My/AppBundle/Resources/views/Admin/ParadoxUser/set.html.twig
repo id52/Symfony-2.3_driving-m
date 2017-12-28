@@ -1,0 +1,17 @@
+{% extends 'AppBundle::admin.html.twig' %}
+
+{% block content %}
+    <h3>{{ 'admin.paradox_user_set_title'|trans }}</h3>
+    <hr>
+
+    {{ form_start(form) }}
+        {{ form_errors(form) }}
+
+        {{ form_widget(form) }}
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-success"><i class="fa fa-sign-in"></i> {{ 'admin.buttons.set'|trans }}</button>
+            <a class="btn pull-right" href="{{ path('admin_paradox_user_view', { id: user.id }) }}"><i class="fa fa-arrow-left"></i> {{ 'admin.buttons.back_to_view'|trans }}</a>
+        </div>
+    {{ form_end(form) }}
+{% endblock content %}

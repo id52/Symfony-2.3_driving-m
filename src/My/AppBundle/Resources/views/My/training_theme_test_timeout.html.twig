@@ -1,0 +1,20 @@
+{% extends 'AppBundle::layout_new.html.twig' %}
+
+{% block content %}
+<nav class="path">
+    <a href="{{ path('homepage') }}">{{ 'titles.homepage'|trans }}</a>
+    » <a href="{{ path('my_trainings') }}">{{ 'titles.trainings'|trans }}</a>
+    » <a href="{{ path('my_training', { id: theme.subject.id }) }}">{{ theme.subject.title }}</a>
+    » <a href="{{ path('my_training_theme', { id: theme.id }) }}">{{ theme.title }}</a>
+    » <strong>{{ 'theme_test_title'|trans }}</strong>
+</nav>
+
+<div class="mainContent">
+    <div class="title"><h1>{{ 'theme_test_timeout'|trans }}</h1></div>
+    {{ settings['training_theme_test_timeout']|raw }}
+    <div class="links">
+        <a class="bg-green" href="{{ path('my_training_theme_test', { id: theme.id }) }}">{{ 'theme_test_timeout_repeat'|trans }}</a>
+        <a class="bg-red" href="{{ path('my_training', { id: theme.subject.id }) }}">{{ 'theme_test_complete_list'|trans }}</a>
+    </div>
+</div>
+{% endblock content %}

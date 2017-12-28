@@ -1,0 +1,17 @@
+My\AppBundle\Entity\FeedbackEmail:
+    type: entity
+    table: feedback_emails
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+        email:
+            type: string
+        password:
+            type: string
+        subjects:
+            type: text

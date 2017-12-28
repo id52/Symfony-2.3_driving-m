@@ -1,0 +1,15 @@
+<div class="road-signs clearfix">
+    <div class="rs-title">{{ block.title }}</div>
+    <div class="rs-list" id="vertical-signs">
+        {% for item in items %}
+            <a href="#" data-id="{{ item.id }}" class="flash_block_link">
+                {% if item.image %}
+                    <img src="{{ item.image.webPath }}"/><br>
+                {% endif %}
+                <span>{{ item.title }}</span>
+                <br>
+                <span class="item_subtitle">&nbsp; {{ item.subtitle }}</span>
+            </a>
+        {% endfor %}
+    </div>
+</div>

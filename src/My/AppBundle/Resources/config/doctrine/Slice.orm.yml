@@ -1,0 +1,29 @@
+My\AppBundle\Entity\Slice:
+    type: entity
+    table: slices
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    oneToOne:
+        after_theme:
+            targetEntity: Theme
+            inversedBy: slice
+    oneToMany:
+        logs:
+            targetEntity: SliceLog
+            mappedBy: slice
+            cascade: [ remove ]
+    manyToMany:
+        versions:
+            targetEntity: TrainingVersion
+            inversedBy: slices
+            joinTable:
+                name: training_versions_slices
+                joinColumns:
+                    slice_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    version_id:
+                        referencedColumnName: id

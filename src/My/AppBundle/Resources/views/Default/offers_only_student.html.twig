@@ -1,0 +1,84 @@
+{% extends 'AppBundle::layout_m.html.twig' %}
+
+{% block content %}
+    <div class="wrap">
+        <div class="back-link r-fl"><a href="{{ path('homepage') }}"><span class="v-m arrow">«</span>Вернуться</a></div>
+
+        <ul class="breadcrumb">
+            <li><a title="Главная" href="{{ path('homepage') }}">Главная</a></li>
+            <li class="active"><span>Спецпредложения и скидки для студентов</span></li>
+        </ul>
+
+        <div class="main-title left-bg">
+            <div class="caption">Спецпредложения и скидки для студентов:</div>
+        </div>
+
+        {% for offer in offers %}
+            <div id="{{ offer.id }}" class="offer-preview">
+                {% if offer.image %}
+                    <a href="#{{ offer.id }}" class="ofp-img-link">
+                        <img src="{{ offer.image.webPath|imagine_filter('offer_index') }}"/>
+                    </a>
+                {% endif %}
+                <div class="ofp-text">
+                    <a href="#{{ offer.id }}" class="ofp-link">{{ offer.title }}</a>
+                    {% if offer.subtitle %}
+                        <div class="ofp-period">{{ offer.subtitle }}</div>
+                    {% endif %}
+                    <div class="ofp-desc-cut">
+                        <div class="ofp-desc">{{ offer.desc|raw }}</div>
+                        <a href="#{{ offer.id }}" class="ofp-more-link">Подробнее</a>
+                    </div>
+                    <div class="ofp-desc-full" style="display:none">
+                        <div class="ofp-desc">{{ offer.description|raw }}</div>
+                        <a href="#" class="ofp-more-link" style="display:none">Свернуть</a>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock content %}
+
+{% block js %}
+    <script>
+        $(function() {
+            $('.ofp-img-link, .ofp-link, .ofp-desc-cut>.ofp-more-link').click(function(e) {
+                e.preventDefault();
+                if ($(location).attr('hash') != $(this).attr('href')) {
+                    $(location).attr('hash', $(this).attr('href'));
+                }
+                check_hash();
+            });
+
+            $('.ofp-more-link', '.ofp-desc-full').on('click', function(e) {
+                e.preventDefault();
+                var ofp_text = $(this).closest('.ofp-text');
+                var full = ofp_text.find('.ofp-desc-full');
+                var cut = ofp_text.find('.ofp-desc-cut');
+                $('.ofp-more-link', full).hide();
+                full.hide('slow');
+                cut.show('slow');
+                $('.ofp-more-link', cut).show();
+            });
+
+            var check_hash = function() {
+                var index = parseInt($(location).attr('hash').replace('#', ''));
+                if (!isNaN(index)) {
+                    var ofp_text = $('.ofp-text', '#'+index);
+                    var full = ofp_text.find('.ofp-desc-full');
+                    var cut = ofp_text.find('.ofp-desc-cut');
+                    $('.ofp-more-link', cut).hide();
+                    cut.hide('slow');
+                    full.show('slow');
+                    $('.ofp-more-link', full).show();
+                    $('html,body').animate({
+                        scrollTop: $('#'+index).offset().top-50
+                    });
+                }
+            };
+            $(window).on('hashchange', check_hash);
+            check_hash();
+        });
+    </script>
+{% endblock js %}

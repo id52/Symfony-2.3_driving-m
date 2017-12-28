@@ -1,0 +1,48 @@
+My\AppBundle\Entity\Category:
+    type: entity
+    table: categories
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+        with_at:
+            type: boolean
+        theory:
+            type: integer
+        practice:
+            type: integer
+        training:
+            type: decimal
+            scale: 1
+    oneToOne:
+        image:
+            targetEntity: Image
+            mappedBy: category
+            cascade: [ all ]
+    oneToMany:
+        categories_prices:
+            targetEntity: CategoryPrice
+            mappedBy: category
+            cascade: [ all ]
+        offers_prices:
+            targetEntity: OfferPrice
+            mappedBy: category
+            cascade: [ all ]
+        offers_prices_students:
+            targetEntity: OfferPriceStudent
+            mappedBy: category
+            cascade: [ all ]
+        users:
+            targetEntity: User
+            mappedBy: category
+        reviews:
+            targetEntity: Review
+            mappedBy: category
+        training_versions:
+            targetEntity: TrainingVersion
+            mappedBy: category
+            cascade: [ all ]

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{% block title %}{{ 'project.name'|trans }} — {{ 'project.slogan'|trans }}{% endblock %}</title>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400,300,300italic,400italic,700,700italic&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/m/css/print.css">
+</head>
+<body>
+
+<div class="container">
+    <div>
+        <img class="logo" src="/m/images/logo-dark-blue.png" alt="Автошкола МГТУ">
+        <div class="phones">
+            +7 ({{ settings['contacts_phone1_prefix'] }}) {{ settings['contacts_phone1'] }}<br/>
+            +7 ({{ settings['contacts_phone2_prefix'] }}) {{ settings['contacts_phone2'] }}
+        </div>
+    </div>
+
+    <table class="title">
+        <tr><td></td><td class="title-t">Филиал</td><td></td></tr>
+    </table>
+
+    <div class="title-2">Автошкола при МГТУ им.Баумана</div>
+
+    <h3 class="office-title">{{ office.title }}</h3>
+
+    <div class="contacts-info">
+        <div class="block-contacts fs16">
+            <img alt="" class="icon v-m" src="/m/images/icon/location.png" />
+            <div class="c-info clear">{{ office.region }}, {{ office.address }} {{ office.station ? ('(м. «'~office.station~'»)') : '' }}</div>
+        </div>
+
+        {% if office.addressDesc %}
+            <div class="block-contacts fs16">
+                <img alt="" class="icon v-m" src="/m/images/icon/location.png" />
+                <div class="c-info clear">{{ office.addressDesc|raw }}</div>
+            </div>
+        {% endif %}
+
+        {% if office.workTime %}
+            <div class="block-contacts fs16">
+                <img alt="" class="icon v-m" src="/m/images/icon/clock.png" />
+                <div class="c-info clear">{{ office.workTime }}</div>
+            </div>
+        {% endif %}
+
+        {% if office.activePhones %}
+            <div class="block-contacts fs16">
+                <img alt="" class="icon v-m" src="/m/images/icon/phone-3.png" />
+                <div class="c-info clear"><b>{{ office.activePhones|join('</b><br><b>')|raw }}</b></div>
+            </div>
+        {% endif %}
+
+        {% if office.activeEmails %}
+            <div class="block-contacts fs16">
+                <img alt="" class="icon v-m" src="/m/images/icon/mail-2.png" />
+                <div class="c-info clear">{{ office.activeEmails|join('<br>')|raw }}</div>
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="container-2">
+        {% if office.addressGeo or office.mapCode %}
+        <div class="map">
+            <div class="map-in" id="map_{{ office.id }}"></div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% if office.addressGeo or office.mapCode %}
+<script src="/m/js/jquery.js"></script>
+<script src="//api-maps.yandex.ru/2.1/?lang=ru-RU"></script>
+<script type="text/javascript">
+{% if office.addressGeo %}
+var init = function() {
+    ymaps.geocode('{{ office.region~', '~office.addressGeo }}', { results: 1 }).then(function(res) {
+        var coords = res.geoObjects.get(0).geometry.getCoordinates();
+
+        var myMap = new ymaps.Map('map_{{ office.id }}', { center: coords, zoom: 16 }, { suppressMapOpenBlock: true });
+
+        var myPlacemark = new ymaps.Placemark(coords,
+            {
+                hintContent: '{{ office.title }}',
+                balloonContent: '<b>{{ office.title }}</b><br>{{ office.activePhones|join('<br>')|raw }}<br>г. {{ office.region }} {{ office.station ? (' (м. '~office.station~')') : '' }}, {{ office.address }}'
+            },
+            { preset: 'islands#dotIcon', iconColor: '#025C91' }
+        );
+        myMap.geoObjects.add(myPlacemark);
+    });
+};
+ymaps.ready(init);
+{% else %}
+{{ office.mapCode|raw }}
+{% endif %}
+</script>
+{% endif %}
+
+{% if settings['counters_yandex'] is defined %}
+<script>{{ settings['counters_yandex']|raw }}</script>
+{% endif %}
+
+</body>
+</html>

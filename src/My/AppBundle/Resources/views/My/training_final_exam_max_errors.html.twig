@@ -1,0 +1,45 @@
+{% extends 'AppBundle::layout_new.html.twig' %}
+
+{% block content %}
+<nav class="path">
+    <a href="{{ path('homepage') }}">{{ 'titles.homepage'|trans }}</a>
+    » <a href="{{ path('my_trainings') }}">{{ 'titles.trainings'|trans }}</a>
+    » <strong>{{ 'final_exam'|trans }}</strong>
+</nav>
+
+<div class="mainContent">
+    <div class="title"><h1>{{ 'training.final_exam.max_errors'|trans }}</h1></div>
+
+    {% if popup_error_window is defined and popup_error_window != "" %}
+        {% if popup_error_window == "max_errors_questions" %}
+            {% if settings['max_errors_questions_text'] is defined %}
+                {{ settings['max_errors_questions_text']|raw }}
+            {% else %}
+                Вы допустили максимальное количество ошибок в основных вопросах. <br><br>
+            {% endif %}
+        {% elseif popup_error_window == "max_errors_questions_block" %}
+            {% if settings['max_errors_questions_block_text'] is defined %}
+                {{ settings['max_errors_questions_block_text']|raw }}
+            {% else %}
+                Вы допустили максимальное количество ошибок в основных вопросах в одном блоке. <br><br>
+            {% endif %}
+        {% elseif popup_error_window == "max_errors_additional_questions" %}
+            {% if settings['max_errors_additional_questions_text'] is defined %}
+                {{ settings['max_errors_additional_questions_text']|raw }}
+            {% else %}
+                Вы допустили максимальное количество ошибок в дополнительных вопросах. <br><br>
+            {% endif %}
+        {% elseif popup_error_window == "max_errors_ticket" %}
+            {% if settings['max_errors_ticket_text'] is defined %}
+                {{ settings['max_errors_ticket_text']|raw }}
+            {% else %}
+                Вы допустили максимальное количество ошибок в вопросах дополнительного билета. <br><br>
+            {% endif %}
+        {% endif %}
+    {% endif %}
+
+    <div class="links">
+        <a class="bg-red" href="{{ path('my_trainings') }}">{{ 'training.final_exam.back_to_list'|trans }}</a>
+    </div>
+</div>
+{% endblock content %}

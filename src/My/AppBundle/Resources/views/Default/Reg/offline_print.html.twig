@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{% block title %}{{ 'project.name'|trans }} — {{ 'project.slogan'|trans }}{% endblock %}</title>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400,300,300italic,400italic,700,700italic&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/m/css/print-offline.css">
+</head>
+<body>
+
+<div class="container">
+    <div>
+        <img class="logo" src="/m/images/logo-dark-blue.png" alt="Автошкола МГТУ">
+        <div class="phones">
+            +7 ({{ settings['contacts_phone1_prefix'] }}) {{ settings['contacts_phone1'] }}<br/>
+            +7 ({{ settings['contacts_phone2_prefix'] }}) {{ settings['contacts_phone2'] }}
+        </div>
+    </div>
+
+    <table class="title">
+        <tr><td></td><td class="title-t">КВИТАНЦИЯ НА ОПЛАТУ В КАССЕ АВТОШКОЛЫ</td><td></td></tr>
+    </table>
+
+    <table class="info">
+        <tr>
+            <td><div class="head">Категория прав:</div></td>
+            <td><div class="head">Вид оплаты:</div></td>
+            <td><div class="head">Филиал:</div></td>
+        </tr>
+        <tr>
+            <td>{{ category.name~(category.withAt ? (' + '~(with_at ? 'А' : 'М')~'КПП') : '') }}</td>
+            <td>Наличными в офисе</td>
+            <td>Марксистская</td>
+        </tr>
+    </table>
+
+    <div class="head">Параметры обучения</div>
+    <table class="params">
+        <tr>
+            <td>
+                <img src="/m/images/icon/price-1.png" alt="" />
+                <div>Теория</div>
+                <div class="time">{{ category.theory }} ак. часов</div>
+            </td>
+            <td>
+                <img src="/m/images/icon/price-2.png" alt="" />
+                <div>Вождение</div>
+                <div class="time">{{ category.practice }} астр. часов</div>
+            </td>
+            <td>
+                <img src="/m/images/icon/price-3.png" alt="" />
+                <div>Срок обучения</div>
+                <div class="time">{{ category.training }} месяца</div>
+            </td>
+            <td>
+                <img src="/m/images/icon/price-4.png" alt="" />
+                <div>Полная стоимость</div>
+                <div class="time">{{ cur_price|sum_format }} руб.
+                    {% if not offerId %}<span style="color:#a00">*</span>{% endif %}
+                </div>
+                {% if not offerId %}<div class="offers"><span style="color:#a00">*</span>Без учёта <span>спецпредложения</span></div>{% endif %}
+            </td>
+        </tr>
+    </table>
+
+    <div class="head">Информация о Филиале:</div>
+    <table class="map">
+        <tr>
+            <td>
+                <img src="/m/images/off-place.png" alt="" />
+                <div>
+                    <div>Адрес автошколы:</div>
+                    <div>
+                        м. Марксистская<br>
+                        Товарищеский пер., 3
+                    </div>
+                </div>
+            </td>
+            <td rowspan="3">
+                <img class="map-img" src="/m/images/off-map.jpg" alt="Карта">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img src="/m/images/off-contacts.png" alt="" />
+                <div>
+                    <div>Телефон и E-mail:</div>
+                    <div>
+                        +7 ({{ settings['contacts_phone1_prefix'] }}) {{ settings['contacts_phone1'] }}<br/>
+                        +7 ({{ settings['contacts_phone2_prefix'] }}) {{ settings['contacts_phone2'] }}<br>
+                        {{ settings['contacts_email'] }}
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img src="/m/images/off-time.png" alt="" />
+                <div>
+                    <div>График работы:</div>
+                    <div>
+                        Пн.−Пт.: 10:00 − 21:00<br>
+                        Сб.: 10:00 − 17:00<br>
+                        Вс.: выходной
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <div class="head">Внимание:</div>
+    {{ settings['offline_print_text']|raw }}
+</div>
+
+<script>
+window.onload = function() {
+    window.print();
+};
+</script>
+
+{% if settings['counters_yandex'] is defined %}
+<script>{{ settings['counters_yandex']|raw }}</script>
+{% endif %}
+
+</body>
+</html>

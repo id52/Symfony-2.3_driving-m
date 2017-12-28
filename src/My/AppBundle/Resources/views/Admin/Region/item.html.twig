@@ -1,0 +1,90 @@
+{% extends 'AppBundle::admin.html.twig' %}
+{% trans_default_domain 'region' %}
+
+{% block content %}
+    <div class="alert alert-warning" id="empty-categories-alert">
+        {{ 'region_empty_categories'|trans }}
+    </div>
+    <h3>{{ (app.request.get('_route') == router_item_edit ? ('admin.'~entity_name_s~'_edit_title') : ('admin.'~entity_name_s~'_add_title'))|trans({}, 'messages') }}</h3>
+    <hr>
+    {{ form_start(form) }}
+        {{ form_row(form.name) }}
+
+        {% if categories %}
+        <fieldset>
+            <legend>{{ 'region_categories_prices'|trans }}:</legend>
+            <div class="control-group">
+                <label></label>
+                <div class="controls">
+                    <span class="span1">Обучение</span>
+                    <span class="span1">Вождение</span>
+                    <span class="span1">Автомат</span>
+                </div>
+            </div>
+            {% for category in categories %}
+                <div class="control-group">
+                    <label for="category_price_edu_{{ category.id }}" class="control-label">{{ category.name }}:</label>
+                    <div class="controls">
+                        <div class="input-append">
+                            <input value="{{ category_prices_edu[category.id] is defined ? category_prices_edu[category.id] : 0 }}" type="text" class="span1" name="category_prices_edu[{{ category.id }}]" id="category_price_edu_{{ category.id }}">
+                            <span class="add-on">{{ 'RUB'|trans({}, 'messages') }}</span>
+                        </div>
+                        <div style="display:inline-block">
+                            <div class="input-append">
+                                <input value="{{ category_prices_drv[category.id] is defined ? category_prices_drv[category.id] : 0 }}" type="text" class="span1" name="category_prices_drv[{{ category.id }}]" id="category_price_drv_{{ category.id }}">
+                                <span class="add-on">{{ 'RUB'|trans({}, 'messages') }}</span>
+                            </div>
+                        </div>
+                        <div style="display:inline-block{{ category.withAt ? '' : ';visibility:hidden' }}">
+                            <div class="input-append">
+                                <input value="{{ category_prices_drv_at[category.id] is defined ? category_prices_drv_at[category.id] : 0 }}" type="text" class="span1" name="category_prices_drv_at[{{ category.id }}]" id="category_price_drv_at_{{ category.id }}">
+                                <span class="add-on">{{ 'RUB'|trans({}, 'messages') }}</span>
+                            </div>
+                        </div>
+                        <label style="display:inline-block"><input class="category-price"{{ (category_prices_active[category.id] is defined) ? 'checked="checked"' : '' }} name="category_prices_active[{{ category.id }}]" type="checkbox" /> Активна?</label>
+                    </div>
+                </div>
+            {% endfor %}
+        </fieldset>
+        {% endif %}
+
+        {% if services %}
+        <fieldset>
+            <legend>{{ 'region_services_prices'|trans }}:</legend>
+            {% for service in services %}
+                <div class="control-group">
+                    <label for="service_price_{{ service.id }}" class="control-label">{{ service.name }}:</label>
+                    <div class="controls">
+                        <div class="input-append">
+                            <input value="{{ service_prices[service.id] is defined ? service_prices[service.id] : 0 }}" type="text" class="span1{% if service.type == 'training' %} second-price{% endif %}" name="service_prices[{{ service.id }}]" id="service_price_{{ service.id }}">
+                            <span class="add-on">{{ 'RUB'|trans({}, 'messages') }}</span>
+                        </div>
+                        <label style="display:inline-block"><input {{ service.type is not null ? 'disabled="disabled"' : '' }} {{ (service_prices_active[service.id] is defined) or (service.type is not null) ? 'checked="checked"' : '' }} name="service_prices_active[{{ service.id }}]" type="checkbox" /> Активна?</label>
+                        {% if service.type %}({{ service.type|trans }}){% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </fieldset>
+        {% endif %}
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-success">
+                <i class="fa fa-download"></i>
+                <span>{{ 'admin.buttons.save'|trans({}, 'messages') }}</span>
+            </button>
+            {% if app.request.get('_route') == router_item_edit %}
+                <a href="{{ path(router_item_delete, { id: entity.id }) }}" class="btn btn-danger" onclick="return confirm('{{ 'you_sure'|trans({}, 'messages') }}')">
+                    <i class="fa fa-trash-o"></i> <span>{{ 'admin.buttons.delete'|trans({}, 'messages') }}</span>
+                </a>
+            {% endif %}
+            <a class="btn pull-right" href="{{ path(router_list) }}"><i class="fa fa-arrow-left"></i> {{ 'admin.buttons.back_to_list'|trans({}, 'messages') }}</a>
+        </div>
+    {{ form_end(form) }}
+{% endblock content %}
+
+{% block js %}
+    {{ parent() }}
+    {% javascripts '@AppBundle/Resources/public/js/*'%}
+    <script type="text/javascript" src="{{ asset_url }}" ></script>
+    {% endjavascripts %}
+{% endblock %}

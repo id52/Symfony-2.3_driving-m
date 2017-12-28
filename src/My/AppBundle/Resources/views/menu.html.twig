@@ -1,0 +1,18 @@
+{% set route = app.request.get('_route') %}
+<ul class="nav nav-list well menu">
+    <li{{ route == 'my_profile' or route == 'my_profile_edit' ? ' class="active"' : '' }}><a href="{{ path('my_profile') }}"><i class="fa fa-user"></i> {{ 'menu.profile'|trans }}</a></li>
+    <li {{ route == 'my_notifies' or route == 'my_notify_read' ? ' class="active"' : (app.user.notifiesCnt > 0 ? ' class="blink"' : '') }}>
+        <a href="{{ path('my_notifies') }}">
+            <i class="fa fa-envelope-o"></i>
+            {{ 'menu.notifies'|trans }}
+            {% if app.user.notifiesCnt > 0 %}
+                <span class="badge badge-warning">{{ app.user.notifiesCnt }}</span>
+            {% endif %}
+        </a>
+    </li>
+    <li{{ route == 'my_payments' or route == 'my_payments_2' ? ' class="active"' : '' }}><a href="{{ path('my_payments') }}"><i class="fa fa-money"></i> {{ 'menu.payments'|trans }}</a></li>
+    <li{{ route == 'my_trainings' or route == 'my_training' or route == 'my_training_theme' or route == 'my_training_theme_test' or route == 'my_training_slice' or route == 'my_training_exam' or route == 'my_training_final_exam' ? ' class="active"' : '' }}><a href="{{ path('my_trainings') }}"><i class="fa fa-book"></i> {{ 'menu.training'|trans }}</a></li>
+    <li{{ route == 'my_test' ? ' class="active"' : '' }}><a href="{{ path('my_test') }}"><i class="fa fa-question-circle"></i> {{ 'menu.test'|trans }}</a></li>
+    <li{{ route == 'my_test_knowledge' ? ' class="active"' : '' }}><a href="{{ path('my_test_knowledge') }}"><i class="fa fa-question-circle"></i> {{ 'menu.test_knowledge'|trans }}</a></li>
+    <li{{ route == 'my_stat' ? ' class="active"' : '' }}><a href="{{ path('my_stat') }}"><i class="fa fa-bar-chart-o"></i> {{ 'menu.stat'|trans }}</a></li>
+</ul>

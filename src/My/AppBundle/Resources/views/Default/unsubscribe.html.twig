@@ -1,0 +1,18 @@
+{% extends "AppBundle::layout_unsubscribe.html.twig" %}
+
+{% block content %}
+    <div class="mainContent">
+        <section class="unsubscribe">
+            <div class="title"><h1>{{ 'unsubscribe_done_title'|trans }}</h1></div>
+        </section>
+        <section class="unsubscribe_body">
+            <div class="title">{{ 'unsubscribe'|trans({ '%email%': email }) }}</div>
+        </section>
+
+        <div class="form-actions">
+            <a href="{{ path('homepage') }}">
+                <input type="button" id="button_no" class="btn btn-success" value="На главную">
+            </a>
+        </div>
+    </div>
+{% endblock content %}

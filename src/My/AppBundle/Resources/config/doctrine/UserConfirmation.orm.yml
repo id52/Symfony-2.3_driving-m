@@ -1,0 +1,30 @@
+My\AppBundle\Entity\UserConfirmation:
+    type: entity
+    table: users_confirmation
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        hash:
+            type: string
+            length: 40
+            unique: true
+        sms_code:
+            type: string
+            nullable: true
+        phone:
+            type: string
+            nullable: true
+        last_sent:
+            type: datetime
+        activated:
+            type: boolean
+    manyToOne:
+        user:
+            targetEntity: \My\AppBundle\Entity\User
+            inversedBy: user_confirmation
+            joinColumn:
+                name: uid
+                referencedColumnName: id

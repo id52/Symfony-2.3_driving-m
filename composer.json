@@ -1,0 +1,154 @@
+{
+    "type": "project",
+    "name": "driving_m",
+    "autoload": {
+        "psr-0": { "": "src/" }
+    },
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/symfony": "2.3.*",
+        "doctrine/orm": "~2.2,>=2.2.3,<2.5",
+        "doctrine/dbal": "<2.5",
+        "doctrine/doctrine-bundle": "~1.2",
+        "twig/extensions": "1.0.*",
+        "symfony/assetic-bundle": "~2.3",
+        "symfony/swiftmailer-bundle": "~2.3",
+        "symfony/monolog-bundle": "~2.4",
+        "sensio/distribution-bundle": "~2.3",
+        "sensio/framework-extra-bundle": "~3.0,>=3.0.2",
+        "sensio/generator-bundle": "~2.3",
+        "incenteev/composer-parameter-handler": "~2.0",
+        "tigerman/doctrine-generate-models-bundle": "*",
+        "doctrine/doctrine-migrations-bundle": "*",
+        "doctrine/doctrine-fixtures-bundle": "*",
+        "stof/doctrine-extensions-bundle": "*",
+        "ocramius/proxy-manager": "1.*",
+        "friendsofsymfony/user-bundle": "*",
+        "liip/imagine-bundle": "<1.0",
+        "white-october/pagerfanta-bundle": "*",
+        "components/jquery": "<2.2",
+        "components/jqueryui": "*",
+        "components/jquery-cookie": "*",
+        "twbs/bootstrap": "2.*",
+        "fortawesome/font-awesome": "*",
+        "tapmodo/jcrop": "*",
+        "ckeditor/ckeditor-full": "*",
+        "blueimp/jquery-file-upload": "*",
+        "kbwood/countdown": "*",
+        "zeroclipboard/jquery.zeroclipboard": "*",
+        "beberlei/DoctrineExtensions": "*",
+        "innocead/captcha-bundle": "@dev",
+        "dubrox/jquery-ui.multiple-dates-picker": "*",
+        "nnnick/chart.js": "*",
+        "krealab-services/pdf-form-filler-bundle": "*"
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
+        ],
+        "post-update-cmd": [
+            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
+        ]
+    },
+    "config": {
+        "component-dir": "vendor/components",
+        "optimize-autoloader": true,
+        "discard-changes": true,
+        "secure-http": false
+    },
+    "minimum-stability": "stable",
+    "extra": {
+        "symfony-app-dir": "app",
+        "symfony-web-dir": "web",
+        "symfony-assets-install": "relative",
+        "incenteev-parameters": {
+            "file": "app/config/parameters.yml"
+        }
+    },
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "tapmodo/jcrop",
+                "version": "0.9.12",
+                "source": {
+                    "type": "git",
+                    "url": "http://github.com/tapmodo/Jcrop.git",
+                    "reference": "v0.9.12"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "ckeditor/ckeditor-full",
+                "version": "4.2",
+                "source": {
+                    "type": "git",
+                    "url": "http://github.com/ckeditor/ckeditor-releases.git",
+                    "reference": "4.2/full"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "kbwood/countdown",
+                "version": "1.6.3",
+                "source": {
+                    "type": "git",
+                    "url": "http://github.com/kbwood/countdown.git",
+                    "reference": "Release_1_6_3"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "zeroclipboard/jquery.zeroclipboard",
+                "version": "0.2.2",
+                "source": {
+                    "type": "git",
+                    "url": "http://github.com/zeroclipboard/jquery.zeroclipboard.git",
+                    "reference": "v0.2.2"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "dubrox/jquery-ui.multiple-dates-picker",
+                "version": "1.6.4",
+                "source": {
+                    "type": "git",
+                    "url": "http://github.com/dubrox/Multiple-Dates-Picker-for-jQuery-UI.git",
+                    "reference": "master"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "nnnick/chart.js",
+                "version": "1.0.1",
+                "source": {
+                    "type": "git",
+                    "url": "http://github.com/nnnick/Chart.js.git",
+                    "reference": "v1.0.1-beta.4"
+                }
+            }
+        },
+        {
+            "type": "git",
+            "url": "git@gitlab.krealab.ru:krealab-services/pdf-form-filler-bundle.git"
+        }
+    ]
+}

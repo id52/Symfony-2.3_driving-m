@@ -1,0 +1,16 @@
+<div class="branch-b">
+    <div class="title-branch">
+        <a href="#" class="close-popup r-fl"><img src="/m/images/icon/close.png" alt="" /></a>
+        <div class="name-branch">Site "{{ site.title }}"</div>
+    </div>
+    <div class="wrap-branch">
+        <div class="contacts-info">
+            <div class="block-contacts fs16">
+                <img src="/m/images/icon/location.png" alt="" class="icon v-m">{{ site.region }}, {{ site.address }}
+            </div>
+        </div>
+    </div>
+</div>
+{% if site.countersCode %}
+<script>{{ site.countersCode|raw }}</script>
+{% endif %}

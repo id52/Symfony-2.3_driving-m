@@ -1,0 +1,354 @@
+{% extends 'AppBundle::layout_new.html.twig' %}
+
+{% block start_content %}
+{% if not is_granted('ROLE_USER_FULL_PROFILE') %}
+<div class="modal border-red reg-done" id="full_profile">
+    <div class="content">Ваш профиль заполнен не полностью. Вы можете заполнить недостающие данные сейчас, чтобы не тратить на это время перед итоговым экзаменом.</div>
+    <div class="links"><a href="{{ path('my_profile_edit') }}" class="link bg-green">Завершить заполнение профиля</a></div>
+</div>
+{% endif %}
+{% endblock start_content %}
+
+{% block content %}
+<nav class="path">
+    <a href="{{ path('homepage') }}">{{ 'titles.homepage'|trans }}</a>
+    » <strong>{{ 'titles.profile'|trans }}</strong>
+</nav>
+
+<div class="mainContent">
+    <section class="profile">
+    {% if app.user.photo %}
+        <div class="right">
+            <div class="photo">
+                <img src="{{ app.user.photoWebPath|imagine_filter('photo_small_new') }}?t={{ 'now'|date('U') }}" width="225" height="300" alt="">
+            </div>
+        </div>
+    {% endif %}
+
+        <div class="left">
+            <div class="title">
+                <div class="links">
+                    <a class="bg-blue edit-link" href="{{ path('my_profile_edit') }}">Редактировать профиль</a>
+                </div>
+                <h1>{{ 'titles.profile'|trans }}</h1>
+            </div>
+
+        {% if app.user.webgroup %}
+            <ul class="info-list">
+                <li>
+                    <div class="label">{{ 'user_webgroup'|trans({}, 'user') }}:</div>
+                    {{ app.user.webgroup }}
+                </li>
+            </ul>
+            <div class="hr"></div>
+        {% endif %}
+
+            {% if app.user.certificate %}
+                <ul class="info-list">
+                    <li class="user-certificate">
+                        {#{{ settings['profile_final_exam']|replace({'%certificate_link%': '/certificates/'~app.user.certificate~'.pdf'})|raw }}#}
+                        {{ settings['profile_final_exam']|replace({'%certificate_link%': path('my_certificate')})|raw }}
+                    </li>
+                </ul>
+                <div class="hr"></div>
+            {% endif %}
+
+            <h2>Данные регистрации:</h2>
+            <ul class="info-list">
+                <li>
+                    <div class="label">{{ 'profile_email'|trans }}:</div>
+                    {{ app.user.email }}
+                </li>
+                <li>
+                    <div class="label">{{ 'profile_last_name'|trans }}:</div>
+                    {{ app.user.lastName }}
+                </li>
+                <li>
+                    <div class="label">{{ 'profile_first_name'|trans }}:</div>
+                    {{ app.user.firstName }}
+                </li>
+                <li>
+                    <div class="label">{{ 'profile_patronymic'|trans }}:</div>
+                    {{ app.user.patronymic }}
+                </li>
+                <li>
+                    <div class="label">{{ 'profile_region'|trans }}:</div>
+                    {{ app.user.region }}
+                </li>
+            {% if app.user.category %}
+                <li>
+                    <div class="label">{{ 'profile_category'|trans }}:</div>
+                    {{ app.user.category.name }}
+                </li>
+            {% endif %}
+            </ul>
+            <div class="hr"></div>
+
+        {% if app.user.sex %}
+            <h2>{{ 'profile_passport_data'|trans }}:</h2>
+            <ul class="info-list">
+                <li>
+                    <div class="label">{{ 'profile_sex'|trans }}:</div>
+                    {{ app.user.sex|trans }}
+                </li>
+                <li>
+                    <div class="label">{{ 'profile_birthday'|trans }}:</div>
+                    {{ app.user.birthday|date('j / n / Y') }} г.
+                </li>
+            {% if app.user.foreignPassport %}
+                <li>
+                    <div class="label">{{ 'profile_foreign_passport_number'|trans }}:</div>
+                    {{ app.user.foreignPassportNumber }}
+                </li>
+            {% else %}
+                <li>
+                    <div class="label">{{ 'profile_passport_number'|trans }}:</div>
+                    {{ app.user.passportNumber }}
+                </li>
+            {% endif %}
+                <li>
+                    <div class="label">{{ 'profile_passport_rovd'|trans }}:</div>
+                    {{ app.user.passportRovd }}
+                </li>
+                <li>
+                    <div class="label">{{ 'profile_passport_rovd_number'|trans }}:</div>
+                    {{ app.user.passportRovdNumber }}
+                </li>
+                <li>
+                    <div class="label">{{ 'profile_passport_rovd_date'|trans }}:</div>
+                    {{ app.user.passportRovdDate|date('j / n / Y') }} г.
+                </li>
+            </ul>
+            <div class="hr"></div>
+        {% endif %}
+
+        {% if app.user.birthCountry or app.user.birthRegion or app.user.birthCity %}
+            <h2>{{ 'profile_birth_place'|trans }}:</h2>
+            <ul class="info-list">
+            {% if app.user.birthCountry %}
+                <li>
+                    <div class="label">{{ 'profile_birth_country'|trans }}:</div>
+                    {{ app.user.birthCountry }}
+                </li>
+            {% endif %}
+            {% if app.user.birthRegion %}
+                <li>
+                    <div class="label">{{ 'profile_birth_region'|trans }}:</div>
+                    {{ app.user.birthRegion }}
+                </li>
+            {% endif %}
+            {% if app.user.birthCity %}
+                <li>
+                    <div class="label">{{ 'profile_birth_city'|trans }}:</div>
+                    {{ app.user.birthCity }}
+                </li>
+            {% endif %}
+            </ul>
+            <div class="hr"></div>
+        {% endif %}
+
+        {% if app.user.registrationCountry and not app.user.notRegistration %}
+            <h2>{{ 'profile_registration_data'|trans }}:</h2>
+            <ul class="info-list">
+                <li>
+                    <div class="label">{{ 'profile_registration_country'|trans }}:</div>
+                    {{ app.user.registrationCountry }}
+                </li>
+                <li>
+                    <div class="label">{{ 'profile_registration_region'|trans }}:</div>
+                    {{ app.user.registrationRegion }}
+                </li>
+                <li>
+                    <div class="label">{{ 'profile_registration_city'|trans }}:</div>
+                    {{ app.user.registrationCity }}
+                </li>
+                <li>
+                    <div class="label">{{ 'profile_registration_street'|trans }}:</div>
+                    {{ app.user.registrationStreet }}
+                </li>
+                <li>
+                    <div class="label">{{ 'profile_registration_house'|trans }}:</div>
+                    {{ app.user.registrationHouse }}
+                </li>
+            {% if app.user.registrationStroenie %}
+                <li>
+                    <div class="label">{{ 'profile_registration_stroenie'|trans }}:</div>
+                    {{ app.user.registrationStroenie }}
+                </li>
+            {% endif %}
+            {% if app.user.registrationKorpus %}
+                <li>
+                    <div class="label">{{ 'profile_registration_korpus'|trans }}:</div>
+                    {{ app.user.registrationKorpus }}
+                </li>
+            {% endif %}
+            {% if app.user.registrationApartament %}
+                <li>
+                    <div class="label">{{ 'profile_registration_apartament'|trans }}:</div>
+                    {{ app.user.registrationApartament }}
+                </li>
+            {% endif %}
+            </ul>
+            <div class="hr"></div>
+        {% endif %}
+
+        {% if app.user.placeCountry and app.user.notRegistration %}
+            <h2>{{ 'profile_place_data'|trans }}:</h2>
+            <ul class="info-list">
+                <li>
+                    <div class="label">{{ 'profile_place_country'|trans }}:</div>
+                    {{ app.user.placeCountry }}
+                </li>
+                <li>
+                    <div class="label">{{ 'profile_place_region'|trans }}:</div>
+                    {{ app.user.placeRegion }}
+                </li>
+                <li>
+                    <div class="label">{{ 'profile_place_city'|trans }}:</div>
+                    {{ app.user.placeCity }}
+                </li>
+                <li>
+                    <div class="label">{{ 'profile_place_street'|trans }}:</div>
+                    {{ app.user.placeStreet }}
+                </li>
+                <li>
+                    <div class="label">{{ 'profile_place_house'|trans }}:</div>
+                    {{ app.user.placeHouse }}
+                </li>
+            {% if app.user.placeStroenie %}
+                <li>
+                    <div class="label">{{ 'profile_place_stroenie'|trans }}:</div>
+                    {{ app.user.placeStroenie }}
+                </li>
+            {% endif %}
+            {% if app.user.placeKorpus %}
+                <li>
+                    <div class="label">{{ 'profile_place_korpus'|trans }}:</div>
+                    {{ app.user.placeKorpus }}
+                </li>
+            {% endif %}
+            {% if app.user.placeApartament %}
+                <li>
+                    <div class="label">{{ 'profile_place_apartament'|trans }}:</div>
+                    {{ app.user.placeApartament }}
+                </li>
+            {% endif %}
+            </ul>
+            <div class="hr"></div>
+        {% endif %}
+
+        {% if app.user.workPlace or app.user.workPosition %}
+            <h2>{{ 'profile_work'|trans }}:</h2>
+            <ul class="info-list">
+            {% if app.user.workPlace %}
+                <li>
+                    <div class="label">{{ 'profile_work_place'|trans }}:</div>
+                    {{ app.user.workPlace }}
+                </li>
+            {% endif %}
+            {% if app.user.workPosition %}
+                <li>
+                    <div class="label">{{ 'profile_work_position'|trans }}:</div>
+                    {{ app.user.workPosition }}
+                </li>
+            {% endif %}
+            </ul>
+            <div class="hr"></div>
+        {% endif %}
+
+        {% if app.user.regionPlace %}
+            <h2>{{ 'profile_region_place'|trans }}:</h2>
+            <ul class="info-list">
+                <li>
+                    <div class="label">{{ 'profile_region'|trans }}:</div>
+                    {{ app.user.region }}
+                </li>
+                <li>
+                    <div class="label">{{ 'profile_region_place'|trans }}:</div>
+                    {{ app.user.regionPlace }}
+                </li>
+            </ul>
+            <div class="hr"></div>
+        {% endif %}
+
+        {% if app.user.phoneMobile %}
+            <h2>{{ 'profile_phone_data'|trans }}:</h2>
+
+            <ul class="info-list">
+                <li>
+                    <div class="label">{{ 'profile_phone_mobile'|trans }}:</div>
+                    +7 {{ app.user.phoneMobile }}
+                    <div class="submit-phone" id="mobile_status">
+                    {% if 'confirmed' == app.user.phoneMobileStatus %}
+                        {% include 'AppBundle:My:_mobile_confirmed.html.twig' %}
+                    {% elseif 'sended' == app.user.phoneMobileStatus %}
+                        {% include 'AppBundle:My:_mobile_sended.html.twig' %}
+                    {% else %}
+                        <div class="bg toggle red">{{ 'mobile_status.nulled'|trans }}</div>
+                    {% endif %}
+                    </div>
+                </li>
+            </ul>
+        {% endif %}
+        </div>
+    </section>
+</div>
+{% endblock content %}
+
+{% block js %}
+<script>
+$(function() {
+    var sblock = $('#mobile_status');
+    var submit = $('input[type=submit]', sblock);
+    var input = $('input[type=text]', sblock);
+    var more = $('.more', sblock);
+
+    var confirm = function() {
+        var input = $('input[type=text]', sblock);
+        submit.attr('disabled', 'disabled');
+        $('.err-text', sblock).remove();
+        $.getJSON('{{ path('my_mobile_confirm_ajax') }}?code=' + input.val(), function(data) {
+            if (data.error) {
+                $('.input', sblock).addClass('error');
+                $('.form', sblock).append('<div class="err-text">Ошибка! Введен неверный код подтверждения</div>');
+                submit.removeAttr('disabled');
+            } else {
+                sblock.html('{% include 'AppBundle:My:_mobile_confirmed.html.twig' %}');
+            }
+        });
+        return false;
+    };
+
+    var resend = function() {
+        $.getJSON('{{ path('my_mobile_status_ajax') }}');
+        $('.input', sblock).removeClass('error');
+        $('[type=text]', sblock).val('');
+        $('.err-text', sblock).remove();
+        return false;
+    };
+
+    var init = function() {
+        var submit = $('input[type=submit]', sblock);
+        var more = $('.more', sblock);
+        submit.on('click', confirm);
+        submit.removeAttr('disabled');
+        input.keypress(function(e) { if (e.which == 13) confirm(); });
+        more.on('click', resend);
+    };
+
+    $('.red', sblock).on('click', function() {
+        var btn_danger = $(this);
+        $.getJSON('{{ path('my_mobile_status_ajax') }}', function() {
+            sblock.html('{% include 'AppBundle:My:_mobile_sended.html.twig' %}');
+            init();
+        });
+    });
+
+    init();
+
+    {% if not is_granted('ROLE_USER_FULL_PROFILE') %}
+    $.simplebox('#full_profile');
+    {% endif %}
+});
+</script>
+{% endblock js %}

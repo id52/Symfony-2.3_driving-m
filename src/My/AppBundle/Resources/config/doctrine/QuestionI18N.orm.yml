@@ -1,0 +1,23 @@
+My\AppBundle\Entity\QuestionI18N:
+    type: entity
+    table: questions_i18n
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        text:
+            type: text
+        description:
+            type: text
+            nullable: true
+        answers:
+            type: array
+    manyToOne:
+        locale:
+          targetEntity: Locale
+          inversedBy: questions_i18n
+        question:
+          targetEntity: Question
+          inversedBy: questions_i18n

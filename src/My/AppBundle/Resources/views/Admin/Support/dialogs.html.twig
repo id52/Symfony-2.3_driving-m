@@ -1,0 +1,92 @@
+{% extends 'AppBundle::admin.html.twig' %}
+
+{% block content %}
+    <h1>{{ 'admin.support_dialogs'|trans }}</h1>
+    <hr>
+    <a id="filter_link" href="#"><i class="fa fa-caret-down"></i> Фильтр</a>
+    <div id="filter">
+        {{ form_start(filter_form) }}
+        {{ form_widget(filter_form) }}
+        <div class="form-actions">
+            <button type="submit" class="btn btn-success pull-right">
+                <i class="fa fa-filter"></i>
+                <span>{{ 'buttons.filter'|trans }}</span>
+            </button>
+        </div>
+        {{ form_end(filter_form) }}
+    </div>
+    <hr>
+    {% if pagerfanta.currentPageResults|length %}
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>{{ 'support_dialog_laste_message_time'|trans({}, 'support_dialog') }}</th>
+                <th>{{ 'support_dialog_parent_category_name'|trans({}, 'support_dialog') }}</th>
+                <th>{{ 'support_dialog_category_name'|trans({}, 'support_dialog') }}</th>
+                <th>{{ 'support_dialog_user_fullname'|trans({}, 'support_dialog') }}</th>
+                <th>{{ 'support_dialog_last_moderator'|trans({}, 'support_dialog') }}</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for dialog in pagerfanta.currentPageResults %}
+                <tr style="font-weight:bold" class="{{ dialog.answered ? 'tr-success' : ('now'|date('U') > dialog.limitAnswerDate|date('U') ? 'tr-error' : 'tr-warning') }}">
+                    <td class="min_col">{{ dialog.lastMessageTime|date('d.m.Y H:i') }}</td>
+                    <td>
+                        {% if dialog.categoryType == 'teacher' and dialog.teacherFirstName is defined %}
+                            {% if dialog.teacherFirstName is defined %}
+                                {{ dialog.teacherFirstName }} {{ dialog.teacherLastName }}
+                            {% endif %}
+                        {% else %}
+                            {{ dialog.parentCategoryName }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if dialog.categoryType == 'teacher' %}
+                            {{ dialog.themeTitle }}
+                        {% else %}
+                            {{ dialog.categoryName }}
+                        {% endif %}
+                    </td>
+                    <td class="min_col">{{ dialog.userLastName ? dialog.userLastName : '' }} {{ dialog.userFirstName ? dialog.userFirstName : '' }} {{ dialog.userPatronomic ? dialog.userPatronomic : '' }}</td>
+                    <td class="min_col">
+                        {% if dialog.lastModeratorId %}
+                            {{ dialog.lastModeratorLastName ? dialog.lastModeratorLastName : '' }} {{ dialog.lastModeratorFirstName ? dialog.lastModeratorFirstName : '' }} {{ dialog.lastModeratorPatronomic ? dialog.lastModeratorPatronomic : '' }}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+                    <td class="min_col">
+                        <a href="{{ path('admin_support_dialog_show', { id: dialog.id }) }}" class="nodecor text-success"><i class="fa fa-eye"></i></a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        {{ 'no_data'|trans }}
+    {% endif %}
+    {% if pagerfanta.haveToPaginate %}
+        {{ pagerfanta(pagerfanta, 'twitter_bootstrap_translated', { prev_message: '←', next_message: '→' }) }}
+    {% endif %}
+{% endblock content %}
+
+{% block js %}
+<script>
+$(function() {
+    {% if app.request.queryString == '' %}
+    $('#filter').hide();
+    {% else %}
+    $('#filter_default').hide();
+    {% endif %}
+    $('#filter_link').click(function() {
+        $('#filter').toggle();
+        {% if app.request.queryString == '' %}
+        $('#filter_default').toggle();
+        {% endif %}
+        return false;
+    });
+});
+</script>
+{% endblock js %}
+

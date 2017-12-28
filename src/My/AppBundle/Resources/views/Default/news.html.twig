@@ -1,0 +1,44 @@
+{% extends 'AppBundle::layout_m.html.twig' %}
+
+{% block content %}
+<div class="wrap">
+    <div class="back-link r-fl"><a href="{{ path('homepage') }}"><span class="v-m arrow">«</span>Вернуться</a></div>
+    <ul class="breadcrumb">
+        <li>
+            <a title="Главная" href="{{ path('homepage') }}">Главная</a>
+        </li>
+        <li class="active"><a href="{{ path('news') }}">Новости</a></li>
+    </ul>
+    <div class="main-side">
+        <div class="main-title left-bg">
+            <div class="caption">Новости:</div>
+        </div>
+        <ul class="news-b">
+            {% for news in pagerfanta.currentPageResults %}
+            <li class="media">
+                <div class="date btn-blue-2 text-center l-fl">
+                    {{ news.createdAt|date('j') }}<br />{{ news.createdAt|localizeddate('none', 'none', null, null, 'MMM') }}
+                </div>
+                <div class="media-body">
+                    <div class="caption"><a href="{{ path('news_show', { id: news.id }) }}">{{ news.title }}</a></div>
+                    <div class="desc">{{ news.description }}</div>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+        <div class="pager text-center">
+            {% if pagerfanta.haveToPaginate %}
+                {{ pagerfanta(pagerfanta, 'default', {
+                    previous_message: '«',
+                    next_message: '»',
+                    container_template: '<ul>%pages%</ul>',
+                    css_current_class: 'active',
+                    page_template: '<li class="%class%"><a href="%href%">%text%</a></li>',
+                    span_template: '<li class="%class%"><span>%text%</span></li>'
+                }) }}
+            {% endif %}
+        </div>
+    </div>
+    {% include 'AppBundle::_right_side.html.twig' %}
+</div>
+{% endblock content %}

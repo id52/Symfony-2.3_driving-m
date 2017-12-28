@@ -1,0 +1,43 @@
+{% extends 'AppBundle:Admin:_settings.html.twig' %}
+{% trans_default_domain 'settings' %}
+
+{% block fields %}
+    <fieldset>
+        <legend>{{ 'settings_theme_test'|trans }}</legend>
+
+        <div class="control-group">
+            {{ form_label(form.theme_test_correct_answers) }}
+            <div class="controls">
+                {{ form_widget(form.theme_test_correct_answers) }}
+                <span class="embedded">
+                    {{ form_widget(form.theme_test_correct_answers_in_row) }}
+                    {{ form_label(form.theme_test_correct_answers_in_row, null, { unpointed: true }) }}
+                </span>
+                {{ form_errors(form.theme_test_correct_answers) }}
+            </div>
+        </div>
+
+        {{ form_row(form.theme_test_questions_method) }}
+
+        <div class="control-group">
+            {{ form_label(form.theme_test_time) }}
+            <div class="controls">
+                <div class="input-append">
+                    {{ form_widget(form.theme_test_time) }}
+                    <span class="add-on">{{ 'minute'|trans({}, 'messages') }}</span>
+                </div>
+                {{ form_errors(form.theme_test_time) }}
+            </div>
+        </div>
+
+        {{ form_row(form.theme_test_shuffle_answers) }}
+    </fieldset>
+
+    <fieldset>
+        <legend>{{ 'settings_training_theme_test_messages'|trans }}:</legend>
+        {{ form_row(form.training_theme_test_timeout) }}
+        {{ form_row(form.training_theme_test_complete_next) }}
+        {{ form_row(form.training_theme_test_complete_list) }}
+        {{ form_row(form.training_theme_test_long_time) }}
+    </fieldset>
+{% endblock fields %}

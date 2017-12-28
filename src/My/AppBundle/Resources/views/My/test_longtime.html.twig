@@ -1,0 +1,13 @@
+{% extends 'AppBundle::layout_new.html.twig' %}
+
+{% block content %}
+<nav class="path">
+    <a href="{{ path('homepage') }}">{{ 'titles.homepage'|trans }}</a>
+    » <strong>{{ 'titles.test'|trans }}</strong>
+</nav>
+
+<div class="mainContent">
+    <div class="title"><h1>{{ 'test.longtime'|trans }}</h1></div>
+    {{ settings['training_test_long_time']|raw }}
+</div>
+{% endblock content %}

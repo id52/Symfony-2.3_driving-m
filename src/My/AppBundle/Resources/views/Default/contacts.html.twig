@@ -1,0 +1,160 @@
+{% extends 'AppBundle::layout_m.html.twig' %}
+
+{% block content %}
+<div class="wrap">
+    <div class="back-link r-fl"><a href="{{ path('homepage') }}"><span class="v-m arrow">«</span>Вернуться</a></div>
+    <ul class="breadcrumb">
+        <li><a title="Главная" href="{{ path('homepage') }}">Главная</a></li>
+        <li class="active"><a href="{{ path('contacts') }}">Контакты</a></li>
+    </ul>
+    <div class="contact-b l">
+        <div class="main-title left-bg">
+            <div class="caption">Контакты:</div>
+        </div>
+        <div class="w-map">
+            <div id="map" class="map"></div>
+        </div>
+        <script src="//api-maps.yandex.ru/2.0/?load=package.standard,package.geoObjects&lang=ru-RU" type="text/javascript"></script>
+        <script type="text/javascript">
+            ymaps.ready(init);
+            function init () {
+                var myMap = new ymaps.Map("map", {
+                        center: [55.7416865,37.6586377],
+                        zoom: 16
+                    }),
+                    myGeoObject = new ymaps.Placemark([55.7416865,37.6586377], {
+                        // Свойства.
+                        balloonContent: 'Товарищеский переулок, 3 (м. "Марксистская")',
+                        hintContent: 'Автошкола'
+                    }, {
+                        // Опции.
+                        // Своё изображение иконки метки.
+                        iconImageHref: '/m/images/lp.png',
+                        // Размеры метки.
+                        iconImageSize: [27, 44],
+                        // Смещение левого верхнего угла иконки относительно
+                        // её "ножки" (точки привязки).
+                        iconImageOffset: [-13, -44]
+                    });
+                myMap.controls
+                    // Кнопка изменения масштаба.
+                    .add('zoomControl', { left: 5, top: 5 })
+                    // Список типов карты
+                    .add('typeSelector')
+                    // Стандартный набор кнопок
+                    .add('mapTools', { left: 35, top: 5 });
+                // Добавляем все метки на карту.
+                myMap.geoObjects.add(myGeoObject);
+            }
+        </script>
+        <div class="l-col1">
+            <div class="main-title left-bg">
+                <div class="caption">Центральный офис:</div>
+            </div>
+            <div class="contacts-info">
+                <div class="block-contacts fs16">
+                    <img src="/m/images/icon/location.png" alt="" class="icon v-m" />г. Москва, Товарищеский переулок, 3 (м. "Марксистская")
+                </div>
+                <div class="hr"></div>
+                <div class="block-contacts fs16">
+                    <img src="/m/images/icon/clock.png" alt="" class="icon v-m" />
+                    <ul class="list-line v-m">
+                        <li>Пн−Пт: 11.00 − 21.00</li>
+                        <li>Сб: 11.00 − 17.00</li>
+                        <li>Вс: выходной</li>
+                    </ul>
+                </div>
+                <div class="hr"></div>
+                <div class="block-contacts fs16">
+                    <img src="/m/images/icon/phone-3.png" alt="" class="icon v-m" />
+                    <div class="v-m" style="margin-right: 15px;">+7 ({{ settings['contacts_phone1_prefix'] }}) {{ settings['contacts_phone1'] }}</div>
+                    <img src="/m/images/icon/phone-3.png" alt="" class="icon v-m" />
+                    <div class="v-m">+7 ({{ settings['contacts_phone2_prefix'] }}) {{ settings['contacts_phone2'] }}</div>
+                </div>
+                <div class="hr"></div>
+                <div class="block-contacts fs16">
+                    <img src="/m/images/icon/mail-2.png" alt="" class="icon v-m" />
+                    <a href="mailto:{{ settings['contacts_email'] }}">{{ settings['contacts_email'] }}</a>
+                </div>
+            </div>
+        </div>
+        <div class="l-col2">
+            <div id="send_feedback_in" class="feedback-b">
+                <div class="main-title left-bg">
+                    <div class="caption">Обратная связь</div>
+                </div>
+                {{ form_start(sendmail_form) }}
+                    {% if not app.user %}
+                    <div class="l-col1">
+                        <style scoped="scoped">.captcha-b img{vertical-align:top}</style>
+                        <div class="w-field">
+                            {{ form_label(sendmail_form.name, null, { label_attr: { class: 'name' } }) }}
+                            {{ form_widget(sendmail_form.name, { attr: { class: 'field' } }) }}
+                            <div class="err-text" style="color:red"></div>
+                        </div>
+                        <div class="w-field">
+                            {{ form_label(sendmail_form.email, null, { label_attr: { class: 'name' } }) }}
+                            {{ form_widget(sendmail_form.email, { attr: { class: 'field' } }) }}
+                            <div class="err-text" style="color:red"></div>
+                        </div>
+                        <div class="w-field captcha-b">
+                            {{ form_label(sendmail_form.captcha, null, { label_attr: { class: 'name' } }) }}
+                            {{ form_widget(sendmail_form.captcha, { attr: { class: 'field', placeholder: 'Введите код', style: 'width:173px' }, captcha_width: 106, captcha_height: 40 }) }}
+                            <div class="err-text" style="color:red"></div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    <div class="l-col{{ app.user ? '1' : '2' }}">
+                        <div class="w-field textarea">
+                            {{ form_widget(sendmail_form.message, { attr: { class: 'field', placeholder: 'Сообщение' } }) }}
+                            <div class="err-text" style="color:red"></div>
+                        </div>
+                    </div>
+                    <div class="hr"></div>
+                    <button type="submit" class="send btn btn-blue">Отправить</button>
+                {{ form_end(sendmail_form) }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block js %}
+<script>
+$(function () {
+    var error = function(el, error) {
+        var input = el.closest('.w-field');
+        $('.err-text', input).html(error);
+        $('input', input).addClass('error');
+        input.addClass('error');
+        $('.err-text', input).show();
+    };
+
+    var send_feedback = $('#send_feedback_in');
+
+    $('form[action="{{ path('send_feedback') }}"]', send_feedback).submit(function(e) {
+        e.preventDefault();
+
+        $('.w-field').removeClass('error');
+        $('.w-field input').removeClass('error');
+        $('.err-text').hide();
+
+        $.post($(this).attr('action'), $(this).serialize(), function(data) {
+            if (data.errors) {
+                for(var i in data.errors) {
+                    if (data.errors.hasOwnProperty(i)) {
+                        error($('#sendmail_' + i), data.errors[i]);
+                    }
+                }
+                $('#sendmail_captcha').closest('.w-field').find('img').attr('src', '{{ path('innocead_captcha', {'random': '1' }) }}'+Math.round(Math.random(0)*10000000000));
+            } else {
+                {% if _server_type == 'prod' %}
+                yaCounter25512893.reachGoal('FEEDBACK');
+                {% endif %}
+                $('form', send_feedback).html('<div class="text-center"><span style="color:green">Сообщение успешно отправлено!</span><br><a href="' + window.location + '" class="send btn btn-blue delay">Закрыть</a></div>');
+            }
+        });
+    });
+});
+</script>
+{% endblock js %}

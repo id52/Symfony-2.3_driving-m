@@ -1,0 +1,29 @@
+{% extends 'AppBundle::admin.html.twig' %}
+{% trans_default_domain 'info' %}
+
+{% block content %}
+    <h3>{{ (app.request.get('_route') == router_item_edit ? ('admin.'~entity_name_s~'_edit_title') : ('admin.'~entity_name_s~'_add_title'))|trans({}, 'messages') }}</h3>
+    <hr>
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-success">
+            <i class="fa fa-download"></i>
+            <span>{{ 'admin.buttons.save'|trans({}, 'messages') }}</span>
+        </button>
+        {% if app.request.get('_route') == router_item_edit %}
+            <a href="{{ path(router_item_delete, { id: entity.id }) }}" class="btn btn-danger" onclick="return confirm('{{ 'you_sure'|trans({}, 'messages') }}')">
+                <i class="fa fa-trash-o"></i> <span>{{ 'admin.buttons.delete'|trans({}, 'messages') }}</span>
+            </a>
+        {% endif %}
+        <a class="btn pull-right" href="{{ path(router_list) }}"><i class="fa fa-arrow-left"></i> {{ 'admin.buttons.back_to_list'|trans({}, 'messages') }}</a>
+    </div>
+    {{ form_end(form) }}
+{% endblock content %}
+
+{% block js %}
+    <script src="/ckeditor/ckeditor.js"></script>
+{% endblock js %}

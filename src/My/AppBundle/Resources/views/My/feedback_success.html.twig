@@ -1,0 +1,13 @@
+{% extends 'AppBundle::layout_new.html.twig' %}
+
+{% block content %}
+<nav class="path">
+    <a href="{{ path('homepage') }}">{{ 'titles.homepage'|trans }}</a>
+    » <strong>{{ 'titles.feedback'|trans }}</strong>
+</nav>
+
+<div class="mainContent">
+    <div class="title"><h1>{{ 'titles.feedback'|trans }}</h1></div>
+    <p>Сообщение отправлено!</p>
+</div>
+{% endblock content %}

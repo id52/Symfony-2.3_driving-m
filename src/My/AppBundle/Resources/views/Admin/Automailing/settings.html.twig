@@ -1,0 +1,58 @@
+{% extends 'AppBundle:Admin:_settings.html.twig' %}
+{% trans_default_domain 'settings' %}
+
+{% block subtitle %}{{ 'admin.automailing_settings'|trans({}, 'messages') }}{% endblock subtitle %}
+
+{% block fields %}
+<fieldset>
+    <legend>
+        {{ 'settings_no_payments_notify'|trans }}
+        <a data-content="{{ 'settings_no_payments_notify_help'|trans }}" href="#" data-toggle="popover"><i class="fa fa-question-circle"></i></a>
+    </legend>
+
+    <div class="control-group">
+        <label class="control-label">{{ 'settings_notify_no_payments'|trans }}:</label>
+        <div class="controls">
+            {% for i in 1..5 %}
+            <div class="input-append">
+                {{ form_widget(attribute(form, 'notify_no_payments_'~i)) }}
+                <span class="add-on">{{ 'days'|trans({}, 'messages') }}</span>
+            </div>
+            {% endfor %}
+            {% for i in 1..5 %}
+            {{ form_errors(attribute(form, 'notify_no_payments_'~i)) }}
+            {% endfor %}
+        </div>
+    </div>
+{#
+    <div class="control-group">
+        <label class="control-label">{{ 'settings_notify_no_payments_promo_expiration'|trans }}:</label>
+        <div class="controls">
+            {% for i in 1..5 %}
+            <div class="input-append">
+                {{ form_widget(attribute(form, 'notify_no_payments_promo_expiration_'~i)) }}
+                <span class="add-on">{{ 'days'|trans({}, 'messages') }}</span>
+            </div>
+            {% endfor %}
+            {% for i in 1..5 %}
+            {{ form_errors(attribute(form, 'notify_no_payments_promo_expiration_'~i)) }}
+            {% endfor %}
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">{{ 'settings_notify_no_payments_promo_discount'|trans }}:</label>
+        <div class="controls">
+            {% for i in 1..5 %}
+            <div class="input-append">
+                {{ form_widget(attribute(form, 'notify_no_payments_promo_discount_'~i)) }}
+                <span class="add-on">{{ 'RUB'|trans({}, 'messages') }}</span>
+            </div>
+            {% endfor %}
+            {% for i in 1..5 %}
+            {{ form_errors(attribute(form, 'notify_no_payments_promo_discount_'~i)) }}
+            {% endfor %}
+        </div>
+    </div>
+#}
+</fieldset>
+{% endblock fields %}

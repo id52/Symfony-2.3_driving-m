@@ -1,0 +1,12 @@
+My\AppBundle\Entity\Setting:
+    type: entity
+    table: settings
+    repositoryClass: My\AppBundle\Repository\SettingRepository
+    id:
+        _key:
+            type: string
+    fields:
+        value:
+            type: text
+        type:
+            type: string

@@ -1,0 +1,98 @@
+{% extends 'AppBundle::admin.html.twig' %}
+
+{% block content %}
+    <h1>{{ 'admin.automailing_statistics'|trans }}</h1>
+    <hr>
+    <a id="filter_link" href="#"><i class="fa fa-caret-down"></i> Фильтр</a>
+    <div id="filter">
+        {{ form_start(filter_form) }}
+        {{ form_widget(filter_form) }}
+        <div class="form-actions">
+            <button type="submit" class="btn btn-success pull-right">
+                <i class="fa fa-filter"></i>
+                <span>{{ 'buttons.filter'|trans }}</span>
+            </button>
+        </div>
+        {{ form_end(filter_form) }}
+    </div>
+    <br>
+    <br>
+    <h3>Количество пользователей</h3>
+    <table class="table table-hover">
+        <tr>
+            <td>Не оплатили</td>
+            <td class="min_col">{{ unpaid }} чел.</td>
+        </tr>
+        <tr>
+            <td>Оплатили купонами</td>
+            <td class="min_col">{{ paidPromo }} чел.</td>
+        </tr>
+    </table>
+    <h3>Оплаты по купонам, сгенерированным для письма</h3>
+    {% if dataByDay|length %}
+        <table class="table table-hover">
+            <tr>
+                <th>Номер письма</th>
+                <th class="min_col">Сумма оплат со скидкой</th>
+            </tr>
+            {% for day in dataByDay %}
+                <tr>
+                    <td>{{ day.num }}</td>
+                    <td class="min_col">{{ day.summ }} руб.</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <canvas id="overdue_statistics_users_chart" width="450" height="440" style="margin:15px;"></canvas>
+        <canvas id="overdue_statistics_letters_chart" width="450" height="440" style="margin:15px;"></canvas>
+    {% else %}
+        {{ 'no_data'|trans }}
+    {% endif %}
+{% endblock content %}
+
+{% block js %}
+<script>
+$(function() {
+    {% if app.request.queryString == '' %}
+    $('#filter').hide();
+    {% else %}
+    $('#filter_default').hide();
+    {% endif %}
+    $('#filter_link').click(function() {
+        $('#filter').toggle();
+        {% if app.request.queryString == '' %}
+        $('#filter_default').toggle();
+        {% endif %}
+        return false;
+    });
+
+    {% if dataByDay|length %}
+    //make charts
+    var colors = ['#0146F6', '#F2B705', '#00E22B', '#000A1D', '#61010C', '#F28F00', '#29003C'];
+    new Chart(document.getElementById('overdue_statistics_users_chart').getContext('2d')).Pie([
+        {
+            value: {{ unpaid }},
+            color: '#a00',
+            highlight: '#ccc',
+            label: 'Не оплатили'
+        },
+        {
+            value: {{ paidPromo }},
+            color: '#0a0',
+            highlight: '#ccc',
+            label: 'Оплатили купонами'
+        }
+    ], {});
+    new Chart(document.getElementById('overdue_statistics_letters_chart').getContext('2d')).Pie([
+    {% for day in dataByDay %}
+        {
+          value: {{ day.summ }},
+          color: colors[{{loop.index0%7}}],
+          highlight: '#ccc',
+          label: 'Письмо №{{ day.num }}'
+        }{{ loop.last ? '' : ',' }}
+    {% endfor %}
+    ], {});
+    {% endif %}
+});
+</script>
+{% endblock js %}

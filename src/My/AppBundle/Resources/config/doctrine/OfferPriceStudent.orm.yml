@@ -1,0 +1,25 @@
+My\AppBundle\Entity\OfferPriceStudent:
+    type: entity
+    table: offers_prices_students
+    id:
+        category:
+            associationKey: true
+        region:
+            associationKey: true
+        offer_student:
+            associationKey: true
+        at:
+            type: boolean
+    fields:
+        price:
+            type: integer
+    manyToOne:
+        category:
+            targetEntity: Category
+            inversedBy: offers_prices_students
+        region:
+            targetEntity: Region
+            inversedBy: offers_prices_students
+        offer_student:
+            targetEntity: OfferStudent
+            inversedBy: prices

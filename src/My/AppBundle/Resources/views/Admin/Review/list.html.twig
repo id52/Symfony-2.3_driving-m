@@ -1,0 +1,64 @@
+{% extends 'AppBundle::admin.html.twig' %}
+
+{% block content %}
+    <h1>{{ ('admin.'~entity_name_s~'_list')|trans }}</h1>
+    <hr>
+
+    <a id="filter_link" href="#"><i class="fa fa-caret-down"></i> Фильтр</a>
+    <div id="filter">
+        {{ form_start(filter_form) }}
+        {{ form_widget(filter_form) }}
+        <div class="form-actions">
+            <button type="submit" class="btn btn-success pull-right">
+                <i class="fa fa-filter"></i>
+                <span>{{ 'buttons.filter'|trans }}</span>
+            </button>
+        </div>
+        {{ form_end(filter_form) }}
+    </div>
+    <br><br>
+
+    {% if pagerfanta.currentPageResults|length %}
+        <table class="table table-hover">
+            <tbody>
+            {% for entity in pagerfanta.currentPageResults %}
+                {% set user = entity.user ? entity.user : entity %}
+                <tr{{ not entity.moderated is null ? (' class="'~(entity.moderated ? 'success' : 'error')~'"')|raw : '' }}>
+                    <td class="min_col">
+                        <img src="{{ user.photo ? user.photoWebPath|imagine_filter('review'~(entity.user ? '_user' : '')~'_photo') : '/m/images/review-no-photo.png' }}" class="review-image"/>
+                    </td>
+                    <td>
+                        <span class="pull-right">{{ entity.createdAt|localizeddate('long', 'none') }}</span>
+                        <b>{{ user.firstName }} {{ user.lastName }} {{ user.age ? '('~('age'|transchoice(user.age, { '%age%': user.age }))~')' : '' }}</b><br>
+                        [ Категория {{ user.category }} ]<br>
+                        {{ entity.message }}
+                    </td>
+                    <td class="min_col">
+                        <a href="{{ path('admin_review_check', { id: entity.id, status: 1 }) }}" class="nodecor text-success"><i class="fa fa-check"></i></a>
+                        <a href="{{ path('admin_review_check', { id: entity.id, status: 0 }) }}" class="nodecor text-error"><i class="fa fa-times"></i></a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        {{ 'no_data'|trans }}
+    {% endif %}
+    {% if pagerfanta.haveToPaginate %}
+        {{ pagerfanta(pagerfanta, 'twitter_bootstrap_translated', { prev_message: '←', next_message: '→' }) }}
+    {% endif %}
+{% endblock content %}
+
+{% block js %}
+<script>
+$(function() {
+    {% if app.request.queryString == '' %}
+    $('#filter').hide();
+    {% endif %}
+    $('#filter_link').click(function(e) {
+        e.preventDefault();
+        $('#filter').toggle();
+    });
+});
+</script>
+{% endblock js %}

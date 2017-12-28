@@ -1,0 +1,23 @@
+{% extends 'AppBundle::layout_new.html.twig' %}
+
+{% block content %}
+<nav class="path">
+    <a href="{{ path('homepage') }}">{{ 'titles.homepage'|trans }}</a>
+    » <a href="{{ path('my_notifies') }}">{{ 'titles.notifies'|trans }}</a>
+    » <strong>{{ notify.title }}</strong>
+</nav>
+
+<div class="mainContent">
+    <div class="title"><h1>{{ 'titles.notifies'|trans }}</h1></div>
+    <div class="notice-main">
+        <div class="title">
+            <span class="date">{{ notify.sendedAt|localizeddate('long', 'none') }}</span>
+            {{ notify.title }}
+        </div>
+
+        {{ text|raw }}
+
+        <a class="close" href="{{ path('my_notifies') }}"></a>
+    </div>
+</div>
+{% endblock content %}

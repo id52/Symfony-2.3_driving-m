@@ -1,0 +1,150 @@
+{% extends 'AppBundle::admin.html.twig' %}
+{% trans_default_domain 'site' %}
+
+{% block content %}
+<h3>{{ (app.request.get('_route') == 'admin_site_edit' ? 'admin.site_edit_title' : 'admin.site_add_title')|trans({}, 'messages') }}</h3>
+<hr>
+
+{{ form_start(imageForm, { action: path('admin_image_ajax') }) }}
+    <div class="control-group">
+        {{ form_label(imageForm.uploadFile, 'image_uploadFile'|trans({}, 'messages')) }}
+        <div class="controls">
+            <div id="image_view" class="clearfix"></div>
+                <span class="btn fileinput-button">
+                    <span>{{ 'image_uploadFile_btn'|trans({}, 'messages') }}</span>
+                    {{ form_widget(imageForm.uploadFile) }}
+                </span>
+            <div id="image-progress" class="progress progress-striped active">
+                <span>{{ 'uploading'|trans({}, 'messages') }}</span>
+                <div class="bar bar-success"></div>
+            </div>
+            <span class="upload-fail"></span>
+        </div>
+    </div>
+    {{ form_widget(imageForm) }}
+{{ form_end(imageForm) }}
+
+
+{{ form_start(form) }}
+    {{ form_row(form.image_id) }}
+    {{ form_row(form.region) }}
+
+    <div class="control-group">
+        <label class="control-label">Активен?</label>
+        <div class="controls">
+            <label>
+                {{ form_widget(form.active) }}
+                для неавторзиованных
+            </label>
+            <label>
+                {{ form_widget(form.active_auth) }}
+                для авторизованных
+            </label>
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">Показывать?</label>
+        <div class="controls">
+            <label>
+                {{ form_widget(form.show) }}
+                неавторзиованным
+            </label>
+            <label>
+                {{ form_widget(form.show_auth) }}
+                авторзиованным
+            </label>
+        </div>
+    </div>
+
+    {{ form_row(form.title) }}
+
+    <div class="control-group">
+        <label class="control-label">{{ 'site_coords'|trans }}:</label>
+        <div class="controls">
+            <label for="site_coords_x" style="display:inline-block">X:</label>
+            <input id="site_coords_x" name="site_coords[x]" class="span1" value="{{ entity.coords['x'] ? entity.coords['x'] : 0 }}">
+            <label for="site_coords_y" style="display:inline-block">Y:</label>
+            <input id="site_coords_y" name="site_coords[y]" class="span1" value="{{ entity.coords['y'] ? entity.coords['y'] : 0 }}">
+        </div>
+    </div>
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-success">
+            <i class="fa fa-download"></i>
+            <span>{{ 'admin.buttons.save'|trans({}, 'messages') }}</span>
+        </button>
+        {% if app.request.get('_route') == 'admin_site_edit' %}
+            <a href="{{ path('admin_site_delete', { id: entity.id }) }}" class="btn btn-danger" onclick="return confirm('{{ 'you_sure'|trans({}, 'messages') }}')">
+                <i class="fa fa-trash-o"></i> <span>{{ 'admin.buttons.delete'|trans({}, 'messages') }}</span>
+            </a>
+        {% endif %}
+        <a class="btn pull-right" href="{{ path('admin_sites') }}"><i class="fa fa-arrow-left"></i> {{ 'admin.buttons.back_to_list'|trans({}, 'messages') }}</a>
+    </div>
+{{ form_end(form) }}
+{% endblock content %}
+
+{% block js %}
+<script>
+$(function() {
+    var image_id = $('#site_image_id');
+    if (image_id.val()) {
+        $.post('{{ path('admin_image_view_ajax') }}?image_id='+image_id.val(), function(result) {
+            var image_view = $('#image_view');
+            image_view.html(result.image_view).show();
+            $('.fa-times', image_view).on('click', function() {
+                image_id.val(null);
+                $('#image_view').html('').hide();
+            });
+        });
+    }
+
+    $('#image_uploadFile').fileupload({
+        formData: function (form) {
+            var f = form.serializeArray();
+            f.push({
+                name: 'image_id',
+                value: image_id.val()
+            });
+            return f;
+        },
+        progressall: function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            $('#image-progress').find('.bar').css('width', progress + '%');
+        },
+        send: function () {
+            var cntr = $('#image_uploadFile').closest('.controls');
+            $('.btn', cntr).hide();
+            $('#image-progress').show();
+        },
+        done: function (e, data) {
+            var cntr = $('#image_uploadFile').closest('.controls');
+            $('#image-progress').hide();
+            if (data.result.image_id) {
+                $('.btn', cntr).show();
+                image_id.val(data.result.image_id);
+                var image_view = $('#image_view');
+                image_view.html(data.result.image_view).show();
+                $('.fa-times', image_view).on('click', function() {
+                    image_id.val(null);
+                    $('#image_view').html('').hide();
+                });
+            } else {
+                var errors = data.result.errors ? data.result.errors.join('<br>') : '{{ 'undefined_error'|trans({}, 'messages') }}';
+                $('.upload-fail', cntr).html(errors).show().delay(1500).hide(function () {
+                    $('.btn', cntr).show();
+                });
+            }
+        },
+        fail: function () {
+            var cntr = $('#image_uploadFile').closest('.controls');
+            $('#image-progress').hide();
+            $('.upload-fail', cntr).html('{{ 'errors.server'|trans({}, 'messages') }}').show().delay(1500).hide(function () {
+                $('.btn', cntr).show();
+            });
+        }
+    });
+
+});
+</script>
+{% endblock js %}

@@ -1,0 +1,27 @@
+My\AppBundle\Entity\Info:
+    type: entity
+    table: infos
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        title:
+            type: string
+        text:
+            type: text
+        release_time:
+            type: datetime
+    manyToMany:
+        readers:
+            targetEntity: User
+            inversedBy: read_infos
+            joinTable:
+                name: infos_readers
+                joinColumns:
+                    info_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    reader_id:
+                        referencedColumnName: id

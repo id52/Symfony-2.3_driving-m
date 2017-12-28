@@ -1,0 +1,58 @@
+{% extends 'AppBundle::layout_new.html.twig' %}
+
+{% block content %}
+<nav class="path">
+    <a href="{{ path('homepage') }}">{{ 'titles.homepage'|trans }}</a>
+    » <a href="{{ path('my_support_dialogs') }}">{{ 'titles.feedback'|trans }}</a>
+    » <strong>Диалог</strong>
+</nav>
+
+<div class="mainContent">
+    <div class="title">
+        {% if dialog.category.parent %}
+            <h1>{{ dialog.category.parent.name }}: {{ dialog.category.name }}</h1>
+        {% else %}
+            <h1>{{ dialog.category.name }}</h1>
+        {% endif %}
+        {% if dialog.category.user %}
+            <h1>{{ dialog.category.user.firstName }} {{ dialog.category.user.lastName }}</h1>
+        {% endif %}
+        {% if dialog.theme %}
+            {{ dialog.theme.title }} -
+        {% endif %}
+        {{ dialog.createdAt|date('d.m.Y H:i') }}
+    </div>
+
+    {% if dialog.messages|length %}
+        <section class="support_messages">
+            {% for message in dialog.messages %}
+                <figure class="message {{ message.user.id == dialog.user.id ? 'user' : 'moderator' }}">
+                    <div class="from">{{ message.user.id == dialog.user.id ? 'Вы:' : 'Модератор:' }} {{ message.user.fullName }}</div>
+                    <div class="text">{{ message.text|nl2br }}</div>
+                    <div class="time">{{ message.createdAt|date('d.m.Y H:i') }}</div>
+                </figure>
+            {% endfor %}
+            <div class="form">
+                {{ form_start(form) }}
+                    <div class="row">
+                        <div class="input">
+                            {{ form_widget(form.text, { attr: { placeholder: 'Ваше сообщение' } }) }}
+                        </div>
+                        {{ form_errors(form.text) }}
+                    </div>
+
+                    <div class="links bottom">
+                        <span class="link bg-green message-bg mail-link">
+                            Отправить сообщение
+                            <input value="" type="submit">
+                        </span>
+                    </div>
+                {{ form_end(form) }}
+            </div>
+        </section>
+        {% if not dialog.answered %}
+            <div class="info-block">Наш сотрудник должен ответить Вам не позже {{ dialog.limitAnswerDate|date('d.m.Y') }}.</div>
+        {% endif %}
+    {% endif %}
+</div>
+{% endblock content %}

@@ -1,0 +1,63 @@
+{% if filial.addressGeo or filial.mapCode %}
+<script type="text/javascript">
+{% if filial.addressGeo %}
+    var init = function() {
+        ymaps.geocode('{{ filial.region~', '~filial.addressGeo }}', { results: 1 }).then(function(res) {
+            var coords = res.geoObjects.get(0).geometry.getCoordinates();
+
+            var myMap = new ymaps.Map('map', { center: coords, zoom: 16 });
+
+            myMap.controls
+                .add('zoomControl', { left: 5, bottom: 100 })
+                .add('typeSelector', { right: 5, bottom: 75 })
+                .add('mapTools', { left: 35, bottom: 100 })
+                .add(new ymaps.control.TrafficControl(), { right: 5, bottom: 45 })
+                .add(new ymaps.control.MiniMap({ type: 'yandex#publicMap' }))
+            ;
+
+            var myPlacemark = new ymaps.Placemark(
+                coords,
+                {
+                    hintContent: '{{ filial.title }}',
+                    balloonContent: '<b>{{ filial.title }}</b><br>{{ filial.activePhones|join('<br>')|raw }}<br>г. {{ filial.region }} {{ filial.station ? (' (м. '~filial.station~')') : '' }}, {{ filial.address }}'
+                },
+                { iconImageHref: '/m/images/lp.png', iconImageSize: [ 29, 44 ], iconImageOffset: [ -14, -44 ] }
+            );
+            myMap.geoObjects.add(myPlacemark);
+        });
+    };
+    ymaps.ready(init);
+{% else %}
+    {{ filial.mapCode|raw }}
+{% endif %}
+</script>
+<div class="wrap-map">
+    <div id="map" class="map"></div>
+</div>
+{% endif %}
+<div class="branch-b">
+    <div class="title-branch">
+        <a href="#" class="close-popup r-fl"><img src="/m/images/icon/close.png" alt="" /></a>
+        <a target="_blank" href="{{ path('branch_print', { url: filial.url }) }}" class="print-button">Печать</a>
+        <div class="name-branch">Филиал "{{ filial.title }}"</div>
+    </div>
+    <div class="wrap-branch">
+        <div class="contacts-info">
+            <div class="block-contacts fs16">
+                <img src="/m/images/icon/location.png" alt="" class="icon v-m">{{ filial.region }}, {{ filial.address }} {{ filial.station ? ('(м. "'~filial.station~'")') : '' }}
+            </div>
+            {% if filial.workTime %}
+            <div class="hr"></div>
+            <div class="block-contacts fs16">
+                <img src="/m/images/icon/clock.png" alt="" class="icon v-m">
+                <ul class="list-line v-m">
+                    <li>{{ filial.workTime }}</li>
+                </ul>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% if filial.countersCode %}
+<script>{{ filial.countersCode|raw }}</script>
+{% endif %}

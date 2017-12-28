@@ -1,0 +1,70 @@
+{% extends 'AppBundle::layout_new.html.twig' %}
+
+{% block start_content %}
+<div id="modal-empty" class="modal border-red">
+    <div class="notice bg-sad">
+        <div class="title">НЕ ВЫБРАНА ТЕМА ОБРАЩЕНИЯ</div>
+        Для отправки сообщения нужно выбрать  из выпадающего меню “Тему обращения”.<br>
+        Обратите внимание, в “Темах обращения” есть Отделы которым будет адресован Ваш вопрос и  темы вопросов.<br>
+        Если Вы не нашли интересующий Вас вопрос, выберите Отдел с пометкой Другое.<br>
+        <b>Пример:</b> Отдел вождения: Другое
+    </div>
+    <span class="close"></span>
+</div>
+{% endblock start_content %}
+
+{% block content %}
+<nav class="path">
+    <a href="{{ path('homepage') }}">{{ 'titles.homepage'|trans }}</a>
+    » <strong>{{ 'titles.feedback'|trans }}</strong>
+</nav>
+
+<div class="mainContent">
+    <div class="title">
+        <h1>{{ 'titles.feedback'|trans }}</h1>
+    </div>
+
+    <p>Форма обратной связи поможет Вам получить ответ на любой вопрос, связанный с обучением в нашей автошколе. От того как записаться, до даты Вашего экзамена в ГИБДД. Для этого Вам необходимо выбрать отдел, тему обращения и задать Ваш вопрос.</p>
+
+    <div class="form">
+        {{ form_start(form) }}
+            <div class="row">
+                {{ form_widget(form.category, { attr: { class: 'customSelect', 'data-placeholder': 'Выберите тему обращения' }}) }}
+                {{ form_errors(form.category) }}
+            </div>
+
+            <div class="row">
+                <div class="input">
+                    {{ form_widget(form.text, { attr: { placeholder: 'Ваше сообщение' } }) }}
+                </div>
+                {{ form_errors(form.text) }}
+            </div>
+
+            <div class="links bottom">
+                <span class="link bg-green message-bg mail-link">
+                    Отправить сообщение
+                    <input value="" type="submit">
+                </span>
+            </div>
+        {{ form_end(form) }}
+    </div>
+
+    <div class="info-block">По всем техническим вопросам (не открывается сайт, не приходит sms подтверждение моб. телефона и т.д.) обращайтесь по телефону +7 (926) 867-3-867.<br>Внимание! Только вопросы корректной работы сайта!</div>
+</div>
+{% endblock content %}
+
+{% block js %}
+<script>
+$(function() {
+    var empty = function() {
+        if (!$('#support_message_category').val()) {
+            $.simplebox('#modal-empty');
+            return false;
+        }
+    };
+    var form = $('.mainContent form');
+    form.submit(empty);
+    $('[type=submit]', form).click(empty);
+});
+</script>
+{% endblock js %}

@@ -1,0 +1,35 @@
+My\PromoBundle\Entity\Key:
+    type: entity
+    table: promo_key
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        _key:
+            type: string
+            unique: true
+        activations_info:
+            type: array
+        tried_enters:
+            type: simple_array
+            nullable: true
+        rezerv:
+            type: simple_array
+            nullable: true
+        active_user:
+            type: simple_array
+            nullable: true
+        created:
+            type: datetime
+            gedmo:
+                timestampable:
+                  on: create
+        activated:
+            type: datetime
+            nullable: true
+    manyToOne:
+        campaign:
+            targetEntity: Campaign
+            inversedBy: keys

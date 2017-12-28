@@ -1,0 +1,143 @@
+my_trainings:
+    pattern:  /
+    defaults: { _controller: AppBundle:MyTraining:trainings }
+
+my_trainings_subject_pass:
+    pattern:  /subject-{id}/pass/
+    defaults: { _controller: AppBundle:MyTraining:trainingSubjectPass }
+
+my_trainings_subject_reset:
+    pattern:  /subject-{id}/reset/
+    defaults: { _controller: AppBundle:MyTraining:trainingSubjectReset }
+
+my_training:
+    pattern:  /{id}/
+    defaults: { _controller: AppBundle:MyTraining:training }
+    requirements:
+        id: \d+
+
+my_training_theme:
+    pattern:  /theme-{id}/
+    defaults: { _controller: AppBundle:MyTraining:trainingTheme }
+    requirements:
+        id: \d+
+
+my_training_theme_get_flash_block_item_ajax:
+    pattern:  /get-flash-block-item-ajax/
+    defaults: { _controller: AppBundle:MyTraining:getFlashBlockItemAjax }
+
+my_training_theme_test:
+    pattern:  /theme-{id}/test/
+    defaults: { _controller: AppBundle:MyTraining:trainingThemeTest }
+    requirements:
+        id: \d+
+
+my_training_theme_test_next_question_ajax:
+    pattern:  /theme-{id}/test/next_question_ajax/
+    defaults: { _controller: AppBundle:MyTraining:trainingThemeTest, next: true }
+    requirements:
+        id: \d+
+
+my_training_theme_test_reset:
+    pattern:  /theme-{id}/test/reset/
+    defaults: { _controller: AppBundle:MyTraining:trainingThemeTestReset }
+    requirements:
+        id: \d+
+
+my_training_theme_test_quit:
+    pattern:  /theme-{id}/test/quit/
+    defaults: { _controller: AppBundle:MyTraining:trainingThemeTestQuit }
+    requirements:
+        id: \d+
+
+my_training_theme_test_comment:
+    pattern:  /theme-{id}/test/comment/
+    defaults: { _controller: AppBundle:MyTraining:trainingThemeTestComment }
+    requirements:
+        id: \d+
+
+my_training_theme_test_pass:
+    pattern:  /theme-{id}/test/pass/
+    defaults: { _controller: AppBundle:MyTraining:trainingThemeTestPass }
+    requirements:
+        id: \d+
+
+my_training_slice:
+    pattern:  /slice-{id}/
+    defaults: { _controller: AppBundle:MyTraining:trainingSlice }
+    requirements:
+        id: \d+
+
+my_training_slice_next_question_ajax:
+    pattern:  /slice-{id}/next_question_ajax/
+    defaults: { _controller: AppBundle:MyTraining:trainingSlice, next: true }
+    requirements:
+        id: \d+
+
+my_training_slice_reset:
+    pattern:  /slice-{id}/reset/
+    defaults: { _controller: AppBundle:MyTraining:trainingSliceReset }
+    requirements:
+        id: \d+
+
+my_training_slice_quit:
+    pattern:  /slice-{id}/quit/
+    defaults: { _controller: AppBundle:MyTraining:trainingSliceQuit }
+    requirements:
+        id: \d+
+
+my_training_slice_pass:
+    pattern:  /slice-{id}/pass/
+    defaults: { _controller: AppBundle:MyTraining:trainingSlicePass }
+    requirements:
+        id: \d+
+
+my_training_exam:
+    pattern:  /{id}/exam/
+    defaults: { _controller: AppBundle:MyTraining:trainingExam }
+    requirements:
+        id: \d+
+
+my_training_exam_next_question_ajax:
+    pattern:  /{id}/exam/next_question_ajax/
+    defaults: { _controller: AppBundle:MyTraining:trainingExam, next: true }
+    requirements:
+        id: \d+
+
+my_training_exam_reset:
+    pattern:  /{id}/exam/reset/
+    defaults: { _controller: AppBundle:MyTraining:trainingExamReset }
+    requirements:
+        id: \d+
+
+my_training_exam_quit:
+    pattern:  /{id}/exam/quit/
+    defaults: { _controller: AppBundle:MyTraining:trainingExamQuit }
+    requirements:
+        id: \d+
+
+my_training_exam_pass:
+    pattern:  /{id}/exam/pass/
+    defaults: { _controller: AppBundle:MyTraining:trainingExamPass }
+    requirements:
+        id: \d+
+
+my_training_final_exam:
+    pattern:  /final-exam/
+    defaults: { _controller: AppBundle:MyTraining:trainingFinalExam }
+
+my_training_final_exam_next_question_ajax:
+    pattern:  /final-exam/next_question_ajax/
+    defaults: { _controller: AppBundle:MyTraining:trainingFinalExam, next: true }
+
+my_training_final_exam_reset:
+    pattern:  /final-exam/reset/
+    defaults: { _controller: AppBundle:MyTraining:trainingFinalExamReset }
+
+my_training_final_exam_quit:
+    pattern:  /final-exam/quit/
+    defaults: { _controller: AppBundle:MyTraining:trainingFinalExamQuit }
+
+my_training_final_exam_pass:
+    pattern:  /final-exam/pass/
+    defaults: { _controller: AppBundle:MyTraining:trainingFinalExamPass }

@@ -1,0 +1,23 @@
+{% extends 'AppBundle::layout_unsubscribe.html.twig' %}
+
+{% block content %}
+    <div class="mainContent">
+        <section class="unsubscribe">
+            <div class="title"><h1>{{ 'unsubscribe_pre_check_title'|trans }}</h1></div>
+        </section>
+        <section class="unsubscribe_body">
+            <div class="title">{{ 'unsubscribe_body_text'|trans }}</div>
+        </section>
+
+        <div class="form-actions">
+            <a href="{{ url('my_unsubscribe_overdue_done', {'email':  email }) }}">
+                <input type="button" id="button_yes" class="btn btn-success"
+                       value="{{ 'unsubscribe_button_yes'|trans }}">
+            </a>
+            <a href="{{ path('homepage') }}">
+                <input type="button" id="button_no" class="btn btn-success" value="{{ 'unsubscribe_button_no'|trans }}">
+            </a>
+        </div>
+    </div>
+{% endblock content %}
+

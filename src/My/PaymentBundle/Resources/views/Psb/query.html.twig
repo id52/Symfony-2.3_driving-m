@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Оплата в PSB</title>
+</head>
+<body>
+
+<form action="{{ url }}" id="psb_form" name="psb_form" method="post">
+    {% for key, value in hmac_params %}
+        <input type="hidden" name="{{ key }}" value="{{ value }}">
+    {% endfor %}
+    <input type="hidden" name="P_SIGN" value="{{ psign }}" >
+</form>
+
+<script type="text/javascript">
+    window.onload = function() {
+        document.forms['psb_form'].submit();
+    }
+</script>
+
+</body>
+</html>

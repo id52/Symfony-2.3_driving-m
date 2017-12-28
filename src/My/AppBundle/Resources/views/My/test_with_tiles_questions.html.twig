@@ -1,0 +1,25 @@
+<li>
+        {% set image = question.image ? 'question_with_image' : 'question_not_image' %}
+
+        {% if quest_answers[question.id] is not null %}
+            {% set href = '#' %}
+            {% set answer = quest_answers[question.id] ? 'answer_correct' : 'answer_incorrect' %}
+        {% else %}
+            {% set href = path('my_test', {'question' : question.getId}) %}
+            {% set answer = null %}
+        {% endif %}
+
+        <a href={{ href }} class="{{ image ~ ' ' ~ answer }}">
+                    <span class="b_question_inner">
+                    {% if question.image %}
+                        <span class="b_question_image">
+                            <img src="{{ question.image.webPath|imagine_filter('image') }}" alt="">
+                        </span>
+                    {% endif %}
+                        <span class="b_question_text">{{ question.text }}</span>
+                    </span>
+            {% if answer %}
+                <span class="{{ answer }}_icon"></span>
+            {% endif %}
+        </a>
+</li>

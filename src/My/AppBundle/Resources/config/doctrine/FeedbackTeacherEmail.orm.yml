@@ -1,0 +1,15 @@
+My\AppBundle\Entity\FeedbackTeacherEmail:
+    type: entity
+    table: feedback_teacher_emails
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+        email:
+            type: string
+        password:
+            type: string

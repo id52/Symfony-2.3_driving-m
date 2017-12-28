@@ -1,0 +1,19 @@
+My\AppBundle\Entity\Faq:
+    type: entity
+    table: faq
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        question:
+            type: text
+        answer:
+            type: text
+        position:
+            type: integer
+            gedmo:
+                - sortablePosition
+        status:
+            type: boolean

@@ -1,0 +1,22 @@
+My\AppBundle\Entity\News:
+    type: entity
+    table: news
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        title:
+            type: string
+        description:
+            type: string
+        text:
+            type: text
+        publish:
+            type: boolean
+        created_at:
+            type: datetime
+            gedmo:
+                timestampable:
+                    on: create

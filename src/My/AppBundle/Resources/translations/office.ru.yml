@@ -1,0 +1,13 @@
+office_region: Регион
+office_active: Активен?
+office_title: Название
+office_address: Адрес
+office_station: Станция метро
+office_address_desc: Описание пути до адреса
+office_work_time: Время работы
+office_phones: Телефоны
+office_emails: Адреса электронной почты
+office_address_geo: Адрес для геокодирования
+office_map_code: Код Я.Карты
+
+choose_option:  - Выберите -

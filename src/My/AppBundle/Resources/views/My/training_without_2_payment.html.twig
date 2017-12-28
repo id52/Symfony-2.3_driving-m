@@ -1,0 +1,18 @@
+{% extends 'AppBundle::layout_new.html.twig' %}
+
+{% block content %}
+<nav class="path">
+    <a href="{{ path('homepage') }}">{{ 'titles.homepage'|trans }}</a>
+    » <strong>{{ 'titles.trainings'|trans }}</strong>
+</nav>
+
+<div class="mainContent">
+    <div class="title">
+        <h1>{{ settings['training_without_2_payment_title'] }}</h1>
+    </div>
+    {{ settings['training_without_2_payment_text']|raw }}
+    <div class="links">
+        <a class="bg-green" href="{{ path('my_payments') }}">{{ 'buttons.pay'|trans }}</a>
+    </div>
+</div>
+{% endblock content %}

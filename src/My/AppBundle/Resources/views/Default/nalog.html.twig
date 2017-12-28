@@ -1,0 +1,131 @@
+{% extends 'AppBundle::layout_m.html.twig' %}
+
+{% block css %}
+    <link href="/m/css/nalog.css" type="text/css" rel="stylesheet" />
+{% endblock css %}
+
+{% block content %}
+<div class="wrap">
+    <div class="back-link r-fl"><a href="{{ path('homepage') }}"><span class="v-m arrow">«</span>Вернуться</a></div>
+    <ul class="breadcrumb">
+        <li><a title="Главная" href="{{ path('homepage') }}">Главная</a></li>
+        <li class="active"><span>Экзамены</span></li>
+    </ul>
+    <div class="main-side">
+        <div class="main-title left-bg">
+            <div class="caption">Социальный налоговый вычет</div>
+        </div>
+        <div class="text-block">
+            <div class="pred">  <div class="pred_icon">&#8212;</div><span>Предусмотрен статьей 219 НК РФ.</span></div>
+            <p class="pred_text showtext">
+                Согласно подпункту 2 пункта 1 статьи 219 Кодекса при определении размера налоговой базы налогоплательщик имеет право на получение социального налогового вычета, в частности, в сумме фактически произведенных им в налоговом периоде расходов на свое обучение в образовательных учреждениях, но не более 120 000 рублей, а также в сумме, уплаченной налогоплательщиком- родителем за обучение своих детей в возрасте до 24 лет по очной форме обучения в образовательных учреждениях - в размере фактически произведенных расходов на это обучение, но не более 50 000 рублей на каждого ребенка в общей сумме на обоих родителей.
+                <a href="#" class="hide">Скрыть</a>
+            </p>
+        </div>
+        <div class="block_sum">
+            <img src="/m/images/pred_logo.png" height="70" width="96" alt="">
+            <p class="sum">13% от суммы</p>
+            <p class="back_sum">Возврат суммы, уплаченной за обучение за себя или своего ребенка</p>
+            <p class="back_sum_text">Производится по окончании налогового периода при обращении в налоговую<br>при подаче декларации.</p>
+        </div>
+        <div class="work">
+            <p class="work_title"><span>Как это работает</span><span class="left_margin"></span><span class="right_margin"></span></p>
+            <img src="/m/images/pred_body.png" height="144" width="800" alt="">
+            <div class="work_text">Учитесь в <br>автошколе</div>
+            <div class="work_text">Получаете пакет <br>документов</div>
+            <div class="work_text">Идёте в<br> налоговую</div>
+            <div class="work_text">Получаете<br> вычет</div>
+        </div>
+        <div class="document">
+            <div class="second_title">
+                <div class="pred_doc">&#8212;</div><span class="border">Перечень документов</span>
+            </div>
+            <div class="text_doc_bottom showtext">
+                <ul class="list_doc">
+                    <li><span>налоговая декларация по форме 3-НДФЛ;</span></li>
+                    <li><span>заявление на возврат налога (с указанием реквизитов, куда следует перечислить денежные<br>средства).</span></li>
+                </ul>
+                <p class="takzhe">Также потребуются:</p>
+                <ul  class="list_doc_second">
+                    <li><span>паспорт;</span></li>
+                    <li><span>справка о ваших доходах по форме 2-НДФЛ за год, в котором было оплачено обучение;</span></li>
+                    <li><span>копия договора на обучение (в случае заключения);</span></li>
+                    <li><span>копии лицензии образовательного учреждения, иных документов, подтверждающих статус учебного<br>заведения (например, устав);</span></li>
+                    <li>
+                        <span>копии платежных документов, подтверждающих оплату обучения. Например, кассовые чеки,<br>квитанции к приходным кассовым ордерам, оплаченные банковские квитанции и т.п.</span>
+                    </li>
+                </ul>
+                <p class="zayava">Если заявляете вычет на обучение детей,<br>подопечных, брата, сестры, то дополнительно понадобятся: </p>
+                <ul class="list_doc_three">
+                    <li> <span>копия документа, подтверждающего родство и возраст учащегося, - если вы оплатили обучение<br>детей, братьев, сестер. Например, копия свидетельства о рождении;</span></li>
+                    <li> <span>документ, подтверждающий очную форму обучения (если она не прописана в договоре).<br>К примеру, справка из учебного заведения;</span>
+                    </li>
+                    <li> <span>копия документа, подтверждающего опеку или попечительство, если вы оплатили обучение<br>подопечных.</span></li>
+                </ul>
+                <a href="#" class="hide_bottom">Скрыть</a>
+            </div>
+        </div>
+    </div>
+    {% include 'AppBundle::_right_side.html.twig' %}
+</div>
+{% endblock content %}
+
+{% block js %}
+<script>
+$(function() {
+    var hideText = function() {
+        $('.pred_text').slideUp();
+        $('.pred_icon').text('+');
+        $('.pred_text.showtext').addClass('hidetext');
+        $('.hidetext').removeClass('showtext');
+    };
+    var showText = function() {
+        $('.pred_text').slideDown();
+        $('.pred_icon').html('&#8212;');
+        $('.pred_text.hidetext').addClass('showtext');
+        $('.pred_text.showtext').removeClass('hidetext');
+    };
+    var hideText_b = function() {
+        $('.text_doc_bottom').slideUp();
+        $('.pred_doc').text('+');
+        $('.text_doc_bottom.showtext').addClass('hidetext');
+        $('.text_doc_bottom.hidetext').removeClass('showtext');
+    };
+    var showText_b = function() {
+        $('.text_doc_bottom').slideDown();
+        $('.pred_doc').html('&#8212;');
+        $('.text_doc_bottom.hidetext').addClass('showtext');
+        $('.text_doc_bottom.showtext').removeClass('hidetext');
+    };
+
+    $('.hide').click(function() {
+        if ($('.pred_text').hasClass('showtext')) {
+            hideText();
+        } else {
+            showText();
+        }
+    });
+    $('.pred').click(function() {
+        if ($('.pred_text').hasClass('showtext')) {
+            hideText();
+        } else {
+            showText();
+        }
+    });
+    $('.hide_bottom').click(function() {
+        if ($('.text_doc_bottom').hasClass('showtext')) {
+            hideText_b();
+        } else {
+            showText_b();
+        }
+    });
+    $('.second_title').click(function() {
+        if ($('.text_doc_bottom').hasClass('showtext')) {
+            hideText_b();
+        } else {
+            showText_b();
+        }
+    });
+});
+</script>
+{% endblock js %}

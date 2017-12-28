@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{% block title %}{{ 'project.name'|trans }} — {{ 'project.slogan'|trans }}{% endblock %}</title>
+    <meta name="keywords" content="{% block meta_keywords '' %}" />
+    <meta name="description" content="{% block meta_description '' %}" />
+    <!--[if IE]>
+    <link href="/m/css/ie.css" type="text/css" rel="stylesheet">
+    <script type="text/javascript" src="/m/js/PIE.js"></script>
+    <![endif]-->
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400,300,300italic,400italic,700,700italic&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+    <link href="/m/css/select2.css" type="text/css" rel="stylesheet"/>
+    <link href="/m/css/royalslider.css" type="text/css" rel="stylesheet" />
+    <link href="/m/css/jquery.fancybox.css" type="text/css" rel="stylesheet"  />
+    <link href="/m/css/style.css" type="text/css" rel="stylesheet" />
+    {% if 'reg' == app.request.get('_route') or 'fos_user_registration_register' == app.request.get('_route') or 'send_feedback' == app.request.get('_route')  %}
+    <link href="/m/css/payment.css" type="text/css" rel="stylesheet" />
+    {% endif %}
+    {% block css '' %}
+    <!--[if lte IE 8]>
+    <link href="/m/css/ie8.css" type="text/css" rel="stylesheet">
+    <script type="text/javascript" src="/m/js/css3-mediaqueries.js"></script>
+    <script type="text/javascript" src="/m/js/html5shiv.js"></script>
+    <script type="text/javascript" src="/m/js/selectivizr.js"></script>
+    <![endif]-->
+    <script type="text/javascript" src="/m/js/jquery.js"></script>
+    <script type="text/javascript" src="/m/js/jquery.main.js"></script>
+</head>
+<body {{ 'homepage' == app.request.get('_route') and not app.user ? ' class="main"' : '' }}>
+
+{% include 'AppBundle::_server_label.html.twig' %}
+
+{% block start_content '' %}
+
+<div id="m_modal_overlay"></div>
+<div id="m_modal" class="m_modal">
+    <div class="m_modal_title">
+        <a href="#" class="m_modal_close"><img src="/m/images/icon/close.png" alt=""></a>
+        <span></span>
+    </div>
+    <div class="m_modal_content"></div>
+</div>
+
+<div class="wrap-page">
+    <div class="site-header">
+        <div class="wrap">
+            <div class="logo"><a href="{{ path('homepage') }}"><img src="/m/images/logo.png" alt="" /></a></div>
+            <div class="right-head text-right r-fl">
+                <div class="contact-head">
+                    <div class="phone v-m">+7 ({{ settings['contacts_phone1_prefix'] }}) {{ settings['contacts_phone1'] }}</div>
+                    <div class="phone v-m">+7 ({{ settings['contacts_phone2_prefix'] }}) {{ settings['contacts_phone2'] }}</div>
+                    {% if app.user %}
+                        <a class="sh-user" href="{{ path('homepage') }}">{{ app.user.lastName~' '~app.user.firstName|slice(0,1)~'.' }}</a>
+                        {% if is_granted('ROLE_MOD') %}
+                            <a href="{{ path('admin') }}" class="sh-to-admin">В админку</a>
+                        {% endif %}
+                        <a href="{{ path('fos_user_security_logout') }}" class="sh-exit">Выход</a>
+                    {% else %}
+                    <div id="send_feedback" class="feedback-top js-parrent-drop v-m">
+                        {% if 'fos_user_registration_register' != app.request.get('_route') and 'contacts' != app.request.get('_route') %}
+                            <a class="btn btn-blue js-link-drop ie_css3" href="#"><img class="icon v-m" src="/m/images/icon/mail.png" alt="">Обратная связь</a>
+                            <div class="open-b right js-drop-down ie_css3">
+                                {{ form_start(sendmail_form) }}
+                                {% if not app.user %}
+                                    <div class="w-field">
+                                        {{ form_widget(sendmail_form.name, { attr: { class: 'field', placeholder: 'Ваше имя' } }) }}
+                                        <div class="err-text" style="color:red"></div>
+                                    </div>
+                                    <div class="w-field">
+                                        {{ form_widget(sendmail_form.email, { attr: { class: 'field', placeholder: 'E-mail' } }) }}
+                                        <div class="err-text" style="color:red"></div>
+                                    </div>
+                                {% endif %}
+                                <div class="w-field">
+                                    {{ form_widget(sendmail_form.message, { attr: { class: 'field', placeholder: 'Вопрос' } }) }}
+                                    <div class="err-text" style="color:red"></div>
+                                </div>
+                                {% if not app.user %}
+                                    <div class="w-field">
+                                        {{ form_widget(sendmail_form.captcha, { attr: { class: 'field', placeholder: 'Введите символы', style: 'width:160px;float:right;margin-top:12px' } }) }}
+                                        <div class="err-text" style="color:red"></div>
+                                    </div>
+                                {% endif %}
+                                <button class="send btn btn-blue ie_css3">Отправить</button>
+                                {{ form_end(sendmail_form) }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div id="auth01" class="entry-b activation js-parrent-drop v-m">
+                        <a href="#" class="link btn js-link-drop ie_css3"><img src="/m/images/icon/user.png" alt="" class="icon v-m" /><span class="v-m">Вход</span></a>
+
+                        <div class="login-popup js-drop-down table-form login-form" >
+                            <div class="blue-hr"></div>
+                            <div class="form-wrap">
+                                <div class="caption">Вход:</div>
+                                <form id="signIn" action="{{ path('fos_user_security_check') }}" method="post">
+                                    <div class="hr"></div>
+                                    <table class="fields-table">
+                                        <tr>
+                                            <th><label for="js_login_username">E-mail:</label></th>
+                                            <td>
+                                                <input id="js_login_username" name="_username" class="field ie_css3" type="text" />
+                                                <div class="field-error"></div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th><label for="js_login_password">Пароль:</label></th>
+                                            <td>
+                                                <input id="js_login_password" name="_password" class="field ie_css3" type="password" />
+                                                <div class="field-error"></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <div class="hr"></div>
+                                    <input type="hidden" name="_csrf_token" value="{{ csrf_token_auth }}" />
+                                    <button type="submit" class="btn-blue-3">Вход</button>
+                                    <a href="#" class="forgot-pass-link">Забыли пароль?</a>
+                                </form>
+                                <div class="clear"></div>
+                            </div>
+                            <div class="remind-password-rack">
+                                <div class="remind-password-block">
+                                    <div class="top-speak-arrow"></div>
+                                    <form action="{{ path('fos_user_resetting_send_email') }}" method="post">
+                                        <input name="username" type="text" class="field ie_css3" placeholder="Укажите ваш E-mail" /><button><span></span></button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                {% include 'AppBundle::menu_m.html.twig' %}
+                {% if 'homepage' == app.request.get('_route') and not app.user %}
+                <style scoped="scoped">.top-info .v-m a { color: #fff }</style>
+                <div class="top-info">
+                    <div class="v-m">
+                        <div class="v-m"><a href="{{ path('branches') }}"><img src="/m/images/head-icon-1.png" alt="" /></a></div>
+                        <div class="v-m">
+                            <a href="{{ path('branches') }}">31 филиал</a>
+                            <br /> + <a href="{{ path('article_show', { id: 'sites' }) }}">40 площадок</a>
+                        </div>
+                    </div>
+                    <div class="v-m">
+                        <div class="v-m"><a href="{{ path('article_show', { id: 'obuchenie_online' }) }}"><img src="/m/images/head-icon-2.png" alt="" /></a></div>
+                        <div class="v-m"><a href="{{ path('article_show', { id: 'obuchenie_online' }) }}">Обучение очное<br />и дистанционное</a></div>
+                    </div>
+                </div>
+                <div class="info-category-top">
+                    <div class="h2">Осуществляем подготовку</div>
+                    <div class="h3">водителей категорий</div>
+                    <ul class="top-category-list list-line">
+                        <li><a class="ie_css3" href="{{ path('article_show', { id: 'categories/category-a' }) }}">a</a></li>
+                        <li><a class="ie_css3" href="{{ path('article_show', { id: 'categories/category-b' }) }}">b</a></li>
+                        <li><a class="ie_css3" href="{{ path('article_show', { id: 'categories/category-c' }) }}">c</a></li>
+                        <li><a class="ie_css3" href="{{ path('article_show', { id: 'categories/category-d' }) }}">d</a></li>
+                        <li><a class="ie_css3" href="{{ path('article_show', { id: 'categories/category-e' }) }}">e</a></li>
+                    </ul>
+                </div>
+                {% endif %}
+            </div>
+            {% if 'homepage' == app.request.get('_route') and not app.user %}
+                <div class="people-b">
+                    <img class="slogan" src="/m/images/slogan.png" alt="" />
+                    <img class="people" src="/m/images/people.png" alt="" />
+                </div>
+            {% else %}
+                <div class="slogan-text l-fl">«С нами - значит, с правами!» </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="container">
+        {% block content '' %}
+    </div>
+
+    <div class="hfooter"></div>
+    <div class="footer">
+        <div class="wrap">
+            <div class="r-fl">
+                <ul class="menu-f list-line">
+                    <li><a href="{{ path('article_show', { id: 'terms' }) }}">Правила пользователя</a></li>
+                    <li><a href="{{ path('article_show', { id: 'sitemap' }) }}">Карта сайта</a></li>
+                    <li><a href="{{ path('contacts') }}">Контакты</a></li>
+                </ul>
+            </div>
+            <div class="logo-f v-m">
+                <a href="#"><img src="/m/images/logo-f.png" alt="" /></a>
+            </div>
+            <div class="v-m">
+                <div class="copyright">© {{ 'now'|date('Y') }} Автошкола при МГТУ им. Баумана | Все права защищены</div>
+                <div class="contact-head">
+                    <div class="phone v-m">+7 ({{ settings['contacts_phone1_prefix'] }}) {{ settings['contacts_phone1'] }}</div>
+                    <div class="phone v-m">+7 ({{ settings['contacts_phone2_prefix'] }}) {{ settings['contacts_phone2'] }}</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/m/js/jquery.placeholder.js"></script>
+<script type="text/javascript" src="/m/js/select2.min.js"></script>
+<script type="text/javascript" src="/m/js/jquery.royalslider.min.js"></script>
+<script type="text/javascript" src="/m/js/prettyCheckboxes.js"></script>
+<script type="text/javascript" src="/m/js/jquery.fancybox.js"></script>
+<script type="text/javascript" src="/m/js/main.js"></script>
+{% block js '' %}
+<script>
+$(function () {
+    var error = function(el, error) {
+        var input = el.closest('.w-field');
+        $('.err-text', input).html(error);
+        $('input', input).addClass('error');
+        input.addClass('error');
+        $('.err-text', input).show();
+    };
+    var error_tb = function(el, error) {
+        var input = el.closest('td');
+        $('.field-error', input).html(error);
+        $('input', input).addClass('-error');
+        input.addClass('-error');
+        $('.field-error', input).show();
+    };
+
+    {% if not app.user %}
+    var auth01 = $('#auth01');
+
+    $('form[action="{{ path('fos_user_security_check') }}"]', auth01).submit(function(e) {
+        e.preventDefault();
+
+        $('.-error', auth01).removeClass('-error');
+        $('.field-error').hide();
+
+        var username = $('#js_login_username');
+        var password = $('#js_login_password');
+
+        if (!username.val() || !password.val()) {
+            if (!username.val()) {
+                error_tb(username, 'Нужно указать e-mail');
+            }
+            if (!password.val()) {
+                error_tb(password, 'Нужно указать пароль');
+            }
+        } else {
+            $.post($(this).attr('action'), $(this).serialize(), function(data) {
+                if (data.error) {
+                    error_tb(username, '');
+                    error_tb(password, data.error);
+                } else {
+                    {% if _server_type == 'prod' %}
+                    yaCounter25512893.reachGoal('LOGIN');
+                    {% endif %}
+                    location.assign('{{ path('homepage') }}');
+                }
+            });
+        }
+    });
+    {% endif %}
+
+    var send_feedback = $('#send_feedback');
+
+    $('form[action="{{ path('send_feedback') }}"]', send_feedback).submit(function(e) {
+        e.preventDefault();
+
+        $('.w-field').removeClass('error');
+        $('.w-field input').removeClass('error');
+        $('.err-text').hide();
+
+        $.post($(this).attr('action'), $(this).serialize(), function(data) {
+            if (data.errors) {
+                for(var i in data.errors) {
+                    if (data.errors.hasOwnProperty(i)) {
+                        error($('#sendmail_' + i), data.errors[i]);
+                    }
+                }
+                $('#sendmail_captcha').closest('.w-field').find('img').attr('src', '{{ path('innocead_captcha', {'random': '1' }) }}'+Math.round(Math.random(0)*10000000000));
+            } else {
+                {% if _server_type == 'prod' %}
+                yaCounter25512893.reachGoal('FEEDBACK');
+                {% endif %}
+                $('.open-b', send_feedback).html('<div class="text-center"><span style="color:green">Сообщение успешно отправлено!</span><br><a href="' + window.location + '" class="send btn btn-blue delay">Закрыть</a></div>');
+            }
+        });
+    });
+});
+</script>
+
+{% if _server_type == 'prod' and settings['counters_yandex'] is defined and settings['counters_yandex'] %}
+<script>{{ settings['counters_yandex']|raw }}</script>
+{% endif %}
+
+</body>
+</html>

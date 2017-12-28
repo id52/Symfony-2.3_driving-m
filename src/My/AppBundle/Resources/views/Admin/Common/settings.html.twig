@@ -1,0 +1,178 @@
+{% extends 'AppBundle:Admin:_settings.html.twig' %}
+{% trans_default_domain 'settings' %}
+
+{% block subtitle %}{{ ('admin.settings_common')|trans({}, 'messages') }}{% endblock subtitle %}
+
+{% block fields %}
+    {{ form_row(form.counters_yandex) }}
+
+    <fieldset>
+        <legend>
+            {{ 'settings_contacts'|trans }}
+        </legend>
+
+        {{ form_row(form.contacts_email) }}
+
+        <div class="control-group">
+            {{ form_label(form.contacts_phone1) }}
+            <div class="controls">
+                +7
+                {{ form_widget(form.contacts_phone1_prefix, { attr: { class: 'span1' } }) }}
+                {{ form_widget(form.contacts_phone1, { attr: { class: 'span3' } }) }}
+                {{ form_errors(form.contacts_phone1_prefix) }}
+                {{ form_errors(form.contacts_phone1) }}
+            </div>
+        </div>
+        <div class="control-group">
+            {{ form_label(form.contacts_phone2) }}
+            <div class="controls">
+                +7
+                {{ form_widget(form.contacts_phone2_prefix, { attr: { class: 'span1' } }) }}
+                {{ form_widget(form.contacts_phone2, { attr: { class: 'span3' } }) }}
+                {{ form_errors(form.contacts_phone2_prefix) }}
+                {{ form_errors(form.contacts_phone2) }}
+            </div>
+        </div>
+
+        <div class="control-group">
+            {{ form_label(form.coupons_phone1) }}
+            <div class="controls">
+                +7
+                {{ form_widget(form.coupons_phone1_prefix, { attr: { class: 'span1' } }) }}
+                {{ form_widget(form.coupons_phone1, { attr: { class: 'span3' } }) }}
+                {{ form_errors(form.coupons_phone1_prefix) }}
+                {{ form_errors(form.coupons_phone1) }}
+            </div>
+        </div>
+        <div class="control-group">
+            {{ form_label(form.coupons_phone2) }}
+            <div class="controls">
+                +7
+                {{ form_widget(form.coupons_phone2_prefix, { attr: { class: 'span1' } }) }}
+                {{ form_widget(form.coupons_phone2, { attr: { class: 'span3' } }) }}
+                {{ form_errors(form.coupons_phone2_prefix) }}
+                {{ form_errors(form.coupons_phone2) }}
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>
+            {{ 'settings_socials'|trans }}
+        </legend>
+
+        {{ form_row(form.socials_vk) }}
+        {{ form_row(form.socials_facebook) }}
+        {{ form_row(form.socials_twitter) }}
+    </fieldset>
+
+    <fieldset>
+        <legend>{{ 'settings_profile_messages'|trans }}:</legend>
+        {{ form_row(form.profile_final_exam, { attr: { class: 'ckeditor' } }) }}
+    </fieldset>
+
+    <fieldset>
+        <legend>{{ 'settings_training_test_messages'|trans }}:</legend>
+        {{ form_row(form.training_test_timeout) }}
+        {{ form_row(form.training_test_complete) }}
+        {{ form_row(form.training_test_long_time) }}
+        {{ form_row(form.training_test_max_errors) }}
+    </fieldset>
+
+    <fieldset>
+        <legend>{{ 'settings_training_test_knowledge_messages'|trans }}:</legend>
+        {{ form_row(form.training_test_knowledge_timeout) }}
+        {{ form_row(form.training_test_knowledge_complete) }}
+        {{ form_row(form.training_test_knowledge_long_time) }}
+        {{ form_row(form.training_test_knowledge_max_errors) }}
+    </fieldset>
+
+    <fieldset>
+        <legend>{{ 'settings_training_test_statistics'|trans }}:</legend>
+        {{ form_row(form.training_test_statistics_empty, { attr: { class: 'ckeditor' } }) }}
+    </fieldset>
+
+    <fieldset>
+        <legend>{{ 'settings_help_btns'|trans }}:</legend>
+        {{ form_row(form.trainings_help_btn, { attr: { class: 'ckeditor' } }) }}
+        {% for subject in subjects %}
+            <div class="control-group">
+                <label class="control-label" for="{{ attribute(form, 'training_'~subject.id~'_help_btn').vars.id }}">{{ 'settings_training_help_btn'|trans({ '%subject%': subject.title }) }}</label>
+                <div class="controls">
+                    {{ form_widget(attribute(form, 'training_'~subject.id~'_help_btn'), { attr: { class: 'ckeditor' } }) }}
+                    {{ form_errors(attribute(form, 'training_'~subject.id~'_help_btn')) }}
+                </div>
+            </div>
+        {% endfor %}
+        {{ form_row(form.theme_help_btn, { attr: { class: 'ckeditor' } }) }}
+        {{ form_row(form.question_help_btn, { attr: { class: 'ckeditor' } }) }}
+    </fieldset>
+
+    <fieldset>
+        <legend>
+            {{ 'settings_birthday_greeting'|trans }}
+            <a data-content="{{ 'settings_birthday_greeting_help'|trans }}" href="#" data-toggle="popover"><i class="fa fa-question-circle"></i></a>
+        </legend>
+        {{ form_row(form.birthday_greeting_title, { help: 'settings_birthday_greeting_title_help' }) }}
+        {{ form_row(form.birthday_greeting_text, { attr: { class: 'ckeditor' }, help: 'settings_birthday_greeting_text_help' }) }}
+    </fieldset>
+
+    <fieldset>
+        <legend>
+            {{ 'settings_signs'|trans }}
+            <a data-content="{{ 'settings_signs_help'|trans }}" href="#" data-toggle="popover"><i class="fa fa-question-circle"></i></a>
+        </legend>
+        {% for i in 1..5 %}
+            <div class="control-group">
+                <label class="control-label">{{ 'settings_sign'|trans }}:</label>
+                <div class="controls">
+                    <div class="input-append">
+                        {{ form_widget(attribute(form, 'sign_'~i)) }}
+                    </div>
+                    {{ form_errors(attribute(form, 'sign_'~i)) }}
+                </div>
+            </div>
+        {% endfor %}
+    </fieldset>
+
+    <fieldset>
+        <legend>
+            {{ 'settings_lock_unlock'|trans }}
+            <a data-content="{{ 'settings_lock_unlock_help'|trans }}" href="#" data-toggle="popover"><i class="fa fa-question-circle"></i></a>
+        </legend>
+        {{ form_row(form.lock_user_enabled) }}
+        {{ form_row(form.lock_user_title) }}
+        {{ form_row(form.lock_user_text, { attr: { class: 'ckeditor' }, help: 'settings_lock_user_text_help' }) }}
+
+        {{ form_row(form.unlock_user_enabled) }}
+        {{ form_row(form.unlock_user_title) }}
+        {{ form_row(form.unlock_user_text, { attr: { class: 'ckeditor' }, help: 'settings_unlock_user_text_help' }) }}
+    </fieldset>
+
+    <fieldset>
+        <legend>
+            {{ 'settings_errors'|trans }}
+            <a data-content="{{ 'settings_errors_help'|trans }}" href="#" data-toggle="popover"><i class="fa fa-question-circle"></i></a>
+        </legend>
+        {{ form_row(form.error_account_locked, {help: 'settings_error_account_locked_help'}) }}
+    </fieldset>
+
+    <fieldset>
+        <legend>
+            {{ 'settings_close_final_exam'|trans }}
+        </legend>
+        {{ form_row(form.close_final_exam_title) }}
+        {{ form_row(form.close_final_exam_text, { attr: { class: 'ckeditor' },
+            help: 'settings_close_final_exam_text_help' }) }}
+    </fieldset>
+
+    <fieldset>
+        <legend>
+            {{ 'settings_closed_subject'|trans }}
+        </legend>
+        {{ form_row(form.closed_subject_title) }}
+        {{ form_row(form.closed_subject_text, { attr: { class: 'ckeditor' },
+            help: 'settings_closed_subject_text_help' }) }}
+    </fieldset>
+
+{% endblock fields %}

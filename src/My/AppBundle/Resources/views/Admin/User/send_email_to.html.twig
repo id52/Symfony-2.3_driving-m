@@ -1,0 +1,27 @@
+{% extends 'AppBundle::admin.html.twig' %}
+
+{% block content %}
+    <h3>{{ 'admin.send_email_title'|trans }}</h3>
+    <hr>
+    {{ form_start(form) }}
+
+    <div class="control-group">
+        <label class="control-label">{{ 'send_email_to'|trans({}, 'send_email') }}:</label>
+        <div class="controls">{{ user.firstName~' '~user.lastName~' ('~user.email~')' }}</div>
+    </div>
+
+    {{ form_widget(form) }}
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-success">
+            <i class="fa fa-envelope-o"></i>
+            <span>{{ 'admin.buttons.send'|trans }}</span>
+        </button>
+        <a onclick="window.history.back();return false" class="btn pull-right" href="{{ path('admin_users_access') }}"><i class="fa fa-arrow-left"></i> {{ 'admin.buttons.back'|trans }}</a>
+    </div>
+    {{ form_end(form) }}
+{% endblock content %}
+
+{% block js %}
+<script src="/ckeditor/ckeditor.js"></script>
+{% endblock js %}

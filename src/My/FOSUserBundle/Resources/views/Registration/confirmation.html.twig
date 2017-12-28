@@ -1,0 +1,172 @@
+{% extends 'FOSUserBundle::layout.html.twig' %}
+
+{% block fos_user_content %}
+    <div class="table-form confirm-form" style="display:block;z-index:100">
+        <div class="blue-hr"></div>
+        <div class="form-wrap-register">
+            <div class="caption">Подтверждение регистрации:</div>
+            {{ form_start(form) }}
+            <div class="hr"></div>
+            {#<div class="conform-desc">{{ 'user_confirmation'|trans({ '%phone%': phone })|raw}}</div>#}
+            <div class="conform-desc">{{ 'user_confirmation'|trans|raw}}</div>
+            <table class="fields-table">
+                <tr id="conform-code-row">
+                    <th class="confirm-code">Код подтверждения:</th>
+                    <td>
+                        {{ form_widget(form.code, { attr: { class: 'field ie_css3' }}) }}
+                        <div class="field-error">{{ form_errors(form.code) }}</div>
+                    </td>
+                </tr>
+                <tr id="conform-phone-row" style="display:none">
+                    <th>Телефон:</th>
+                    <td>
+                        <div class="phone-wrapper conform-phone">
+                            <span>+7</span>
+                            <input id="new_phone" class="field phone-field ie_css3" type="text"/>
+                        </div>
+                        <div class="field-error"></div>
+                    </td>
+                </tr>
+            </table>
+
+            <div class="conform-flash" style="display:none"></div>
+
+            <div class="conform-btn-row">
+                <button class="conform-btn-1" title="Интервал между повторной отправкой смс: 3 минуты">Отправить еще раз</button>
+                <button class="conform-btn-2">Изменить телефон</button>
+                <button class="conform-btn-3" style="display:none">Подтвердить номер телефона</button>
+                <button class="conform-btn-4" style="display:none">Отмена</button>
+            </div>
+
+            <div class="hr"></div>
+
+            <button class="btn-blue-4" type="submit" disabled="disabled">Подтвердить</button>
+            {{ form_errors(form) }}
+            {{ form_end(form) }}
+            <div class="clear"></div>
+        </div>
+    </div>
+{% endblock fos_user_content %}
+
+{% block js %}
+<script>
+$(function() {
+    $('.phone-wrapper .phone-field').inputmask('(999)-999-99-99', { clearMaskOnLostFocus: false });
+    var timerId;
+    var dateTime = '{{ dateTime }}';
+    var userPhone = '{{ phone }}';
+    var phoneFormat = '+7 ('+userPhone.substr(0, 3)+')-'+userPhone.substr(3, 3)+'-'+userPhone.substr(6, 2)+'-'+userPhone.substr(8, 2);
+
+    $('#user_phone').html(phoneFormat);
+    var code_check = function() {
+        if ($('#confirmation_code').val().search(/^\d{4}$/) != -1) {
+            $('.btn-blue-4').removeAttr('disabled');
+        } else {
+            $('.btn-blue-4').attr('disabled', 'disabled');
+        }
+    };
+    code_check();
+
+    $('#confirmation_code')
+        .inputmask('9999', { clearMaskOnLostFocus: false })
+        .keypress(function(e) {
+            if (e.which == 13) {
+                e.preventDefault();
+            }
+        })
+        .keyup(code_check);
+
+    var btns = $('.conform-btn-row').find('button');
+    btns.removeAttr('disabled');
+
+    var show_code = function() {
+        $('#conform-code-row, .conform-btn-1, .conform-btn-2').show();
+        $('#conform-phone-row, .conform-btn-3, .conform-btn-4').hide();
+        $('.field-error', '#conform-code-row').html('');
+        $('.conform-flash').show();
+    };
+
+    var show_phone = function() {
+        $('#conform-code-row, .conform-btn-1, .conform-btn-2').hide();
+        $('#conform-phone-row, .conform-btn-3, .conform-btn-4').show();
+        $('.field-error', '#conform-phone-row').html('');
+//                $('.conform-flash').hide();
+    };
+
+    var sms_repeat_timer_start = function(last, message) {
+        if (last > 0) {
+            clearTimeout(timerId);
+            timerForSendSms(last);
+            $('.conform-flash').show();
+            timerForSendSms(last);
+            $('.conform-btn-1').attr('disabled', 'disabled');
+            setTimeout(function() {
+                $('.conform-flash').html('').hide();
+                $('.conform-btn-1').removeAttr('disabled');
+            }, last*1000);
+        }
+    };
+
+    sms_repeat_timer_start({{ last }}, '{{ message }}');
+
+    $('.conform-btn-1').on('click', function(e) {
+        e.preventDefault();
+        $('.field-error', '#conform-code-row').html('');
+        btns.attr('disabled', 'disabled');
+        $.post('{{ path('fos_user_confirmation_repeat_sms', { hash: app.request.attributes.get('hash') }) }}', function(data) {
+            btns.removeAttr('disabled');
+            dateTime = data.dateTime;
+            sms_repeat_timer_start(data.last, data.message);
+        });
+    });
+
+    $('.conform-btn-2').on('click', function(e) {
+        e.preventDefault();
+        show_phone();
+    });
+
+    $('.conform-btn-3').on('click', function(e) {
+        e.preventDefault();
+        btns.attr('disabled', 'disabled');
+        $('.field-error', '#conform-phone-row').html('');
+        $.post('{{ path('fos_user_confirmation_change_phone', { hash: app.request.attributes.get('hash') }) }}', {
+            phone: $('#new_phone').val()
+        }, function(data) {
+            btns.removeAttr('disabled');
+            if (data.error) {
+                $('.field-error', '#conform-phone-row').html(data.error);
+            } else {
+                show_code();
+                dateTime = data.dateTime;
+                sms_repeat_timer_start(data.last, data.message);
+            }
+        });
+    });
+
+    $('.conform-btn-4').on('click', function(e) {
+        e.preventDefault();
+        show_code();
+    });
+
+    function timerForSendSms(lastSend) {
+        var timer = document.querySelector('.conform-flash');
+        var m = parseInt(lastSend / 60);
+        var s = lastSend % 60;
+        if (lastSend == 0) {
+            $('label.error').remove();
+            return;
+        }
+        if (m < 10) m = '0'+m;
+        if (s < 10) s = '0'+s;
+        if (timer) {
+            timer.innerHTML = 'Код подтверждения отправлен '+dateTime+'<br>Повторно можно отправить через 00:'+m+':'+s;
+        }
+        lastSend --;
+
+        if (lastSend > 0 ) {
+            timerId = setTimeout(timerForSendSms, 1000, lastSend);
+        }
+    }
+});
+</script>
+{% endblock js %}

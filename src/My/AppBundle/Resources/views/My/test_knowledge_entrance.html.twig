@@ -1,0 +1,110 @@
+{% extends 'AppBundle::layout_new.html.twig' %}
+
+{% form_theme form 'AppBundle::form_new.html.twig' %}
+
+{% block start_content %}
+<div id="modal-empty" class="modal border-red">
+    <div class="notice bg-sad">
+        <div class="title">ВЫ НЕ ВЫБРАЛИ ТЕМЫ</div>
+        Чтобы начать тестирование необходимо выбрать хотя бы одну тему. Сумма вопросов в выбранных темах должна быть 20 или больше. Пример: “Применение специальных сигналов (7 вопросов)” содержит 7 вопросов, нужно добавить еще темы, что бы сумма вопросов была 20 или больше, добавляем тему “Общие обязанности водителей, пассажиров и пешеходов (13 вопросов), в итоге у нас получается 20 вопросов, можно начинать тестирование.  Вы можете выбрать интересующие Вас темы по отдельности или все темы сразу, нажав "Выбрать все". Снять выделение со всех тем можно нажав "Очистить".
+    </div>
+    <span class="close"></span>
+</div>
+
+<div id="modal-min" class="modal border-red">
+    <div class="notice bg-sad">
+        <div class="title">ВЫ ВЫБРАЛИ ТЕМЫ КОТОРЫЕ СОДЕРЖАТ  МЕНЕЕ 20 ВОПРОСОВ</div>
+        Для тестирования нужно выбрать темы в которых сумма вопросов будет 20 или больше.<br>
+        <b>Пример:</b> “Применение специальных сигналов (7 вопросов)” содержит 7 вопросов, нужно добавить еще темы, что бы сумма вопросов была 20 или больше, добавляем тему “Общие обязанности водителей, пассажиров и пешеходов (13 вопросов), в итоге у нас получается 20 вопросов, можно начинать тестирование.<br>
+        Вы можете выбрать интересующие Вас темы по отдельности или выбрать все темы сразу, отметив чекбокс “Выбрать все”. Снять выделение со всех тем можно нажав надпись “Отчистить”
+    </div>
+    <span class="close"></span>
+</div>
+{% endblock start_content %}
+
+{% block content %}
+<nav class="path">
+    <a href="{{ path('homepage') }}">{{ 'titles.homepage'|trans }}</a>
+    » <strong>{{ 'titles.test_knowledge'|trans }}</strong>
+</nav>
+
+<div class="mainContent">
+    <section class="tickets knowledge">
+        {{ form_start(form) }}
+        {{ form_errors(form) }}
+            <div class="title"><h1>{{ 'titles.test_knowledge'|trans }}</h1></div>
+
+            {% if form.themes.vars.errors|length > 0 %}
+                <div>
+                    {{ form_errors(form.themes) }}
+                </div>
+            {% endif %}
+
+            <ul class="list">
+                {% for child in form.themes %}
+                    <li>
+                        <div class="hold">
+                            {{ form_widget(child) }}
+                        </div>
+                        <label for="{{ child.vars.id }}"></label>
+                        {{ child.vars.label }}
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <div class="set">
+                <div class="l">
+                    <div class="check all">
+                        <input class="customCheckbox" id="all" type="checkbox" value="">
+                        <label for="all">Выбрать все</label>
+                    </div>
+                    <button type="reset" class="reset-form">Очистить</button>
+                </div>
+
+                <div class="r">
+                    <div class="check">
+                        {{ form_widget(form.comments) }}
+                        {{ form_label(form.comments) }}
+                    </div>
+                    <div class="check">
+                        {{ form_widget(form.time) }}
+                        {{ form_label(form.time) }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="links">
+                <span class="link bg-green start-link">
+                    {{ 'buttons.start'|trans }}
+                    <input value="" type="submit">
+                </span>
+            </div>
+
+        {{ form_end(form) }}
+    </section>
+</div>
+{% endblock content %}
+
+{% block js %}
+<script>
+$(function() {
+    var themes_cnt = eval({{ themes_cnt|json_encode|raw }});
+    $('.tickets form').submit(function() {
+        var items = $('.list', $(this)).find(':checked');
+        if (items.length) {
+            var all = 0;
+            items.each(function() {
+                all += themes_cnt[$(this).val()];
+            });
+            if (all < {{ questions_limit }}) {
+                $.simplebox('#modal-min');
+                return false;
+            }
+        } else {
+            $.simplebox('#modal-empty');
+            return false;
+        }
+    });
+});
+</script>
+{% endblock js %}

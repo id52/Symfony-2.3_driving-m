@@ -1,0 +1,54 @@
+{% extends 'AppBundle::admin.html.twig' %}
+{% trans_default_domain 'flash_block_item' %}
+
+{% block content %}
+    <h3>{{ (app.request.get('_route') == router_item_edit ? ('admin.'~entity_name_s~'_edit_title') : ('admin.'~entity_name_s~'_add_title'))|trans({}, 'messages') }}</h3>
+    <hr>
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-success">
+            <i class="fa fa-download"></i>
+            <span>{{ 'admin.buttons.save'|trans({}, 'messages') }}</span>
+        </button>
+        {% if app.request.get('_route') == router_item_edit %}
+            <a href="{{ path(router_item_delete, { id: entity.id, key: block.key }) }}" class="btn btn-danger" onclick="return confirm('{{ 'you_sure'|trans({}, 'messages') }}')">
+                <i class="fa fa-trash-o"></i> <span>{{ 'admin.buttons.delete'|trans({}, 'messages') }}</span>
+            </a>
+        {% endif %}
+        <a class="btn pull-right" href="{{ path(router_list, { key: block.key }) }}"><i class="fa fa-arrow-left"></i> {{ 'admin.buttons.back_to_list'|trans({}, 'messages') }}</a>
+    </div>
+    {{ form_end(form) }}
+{% endblock content %}
+
+{% block js %}
+<script src="/ckeditor/ckeditor.js"></script>
+<script>
+$(function() {
+    var cur_p_id = '{{ app.request.get('_route') == router_item_edit and entity.parent ? entity.parent.id : '' }}';
+    var category = $('#flash_block_item_category');
+    var item_category = function() {
+        var item_parents = $('#flash_block_item_parent');
+        item_parents.html('');
+        $.getJSON('{{ path('admin_flash_block_item_get_parent_list_ajax', { key: block.key }) }}',
+            { category: category.val(), id: {{ app.request.get('_route') == router_item_edit ? entity.id : 0 }} },
+            function(data) {
+                item_parents.append('<option value=""> ------ </option>');
+                for (var p in data) {
+                    if (data.hasOwnProperty(p)) {
+                        item_parents.append('<option value="' + p +'">' + data[p] +'</option>');
+                        if (p == cur_p_id) {
+                            item_parents.val(cur_p_id);
+                        }
+                    }
+                }
+            }
+        );
+    };
+    category.change(item_category);
+    item_category();
+});
+</script>
+{% endblock js %}

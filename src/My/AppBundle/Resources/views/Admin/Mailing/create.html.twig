@@ -1,0 +1,191 @@
+{% extends 'AppBundle::admin.html.twig' %}
+{% trans_default_domain 'user' %}
+
+{% block content %}
+    <h3>{{ 'admin.mailing_add_title'|trans({}, 'messages') }}</h3>
+    <hr>
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-success">
+                <i class="fa fa-download"></i>
+                <span>Создать рассылку</span>
+            </button>
+            <a class="btn pull-right" href="{{ path('admin_mailing') }}"><i class="fa fa-arrow-left"></i> {{ 'admin.buttons.back_to_list'|trans({}, 'messages') }}</a>
+        </div>
+    {{ form_end(form) }}
+
+    <fieldset>
+        <legend>{{ 'mailing_filters'|trans({}, 'mailing') }}:</legend>
+        {% if filters['paids'] is defined and not filters['paids'] is empty %}
+        <div class="control-group">
+            <label class="control-label">{{ 'user_paids'|trans }}:</label>
+            <div class="controls">{{ ('paids.'~filters['paids'])|trans }}</div>
+        </div>
+        {% endif %}
+        {% if filters['phone_mobile'] is defined and not filters['phone_mobile'] is empty %}
+        <div class="control-group">
+            <label class="control-label">{{ 'user_phone_mobile'|trans }}:</label>
+            <div class="controls">{{ filters['phone_mobile'] }}</div>
+        </div>
+        {% endif %}
+        {% if filters['passport_number'] is defined and not filters['passport_number'] is empty %}
+        <div class="control-group">
+            <label class="control-label">{{ 'user_passport_number'|trans }}:</label>
+            <div class="controls">{{ filters['passport_number'] }}</div>
+        </div>
+        {% endif %}
+        {% if filters['birthday']['year'] is defined and not filters['birthday']['year'] is empty %}
+        <div class="control-group">
+            <label class="control-label">{{ 'user_birthday'|trans }}:</label>
+            <div class="controls">{{ filters['birthday']['day']~'-'~filters['birthday']['month']~'-'~filters['birthday']['year'] }}</div>
+        </div>
+        {% endif %}
+        {% if filters['last_name'] is defined and not filters['last_name'] is empty %}
+        <div class="control-group">
+            <label class="control-label">{{ 'user_last_name'|trans }}:</label>
+            <div class="controls">{{ filters['last_name'] }}</div>
+        </div>
+        {% endif %}
+        {% if filters['first_name'] is defined and not filters['first_name'] is empty %}
+        <div class="control-group">
+            <label class="control-label">{{ 'user_first_name'|trans }}:</label>
+            <div class="controls">{{ filters['first_name'] }}</div>
+        </div>
+        {% endif %}
+        {% if filters['patronymic'] is defined and not filters['patronymic'] is empty %}
+        <div class="control-group">
+            <label class="control-label">{{ 'user_patronymic'|trans }}:</label>
+            <div class="controls">{{ filters['patronymic'] }}</div>
+        </div>
+        {% endif %}
+        {% if filters['region'] is defined and not filters['region'] is empty %}
+        <div class="control-group">
+            <label class="control-label">{{ 'user_region'|trans }}:</label>
+            <div class="controls">{{ region.name }}</div>
+        </div>
+        {% endif %}
+        {% if filters['email'] is defined and not filters['email'] is empty %}
+        <div class="control-group">
+            <label class="control-label">{{ 'user_email'|trans }}:</label>
+            <div class="controls">{{ filters['email'] }}</div>
+        </div>
+        {% endif %}
+        {% if filters['webgroup'] is defined and not filters['webgroup'] is empty %}
+        <div class="control-group">
+            <label class="control-label">{{ 'user_webgroup'|trans }}:</label>
+            <div class="controls">{{ webgroup.name }}</div>
+        </div>
+        {% endif %}
+        {% if filters['paradox_id'] is defined and not filters['paradox_id'] is empty %}
+        <div class="control-group">
+            <label class="control-label">{{ 'user_paradox_id'|trans }}:</label>
+            <div class="controls">{{ filters['paradox_id'] }}</div>
+        </div>
+        {% endif %}
+        {% if filters['phone_mobile_confirmed'] is defined and not filters['phone_mobile_confirmed'] is empty %}
+        <div class="control-group">
+            <label class="control-label">{{ 'user_phone_mobile_confirmed'|trans }}:</label>
+            <div class="controls">{{ filters['phone_mobile_confirmed']|trans }}</div>
+        </div>
+        {% endif %}
+        {% if filters['show_from']['year'] is defined and not filters['show_from']['year'] is empty %}
+        <div class="control-group">
+            <label class="control-label">{{ 'user_show_from'|trans }}:</label>
+            <div class="controls">{{ filters['show_from']['day']~'-'~filters['show_from']['month']~'-'~filters['show_from']['year'] }}</div>
+        </div>
+        {% endif %}
+        {% if filters['show_to']['year'] is defined and not filters['show_to']['year'] is empty %}
+        <div class="control-group">
+            <label class="control-label">{{ 'user_show_to'|trans }}:</label>
+            <div class="controls">{{ filters['show_to']['day']~'-'~filters['show_to']['month']~'-'~filters['show_to']['year'] }}</div>
+        </div>
+        {% endif %}
+        {% if filters['exams'] is defined and not filters['exams'] is empty %}
+        <div class="control-group">
+            <label class="control-label">{{ 'user_exams'|trans }}:</label>
+            <div class="controls">
+                {% for exam in filters['exams'] %}
+                    {{ exams[exam] }}<br>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+        {% if filters['final_exam'] is defined and not filters['final_exam'] is empty %}
+        <div class="control-group">
+            <label class="control-label">{{ 'user_final_exam'|trans }}:</label>
+            <div class="controls">{{ 'yes'|trans }}</div>
+        </div>
+        {% endif %}
+        {% if filters['in_paradox'] is defined and not filters['in_paradox'] is empty %}
+        <div class="control-group">
+            <label class="control-label">{{ 'user_in_paradox'|trans }}:</label>
+            <div class="controls">{{ 'yes'|trans }}</div>
+        </div>
+        {% endif %}
+        {% if filters['mailing'] is defined and not filters['mailing'] is empty %}
+        <div class="control-group">
+            <label class="control-label">{{ 'user_mailing'|trans }}:</label>
+            <div class="controls">{{ filters['mailing']|trans }}</div>
+        </div>
+        {% endif %}
+    </fieldset>
+
+    <fieldset>
+        <legend>{{ 'mailing_users'|trans({}, 'mailing') }}:</legend>
+
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th class="min_col">{{ 'user_id'|trans }}</th>
+                <th>{{ 'user_email'|trans }}</th>
+                <th>{{ 'user_name'|trans }}</th>
+                <th class="min_col">{{ 'user_status'|trans }}</th>
+                <th class="min_col">{{ 'user_created_at'|trans }}</th>
+                <th class="min_col">{{ 'user_mailing_c'|trans }}</th>
+                <th class="min_col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in pagerfanta.currentPageResults %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.lastName }} {{ user.firstName }} {{ user.patronymic }}</td>
+                    <td class="min_col">
+                        {% if user.enabled %}<i class="fa fa-check-square-o" title="Зарегистрировался"></i>{% endif %}
+                        {% if user.phoneMobileStatus == 'confirmed' %}<i class="fa fa-phone" title="Подтвердил телефон"></i>{% endif %}
+                        {% if 'ROLE_USER_PAID2' in user.roles %}<i class="fa fa-ruble" {{ user.isPromoUsedFor2 ? (user.isSumFor2 ? 'style="color:green"' : 'style="color:blue"') : (user.isOfflinePaidFor2 ? 'style="color:violet"' : '') }} title="Первая оплата{% if user.isPromoUsedFor2 %}{% if user.isSumFor2 %}. Смешанная оплата{% else %}. Оплата промокодом{% endif %}{% endif %}{% if user.isOfflinePaidFor2 %}. Оплата в офисе{% endif %}"></i>{% endif %}
+                        {% if 'ROLE_USER_PAID3' in user.roles %}<i class="fa fa-ruble" {{ user.isPromoUsedFor3 ? (user.isSumFor3 ? 'style="color:green"' : 'style="color:blue"') : (user.isOfflinePaidFor3 ? 'style="color:violet"' : '') }} title="Вторая оплата{% if user.isPromoUsedFor3 %}{% if user.isSumFor3 %}. Смешанная оплата{% else %}. Оплата промокодом{% endif %}{% endif %}{% if user.isOfflinePaidFor3 %}. Оплата в офисе{% endif %}"></i>{% endif %}
+                        {% if user.certificate %}<i class="fa fa-bookmark" title="Сдал итоговый экзамен"></i>{% endif %}
+                        {% if user.moderated %}<i class="fa fa-exclamation-triangle" title="Проверен"></i>{% endif %}
+                        {% if user.paradoxId %}<i class="fa fa-thumbs-up" title="Занесён в парадокс"></i>{% endif %}
+                        {% if user.offline %}<i class="fa fa-user" title="Зарегистрирован оффлайн"></i>{% endif %}
+                    </td>
+                    <td class="min_col">{{ user.createdAt|localizeddate('long', 'none') }}</td>
+                    <td class="min_col">
+                        {% if not user.mailing %}
+                            <span id="mailing"><i class="fa fa-envelope" title="Отписан от рассылки"></i></span>
+                        {% endif %}
+                    </td>
+                    <td class="min_col">
+                        <form method="post" style="margin-bottom:0">
+                            <input type="hidden" name="action" value="delete">
+                            <input type="hidden" name="uid" value="{{ user.id }}">
+                            <button type="submit" class="btn btn-link" onclick="return confirm('{{ 'you_sure'|trans({}, 'messages') }}')"><i class="fa fa-times text-error"></i></button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% if pagerfanta.haveToPaginate %}
+            {{ pagerfanta(pagerfanta, 'twitter_bootstrap_translated', { prev_message: '←', next_message: '→' }) }}
+        {% endif %}
+    </fieldset>
+{% endblock content %}
+
+{% block js %}
+<script src="/ckeditor/ckeditor.js"></script>
+{% endblock js %}

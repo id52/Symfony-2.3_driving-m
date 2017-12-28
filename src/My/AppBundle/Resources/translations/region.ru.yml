@@ -1,0 +1,4 @@
+region_name: Название
+region_services_prices: Цены на услуги в регионе
+region_categories_prices: Цены категорий прав в регионе
+region_empty_categories: Внимание, создан новый Регион, добавьте "Категории прав" в этом регионе!

@@ -1,0 +1,64 @@
+My\AppBundle\Entity\Filial:
+    type: entity
+    table: filials
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        title:
+            type: string
+        url:
+            type: string
+            unique: true
+        address:
+            type: string
+        station:
+            type: string
+            nullable: true
+        work_time:
+            type: string
+            nullable: true
+        phones:
+            type: array
+        emails:
+            type: array
+        coords:
+            type: array
+        address_geo:
+            type: string
+            nullable: true
+        map_code:
+            type: text
+            nullable: true
+        counters_code:
+            type: text
+            nullable: true
+        active:
+            type: boolean
+        active_auth:
+            type: boolean
+        _show:
+            type: boolean
+        show_auth:
+            type: boolean
+        updated_at:
+            type: datetime
+            gedmo:
+                timestampable:
+                    on: update
+        created_at:
+            type: datetime
+            gedmo:
+                timestampable:
+                    on: create
+    oneToOne:
+        image:
+            targetEntity: Image
+            mappedBy: filial
+            cascade: [ all ]
+    manyToOne:
+        region:
+            targetEntity: Region
+            inversedBy: filials

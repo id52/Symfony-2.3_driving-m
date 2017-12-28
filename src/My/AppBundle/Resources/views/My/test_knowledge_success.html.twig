@@ -1,0 +1,63 @@
+{% extends 'AppBundle::layout_new.html.twig' %}
+
+{% block content %}
+    <div class="main_t">
+        <h1>{{ 'menu.test_knowledge'|trans }}</h1>
+        {% if seconds_left %}
+            <div class="test_time">
+                <div class="time">
+                    <div id="note">0:00</div>
+                </div>
+            </div>
+        {% endif %}
+        <span class="haw_qwe" data-toggle="modal" data-target="#help_modal"><img src="/img/qwestion.png" alt="" title="" /></span>
+    </div>
+    <div id="test">
+        <div class="nav_test">
+            {% for key in answers|keys %}
+                {% if num == key %}
+                    <span class="active">{{ loop.index }}</span>
+                {% else %}
+                    <span {{ answers[key] ? (answers[key].correct ? ' class="tr"' : ' class="wr"') : '' }}>{{ loop.index }}</span>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div class="need_comment">
+            <form action="{{ path('my_test_knowledge_comment') }}">
+                <span class="text">{{ 'test_knowledge_comments'|trans }}</span>
+                <input type="checkbox"{{ is_comment ? ' checked="checked"' : '' }} onClick="$(this).closest('form').submit()" />
+            </form>
+        </div>
+        <div class="form_unswer">
+            <div class="alert-success clear">
+                {{ settings['training_test_knowledge_success'] }}
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block js %}
+<script>
+$(function() {
+    {% if seconds_left %}
+    $('.test_time .time #note').countdown({
+        until: {{ seconds_left }},
+        layout: '{mn}{sep}{snn}',
+        onTick: function(periods) {
+            var seconds = $.countdown.periodsToSeconds(periods);
+            if (60 > seconds) {
+                $(this).addClass('text-error');
+            }
+            if (30 > seconds) {
+                $(this).addClass('blink');
+            }
+        }
+    });
+    {% endif %}
+
+    setTimeout(function() {
+        location.assign('{{ path('my_test_knowledge') }}');
+    }, 1000);
+});
+</script>
+{% endblock js %}

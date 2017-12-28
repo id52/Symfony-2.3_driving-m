@@ -1,0 +1,81 @@
+{% extends 'AppBundle::admin.html.twig' %}
+
+{% block content %}
+    <h3>Статистика</h3>
+    <hr>
+    <a id="filter_link" href="#"><i class="fa fa-caret-down"></i> Фильтр</a>
+    <div id="filter">
+        {{ form_start(filter_form) }}
+        {{ form_widget(filter_form) }}
+        <div class="form-actions">
+            <button type="submit" class="btn btn-success pull-right">
+                <i class="fa fa-filter"></i>
+                <span>{{ 'buttons.filter'|trans }}</span>
+            </button>
+        </div>
+        {{ form_end(filter_form) }}
+    </div>
+    <div id="filter_default">Данные за {{ form|date('d.m.Y') }} &ndash; {{ to|date('d.m.Y') }}</div>
+    <hr>
+
+    <h4>Подкатегории</h4>
+    {% if data.subCategories|length %}
+        <table class="table table-hover">
+            <tr>
+                <th>Категория</th>
+                <th class="min_col">Диалогов всего</th>
+                <th class="min_col">Неотвеченных диалогов</th>
+            </tr>
+            {% for category in data.subCategories %}
+                <tr>
+                    <td><a href="{{ path('admin_support_dialogs')~'?support_dialog[category_name]='~category.id }}">{{ category.name }}: {{ category.parentName }}</a></td>
+                    <td class="min_col">{{ category.dialogsTotalCount }}</td>
+                    <td class="min_col"><a href="{{ path('admin_support_dialogs')~'?support_dialog[category_name]='~category.id~'&support_dialog[answered]=no' }}">{{ category.dialogsWithoutAnswerCount }}</a></td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        Нет категорий
+    {% endif %}
+
+    <h4>Преподаватели</h4>
+    {% if data.teachers|length %}
+        <table class="table table-hover">
+            <tr>
+                <th>Преподаватель</th>
+                <th class="min_col">Диалогов всего</th>
+                <th class="min_col">Неотвеченных диалогов</th>
+            </tr>
+            {% for teacher in data.teachers %}
+                <tr>
+                    <td><a href="{{ path('admin_support_dialogs')~'?support_dialog[category_name]='~teacher.id }}">{{ teacher.last_name~' '~teacher.first_name~' '~teacher.patronymic }}</a></td>
+                    <td class="min_col">{{ teacher.dialogsTotalCount }}</td>
+                    <td class="min_col"><a href="{{ path('admin_support_dialogs')~'?support_dialog[category_name]='~teacher.id~'&support_dialog[answered]=no' }}">{{ teacher.dialogsWithoutAnswerCount }}</a></td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        Нет преподавателей
+    {% endif %}
+
+{% endblock content %}
+
+{% block js %}
+<script>
+$(function() {
+    {% if app.request.queryString == '' %}
+    $('#filter').hide();
+    {% else %}
+    $('#filter_default').hide();
+    {% endif %}
+    $('#filter_link').click(function() {
+        $('#filter').toggle();
+        {% if app.request.queryString == '' %}
+        $('#filter_default').toggle();
+        {% endif %}
+        return false;
+    });
+});
+</script>
+{% endblock js %}
+

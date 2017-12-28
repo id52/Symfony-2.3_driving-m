@@ -1,0 +1,39 @@
+My\AppBundle\Entity\TrainingVersion:
+    type: entity
+    table: training_versions
+    repositoryClass: My\AppBundle\Repository\TrainingVersionRepository
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        start_date:
+            type: date
+        updated_at:
+            type: datetime
+            gedmo:
+                timestampable:
+                    on: update
+        created_at:
+            type: datetime
+            gedmo:
+                timestampable:
+                    on: create
+    manyToOne:
+        category:
+            targetEntity: Category
+            inversedBy: training_versions
+    manyToMany:
+        subjects:
+            targetEntity: Subject
+            mappedBy: versions
+        slices:
+            targetEntity: Slice
+            mappedBy: versions
+        themes:
+            targetEntity: Theme
+            mappedBy: versions
+        questions:
+            targetEntity: Question
+            mappedBy: versions

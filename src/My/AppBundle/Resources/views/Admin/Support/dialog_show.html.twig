@@ -1,0 +1,66 @@
+{% extends 'AppBundle::admin.html.twig' %}
+
+{% block content %}
+    <style>
+        .support_messages .form {
+            clear: both;
+            margin: 30px 60px;
+        }
+        .support_messages .message {
+            padding: 10px;
+            width: 60%;
+        }
+        .support_messages .message.user {
+            background-color: #9EE8FF;
+            float: left;
+            text-align: left;
+        }
+        .support_messages .message.moderator {
+            background-color: #C1FF9E;
+            float: right;
+            text-align: left;
+        }
+        .support_messages .message .from {
+            font-size: 10px;
+        }
+        .support_messages .message .time {
+            font-size: 10px;
+        }
+        .support_messages .message .text {
+            font-size: 18px;
+        }
+    </style>
+    <h3>
+        {% if dialog.category.type == 'teacher' and dialog.category.user %}
+            {% set categoryUser = dialog.category.user %}
+            {{ categoryUser.FirstName }} {{ categoryUser.LastName }}
+        {% else %}
+            {{ dialog.category.parent.name }}: {{ dialog.category.name }}
+        {% endif %}
+    </h3>
+    <div>Начат {{ dialog.createdAt|date('d.m.Y H:i') }}</div>
+
+    {% if dialog.messages|length %}
+        <section class="support_messages">
+            {% for message in dialog.messages %}
+                <figure class="message {{ message.user.id == dialog.user.id ? 'user' : 'moderator' }}">
+                    <div class="from">{{ message.user.id == dialog.user.id ? 'Пользователь:' : 'Модератор:' }} {{ message.user.fullName }}</div>
+                    <div class="text">{{ message.text|nl2br }}</div>
+                    <div class="time">{{ message.createdAt|date('d.m.Y H:i') }}</div>
+                </figure>
+            {% endfor %}
+
+             <div class="form">
+                {{ form_start(form) }}
+                    <div class="control-group">
+                        <div class="input">
+                            {{ form_widget(form.text, { attr: { placeholder: 'Ваше сообщение' } }) }}
+                        </div>
+                        {{ form_errors(form.text) }}
+                    </div>
+                    <input class="btn btn-success" value="Отправить сообщение" type="submit">
+                {{ form_end(form) }}
+            </div>
+        </section>
+    {% endif %}
+{% endblock content %}

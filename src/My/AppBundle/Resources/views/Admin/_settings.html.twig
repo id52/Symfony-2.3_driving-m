@@ -1,0 +1,36 @@
+{% extends 'AppBundle::admin.html.twig' %}
+
+{% block content %}
+    <h3>{% block subtitle ('admin.'~(entity_name_s is defined ? (entity_name_s~'_') : '')~'settings')|trans %}</h3>
+    <hr>
+    {{ form_start(form) }}
+        {{ form_errors(form) }}
+
+        {% block fields '' %}
+
+        {{ form_rest(form) }}
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-success">
+                <i class="fa fa-download"></i>
+                <span>{{ 'admin.buttons.save'|trans }}</span>
+            </button>
+        </div>
+    {{ form_end(form) }}
+{% endblock content %}
+
+{% block js %}
+<script src="/ckeditor/ckeditor.js"></script>
+<script>
+$(function() {
+    $('a').filter(function() {
+        return $(this).data('toggle') == 'popover';
+    })
+        .popover({ trigger: 'focus', html: true })
+        .click(function(e) {
+            e.preventDefault();
+            $(this).focus();
+        });
+});
+</script>
+{% endblock js %}

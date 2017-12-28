@@ -1,0 +1,88 @@
+{% extends 'AppBundle:Admin:_settings.html.twig' %}
+{% trans_default_domain 'settings' %}
+
+{% block fields %}
+    {{ form_row(form.registration_info, { attr: { class: 'ckeditor' } }) }}
+    {{ form_row(form.reginfo_1, { attr: { class: 'ckeditor' } }) }}
+    {{ form_row(form.reginfo_2, { attr: { class: 'ckeditor' } }) }}
+    {{ form_row(form.reginfo_3_offline, { attr: { class: 'ckeditor' } }) }}
+    {{ form_row(form.offline_print_text, { attr: { class: 'ckeditor' } }) }}
+    {{ form_row(form.reginfo_3_online, { attr: { class: 'ckeditor' } }) }}
+    {{ form_row(form.registration_text, { attr: { class: 'ckeditor' } }) }}
+    {{ form_row(form.registration_checkemail_text, { attr: { class: 'ckeditor' }, help: 'settings_registration_checkemail_text_help' }) }}
+
+    <fieldset>
+        <legend>
+            {{ 'settings_confirmation_registration'|trans }}
+            <a data-content="{{ 'settings_confirmation_registration_help'|trans }}" href="#" data-toggle="popover"><i class="fa fa-question-circle"></i></a>
+        </legend>
+        {{ form_row(form.confirmation_registration_enabled) }}
+        {{ form_row(form.confirmation_registration_title) }}
+        {{ form_row(form.confirmation_registration_text, { attr: { class: 'ckeditor' }, help: 'settings_confirmation_registration_text_help' }) }}
+    </fieldset>
+
+    <fieldset>
+        <legend>
+            {{ 'settings_confirmed_registration'|trans }}
+            <a data-content="{{ 'settings_confirmed_registration_help'|trans }}" href="#" data-toggle="popover"><i class="fa fa-question-circle"></i></a>
+        </legend>
+        {{ form_row(form.confirmed_registration_title) }}
+        {{ form_row(form.confirmed_registration_text, { attr: { class: 'ckeditor' }, help: 'settings_confirmed_registration_text_help' }) }}
+    </fieldset>
+
+    <fieldset>
+        <legend>
+            {{ 'settings_confirmed_registration_2'|trans }}
+            <a data-content="{{ 'settings_confirmed_registration_2_help'|trans }}" href="#" data-toggle="popover"><i class="fa fa-question-circle"></i></a>
+        </legend>
+        {{ form_row(form.confirmed_registration_2_title) }}
+        {{ form_row(form.confirmed_registration_2_text, { attr: { class: 'ckeditor' }, help: 'settings_confirmed_registration_2_text_help' }) }}
+    </fieldset>
+
+    <fieldset>
+        <legend>
+            {{ 'settings_resetting_password'|trans }}
+            <a data-content="{{ 'settings_resetting_password_help'|trans }}" href="#" data-toggle="popover"><i class="fa fa-question-circle"></i></a>
+        </legend>
+        {{ form_row(form.resetting_password_enabled) }}
+        {{ form_row(form.resetting_password_title) }}
+        {{ form_row(form.resetting_password_text, { attr: { class: 'ckeditor' }, help: 'settings_resetting_password_text_help' }) }}
+    </fieldset>
+
+    <fieldset>
+        <legend>
+            {{ 'settings_payments_mobile_not_confirmed'|trans }}
+            <a data-content="{{ 'settings_payments_mobile_not_confirmed_help'|trans }}" href="#" data-toggle="popover"><i class="fa fa-question-circle"></i></a>
+        </legend>
+        {{ form_row(form.payments_mobile_not_confirmed_title) }}
+        {{ form_row(form.payments_mobile_not_confirmed_text, { attr: { class: 'ckeditor' } }) }}
+    </fieldset>
+
+    <fieldset>
+        <legend>
+            {{ 'settings_after_confirm_mobile'|trans }}
+            <a data-content="{{ 'settings_after_confirm_mobile_help'|trans }}" href="#" data-toggle="popover"><i class="fa fa-question-circle"></i></a>
+        </legend>
+        {{ form_row(form.after_confirm_mobile_enabled) }}
+        {{ form_row(form.after_confirm_mobile_title) }}
+        {{ form_row(form.after_confirm_mobile_text, { attr: { class: 'ckeditor' } }) }}
+    </fieldset>
+
+    <fieldset>
+        <legend>
+            {{ 'settings_after_confirm_mobile_email'|trans }}
+            <a data-content="{{ 'settings_after_confirm_mobile_email_help'|trans }}" href="#" data-toggle="popover"><i class="fa fa-question-circle"></i></a>
+        </legend>
+        {{ form_row(form.after_confirm_mobile_email_enabled) }}
+        {{ form_row(form.after_confirm_mobile_email_title) }}
+        {{ form_row(form.after_confirm_mobile_email_text, { attr: { class: 'ckeditor' }, help: 'settings_after_confirm_mobile_email_text_help' }) }}
+    </fieldset>
+
+    <fieldset>
+        <legend>
+            {{ 'settings_notfull'|trans }}
+            <a data-content="{{ 'settings_notfull_help'|trans }}" href="#" data-toggle="popover"><i class="fa fa-question-circle"></i></a>
+        </legend>
+        {{ form_row(form.notfull_text, { attr: { class: 'ckeditor' }, help: 'settings_notfull_text_help' }) }}
+    </fieldset>
+{% endblock fields %}

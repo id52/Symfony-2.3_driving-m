@@ -1,0 +1,142 @@
+My\AppBundle\Entity\Question:
+#    constraints:
+#        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: num
+    properties:
+        text:
+            - NotBlank: ~
+
+My\AppBundle\Entity\Slice:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: after_theme
+
+My\AppBundle\Entity\Subject:
+    properties:
+        title:
+            - NotBlank: ~
+
+My\AppBundle\Entity\Theme:
+    properties:
+        title:
+            - NotBlank: ~
+
+My\AppBundle\Entity\User:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: email
+    properties:
+        last_name:
+            - NotBlank: { groups: [ Default, profile, simple_profile ] }
+        first_name:
+            - NotBlank: { groups: [ Default, profile, simple_profile ] }
+        patronymic:
+            - NotBlank: { groups: [ Default, profile, simple_profile ] }
+        email:
+            - NotBlank: { groups: [ Default, only_email ] }
+            - Email: { groups: [ Default, only_email ] }
+        plainPassword:
+            - NotBlank: ~
+            - Length: { min: 6 }
+        photo_file:
+            - Image: { maxSize: 1M, groups: photo }
+        sex:
+            - NotBlank: { groups: profile }
+        birthday:
+            - NotBlank: { groups: profile }
+        phone_mobile:
+            - NotBlank: { groups: profile }
+            - Regex: { pattern: "#^\d{10}$#", groups: [ profile, simple_profile ]  }
+        birth_country:
+            - NotBlank: { groups: profile }
+        birth_region:
+            - NotBlank: { groups: profile }
+        birth_city:
+            - NotBlank: { groups: profile }
+
+My\AppBundle\Entity\PromoKey:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: hash
+
+My\AppBundle\Entity\Article:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: url
+    properties:
+        url:
+            - Regex: { pattern: "#^[-_A-z0-9\/]+$#" }
+
+My\AppBundle\Entity\RegionPlace:
+    properties:
+        name:
+            - NotBlank: ~
+        region:
+            - NotBlank: ~
+
+My\AppBundle\Entity\Mailing:
+    properties:
+        title:
+            - NotBlank: ~
+        message:
+            - NotBlank: ~
+
+My\AppBundle\Entity\SupportCategory:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: name
+
+My\AppBundle\Entity\SupportMessage:
+    properties:
+        text:
+            - NotBlank: ~
+            - Length:
+                max: 3000
+
+My\AppBundle\Entity\Filial:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: url
+    properties:
+        region:
+            - NotBlank: ~
+        title:
+            - NotBlank: ~
+        url:
+            - NotBlank: ~
+            - Regex: { pattern: "#^[-_A-z0-9]+$#" }
+        address:
+            - NotBlank: ~
+
+My\AppBundle\Entity\Offer:
+    properties:
+        title:
+            - NotBlank: ~
+        description:
+            - NotBlank: ~
+
+My\AppBundle\Entity\Article:
+    properties:
+        title:
+            - NotBlank: ~
+        url:
+            - NotBlank: ~
+        text:
+            - NotBlank: ~
+
+My\AppBundle\Entity\FlashBlock:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: _key
+    properties:
+        title:
+            - NotBlank: ~
+
+My\AppBundle\Entity\FlashBlockItem:
+    properties:
+        title:
+            - NotBlank: ~
+        text:
+            - NotBlank: ~
+
+My\AppBundle\Entity\News:
+    properties:
+        title:
+            - NotBlank: ~
+        description:
+            - NotBlank: ~
+            - Length: { max: 255 }
+        text:
+            - NotBlank: ~

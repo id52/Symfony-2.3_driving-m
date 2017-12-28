@@ -1,0 +1,104 @@
+{% extends 'AppBundle::admin.html.twig' %}
+{% trans_default_domain 'office' %}
+
+{% block content %}
+<h3>{{ (app.request.get('_route') == router_item_edit ? ('admin.'~entity_name_s~'_edit_title') : ('admin.'~entity_name_s~'_add_title'))|trans({}, 'messages') }}</h3>
+<hr>
+
+{{ form_start(form) }}
+    {{ form_row(form.region) }}
+    {{ form_row(form.active) }}
+    {{ form_row(form.title) }}
+    {{ form_row(form.address) }}
+    {{ form_row(form.station) }}
+    {{ form_row(form.address_desc) }}
+    {{ form_row(form.work_time) }}
+
+    <div class="control-group">
+        <label class="control-label">{{ 'office_phones'|trans }}:</label>
+        <div class="controls">
+            <button id="add_office_phone" type="button" style="position:absolute;margin-left:250px">+</button>
+            {% if entity.phones %}
+                {% for phone, active in entity.phones %}
+                    <div>
+                        <input name="office_phones[{{ loop.index0 }}]" value="{{ phone }}">
+                        <input name="office_phones_active[{{ loop.index0 }}]" type="checkbox"{{ active ? ' checked="checked"' : '' }}>
+                    </div>
+                {% endfor %}
+            {% else %}
+            <div>
+                <input name="office_phones[0]">
+                <input name="office_phones_active[0]" type="checkbox" checked="checked">
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">{{ 'office_emails'|trans }}:</label>
+        <div class="controls">
+            <button id="add_office_email" type="button" style="position:absolute;margin-left:250px">+</button>
+            {% if entity.emails %}
+                {% for email, active in entity.emails %}
+                    <div>
+                        <input name="office_emails[{{ loop.index0 }}]" value="{{ email }}">
+                        <input name="office_emails_active[{{ loop.index0 }}]" type="checkbox"{{ active ? ' checked="checked"' : '' }}>
+                    </div>
+                {% endfor %}
+            {% else %}
+            <div>
+                <input name="office_emails[0]">
+                <input name="office_emails_active[0]" type="checkbox" checked="checked">
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    {{ form_row(form.address_geo) }}
+    {{ form_row(form.map_code) }}
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-success">
+            <i class="fa fa-download"></i>
+            <span>{{ 'admin.buttons.save'|trans({}, 'messages') }}</span>
+        </button>
+        {% if app.request.get('_route') == router_item_edit %}
+            <a href="{{ path(router_item_delete, { id: entity.id }) }}" class="btn btn-danger" onclick="return confirm('{{ 'you_sure'|trans({}, 'messages') }}')">
+                <i class="fa fa-trash-o"></i> <span>{{ 'admin.buttons.delete'|trans({}, 'messages') }}</span>
+            </a>
+        {% endif %}
+        <a class="btn pull-right" href="{{ path(router_list) }}"><i class="fa fa-arrow-left"></i> {{ 'admin.buttons.back_to_list'|trans({}, 'messages') }}</a>
+    </div>
+{{ form_end(form) }}
+{% endblock content %}
+
+{% block js %}
+<script src="/ckeditor/ckeditor.js"></script>
+<script>
+$(function() {
+    var add_office_phone = $('#add_office_phone');
+    var office_phones = add_office_phone.closest('.controls');
+    add_office_phone.on('click', function() {
+        var cnt = $('>div', office_phones).length;
+        var append = '';
+        append += '<div>';
+        append += '  <input name="office_phones['+cnt+']">';
+        append += '  <input name="office_phones_active['+cnt+']" type="checkbox" checked="checked">';
+        append += '</div>';
+        office_phones.append(append);
+    });
+
+    var add_office_email = $('#add_office_email');
+    var office_emails = add_office_email.closest('.controls');
+    add_office_email.on('click', function() {
+        var cnt = $('>div', office_emails).length;
+        var append = '';
+        append += '<div>';
+        append += '  <input name="office_emails['+cnt+']">';
+        append += '  <input name="office_emails_active['+cnt+']" type="checkbox" checked="checked">';
+        append += '</div>';
+        office_emails.append(append);
+    });
+});
+</script>
+{% endblock js %}

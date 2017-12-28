@@ -1,0 +1,110 @@
+{% extends 'AppBundle::layout_new.html.twig' %}
+
+{% block start_content %}
+<div class="modal helper" id="helper">
+    <div class="title">{{ 'help_title'|trans }}</div>
+
+    {{ settings['theme_help_btn']|raw }}
+
+    <div class="bottom links"><span class="link bg-green check-link btn-close">Спасибо, все понятно</span></div>
+    <span class="close"></span>
+</div>
+
+<div class="modal helper" id="flash_block">
+    <div class="title">123</div>
+    <div class="text">321</div>
+    <span class="close"></span>
+</div>
+
+{% if not is_granted('ROLE_USER_PAID2') %}
+<div id="alert_modal" class="modal border-red">
+    <div class="notice">
+        {{ 'trainings_alert'|trans }}
+        <div class="links">
+            <a href="{{ path('my_payments') }}" class="bg-green">{{ 'paid_notify.pay'|trans }}</a>
+        </div>
+    </div>
+    <span class="close"></span>
+</div>
+{% endif %}
+{% endblock start_content %}
+
+{% block content %}
+<nav class="path">
+    <a href="{{ path('homepage') }}">{{ 'titles.homepage'|trans }}</a>
+    » <a href="{{ path('my_trainings') }}">{{ 'titles.trainings'|trans }}</a>
+    » <a href="{{ path('my_training', { id: theme.subject.id }) }}">{{ theme.subject.title }}</a>
+    » <strong>{{ theme.title }}</strong>
+</nav>
+
+<div class="mainContent">
+    <div class="title">
+        <a class="rlink help-link simplebox" href="#helper">Помощник</a>
+        <h1>{{ theme.title }}</h1>
+    </div>
+
+    {{ text|raw }}
+
+    <div class="bottom links">
+        {% if questions_access %}
+            {% if is_granted('ROLE_USER_PAID2') %}
+                <a class="l bg-blue edit-link" href="{{ path('my_training_theme_test', { id: theme.id }) }}">{{ 'theme_answer_questions'|trans }}</a>
+            {% else %}
+                <a class="l bg-grey edit-link simplebox" href="#alert_modal">{{ 'theme_answer_questions'|trans }}</a>
+            {% endif %}
+        {% endif %}
+        <a class="r" href="{{ path('my_training', { id: theme.subject.id }) }}">Вернуться к списку тем</a>
+    </div>
+</div>
+{% endblock content %}
+
+{% block js %}
+<script>
+$(function() {
+    $('video').on('play', function() {
+        $('video').removeClass('current_play');
+        $(this).addClass('current_play');
+        $('video:not(.current_play)').each(function() {
+            this.pause();
+        });
+    });
+
+    $('.tw-switcher a').click(function(e) {
+        e.preventDefault();
+
+        var sw = $(this);
+        var widget = sw.closest('.terms-widget');
+        var a = $('.terms-by-alphabet', widget);
+        var l = $('.terms-logic-table', widget);
+        var duration = 200;
+
+        if (l.is(':visible')) {
+            l.slideUp(duration, function() {
+                a.slideDown(duration);
+                sw.text('Логический порядок');
+            });
+        } else {
+            a.slideUp(duration, function() {
+                l.slideDown(duration);
+                sw.text('Алфавитный порядок');
+            });
+        }
+    });
+
+    $('.flash_block_link').on('click', function(e) {
+        e.preventDefault();
+        var flash_block = $('#flash_block');
+
+        debugger;
+
+        $.getJSON('{{ path('my_training_theme_get_flash_block_item_ajax') }}', { id: $(this).data('id') }, function(data) {
+            if (data) {
+                $('.title', flash_block).html(data.title);
+                $('.text', flash_block).html(data.text);
+                $.simplebox(flash_block);
+            }
+        });
+    });
+});
+</script>
+{% endblock js %}

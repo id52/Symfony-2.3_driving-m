@@ -1,0 +1,70 @@
+My\AppBundle\Entity\FlashBlockItem:
+    type: entity
+    repositoryClass: Gedmo\Tree\Entity\Repository\NestedTreeRepository
+    table: flash_blocks_items
+    gedmo:
+        tree:
+            type: nested
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        title:
+            type: string
+        subtitle:
+            type: string
+            nullable: true
+        text:
+            type: text
+        category:
+            type: string
+            nullable: true
+        position:
+            type: integer
+            gedmo:
+                - sortablePosition
+        lft:
+            type: integer
+            gedmo:
+                - treeLeft
+        rgt:
+            type: integer
+            gedmo:
+                - treeRight
+        lvl:
+            type: integer
+            gedmo:
+                - treeLevel
+        updated_at:
+            type: datetime
+            gedmo:
+                timestampable:
+                    on: update
+        created_at:
+            type: datetime
+            gedmo:
+                timestampable:
+                    on: create
+    oneToOne:
+        image:
+            targetEntity: Image
+            mappedBy: flash_block_item
+            cascade: [ all ]
+    manyToOne:
+        block:
+            targetEntity: FlashBlock
+            inversedBy: items
+        parent:
+            targetEntity: My\AppBundle\Entity\FlashBlockItem
+            inversedBy: children
+            gedmo:
+                - treeParent
+    oneToMany:
+        children:
+            targetEntity: My\AppBundle\Entity\FlashBlockItem
+            mappedBy: parent
+            cascade: [ all ]
+            orderBy:
+                lft: ASC

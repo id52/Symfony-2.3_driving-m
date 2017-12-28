@@ -1,0 +1,48 @@
+{% extends 'AppBundle::layout_m_clear.html.twig' %}
+
+{% block title %}Вход | {{ 'project.name'|trans }}{% endblock title %}
+
+{% block content %}
+<div class="table-form login-form" style="display:block;z-index:100">
+    <div class="blue-hr"></div>
+    <div class="form-wrap">
+        <div class="caption">Вход:</div>
+        <form action="{{ path('fos_user_security_check') }}" method="post"{% if _server_type == 'prod' %} onsubmit="yaCounter25512893.reachGoal('LOGIN');return true;"{% endif %}>
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+            <input type="hidden" id="remember_me" name="_remember_me" value="1" />
+            <div class="hr"></div>
+            <table class="fields-table">
+                <tr>
+                    <th><label for="username">{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}</label></th>
+                    <td>
+                        <input class="field ie-css3" type="text" id="username" name="_username" value="{{ last_username }}" required="required" />
+                        <div class="field-error"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <th><label for="password">{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}</label></th>
+                    <td{{ error ? ' class="-error"' : '' }}>
+                        <input class="field ie-css3" type="password" id="password" name="_password" required="required" />
+                        {% if error %}
+                            <div class="field-error">{{ error|trans({}, 'FOSUserBundle')|raw }}</div>
+                        {% endif %}
+                    </td>
+                </tr>
+            </table>
+            <div class="hr"></div>
+            <button class="btn-blue-3" type="submit" id="_submit" name="_submit">{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}</button>
+            <a href="#" class="forgot-pass-link">Забыли пароль?</a>
+        </form>
+        <div class="clear"></div>
+    </div>
+    <div class="remind-password-rack">
+        <div class="remind-password-block">
+            <div class="top-speak-arrow"></div>
+            <form action="{{ path('fos_user_resetting_send_email') }}" method="post">
+                <input name="username" type="text" class="field ie_css3" placeholder="Укажите ваш E-mail"/>
+                <button><span></span></button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

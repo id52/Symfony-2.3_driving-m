@@ -1,0 +1,186 @@
+{% extends 'AppBundle::layout_new.html.twig' %}
+
+{% block start_content %}
+<div class="modal helper" id="helper">
+    <div class="title">{{ 'help_title'|trans }}</div>
+
+    {{ settings['training_'~subject.id~'_help_btn']|raw }}
+
+    <div class="bottom links"><span class="link bg-green check-link btn-close">Спасибо, все понятно</span></div>
+    <span class="close"></span>
+</div>
+
+{% if not is_granted('ROLE_USER_FULL_PROFILE') %}
+<div id="alert_notfull" class="modal border-red">
+    <div class="notice">
+        {{ notfull|raw }}
+        <div class="links">
+            <a href="{{ path('my_profile_edit') }}" class="bg-blue">Заполнить профиль</a>
+            <a href="#" class="bg-red btn-close">Закрыть</a>
+        </div>
+    </div>
+    <span class="close"></span>
+</div>
+{% endif %}
+
+{% if not is_granted('ROLE_USER_PAID3') %}
+<div id="alert_modal" class="modal border-red">
+    <div class="notice">
+        {{ 'trainings_alert_2'|trans }}
+        <div class="links">
+            <a href="{{ path('my_payments') }}" class="bg-green">{{ 'paid_notify.pay'|trans }}</a>
+            <a href="#" class="bg-red">Закрыть</a>
+        </div>
+    </div>
+    <span class="close"></span>
+</div>
+{% endif %}
+
+{% if not is_granted('ROLE_USER_PAID2') %}
+<div id="alert_modal" class="modal border-red">
+    <div class="notice">
+        {{ 'trainings_alert'|trans }}
+        <div class="links">
+            <a href="{{ path('my_payments') }}" class="bg-green">{{ 'paid_notify.pay'|trans }}</a>
+        </div>
+    </div>
+    <span class="close"></span>
+</div>
+{% endif %}
+
+{% if subject_is_closed %}
+    <div id="alert_modal_closed_subject" class="modal border-red">
+        <div class="notice">
+            <div class="title">{{ settings['closed_subject_title'] }}</div>
+
+            {{ closed_message|raw }}
+
+            <div class="links">
+                <a href="#" class="bg-red">Закрыть</a>
+            </div>
+        </div>
+        <span class="close"></span>
+    </div>
+{% endif %}
+
+{% endblock start_content %}
+
+{% block content %}
+<nav class="path">
+    <a href="{{ path('homepage') }}">{{ 'titles.homepage'|trans }}</a>
+    » <a href="{{ path('my_trainings') }}">{{ 'titles.trainings'|trans }}</a>
+    » <strong>{{ subject.title }}</strong>
+</nav>
+
+<div class="mainContent">
+    <div class="title">
+        <a class="rlink help-link simplebox" href="#helper">Помощник</a>
+        <h1>{{ subject.title }}</h1>
+    </div>
+
+    <section class="themes">
+        {% set theme_cnt = 1 %}
+        {% for object in training %}
+            {% if object.type == 'theme' %}
+                <figure{{ object.reading ? ' class="done"' : '' }}>
+                    <div class="num">Тема №{{ theme_cnt }}</div>
+                    <div class="text"><a href="{{ path('my_training_theme', { id: object.object.id }) }}">{{ object.object.title }}</a></div>
+                    <div class="links">
+                        {% if object.questions_access %}
+                            {% if is_granted('ROLE_TESTER_TRAINING') %}
+                                <a class="bg-red" href="{{ path('my_training_theme_test_pass', { id: object.object.id }) }}">{{ 'admin_pass'|trans }}</a> &nbsp;
+                            {% endif %}
+                            {% if is_granted('ROLE_USER_PAID2') %}
+                                <a class="bg-blue edit-link" href="{{ path('my_training_theme_test', { id: object.object.id }) }}">{{ 'theme_answer_questions'|trans }}</a>
+                            {% else %}
+                                <a class="bg-grey edit-link simplebox" href="#alert_modal">{{ 'theme_answer_questions'|trans }}</a>
+                            {% endif %}
+                        {% else %}
+                            {% if is_granted('ROLE_TESTER_TRAINING') and object.reading %}
+                                <a class="bg-red" href="{{ path('my_training_theme_test_reset', { id: object.object.id }) }}">{{ 'reset'|trans }}</a>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </figure>
+                {% set theme_cnt = theme_cnt + 1 %}
+            {% elseif object.type == 'slice' %}
+                <figure{{ object.active and object.passed ? ' class="done"' : '' }}>
+                    <div class="num">Срез</div>
+                    <div class="text">{{ 'training.slice'|trans }}</div>
+                    <div class="links">
+                        {% if object.active and not object.passed %}
+                            {% if is_granted('ROLE_TESTER_TRAINING') %}
+                                <a class="bg-red" href="{{ path('my_training_slice_pass', { id: object.object.id }) }}">{{ 'admin_pass'|trans }}</a> &nbsp;
+                            {% endif %}
+                            <a class="bg-blue edit-link" href="{{ path('my_training_slice', { id: object.object.id }) }}">{{ 'slice_start'|trans }}</a>
+                        {% else %}
+                            {% if is_granted('ROLE_TESTER_TRAINING') and object.passed %}
+                                <a class="bg-red" href="{{ path('my_training_slice_reset', { id: object.object.id }) }}">{{ 'reset'|trans }}</a>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </figure>
+            {% endif %}
+        {% endfor %}
+    </section>
+
+
+    {% if exam.active %}
+        {% if exam.passed %}
+            <div class="arr-link done">
+                <strong>экзамен сдан!</strong>
+            </div>
+            {% if is_granted('ROLE_TESTER_TRAINING') %}
+                <br><br><a href="{{ path('my_training_exam_reset', { id: subject.id }) }}">{{ 'reset'|trans }}</a>
+            {% endif %}
+        {% elseif is_granted('ROLE_USER_FULL_PROFILE') %}
+            {% if subject_is_closed %}
+                <a class="arr-link simplebox" href="#alert_modal_closed_subject">
+                    <strong>экзамен</strong>
+                    Вы можете приступить к экзамену только после сдачи всех тем
+                </a>
+            {% else %}
+                <a class="arr-link active{{ not is_granted('ROLE_USER_PAID3') ? ' simplebox' : '' }}" href="{{ is_granted('ROLE_USER_PAID3') ? path('my_training_exam', { id: subject.id }) : '#alert_modal' }}">
+                    <strong>сдать экзамен</strong>
+                </a>
+                {% if is_granted('ROLE_TESTER_TRAINING') %}
+                    <br><br><a href="{{ path('my_training_exam_pass', { id: subject.id }) }}">{{ 'admin_pass'|trans }}</a>
+                {% endif %}
+            {% endif %}
+        {% else %}
+            <a class="arr-link simplebox" href="#alert_notfull">
+                <strong>сдать экзамен</strong>
+            </a>
+        {% endif %}
+    {% else %}
+        <div class="arr-link">
+            <strong>экзамен</strong>
+            Вы можете приступить к экзамену только после сдачи всех тем
+        </div>
+    {% endif %}
+</div>
+{% endblock content %}
+
+{% block js %}
+<script>
+$(function() {
+    {% if not is_granted('ROLE_USER_PAID3') %}
+    var alert_modal = $('#alert_modal');
+    $('.bg-red', alert_modal).click(
+        function(e) {
+            e.preventDefault();
+            $.simplebox.close();
+        }
+    );
+    {% endif %}
+
+    {% if subject_is_closed %}
+    var alert_modal_closed_subject = $('#alert_modal_closed_subject');
+    $('.bg-red', alert_modal_closed_subject).click(function(e) {
+        e.preventDefault();
+        $.simplebox.close();
+    });
+    {% endif %}
+});
+</script>
+{% endblock js %}

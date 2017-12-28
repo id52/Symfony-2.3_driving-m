@@ -1,0 +1,52 @@
+My\AppBundle\Entity\Review:
+    type: entity
+    table: reviews
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        email:
+            type: string
+            nullable: true
+        last_name:
+            type: string
+            nullable: true
+        first_name:
+            type: string
+            nullable: true
+        patronymic:
+            type: string
+            nullable: true
+        sex:
+            type: enumsex
+            nullable: true
+        birthday:
+            type: date
+            nullable: true
+        message:
+            type: text
+        moderated:
+            type: boolean
+            nullable: true
+        social:
+            type: string
+            nullable: true
+        created_at:
+            type: datetime
+            gedmo:
+                timestampable:
+                    on: create
+    oneToOne:
+        photo:
+            targetEntity: Image
+            mappedBy: review
+            cascade: [ all ]
+    manyToOne:
+        category:
+            targetEntity: Category
+            inversedBy: reviews
+        user:
+            targetEntity: User
+            inversedBy: reviews

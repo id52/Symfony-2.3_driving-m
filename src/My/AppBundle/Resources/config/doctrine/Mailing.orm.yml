@@ -1,0 +1,24 @@
+My\AppBundle\Entity\Mailing:
+    type: entity
+    table: mailing
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+        title:
+            type: string
+        message:
+            type: text
+        date:
+            type: date
+        filters:
+            type: array
+            nullable: true
+        users:
+            type: text
+        forceSending:
+            type: boolean

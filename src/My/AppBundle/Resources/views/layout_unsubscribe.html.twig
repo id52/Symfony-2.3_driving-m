@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=1300" />
+    <title>{% block title %}{{ 'project.name'|trans }} — {{ 'project.slogan'|trans }}{% endblock %}</title>
+    <meta name="keywords" content="{% block meta_keywords '' %}" />
+    <meta name="description" content="{% block meta_description '' %}" />
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400,300,300italic,400italic,700,700italic&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+    <link href="/v2/css/style.css" rel="stylesheet" type="text/css">
+    <link href="/v2/css/style-fix.css" rel="stylesheet" type="text/css">
+    <link href="/v2/css/header.css" rel="stylesheet" type="text/css">
+    <!--[if lte IE 8]>
+    <link href="/v2/css/ie8.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="/v2/js/PIE.js"></script>
+    <script type="text/javascript" src="/v2/js/html5support.js"></script>
+    <![endif]-->
+    <script type="text/javascript" src="/v2/js/jquery.js"></script>
+    <script type="text/javascript" src="/v2/js/jquery-ui.js"></script>
+    <script type="text/javascript" src="/v2/js/jquery.main.js"></script>
+</head>
+<body>
+{% include 'AppBundle::_server_label.html.twig' %}
+
+{% block start_content '' %}
+<div class="wrapper">
+<div class="site-header">
+    <div class="sh-wrap">
+        <a href="{{ path('homepage') }}" class="sh-logo"></a>
+        <div class="sh-right">
+            <div class="sh-contact">
+                <div class="sh-phone">+7 ({{ settings['contacts_phone1_prefix'] }}) {{ settings['contacts_phone1'] }}</div>
+                <div class="sh-phone">+7 ({{ settings['contacts_phone2_prefix'] }}) {{ settings['contacts_phone2'] }}</div>
+                {% if app.user %}
+                    <a class="sh-user" href="{{ path('homepage') }}">{{ app.user.lastName~' '~app.user.firstName|slice(0,1)~'.' }}</a>
+                    {% if is_granted('ROLE_MOD') %}
+                        <a href="{{ path('admin') }}" class="sh-to-admin">В админку</a>
+                    {% endif %}
+                    <a href="{{ path('fos_user_security_logout') }}" class="sh-exit">Выход</a>
+                {% endif %}
+            </div>
+            {% include 'AppBundle::menu_m.html.twig' %}
+        </div>
+        <div class="sh-slogan">«С нами - значит, с правами!» </div>
+    </div>
+</div>
+
+
+    <div class="container">
+        <div class="content">
+            {% block content '' %}
+            {% block end_content '' %}
+        </div>
+
+    </div>
+</div>
+<footer class="footer">
+    <div class="container">
+        <div class="logo">
+            <img src="/v2/img/logo.png" width="824" height="230" alt="Автошкола онлайн">
+            <span>ПОРТАЛ ДИСТАНЦИОННОГО<br>ОБУЧЕНИЯ</span>
+        </div>
+
+        <div class="phone">
+            <div class="bg">
+                <a href="tel:+7{{ settings['contacts_phone1_prefix'] }}{{ settings['contacts_phone1']|replace({ '-': '' }) }}">
+                    <span>{{ settings['contacts_phone1_prefix'] }}</span>
+                    <strong>{{ settings['contacts_phone1'] }}</strong>
+                </a>
+            </div>
+        </div>
+        <div class="socials">
+            {% if settings['socials_facebook'] is defined %}<a class="fb" href="{{ settings['socials_facebook'] }}" target="_blank">Facebook</a>{% endif %}
+            {% if settings['socials_twitter'] is defined %}<a class="tw" href="{{ settings['socials_twitter'] }}" target="_blank">Twitter</a>{% endif %}
+            {% if settings['socials_vk'] is defined %}<a class="vk" href="{{ settings['socials_vk'] }}" target="_blank">Вконтакте</a>{% endif %}
+        </div>
+
+        <div class="copy">
+            © {{ 'now'|date('Y') }} {{ 'project.name'|trans }}
+            <div class="small">Все права защищены.</div>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>

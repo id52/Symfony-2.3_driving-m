@@ -1,0 +1,176 @@
+<form id="reg_pay_online" action="{{ path('reg') }}" method="post">
+    <div class="title1">
+        <h1>Обучение в автошколе</h1>
+    </div>
+
+    <ul class="steps">
+        <li class="bg1 done" data-url="{{ path('reg', { act: 'first' }) }}">
+            <span><span>1</span> Шаг:</span> Категория прав
+            <div class="small">Категория «{{ category.name }}»{{ category.withAt ? (' + '~(with_at ? 'А' : 'М')~'КПП') : '' }}</div>
+        </li>
+        <li class="bg2 done" data-url="{{ path('reg', { act: 'back' }) }}">
+            <span><span>2</span> Шаг:</span> Вариант оплаты
+            <div class="small">Оплатить онлайн со скидкой</div>
+        </li>
+        <li class="bg3 active"><span><span>3</span> Шаг:</span> Оплата</li>
+    </ul>
+
+    {% if offerId is defined and offerId > 0 %}
+    <div class="text-info">
+        <div class="in">
+            {% if offer.text1 is defined %}
+                {{ offer.text1|raw }}<br>
+            {% endif %}
+        </div>
+    </div>
+    {% elseif settings['reginfo_3_online'] is defined %}
+        <div class="text-info">
+            <div class="in">
+                {{ settings['reginfo_3_online']|raw }}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if app.session.get('reg')['offer'] is not defined or app.session.get('reg')['offer'] is empty %}
+
+        <div class="pay-selection">
+            <h2>Выберите вариант оплаты:</h2>
+            <a class="active" href="#">
+                <span class="cell">
+                    <span class="big">Акция:<br>Полный курс обучения со скидкой 25%</span>
+                    Самый выгодный способ стать учеником автошколы!
+                </span>
+            </a>
+            <a href="#">
+                <span class="cell">
+                    <span class="big">Оплата в рассрочку со скидкой 10%</span>
+                    Стоимость обучения разделена на два удобных платежа!
+                </span>
+            </a>
+        </div>
+
+    {% endif %}
+
+    <style scoped="scoped">
+        #actions {
+            height: 193px;
+            width: 1180px;
+            overflow: hidden;
+            position: relative;
+        }
+        #actions .action {
+            height: 193px;
+            width: 1180px;
+            position: absolute;
+            top: 0;
+        }
+    </style>
+
+        <div id="actions">
+            <div class="action" style="left:0">
+                <div class="action-timer" id='until' data-until="{% if until is defined %}{{ until }}{% endif %}">
+                    <div class="action-timer-top">
+                        <span><b>00</b>дней</span>
+                        <span><b>00</b>часов</span>
+                    </div>
+                    <div class="action-timer-bot">
+                        <span><span>00</span></span>
+                        <b>:</b>
+                        <span><span>00</span></span>
+                    </div>
+                    <div class="action-timer-top">
+                        <span>мин.</span>
+                        <span>сек.</span>
+                    </div>
+                </div>
+                <div class="action-prices">
+                    <div class="action-prices-block-1">
+                        <div class="action-prices-old-price">
+                            {{ price.sum(with_at)|sum_format }} руб.
+                        </div>
+                        <div class="action-prices-new-price">
+                            {% if offerId is defined and offerId > 0 %}
+                                {{ final_price|sum_format }} руб
+                            {% else %}
+                                {{ price.sum1(with_at)|sum_format }} руб.
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="action-prices-saving">
+                        <span>Вы экономите:</span>
+                        {% if offerId is defined and offerId > 0 %}
+                            {{ (price.sum(with_at) - final_price)|sum_format }} руб.
+                        {% else %}
+                            {{ (price.sum(with_at) - price.sum1(with_at))|sum_format }} руб.
+                        {% endif %}
+                    </div>
+                    <a href="#" class="action-prices-link">Хочу эту скидку!</a>
+                    <div class="action-prices-category">
+                        Категория «<b>{{ category.name }}</b>»<br/>
+                        {{ (category.withAt ? ('<b>'~(with_at ? 'А' : 'М')~'КПП</b>') : '&nbsp;')|raw }}
+                    </div>
+                </div>
+                <div class="action-titles">
+                    <div class="action-title-1">
+                        {% if offer.text2 is defined %}
+                            {{ offer.text2 }}
+                        {% else %}
+                            Скидка 20% на полный курс обучения
+                        {% endif %}
+                    </div>
+                    <div class="action-title-2">
+                        {% if offer.text3 is defined %}
+                            {{ offer.text3 }}
+                        {% else %}
+                                Самый простой и выгодный способ стать учеником автошколы
+                        {% endif %}
+                    </div>
+                    <div class="action-title-3">
+                        {% if offer.text4 is defined %}
+                            {{ offer.text4|raw }}
+                        {% else %}
+                            Получение прав ещё никогда не было таким лёгким, быстрым и выгодным
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="action action-1" style="left:1180px">
+                <div class="action-prices">
+                    <div class="action-prices-block-1">
+                        <div class="action-prices-old-price">
+                            {{ price.sum(with_at)|sum_format }} руб.
+                        </div>
+                        <div class="action-prices-new-price">
+                            {{ (price.sum2 + price.sum2p2(with_at, price.sum2))|sum_format }} руб.
+                        </div>
+                        <div class="action-prices-you-save">
+                            Экономия: {{ (price.sum(with_at) - (price.sum2 + price.sum2p2(with_at, price.sum2)))|sum_format }} руб.
+                        </div>
+                    </div>
+                    <div class="action-prices-saving">
+                        <span>Первый платёж:</span>
+                        Всего {{ price.sum2|sum_format }} руб.!
+                    </div>
+                    <a href="#" class="action-prices-link">Хочу эту скидку!</a>
+                    <div class="action-prices-category">
+                        Категория «<b>{{ category.name }}</b>»<br/>
+                        {{ (category.withAt ? ('<b>'~(with_at ? 'А' : 'М')~'КПП</b>') : '&nbsp;')|raw }}
+                    </div>
+                </div>
+                <div class="action-titles">
+                    <div class="action-title-1">Скидка 10% и оплата двумя платежами</div>
+                    <div class="action-title-2">Первый платёж — всего {{ price.sum2|sum_format }} руб., второй платёж в размере {{ price.sum2p2(with_at, price.sum2)|sum_format }} руб. Вы вносите только через {{ settings['access_time_after_2_payment']~' '~'fdays'|transchoice(settings['access_time_after_2_payment']) }}.</div>
+                    <div class="action-title-3">Удобный способ начать обучение прямо сейчас!</div>
+                </div>
+            </div>
+        </div>
+
+    <input type="hidden" id="pay_method" name="pay_method" value="online">
+
+    <div class="go">
+        <span class="btn2 green">Перейти к оплате <input value="" type="submit"></span>
+        <a class="go-back" href="{{ path('reg', { act: 'back' }) }}"></a>
+    </div>
+</form>

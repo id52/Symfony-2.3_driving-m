@@ -1,0 +1,57 @@
+{% extends 'AppBundle::layout_new.html.twig' %}
+
+{% block content %}
+<nav class="path">
+    <a href="{{ path('homepage') }}">{{ 'titles.homepage'|trans }}</a>
+    » <strong>{{ 'titles.payments'|trans }}</strong>
+</nav>
+
+<section id="info">
+    <div class="e_wrap_payment">
+        <div class="psb_info"></div>
+        <div class="e_item_payment--text psb_info_text">
+            <p class="psb_info_text">Ожидается ответ от платёжной системы.</p>
+            <span class="psb_info_text">Вы будете автоматически перенаправлены на следующую страницу.</span>
+        </div>
+    </div>
+</section>
+<section id="fail" style="display:none">
+    <div class="e_wrap_payment">
+        <div class="e_item_payment--img m_error"></div>
+        <div class="e_item_payment--text">
+            <p>Платёж был отклонён.</p>
+            <span>Вы будете автоматически перенаправлены на следующую страницу.</span>
+        </div>
+    </div>
+</section>
+<section id="success" style="display:none">
+    <div class="e_wrap_payment">
+        <div class="e_item_payment--img m_success"></div>
+        <div class="e_item_payment--text">
+            <p>Платёж был успешно завершён.</p>
+            <span>Вы будете автоматически перенаправлены на следующую страницу.</span>
+        </div>
+    </div>
+</section>
+
+{% endblock content %}
+
+{% block js %}
+    <script>
+        $(function() {
+            var interval = setInterval(function() {
+                $.getJSON('{{ path('psb_get_status_ajax') }}', function(status) {
+                    if (status == 'fail' || status == 'paid') {
+                        $('#info').hide();
+                        $('#success').toggle(status == 'paid');
+                        $('#fail').toggle(status == 'fail');
+                        clearInterval(interval);
+                        setTimeout(function() {
+                            window.location = '{{ path('homepage') }}';
+                        }, 2000);
+                    }
+                });
+            }, 3000);
+        });
+    </script>
+{% endblock %}

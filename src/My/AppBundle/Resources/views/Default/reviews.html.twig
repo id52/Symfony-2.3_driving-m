@@ -1,0 +1,246 @@
+{% extends 'AppBundle::layout_m.html.twig' %}
+
+{% block start_content %}
+<div id="popup-overlay"></div>
+<div id="review-popup" class="popup" style="display:none">
+    <div class="popup-header">
+        <span class="popup-close-btn">+</span>
+        Оставить отзыв:
+    </div>
+    <div class="popup-body">
+        {{ form_start(form, { action: path('reviews'), attr: { class: 'review-form table-form' }}) }}
+            {% if not app.user %}
+{#
+            <div class="review-form-signin">
+                <span>Заполните форму или Авторизируйтесь</span>
+                <a href="#"><img src="/m/images/icon/soc-vk.png"/></a>
+                <a href="#"><img src="/m/images/icon/soc-fb.png"/></a>
+            </div>
+#}
+
+            <div id="photo_view" style="float:left"></div>
+            <div id="no_photo_view" class="review-form-avatar"><div class="review-form-avatar-wrapper"></div></div>
+
+            <div class="review-form-cont-1">
+                <div class="review-form-upload-photo"><a href="#" id="photo_upload_link">Загрузить фото</a></div>
+                {{ form_widget(form.sex, { attr: { class: 'radio-field' }}) }}
+            </div>
+            {% endif %}
+
+            <table class="fields-table review-form-fields">
+                {% if not app.user %}
+                <tr>
+                    <th>{{ form_label(form.fio) }}</th>
+                    <td>
+                        {{ form_widget(form.fio, { attr: { class: 'field ie_css3' }}) }}
+                        <div class="field-error"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>{{ form_label(form.email) }}</th>
+                    <td>
+                        {{ form_widget(form.email, { attr: { class: 'field ie_css3' }}) }}
+                        <div class="field-error"></div>
+                        <div class="field-description">E-mail для уведомление о добавлении отзыва</div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>{{ form_label(form.category) }}</th>
+                    <td>
+                        {{ form_widget(form.category, { attr: { class: 'field ie_css3' }}) }}
+                        <div class="field-error"></div>
+                    </td>
+                </tr>
+                {% endif %}
+                <tr>
+                    <th>{{ form_label(form.message) }}</th>
+                    <td>
+                        {{ form_widget(form.message, { attr: { class: 'field ie_css3' }}) }}
+                        <div class="field-error">{{ form_errors(form.message) }}</div>
+                    </td>
+                </tr>
+            </table>
+            <div class="hr"></div>
+            <button type="submit" class="btn-blue-3 alert-popup-btn">Отправить</button>
+        {{ form_end(form) }}
+        <div style="display:none">
+            {{ form_start(photoForm, { action: path('image_ajax') }) }}
+            {{ form_widget(photoForm.uploadFile, { attr: { size: 1 }}) }}
+            {{ form_end(photoForm) }}
+        </div>
+    </div>
+</div>
+
+<div class="popup" style="display: none;" id="alert-popup">
+    <div class="popup-header">
+        <span class="popup-close-btn">+</span>
+        <span class="popup-title"></span>
+    </div>
+    <div class="popup-body table-form">
+        <div class="alert-popup-text"></div>
+        <button class="btn-blue-3 alert-popup-close-btn">Закрыть</button>
+    </div>
+</div>
+{% endblock start_content %}
+
+{% block content %}
+<div class="wrap">
+    <div class="back-link r-fl"><a href="{{ path('homepage') }}"><span class="v-m arrow">«</span>Вернуться</a></div>
+    <ul class="breadcrumb">
+        <li><a title="Главная" href="{{ path('homepage') }}">Главная</a></li>
+        <li><a title="Об автошколе" href="{{ path('article_show', { id: 'about' }) }}">Об автошколе</a></li>
+        <li class="active"><span>Отзывы</span></li>
+    </ul>
+    <div class="main-side">
+        <div class="main-title left-bg">
+            <div class="caption">Отзывы:</div>
+        </div>
+        {% for review in pagerfanta.currentPageResults %}
+            {% set user = review.user ? review.user : review %}
+            <div class="review">
+                <img src="{{ user.photo ? user.photoWebPath|imagine_filter('review'~(review.user ? '_user' : '')~'_photo') : '/m/images/review-no-photo.png' }}" class="review-image"/>
+                <div class="review-body">
+                    <div class="review-author">{{ user.firstName }} {{ user.lastName }} <span>{{ user.age ? ('age'|transchoice(user.age, { '%age%': user.age })) : '' }}</span></div>
+                    <div class="review-category">Категория {{ user.category }}</div>
+                    <div class="review-date">{{ review.createdAt|localizeddate('long', 'none') }}</div>
+                    <div class="review-text">
+                        <p>
+                            <span class="review-start-quote">“</span>
+                            {{ review.message }}
+                            <span class="review-end-quote">”</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        <div class="pager text-center">
+            {% if pagerfanta.haveToPaginate %}
+                {{ pagerfanta(pagerfanta, 'default', {
+                    previous_message: '«',
+                    next_message: '»',
+                    container_template: '<ul>%pages%</ul>',
+                    css_current_class: 'active',
+                    page_template: '<li class="%class%"><a href="%href%">%text%</a></li>',
+                    span_template: '<li class="%class%"><span>%text%</span></li>'
+                }) }}
+            {% endif %}
+        </div>
+    </div>
+    {% include 'AppBundle::_right_side.html.twig' %}
+</div>
+{% endblock content %}
+
+{% block js %}
+<script src="/v2/js/jquery-ui.js"></script>
+<script src="/v2/js/jquery.fileupload.js"></script>
+<script>
+$(function() {
+    var photo_upload = $('#photo_upload_link');
+    photo_upload.click(function() {
+        $('#image_uploadFile').click();
+    });
+    $('#image_uploadFile').fileupload({
+        formData: function (form) {
+            var f = form.serializeArray();
+            f.push({ name: 'filter', value: 'review_photo' });
+            return f;
+        },
+        send: function() {
+            photo_upload.hide();
+        },
+        done: function(e, data) {
+            if (data.result.errors) {
+                var errors = data.result.errors ? data.result.errors.join("\n") : '{{ 'undefined_error'|trans }}';
+                alert(errors);
+            } else {
+                $('#no_photo_view').hide();
+                $('#photo_view').html('<img src="' + data.result.image_src + '">').show();
+            }
+            photo_upload.show();
+        },
+        fail: function() {
+            alert('{{ 'errors.server'|trans }}');
+            photo_upload.show();
+        }
+    });
+
+    var closePopups = function() {
+        $('.popup').hide();
+        $('#popup-overlay').hide();
+    };
+
+    var showPopup = function(pu) {
+        closePopups();
+
+        var overlay = $('#popup-overlay');
+        overlay.show();
+
+        var updatePuPosition = function() {
+            pu.css({
+                left: ($(window).outerWidth() - pu.outerWidth()) / 2,
+                top: ($(window).outerHeight() - pu.outerHeight()) / 2
+            });
+        };
+
+        pu.css({
+            position: 'absolute',
+            zIndex: 10000
+        });
+
+        pu.show();
+        updatePuPosition();
+
+        pu.find('.popup-close-btn').click(function(e) {
+            e.preventDefault();
+            closePopups();
+        });
+
+        $(window).resize(updatePuPosition);
+
+        overlay.click(closePopups);
+    };
+
+    var popupAlert = function(title, msg) {
+        var pu = $('#alert-popup');
+        pu.find('.alert-popup-text').html(msg);
+        pu.find('.popup-title').html(title);
+        $('.alert-popup-close-btn').click(function(e) {
+            e.preventDefault();
+            closePopups();
+        });
+        showPopup(pu);
+    };
+
+    $('.review-form-link').click(function(e) {
+        e.preventDefault();
+        showPopup($('#review-popup'));
+    });
+
+    $('form[action="{{ path('reviews') }}"]').submit(function(e) {
+        e.preventDefault();
+
+        var $this = $(this);
+
+        $('.field-error', $this).html('');
+        $(':submit', $this).hide();
+
+        $.post($this.attr('action'), $this.serialize(), function(data) {
+            if (data.errors) {
+                for (var i in data.errors) {
+                    if (data.errors.hasOwnProperty(i)) {
+                        $('#' + i).closest('td').find('.field-error').html(data.errors[i]);
+                    }
+                }
+            } else {
+                $this.trigger('reset');
+                $('#review_sex_0, #review_sex_1').closest('label').removeClass('-checked');
+                $('#photo_view').hide();
+                $('#no_photo_view').show();
+                popupAlert('Спасибо!', 'Ваш отзыв отправлен и будет опубликован после проверки администратором');
+            }
+            $(':submit', $this).show();
+        });
+    });
+});
+</script>
+{% endblock js %}

@@ -1,0 +1,47 @@
+{% extends 'AppBundle::admin.html.twig' %}
+
+{% block content %}
+    <a href="{{ path(router_item_add) }}" class="btn pull-right btn-h1">
+        <i class="fa fa-plus"></i>
+        {{ ('admin.'~entity_name_s~'_add')|trans }}
+    </a>
+    <h1>{{ ('admin.'~entity_name_s~'_list')|trans }}</h1>
+    <hr>
+
+    {% for key, subcategories in categories %}
+        <h2>{{ ('support_category_types.'~key)|trans }}</h2>
+        {% if subcategories|length %}
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>{{ 'support_category_name'|trans }}</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for root_category in subcategories %}
+                    <tr>
+                        <td><b>{{ root_category.name }}</b></td>
+                        <td class="min_col">
+                            <a href="{{ path(router_item_edit, { id: root_category.id }) }}" class="nodecor text-success"><i class="fa fa-pencil-square-o"></i></a>
+                            <a href="{{ path(router_item_delete, { id: root_category.id }) }}" class="nodecor text-error" onclick="return confirm('{{ 'you_sure'|trans }}')"><i class="fa fa-times"></i></a>
+                        </td>
+                    </tr>
+
+                    {% for category in root_category.children %}
+                        <tr>
+                            <td style="padding-left:50px">{{ category.name }}</td>
+                            <td class="min_col">
+                                <a href="{{ path(router_item_edit, { id: category.id }) }}" class="nodecor text-success"><i class="fa fa-pencil-square-o"></i></a>
+                                <a href="{{ path(router_item_delete, { id: category.id }) }}" class="nodecor text-error" onclick="return confirm('{{ 'you_sure'|trans }}')"><i class="fa fa-times"></i></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            {{ 'no_data'|trans }}
+        {% endif %}
+    {% endfor %}
+{% endblock content %}

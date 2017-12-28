@@ -1,0 +1,567 @@
+project:
+    name: "Автошкола МГТУ"
+    slogan: "мы научим вас управлять автомобилем"
+    admin: "Админка"
+
+signin_link: "Войти"
+register_link: "Зарегистрироваться"
+forgot_link: "Восстановить пароль"
+in_admin: "В админку"
+on_site: "На сайт"
+
+registration.flash.user_created: "Пользователь создан."
+resetting.flash.success: "Пароль успешно изменён"
+
+fos_user_registration_form_last_name: "Фамилия"
+fos_user_registration_form_first_name: "Имя"
+fos_user_registration_form_patronymic: "Отчество"
+fos_user_registration_form_phone_mobile: "Телефон"
+fos_user_registration_form_email: "E-mail"
+fos_user_registration_form_plainPassword_first: "Пароль"
+fos_user_registration_form_plainPassword_second: "Повторить пароль"
+fos_user_registration_form_region: "Регион"
+fos_user_resetting_form_new_first: "Пароль"
+fos_user_resetting_form_new_second: "Повторить пароль"
+fos_user_registration_form_promoKey: "Промокод"
+fos_user_registration_form_category: "Категория прав"
+fos_user_registration_form_captcha: "Введите текст на картинке"
+
+photo_photoFile: "Фотография"
+photo_photoFile_btn: "Загрузить…"
+
+change_password_old_password: "Старый пароль"
+
+for_admin: "Для админа:"
+
+menu:
+    profile: "Профиль"
+    pass: "Пропуск на филиал"
+    change_password: "Смена пароля"
+    notifies: "Уведомления"
+    payments: "Платежи"
+    training: "Обучение"
+    test: "Тест по билетам"
+    test_general: "Тест как в ГИБДД"
+    test_knowledge: "Тест по темам"
+    stat: "Статистика"
+
+buttons:
+    add: "Добавить"
+    edit: "Редактировать"
+    change: "Сменить"
+    change_password: "Сменить пароль"
+    save: "Сохранить"
+    delete: "Удалить"
+    back: "Назад"
+    forward: "Далее"
+    complete: "Завершить"
+    back_to_training: "Вернуться к обучению"
+    answer: "Ответить"
+    continue: "Продолжить"
+    choice: "Выбрать"
+    quit: "Прервать тест"
+    start: "Начать"
+    pay: "Оплатить"
+    confirm_mobile: "В профиль"
+    filter: "Отфильтровать"
+    send: "Отправить"
+    cancel: "Отменить"
+    export_xml: "Экспортировать из Xml"
+    choose_another: "Выбрать другой вопрос"
+
+titles:
+    homepage: "Главная"
+    profile: "Профиль"
+    profile_edit: "Редактирование профиля"
+    notifies: "Уведомления"
+    payments: "Платежи"
+    trainings: "Обучение"
+    test: "Тест по билетам"
+    test_knowledge: "Тест по темам"
+    stat: "Статистика"
+    feedback: "Обратная связь"
+    feedback_teacher: "Связь с преподавателем"
+    pass: "Пропуск"
+
+form:
+    choices:
+        closed: "Закрыто"
+        opened: "Открыто"
+
+flash:
+    photo_change: "Фотография успешно сменена."
+    photo_save: "Фотография успешно сохранена."
+    photo_delete: "Фотография успешно удалена."
+mailing: "Рассылка"
+mobile_status:
+    confirmed: "подтверждён"
+    not_confirmed: "не подтверждён"
+    sended: "ввести код"
+    nulled: "подтвердить"
+    resend: "повторно отправить смс"
+
+mobile_confirm_text: "Код подтверждения: %code%"
+
+support_category_parent: "Родительская категория"
+support_category_name: "Название"
+support_teacher_name: "ФИО преподавателя"
+support_category_type: "Тип"
+support_category_types:
+    category: "Категория"
+    teacher: "Преподаватель"
+
+holiday_name: "Название"
+holiday_day: "День месяца"
+holiday_month: "Номер месяца"
+holiday_date: "Дата"
+
+paids:
+#    no_paid: Без оплат
+#    paid_1: Теория в рассрочку 50/50
+    paid_2: Оплата в рассрочку со скидкой 10%
+    paid_3: Полный курс обучения со скидкой 25%
+    paid_3_f: Полный курс обучения без скидки
+
+image_uploadFile: "Картинка"
+image_uploadFile_btn: "Загрузить…"
+
+admin:
+    settings: "Настройки"
+    settings_common: "Общие настройки"
+    index_video: "Видео на главной"
+    training_settings: "Настройки обучения"
+    training_version_list: "Версии"
+    training_version_add: "Добавить версию"
+    training_version_add_title: "Добавление версии"
+    training_version_edit_title: "Редактирование версии"
+    subject_list: "Предметы"
+    subject_add: "Добавить предмет"
+    subject_add_title: "Добавление предмета"
+    subject_edit_title: "Редактирование предмета"
+    subject_settings: "Настройки предметов"
+    theme_list: "Темы"
+    theme_add: "Добавить тему"
+    theme_add_title: "Добавление темы"
+    theme_edit_title: "Редактирование темы"
+    theme_settings: "Настройки тем"
+    question_list: "Вопросы"
+    question_add: "Добавить вопрос"
+    question_add_title: "Добавление вопроса"
+    question_edit_title: "Редактирование вопроса"
+    slice_list: "Срезы"
+    slice_add: "Добавить срез"
+    slice_add_title: "Добавление среза"
+    slice_edit_title: "Редактирование среза"
+    slice_settings: "Настройки срезов"
+    region_list: "Регионы"
+    region_add: "Добавить регион"
+    region_add_title: "Добавление региона"
+    region_edit_title: "Редактирование региона"
+    region_place_list: "Места вождения"
+    region_place_add: "Добавить место вождения"
+    region_place_add_title: "Добавление места вождения"
+    region_place_edit_title: "Редактирование места вождения"
+    service_list: "Услуги"
+    service_add: "Добавить услугу"
+    service_add_title: "Добавление услуги"
+    service_edit_title: "Редактирование услуги"
+    category_list: "Категории прав"
+    category_add: "Добавить категорию прав"
+    category_add_title: "Добавление категории прав"
+    category_edit_title: "Редактирование категории прав"
+    users: "Пользователи"
+    user_edit_title: "Редактирование пользователя"
+    faq_list: "Вопрос-ответы"
+    faq_add: "Добавить вопрос-ответ"
+    faq_add_title: "Добавление вопроса-ответа"
+    faq_edit_title: "Редактирование вопроса-ответа"
+    article_list: "Статьи"
+    article_add: "Добавить статью"
+    article_add_title: "Добавление статьи"
+    article_edit_title: "Редактирование статьи"
+    article_settings: "Настройки для статей"
+    news_list: "Новости"
+    news_add: "Добавить новость"
+    news_add_title: "Добавление новости"
+    news_edit_title: "Редактирование новости"
+    info_list: "Важная информация"
+    info_add: "Добавить важную информацию"
+    info_add_title: "Добавление важной информации"
+    info_edit_title: "Редактирование важной информации"
+    precheck_users: "Проверка данных пользователей"
+    precheck_user_view_title: "Проверка данных пользователя"
+    precheck_user_edit_title: "Редактирование данных пользователя"
+    paradox_users: "Перенос пользователей в Paradox"
+    paradox_user_set_title: "Перенос пользователя в Paradox"
+    send_email_title: "Отправление сообщения"
+    webgroup_list: "Веб-группы"
+    webgroup_add: "Добавить веб-группу"
+    webgroup_add_title: "Добавление веб-группы"
+    webgroup_edit_title: "Редактирование веб-группы"
+    mailing_list: "Рассылки"
+    mailing_add: "Добавить рассылку"
+    mailing_add_title: "Добавление рассылки"
+    mailing_edit_title: "Редактирование рассылки"
+    add_user_title: "Добавление пользователя"
+    add_simple_user_title: "Быстрое добавление пользователя"
+    test_email_list: "Cписок контрольных e-mail для рассылки"
+    test_email_add: "Добавить e-mail"
+    test_email_add_title: "Контрольный e-mail"
+    test_email_edit_title: "Контрольный e-mail"
+    test_email_email: "email"
+    support_category_list: "Категории обращений"
+    support_category_add: "Добавить категорию"
+    support_category_edit: "Редактировать категорию"
+    support_category_delete: "Удалить категорию"
+    support_category_add_title: "Добавление категории"
+    support_category_edit_title: "Редактирование категории"
+    support_teachers: "Преподаватели"
+    support_teacher_add: "Добавить переподавателя"
+    support_teacher_add_title: "Добавление преподавателя"
+    support_teacher_edit_title: "Редактирование преподавателя"
+    support_dialogs: "Диалоги"
+    support_holidays: "Праздники"
+    support_settings: "Настройки обратной связи"
+    automailing_promo_keys: "Автоматически сгенерированные ключи"
+    automailing_statistics: "Статистика автоматической рассылки"
+    automailing_settings: "Настройки автоматической рассылки"
+    filials_map: "Карта филиалов"
+    filial_list: "Список филиалов"
+    filial_add: "Добавить филиал"
+    filial_add_title: "Добавление филиала"
+    filial_edit_title: "Редактирование филиала"
+    filial_settings: "Настройки филиалов"
+    sites_map: "Карта площадок"
+    site_list: "Список площадок"
+    site_add: "Добавить площадку"
+    site_add_title: "Добавление площадки"
+    site_edit_title: "Редактирование площадки"
+    site_settings: "Настройка площадок"
+    offer_list: "Спецпредложения"
+    offer_add: "Добавить спецпредложение"
+    offer_add_title: "Добавление спецпредложения"
+    offer_edit_title: "Редактирование спецпредложения"
+    offer_student_list: "Спецпредложения для студентов"
+    offer_student_add: "Добавить спецпредложение"
+    offer_student_add_title: "Добавление спецпредложения"
+    offer_student_edit_title: "Редактирование спецпредложения"
+    office_list: "Офисы"
+    office_add: "Добавить офис"
+    office_add_title: "Добавление офиса"
+    office_edit_title: "Редактирование офиса"
+    flash_block_list: "Flash-блоки"
+    flash_block_add: "Добавить flash-блок"
+    flash_block_add_title: "Добавление flash-блока"
+    flash_block_edit_title: "Редактирование flash-блока"
+    flash_block_item_list: "Список элементов flash-блока «%name%»"
+    flash_block_item_add: "Добавить элемент в flash-блок"
+    flash_block_item_add_title: "Добавление элемента в flash-блок"
+    flash_block_item_edit_title: "Редактирование элемента в flash-блоке"
+    review_list: "Отзывы"
+    how_work_list: "Как это работает"
+    how_work_add: "Добавить элемент"
+    how_work_add_title: "Добавление элемента"
+    how_work_edit_title: "Редактирование элемента"
+    pass_filials_map: "Карта филиалов для пропусков"
+    pass_filial_list: "Список филиалов для пропусков"
+    pass_filial_add: "Добавить филиал для пропусков"
+    pass_filial_add_title: "Добавление филиала для пропусков"
+    pass_filial_edit_title: "Редактирование филиала для пропусков"
+    pass_filial_settings: "Настройки филиалов для пропусков"
+    promo_list: "Промо-кампании"
+    promo_add: "Добавить промо-кампанию"
+    promo_key_search: "Найти ключ"
+    promo_add_title: "Добавление промо-кампании"
+    promo_edit_title: "Редактирование промо-кампании"
+    promo_add_keys: "Добавить ключи"
+    promo_add_activations: "Добавить активации"
+    promo_activations_list: "Список активаций для промо-кампании «%campaign%»"
+    promo_add_keys_title: "Добавление ключей для промо-кампании «%campaign%»"
+    promo_keys_list: "Информация по ключам для промо-кампании «%campaign%»"
+    promo_add_activations_title: "Добавление активаций для промо-кампании «%campaign%»"
+    rever_money_user_card_title: "Карточка ученика"
+
+    buttons:
+        save: "Сохранить"
+        delete: "Удалить"
+        back_to_list: "Вернуться к списку"
+        back_to_view: "Вернуться к просмотру"
+        back: "Назад"
+        moderate: "Отметить как проверенные"
+        unsubscribe: "Отписать от всех рассылок"
+        edit: "Редактировать"
+        set: "Установить"
+        to_precheck: "Вернуть на проверку"
+        paradox_set: "Перенести в парадокс"
+        copy: "Скопировать"
+        send_email: "Отправить сообщение"
+        send: "Отправить"
+        create: "Создать"
+        lock: "Заблокировать"
+        unlock: "Разблокировать"
+        select: "Выбрать"
+
+errors:
+    server: "Ошибка сервера."
+    not_post: "Получен не POST-запрос."
+    image_not_found: "Картинка №%image_id% не найдена."
+    photo_not_found: "Фотография не найдена."
+    category_cant_delete: Нельзя удалить эту категорию прав, так как у некоторых пользователей она указана в профиле. Чтобы запретить регистрироваться с этой категорией, уберите галочки Активно в режиме её редактирования.
+    offer_date: Дата окончания спецпредложения должна быть позже чем дата начала
+    revert_money_1: "Запрос идентифицирован как повторный."
+    revert_money_2: "Запрос отклонен  Банком."
+    revert_money_3: "Запрос отклонен Платежным шлюзом."
+
+undefined_error: "Неизвестная ошибка."
+
+you_sure: "Вы уверены?"
+no_data: "Нет данных"
+success_added: "Успешно добавлено."
+success_edited: "Успешно отредактировано."
+success_deleted: "Успешно удалено."
+success_not_deleted: "Не удалось удалить."
+success_updated: "Успешно обновлено."
+success_revert_money: "Запрос на возврат средст отправлен."
+choose_option: " - Выберите - "
+choose_root:   " - Корень - "
+uploading: "Загружается…"
+yes: "Да"
+or: "или"
+no: "Нет"
+
+products:
+    distance_learning: "Дистанционное обучение"
+    queuing_traffic_police: "Постановка в очередь ГИБДД на сдачу ПДД"
+    medical_certificate: "Медицинская справка"
+    driving: "Вождение"
+
+purchase_of_products: "Оплата услуг"
+purchase_of_products_title: "Оплата услуг «Доступ к теоретическому курсу»"
+buy_products: "Оплатить"
+
+theme_answer_questions: "Ответить на вопросы"
+slice_start: "Пройти срез"
+exam_start: "Пройти экзамен"
+
+ticket_num: "Билет №%ticket%"
+
+theme_test_title: "Тест"
+theme_test_timeout: "Время закончилось!"
+theme_test_timeout_repeat: "Пройти тестирование"
+theme_test_timeout_return: "Повторить материал"
+theme_test_complete: "Тестирование завершено!"
+theme_test_complete_next: "Перейти к следующей теме"
+theme_test_complete_list: "Перейти к списку тем"
+theme_test_comments: "Комментарии к неверным ответам?"
+theme_test_longtime: "Время закончилось!"
+
+theme_test_is_shuffle:
+    total: "Всего %n% вопрос.|Всего %n% вопроса.|Всего %n% вопросов."
+    success_in_row: "Отвечено правильно %times% на %n% вопрос.|Отвечено правильно %times% на %n% вопроса.|Отвечено правильно %times% на %n% вопросов."
+    success_in_row_title: "Отвечено правильно %times%|Отвечено правильно %times%|Отвечено правильно %times%"
+    success_this: "Правильных ответов на этот вопрос %n% из %need%."
+    success_this_in_row: "Правильных ответов на этот вопрос %n%. Из них %n_in_row% подряд из %need%."
+    remaining: "Осталось ответить на %n% вопрос.|Осталось ответить на %n% вопроса.|Осталось ответить на %n% вопросов."
+    times: "%n% раз|%n% раза|%n% раз"
+    in_row: "подряд"
+
+slice_title: "Срез"
+slice_timeout: "Время закончилось!"
+slice_max_errors: "Много ошибок!"
+slice_complete: "Поздравляем!"
+slice_list: "Перейти к списку тем"
+slice_longtime: "Время закончилось!"
+
+final_exam: "Итоговый экзамен"
+
+training:
+    theme: "Тема"
+    slice: "Срез по предыдущим темам"
+    exam: "Экзамен"
+    final_exam:
+        denied: "Итоговый экзамен недоступен!"
+        passed: "Итоговый экзамен сдан!"
+        max_errors: "Много ошибок!"
+        timeout: "Время закончилось!"
+        retake: "Пересдача невозможна!"
+        complete: "Поздравляем!"
+        back_to_list: "Вернуться к обучению"
+        longtime: "Время закончилось!"
+
+test:
+    max_errors: "Много ошибок!"
+    timeout: "Время закончилось!"
+    complete: "Поздравляем!"
+    longtime: "Время закончилось!"
+
+test_knowledge:
+    max_errors: "Много ошибок!"
+    timeout: "Время закончилось!"
+    complete: "Поздравляем!"
+    longtime: "Время закончилось!"
+
+RUB: "руб."
+minute: "мин."
+hours: "ч."
+days: "д."
+
+reset: "Сбросить результаты"
+
+test_tickets: "Выбор билета"
+test_comments: "Комментарии к неверным ответам?"
+test_time: "Учитывать время?"
+test_check_all: "Все билеты"
+test_return: "Пройти ещё раз"
+
+test_knowledge_themes: "Выбор тем"
+test_knowledge_comments: "Комментарии к неверным ответам?"
+test_knowledge_time: "Учитывать время?"
+test_knowledge_check_all: "Все темы"
+test_knowledge_return: "Пройти ещё раз"
+test_knowledge_questions_cnt: "(%cnt% вопрос)|(%cnt% вопроса)|(%cnt% вопросов)"
+test_knowledge_not_enough_questions: "Необходимо, чтобы в выбранных темах было 20 вопросов или больше."
+
+payments:
+    region_not_found: "Регион не определён"
+    region_not_found_description: "Для продолжения работы с платежами необходимо установить Ваш регион в профиле."
+    set_region: "Установить регион"
+    paid: "%sum%р."
+    pay: "Оплатить <span class='sum'>%sum%</span>р."
+
+admin_pass: "Отметить как пройд."
+
+paid_notify:
+    pay: "Оплатить сейчас"
+    left: "Осталось"
+
+stat:
+    subject: "Предмет оценки"
+    theme_num: "Тема №%num%"
+    stat: "%proc%% (%correct% из %all%)"
+    status:
+        passed: "сдан"
+        not_passed: "не сдан"
+        aborted: "прерван"
+
+unsubscribe: "E-mail \"%email%\" успешно отписан от рассылки."
+unsubscribe_pre_check_title: "Отписаться от рассылок"
+unsubscribe_done_title: "Вы отписались от рассылок"
+unsubscribe_body_text: "Вы действительно желаете больше не получать письма от Автошколы МГТУ им.Баумана?"
+unsubscribe_button_yes: "Да"
+unsubscribe_button_no: "Нет"
+
+_btn_trainings: "Перейти к обучению"
+_btn_profile_edit: "Заполнить профиль"
+_btn_payments_2: "Оплатить"
+trainings_alert: "Уважаемый пользователь, начать сдавать тесты по темам Вы можете только поле 2-ой оплаты."
+trainings_alert_2: "Уважаемый пользователь, сдать экзамен Вы сможете только поле оплаты вождения."
+trainings_alert_3: "Уважаемый пользователь, сдать итоговый экзамен Вы сможете только поле оплаты вождения."
+help_title: "Помощь"
+
+feedback: "Обратная связь"
+feedback_error: "Извините, не получилось отправить сообщение. Попробуйте ещё раз."
+feedback_success: "Сообщение успешно отправлено."
+feedbackTeacher: "Связь с преподавателем"
+feedbackTeacher_error: "Извините, не получилось отправить сообщение. Попробуйте ещё раз."
+feedbackTeacher_success: "Сообщение успешно отправлено."
+form_destination: "Получатель"
+form_text: "Текст сообщения"
+form_from: "От"
+form_subject: "Тема письма"
+form_study_subject: "Предмет"
+form_study_theme: "Тема предмета"
+
+enter_access: "Я прочитал и согласен с <a href=\"%url%\" target=\"_blank\">условиями дороговора-оферты</a>"
+enter_privacy: "Я прочитал и согласен с <a href=\"%url%\" target=\"_blank\">условиями конфидециальности</a>"
+
+form.new_password: "Новый пароль"
+form.new_password_confirmation: "Повторить пароль"
+
+unsubscribe_mailing: "Отписаться от рассылок"
+
+statistics_from: "От"
+statistics_to: "До"
+
+user_confirmation: "На номер <span id='user_phone'></span> отправлен SMS-код подтверждения. Введите его в строку «Код подтверждения»"
+user_confirmation_email_subject: "Регистрация нового пользователя в Автошкола МГТУ"
+user_confirmation_email_message: |
+    {{ email }}
+    {{ password }}
+    {{ url }}
+
+sendmail_name: "Имя"
+sendmail_email: "E-mail"
+sendmail_message: "Сообщение"
+sendmail_captcha: "Код"
+
+profile_user_title: Данные пользователя
+profile_registr_data: Данные регистрации
+profile_email: E-mail
+profile_last_name: Фамилия
+profile_first_name: Имя
+profile_patronymic: Отчество
+profile_region: Регион
+profile_passport_data: Паспортные данные
+profile_sex: Пол
+profile_birthday: День рождения
+profile_birth_place: Место рождения
+profile_birth_country: Страна
+profile_birth_region: Регион
+profile_birth_city: Город
+profile_foreign_passport: Паспорт другой страны?
+profile_foreign_passport_number: Номер
+profile_passport_number: Серия и номер
+profile_passport_number_ser: Серия
+profile_passport_number_num: Номер
+profile_passport_number: Серия и номер
+profile_passport_number_help: Формат: 1234 567890
+profile_passport_rovd: Кем выдан
+profile_passport_rovd_number: Код подразделения
+profile_passport_rovd_date: Дата выдачи
+profile_not_registration: Нет прописки?
+profile_registration_data: Прописка
+profile_registration_country: Страна
+profile_registration_region: Регион
+profile_registration_city: Город
+profile_registration_street: Улица
+profile_registration_house: Дом
+profile_registration_stroenie: Строение
+profile_registration_korpus: Корпус
+profile_registration_apartament: Квартира
+profile_place_data: Регистрация по месту пребывания
+profile_place_country: Страна
+profile_place_region: Регион
+profile_place_city: Город
+profile_place_street: Улица
+profile_place_house: Дом
+profile_place_stroenie: Строение
+profile_place_korpus: Корпус
+profile_place_apartament: Квартира
+profile_work: Работа
+profile_work_place: Место
+profile_work_position: Должность
+profile_phone_data: Контактные телефоны
+profile_phone_home: Домашний телефон
+profile_phone_home_help: Формат: +7 1234567890
+profile_phone_mobile: Мобильный телефон
+profile_phone_mobile_help: Формат: +7 1234567890
+profile_old_mobile_phones: Старые м.телефоны
+profile_payments: Платежи
+profile_region_place: Место вождения
+profile_exams: Экзамены
+profile_additional_info: Дополнительная информация
+profile_category: Категория прав
+profile_with_at: Автомат?
+profile_paradox_id: Paradox ID
+profile_webgroup: Веб-группа
+profile_plain_password: Пароль
+profile_moderated: Проверен?
+profile_paids: Оплаты
+profile_support_dialogs: Обратная связь
+
+choose_option:  - Выберите -
+male: Мужской
+female: Женский
+
+age: '%age% год|%age% года|%age% лет'
+fdays: 'день|дня|дней'

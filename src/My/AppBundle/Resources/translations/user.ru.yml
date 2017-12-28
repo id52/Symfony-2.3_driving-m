@@ -1,0 +1,74 @@
+user_id: '#'
+user_email: E-mail
+user_name: Ф. И. О.
+user_category: Категория прав
+user_u_roles: Права
+user_with_roles: С правами?
+user_u_white_ips: Разрешённые IP
+user_u_white_ips_help: Каждый IP с новой строки
+user_created_at: Дата регистрации
+user_birthday: День рождения
+user_region: Регион
+user_paradox_id: Paradox ID
+user_webgroup: Веб-группа
+user_all: Увидеть всех
+user_paid: Оплата
+user_type_paids: Форма оплаты
+user_paids: Оплаты
+user_additional_paids: Оплаты дополнительных услуг
+user_paid2_from: Первый платеж от
+user_paid2_to: Первый платеж до
+user_paid3_from: Второй платеж от
+user_paid3_to: Второй платеж до
+user_phone_home: Домашний телефон
+user_phone_mobile: Мобильный телефон
+user_passport_number: Номер паспорта
+user_last_name: Фамилия
+user_first_name: Имя
+user_patronymic: Отчество
+user_phone_mobile_confirmed: Мобильный телефон подтверждён?
+user_show_from: Показывать от
+user_show_to: Показывать до
+user_exams: Сдал экзамены?
+user_final_exam: Сдал итоговый экзамен?
+user_in_paradox: В парадоксе?
+user_status: Статус
+user_mailing: Подписан на рассылки?
+user_mailing_c: Рассылка
+user_moderated_support_categories: Категории поддержки для модерирования
+
+ROLE_ADMIN: Админ
+ROLE_MOD_CONTENT: Редактирование данных
+ROLE_MOD_PRECHECK_USERS: Проверка пользователей
+ROLE_MOD_PARADOX_USERS: Перенос в Paradox
+ROLE_MOD_ADD_USER: Добавление пользователей
+ROLE_MOD_SUPPORT: Система поддержки
+ROLE_MOD_TEACHER: Преподаватель (система поддержки)
+ROLE_MOD_FINANCE: Финансовый аналитик
+ROLE_MOD_PROMO: Промо-кампании
+ROLE_MOD_MAILING: Управление рассылками
+ROLE_MOD_ACCOUNTANT: Кассир
+ROLE_TESTER_TRAINING: Тестировщик обучения
+ROLE_TRANSLATOR_TJ: Переводчик Таджикский
+ROLE_TRANSLATOR_UZ: Переводчик Узбекский
+ROLE_TRANSLATOR_KG: Переводчик Киргизский
+
+choose_option:  - Выберите -
+yes: да
+no: нет
+
+paids:
+    offline: "Оплата в офисе (добавить быстро, добавить)"
+    online: "Оплата онлайн (через сайт)"
+    no_paid: Без оплат
+    all_online: Все онлайн оплаты
+    paid_2: Оплата в рассрочку со скидкой 10%
+    paid_3: Полный курс обучения со скидкой 25%
+    all_offline: Все оплаты в офисе
+    paid_3_f: Полный курс обучения без скидки
+
+form_last_name: Фамилия
+form_first_name: Имя
+form_patronymic: Отчество
+form_email: E-mail
+form_phone_mobile: Мобильный телефон

@@ -1,0 +1,15 @@
+support_dialog_created_at: Создано
+support_dialog_laste_message_time: Последнее сообщение
+support_dialog_parent_category_name: Категория
+support_dialog_category_name: Подкатегория
+support_dialog_user_fullname: Пользователь
+support_dialog_user_first_name: Имя пользователя
+support_dialog_user_last_name: Фамилия пользователя
+support_dialog_user_patronymic: Отчество пользователя
+support_dialog_user_email: E-mail пользователя
+support_dialog_answered: Отвечено
+support_dialog_last_moderator: Модератор
+
+choose_option:  - Выберите -
+yes: да
+no: нет

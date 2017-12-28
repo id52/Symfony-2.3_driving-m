@@ -1,0 +1,159 @@
+<div class="modal auth-modal" id="auth01">
+    <div class="tabs">
+        <a class="tab" href="#tab1">Вход</a>
+        <a class="tab" href="#tab2">Регистрация</a>
+    </div>
+
+    <div id="tab1">
+        <div class="form">
+            <form action="{{ path('fos_user_security_check') }}" method="post">
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token_auth }}" />
+                <div class="row">
+                    <div class="label">E-mail</div>
+                    <div class="input">
+                        <input id="js_login_username" name="_username" type="text">
+                        <div class="err-text">
+                            <strong>Ошибка!</strong><br>
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="label">Пароль</div>
+                    <div class="input">
+                        <input id="js_login_password" name="_password" type="password">
+                        <div class="err-text">
+                            <strong>Ошибка!</strong><br>
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="check">
+                    <span class="pass-toggle">Забыли пароль</span>
+                    <input name="_remember_me" class="customCheckbox" id="forgot" type="checkbox" checked="checked">
+                    <label for="forgot">Запомнить меня</label>
+                </div>
+                <div class="links">
+                    <span class="link bg-green key-link">
+                        Вход в личный кабинет
+                        <input value="" type="submit">
+                    </span>
+                </div>
+            </form>
+        </div>
+
+        <div class="restore">
+            <form action="{{ path('fos_user_resetting_send_email') }}" method="post">
+                <div class="row">
+                    <div class="label">E-mail для востановление пароля</div>
+                    <div class="input">
+                        <input id="js_reset_username" type="text" name="username">
+                        <div class="err-text">
+                            <strong>Ошибка!</strong><br>
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="links">
+                    <span class="link bg-green">
+                        Востановить пароль
+				        <input value="" type="submit">
+				    </span>
+                </div>
+                <div class="close-toggle"><span>отмена, я вспомнил(а)</span></div>
+            </form>
+        </div>
+    </div>
+
+    <div id="tab2">
+        <div class="form">
+            <form action="{{ path('fos_user_registration_register') }}" method="post">
+                <input type="hidden" name="fos_user_registration_form[_token]" value="{{ csrf_token_reg }}" />
+                <div class="row">
+                    <div class="label">Фамилия</div>
+                    <div class="input">
+                        <input id="js_reg_last_name" name="fos_user_registration_form[last_name]" type="text">
+                        <div class="err-text">
+                            <strong>Ошибка!</strong><br>
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="label">Имя</div>
+                    <div class="input">
+                        <input id="js_reg_first_name" name="fos_user_registration_form[first_name]" type="text">
+                        <div class="err-text">
+                            <strong>Ошибка!</strong><br>
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="label">Отчество</div>
+                    <div class="input">
+                        <input id="js_reg_patronymic" name="fos_user_registration_form[patronymic]" type="text">
+                        <div class="err-text">
+                            <strong>Ошибка!</strong><br>
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="label">E-mail</div>
+                    <div class="input">
+                        <input id="js_reg_email" name="fos_user_registration_form[email]" type="text">
+                        <div class="err-text">
+                            <strong>Ошибка!</strong><br>
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="label">Пароль</div>
+                    <div class="input orange">
+                        <input id="js_reg_plainPassword_first" name="fos_user_registration_form[plainPassword][first]" type="password">
+                        <div class="err-text">
+                            <strong>Ошибка!</strong><br>
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="label">Повторить пароль</div>
+                    <div class="input">
+                        <input id="js_reg_plainPassword_second" name="fos_user_registration_form[plainPassword][second]" type="password">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="label">Регион</div>
+                    <select id="reg-region" name="fos_user_registration_form[region]" class="customSelect" style="width:249px">
+                    </select>
+                </div>
+                <div class="row">
+                    <div class="label">Категория</div>
+                    <select id="reg-category" name="fos_user_registration_form[category]" class="customSelect select-category" style="width:249px">
+                    </select>
+                </div>
+                <div class="row captcha">
+                    <div class="label">Проверочный код</div>
+                    <img src="{{ path('innocead_captcha', { 'random': random() }) }}" onclick="this.src='{{ path('innocead_captcha', {'random': '1' }) }}'+Math.round(Math.random(0)*10000000000)" width="129" height="60" alt="" style="cursor:pointer;border:solid 1px black" />
+                    <div class="input">
+                        <input id="js_reg_captcha" name="fos_user_registration_form[captcha]" type="text">
+                        <div class="err-text">
+                            <strong>Ошибка!</strong><br>
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="links bottom">
+                    <span class="link bg-green reg-link">
+                        Зарегистрироваться
+                        <input value="" type="submit">
+                    </span>
+                </div>
+            </form>
+        </div>
+    </div>
+    <span class="close"></span>
+</div>

@@ -1,0 +1,15 @@
+My\AppBundle\Entity\UserOldMobilePhone:
+    type: entity
+    table: users_old_mobile_phones
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        phone:
+            type: string
+    manyToOne:
+        user:
+            targetEntity: User
+            inversedBy: old_mobile_phones

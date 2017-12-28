@@ -1,0 +1,27 @@
+{% extends 'AppBundle::admin.html.twig' %}
+
+{% block content %}
+    <h3>Версии тем назначенные на преподавателя {{ teacher.user.fullName }}</h3>
+    <hr>
+    {{ form_start(form) }}
+        {% for subject in subjects %}
+            <b>{{ subject.title }}</b>
+            <br>
+            {% for theme in subject.themes %}
+                &nbsp;&nbsp;&nbsp;{{ theme.title }}<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ form_widget(attribute(form, theme.id)) }}<br>
+            {% endfor %}
+        {% endfor %}
+
+        {{ form_rest(form) }}
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-success">
+                <i class="fa fa-download"></i>
+                <span>{{ 'admin.buttons.save'|trans }}</span>
+            </button>
+            <a class="btn pull-right" href="{{ path('admin_support_teachers') }}"><i class="fa fa-arrow-left"></i> {{ 'admin.buttons.back_to_list'|trans }}</a>
+        </div>
+    {{ form_end(form) }}
+
+{% endblock content %}

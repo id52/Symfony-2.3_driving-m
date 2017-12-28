@@ -1,0 +1,40 @@
+My\AppBundle\Entity\Site:
+    type: entity
+    table: sites
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        title:
+            type: string
+        coords:
+            type: array
+        active:
+            type: boolean
+        active_auth:
+            type: boolean
+        _show:
+            type: boolean
+        show_auth:
+            type: boolean
+        updated_at:
+            type: datetime
+            gedmo:
+                timestampable:
+                    on: update
+        created_at:
+            type: datetime
+            gedmo:
+                timestampable:
+                    on: create
+    oneToOne:
+        image:
+            targetEntity: Image
+            mappedBy: site
+            cascade: [ all ]
+    manyToOne:
+        region:
+            targetEntity: Region
+            inversedBy: sites

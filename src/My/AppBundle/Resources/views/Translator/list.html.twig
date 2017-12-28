@@ -1,0 +1,62 @@
+{% extends 'AppBundle::admin.html.twig' %}
+
+{% block content %}
+    <h1>Перевод вопросов</h1>
+    <hr>
+
+    <a id="filter_link" href="#"><i class="fa fa-caret-down"></i> Фильтр</a>
+    <div id="filter">
+        {{ form_start(filter_form) }}
+        {{ form_widget(filter_form) }}
+        <div class="form-actions">
+            <button type="submit" class="btn btn-success pull-right">
+                <i class="fa fa-filter"></i>
+                <span>{{ 'buttons.filter'|trans }}</span>
+            </button>
+        </div>
+        {{ form_end(filter_form) }}
+    </div>
+    <br>
+
+    {% if pagerfanta.currentPageResults|length %}
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th class="min_col">{{ 'question_is_pdd'|trans({}, 'question') }}</th>
+                <th class="min_col">{{ 'question_num'|trans({}, 'question') }}</th>
+                <th class="min_col">{{ 'question_subject'|trans({}, 'question') }}</th>
+                <th>{{ 'question_theme'|trans({}, 'question') }}</th>
+                <th>{{ 'question_text'|trans({}, 'question') }}</th>
+                <th class="min_col"></th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% for question in pagerfanta.currentPageResults %}
+                <tr {% if emptyQuestions[question.id] is defined %}class="tr-error" {% endif %}>
+                    <td class="min_col">{% if question.isPdd %}<i class="fa fa-plus"></i>{% else %}<i class="fa fa-minus"></i>{% endif %}</td>
+                    <td class="min_col">{{ question.num ? question.num : '-----' }}</td>
+                    <td class="min_col">{{ question.theme.subject.briefDescription }}</td>
+                    <td style="width:30%">{{ question.theme.title }}</td>
+                    <td style="width:30%">{{ question.text }}</td>
+                    <td class="min_col">
+                        {% if locale == 'uz' %}
+                            <a href="{{ path('admin_question_translation_edit_uz', { id: question.id, query_string: query_string }) }}" class="nodecor text-success"><i class="fa fa-language"></i></a>
+                        {% elseif locale == 'tj' %}
+                            <a href="{{ path('admin_question_translation_edit_tj', { id: question.id, query_string: query_string }) }}" class="nodecor text-success"><i class="fa fa-language"></i></a>
+                        {% elseif locale == 'kg' %}
+                            <a href="{{ path('admin_question_translation_edit_kg', { id: question.id }) }}" class="nodecor text-success"><i class="fa fa-language"></i></a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        {{ 'no_data'|trans }}
+    {% endif %}
+    {% if pagerfanta.haveToPaginate %}
+        {{ pagerfanta(pagerfanta, 'twitter_bootstrap_translated', { prev_message: '←', next_message: '→' }) }}
+    {% endif %}
+{% endblock content %}
+

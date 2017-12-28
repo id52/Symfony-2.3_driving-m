@@ -1,0 +1,125 @@
+{% extends 'AppBundle::layout_m.html.twig' %}
+
+{% block content %}
+<div class="wrap">
+    <div class="back-link r-fl"><a href="{{ path('homepage') }}"><span class="v-m arrow">«</span>Вернуться</a></div>
+    <ul class="breadcrumb">
+        <li><a title="Главная" href="{{ path('homepage') }}">Главная</a></li>
+        <li><a title="Об автошколе" href="{{ path('article_show', { id: 'about' }) }}">Об автошколе</a></li>
+        <li class="active"><span>Офисы автошколы</span></li>
+    </ul>
+    <div class="main-side">
+        <div class="main-title left-bg">
+            <div class="caption">Офисы автошколы:</div>
+        </div>
+        <div class="text-block">
+            <h2>Автошкола при МГТУ им. Баумана</h2>
+
+            <style scoped="scoped">
+                .contacts-info {
+                    font-size: 14px;
+                    margin-left: 15px;
+                }
+                .contacts-info > div {
+                    margin-top: 5px;
+                }
+                .contacts-info .icon {
+                    float: left;
+                    margin-top: 3px;
+                }
+                .contacts-info .c-info {
+                    margin-left: 23px;
+                }
+                .map {
+                    height: 450px;
+                    width: 600px;
+                    margin-top: 15px;
+                }
+            </style>
+
+            {% for office in offices %}
+                <h3 class="office-title clear">
+                    <a target="_blank" href="{{ path('office_print', { id: office.id }) }}" class="print-button">Печать</a>
+                    {{ office.title }}
+                </h3>
+
+                <div class="contacts-info">
+                    <div class="block-contacts fs16">
+                        <img alt="" class="icon v-m" src="/m/images/icon/location.png" />
+                        <div class="c-info clear">{{ office.region }}, {{ office.address }} {{ office.station ? ('(м. «'~office.station~'»)') : '' }}</div>
+                    </div>
+
+                    {% if office.addressDesc %}
+                    <div class="block-contacts fs16">
+                        <img alt="" class="icon v-m" src="/m/images/icon/location.png" />
+                        <div class="c-info clear">{{ office.addressDesc|raw }}</div>
+                    </div>
+                    {% endif %}
+
+                    {% if office.workTime %}
+                    <div class="block-contacts fs16">
+                        <img alt="" class="icon v-m" src="/m/images/icon/clock.png" />
+                        <div class="c-info clear">{{ office.workTime }}</div>
+                    </div>
+                    {% endif %}
+
+                    {% if office.activePhones %}
+                    <div class="block-contacts fs16">
+                        <img alt="" class="icon v-m" src="/m/images/icon/phone-3.png" />
+                        <div class="c-info clear"><b>{{ office.activePhones|join('</b><br><b>')|raw }}</b></div>
+                    </div>
+                    {% endif %}
+
+                    {% if office.activeEmails %}
+                    <div class="block-contacts fs16">
+                        <img alt="" class="icon v-m" src="/m/images/icon/mail-2.png" />
+                        <div class="c-info clear">
+                            {% for email in office.activeEmails %}
+                            <a href="mailto:{{ email }}">{{ email }}</a><br>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+
+                {% if office.addressGeo or office.mapCode %}
+                    <div id="map_{{ office.id }}" class="map"></div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    {% include 'AppBundle::_right_side.html.twig' %}
+</div>
+{% endblock content %}
+
+{% block js %}
+<script src="//api-maps.yandex.ru/2.1/?lang=ru-RU"></script>
+{% for office in offices %}
+{% if office.addressGeo or office.mapCode %}
+<script type="text/javascript">
+{% if office.addressGeo %}
+    var init_{{ office.id }} = function() {
+        ymaps.geocode('{{ office.region~', '~office.addressGeo }}', { results: 1 }).then(function(res) {
+            var coords = res.geoObjects.get(0).geometry.getCoordinates();
+
+            var myMap = new ymaps.Map('map_{{ office.id }}', { center: coords, zoom: 16 }, { suppressMapOpenBlock: true });
+
+            var myPlacemark = new ymaps.Placemark(
+                coords,
+                {
+                    hintContent: '{{ office.title }}',
+                    balloonContent: '<b>{{ office.title }}</b><br>{{ office.activePhones|join('<br>')|raw }}<br>г. {{ office.region }} {{ office.station ? (' (м. '~office.station~')') : '' }}, {{ office.address }}'
+                },
+                { iconLayout: 'default#image', iconImageHref: '/m/images/lp.png', iconImageSize: [ 29, 44 ], iconImageOffset: [ -14, -44 ] }
+            );
+            myMap.geoObjects.add(myPlacemark);
+        });
+    };
+    ymaps.ready(init_{{ office.id }});
+{% else %}
+    {{ office.mapCode|raw }}
+{% endif %}
+</script>
+{% endif %}
+{% endfor %}
+{% endblock js %}

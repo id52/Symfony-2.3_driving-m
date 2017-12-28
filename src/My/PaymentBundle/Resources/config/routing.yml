@@ -1,0 +1,46 @@
+robokassa_result:
+    path:  /robokassa/result/
+    defaults: { _controller: PaymentBundle:Robokassa:result }
+
+robokassa_success:
+    path:  /robokassa/success/
+    defaults: { _controller: PaymentBundle:Robokassa:success }
+
+robokassa_fail:
+    path:  /robokassa/fail/
+    defaults: { _controller: PaymentBundle:Robokassa:fail }
+
+robokassa_is_paid:
+    path:  /robokassa/is_paid/
+    defaults: { _controller: PaymentBundle:Robokassa:isPaid }
+
+psb_result:
+    path:  /psb/result/
+    defaults: { _controller: PaymentBundle:Psb:result }
+
+psb_query:
+    path:  /psb/query-{id}-{uid}-{trtype}/
+    defaults: { _controller: PaymentBundle:Psb:query, trtype: 1 }
+    requirements:
+        id: \d+
+        uid: \d+
+        trtype: \d+
+
+psb_info:
+    path: /psb/info/
+    defaults: { _controller: PaymentBundle:Psb:info }
+
+psb_get_status_ajax:
+    path: /psb/get-status-ajax/
+    defaults: { _controller: PaymentBundle:Psb:getStatusAjax }
+
+psb_info_revert:
+    path: /psb/info/revert-{uid}
+    defaults: { _controller: PaymentBundle:Psb:infoRevert }
+    requirements:
+        uid: \d+
+
+psb_get_status_revert_ajax:
+    path: /psb/get-status-revert-ajax/
+    defaults: { _controller: PaymentBundle:Psb:getStatusRevertAjax }
+

@@ -1,0 +1,543 @@
+body {
+    padding: 80px 0 20px;
+}
+
+footer {
+    text-align: right;
+}
+
+.auth {
+    margin-top: 10px;
+}
+
+.index {
+    text-align: center;
+}
+
+.index .btn {
+    width: 200px;
+}
+
+.btn-h1 {
+    margin: 16px 0 0 10px;
+}
+
+.jcrop-vline, .jcrop-hline {
+    background: #fff url("/bundles/app/images/Jcrop.gif") top left repeat;
+}
+
+.preview {
+    overflow: hidden;
+}
+
+.preview img {
+    max-width: none;
+}
+
+.help-inline {
+    padding-left: 10px;
+}
+
+.help-block, .help-inline {
+    color: #999;
+}
+
+.nodecor, .nodecor:hover {
+    text-decoration: none;
+}
+
+th.min_col, td.min_col {
+    width: 1px;
+    white-space: nowrap;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.answers, .questions {
+    margin-bottom: 5px;
+}
+
+.answers input[type="radio"] {
+    margin: 0 3px;
+}
+
+#image-progress {
+    width: 200px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+    margin-bottom: 0;
+    border: solid 1px #ccc;
+    border-radius: 5px;
+    position: relative;
+    display: none;
+}
+
+#image-progress span {
+    position: absolute;
+    left: 0;
+    width: 200px;
+}
+
+.upload-fail {
+    height: 22px;
+    margin-top: 4px;
+    float: left;
+    line-height: 22px;
+    color: #a00;
+    display: none;
+}
+
+#image_view {
+    margin-bottom: 10px;
+    display: none;
+}
+
+#image_view > div {
+    float: left;
+    position: relative;
+}
+
+#image_view i {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    text-shadow: 0 0 2px #000, 0 0 4px #fff;
+    font-size: 20px;
+}
+
+#image_view i:hover {
+    font-size: 25px;
+}
+
+#image_view .fa-times {
+    color: #a00;
+}
+
+#image_view .fa-times:hover {
+    color: #c33;
+}
+
+#image_view .fa-pencil-square-o {
+    color: #eee;
+}
+
+#image_view .fa-pencil-square-o:hover {
+    color: #fff;
+}
+
+#mailing .fa-envelope {
+    color: #a00;
+}
+
+#crop-modal {
+    width: 810px;
+}
+
+#crop-modal .btn .loader {
+    display: none;
+}
+
+.preview {
+    overflow: hidden;
+}
+
+.preview img {
+    max-width: none;
+}
+
+#training .nav-tabs > li {
+    margin-bottom: 0;
+}
+
+#training .nav-tabs > li.disabled {
+    background-color: #eee;
+}
+
+#training .nav-tabs > li > span {
+    border: 1px solid #DDDDDD;
+    border-radius: 4px 4px 0 0;
+    line-height: 20px;
+    padding: 8px 12px;
+    margin-right: 2px;
+    display: block;
+}
+
+#training .nav-tabs > li.disabled > span {
+    color: #999999;
+}
+
+#training .nav-tabs > li .btn-mini {
+    margin: 8px;
+}
+
+#training .media-body a {
+    color: #333;
+}
+
+#training .media-body a:hover {
+    text-decoration: none;
+}
+
+.embedded {
+    margin-left: 20px;
+}
+
+.embedded .control-label {
+    display: inline;
+    float: none;
+}
+
+.controls .embedded input[type=checkbox],
+.controls label input[type=checkbox],
+.controls .embedded input[type=radio],
+.controls label input[type=radio] {
+    margin-bottom: 5px;
+}
+
+.controls .radio, .controls .checkbox {
+    padding-left: 0;
+    margin-left: 20px;
+}
+
+.controls > .radio.inline:first-child, .controls > .checkbox.inline:first-child {
+    margin-left: 0;
+}
+
+.help-block.text-error {
+    color: #B94A48;
+}
+
+.label a, .badge a {
+    color: #fff;
+}
+
+.label-active, .label-active {
+    display: inline-block;
+    text-align: center;
+    color: #000;
+}
+
+#counter {
+    float: right;
+    white-space: nowrap;
+    font-size: 38px;
+}
+
+@keyframes blinker {
+    from { opacity: 1.0; }
+    to { opacity: 0.0; }
+}
+
+@-webkit-keyframes blinker {
+    from { opacity: 1.0; }
+    to { opacity: 0.0; }
+}
+
+.blink {
+    text-decoration: blink;
+    -webkit-animation: blinker 1s cubic-bezier(1.0,0,0,1.0) infinite;
+    -moz-animation: blinker 1s cubic-bezier(1.0,0,0,1.0) infinite;
+    animation: blinker 1s cubic-bezier(1.0,0,0,1.0) infinite;
+}
+
+#theme_text {
+    margin-bottom: 20px;
+}
+
+#theme_text p {
+    text-indent: 2em;
+    text-align: justify;
+    margin: 0;
+}
+
+#theme_text>ul, #theme_text>ol {
+    margin-left: 50px;
+}
+
+body#theme_text {
+    padding: 3px;
+}
+
+#theme_text>table {
+    margin: 10px auto;
+}
+
+#theme_text>table td {
+    vertical-align: top;
+    text-indent: 2em;
+    text-align: justify;
+}
+
+#theme_text>table td>ul {
+    text-indent: 0;
+    padding-left: 20px;
+}
+
+#theme_text>table th, #theme_text>table td {
+    padding: 3px;
+}
+
+#theme_text>table>img {
+    display: block;
+    margin: 0 auto;
+}
+
+#theme_text table.warning, #theme_text table.flash {
+    border: solid 1px #900;
+    width: 100%;
+    margin: 10px 0;
+}
+
+#theme_text table.flash {
+    width: auto;
+    margin: 10px auto;
+}
+
+#theme_text table.warning th, #theme_text table.flash th {
+    color: #fff;
+    font-size: 24px;
+    line-height: 24px;
+    padding: 5px 0 5px 50px;
+    text-align: left;
+    width: 1px;
+}
+
+#theme_text table.warning th {
+    background: #900 url('/bundles/app/images/theme_text_warning_bg.png') 5px 0px no-repeat;
+}
+
+#theme_text table.flash th {
+    background: #900 url('/bundles/app/images/theme_text_flash_bg.png') 5px 1px no-repeat;
+}
+
+#theme_text table.warning td, #theme_text table.flash td {
+    padding: 10px;
+}
+
+#theme_text table.flash td {
+    text-align: center;
+    text-indent: 0;
+}
+
+#theme_text table.specdata th {
+    background: #900;
+    color: #fff;
+    border: solid 1px #222;
+}
+
+#theme_text table.specdata td {
+    text-indent: 0;
+    text-align: left;
+    border: solid 1px #222;
+}
+
+#theme_text table.specdata td p {
+    text-indent: 0;
+    text-align: left;
+}
+
+#theme_text div.border {
+    border: solid 1px #900;
+    margin: 10px 0;
+    text-indent: 2em;
+    text-align: justify;
+    padding: 10px;
+}
+
+#theme_text div.title, #theme_text div.title p, #theme_text div.title2, #theme_text div.title2 p, #theme_text div.head , #theme_text div.head p {
+    font-weight: bold;
+    text-align: center;
+    padding: 5px;
+    margin: 10px 0;
+}
+
+#theme_text div.title, #theme_text div.title p, #theme_text div.head , #theme_text div.head p {
+    font-size: 24px;
+    line-height: 24px;
+}
+
+#theme_text div.title2, #theme_text div.title2 p {
+    font-size: 18px;
+    line-height: 18px;
+}
+
+#theme_text div.title {
+    color: #fff;
+    background: #900;
+}
+
+#theme_text div.title2 {
+    color: #fff;
+    background: #999;
+}
+
+#theme_text div.head {
+    color: #222;
+    margin: 20px 0;
+}
+
+#theme_text table.warning th p, #theme_text table.flash th p, #theme_text div.title p, #theme_text div.head p {
+    text-indent: 0;
+}
+
+#check_all {
+    color: #08c;
+}
+
+.table-scroll {
+    overflow-x: auto;
+    width: 700px;
+}
+
+.table-scroll .table {
+    width: auto;
+}
+
+.table-scroll .table td {
+    text-align: center;
+}
+
+#stat td {
+    vertical-align: top;
+}
+
+#stat .table th, #stat .table td {
+    white-space: nowrap;
+}
+
+.question_bottom {
+    width: 100%;
+}
+
+.question_bottom td {
+    text-align: center;
+}
+
+.question_bottom td:first-child {
+    text-align: left;
+}
+
+.question_bottom td:last-child {
+    text-align: right;
+}
+
+.question-help {
+    margin-bottom: -36px;
+    height: 36px;
+    width: 36px;
+    position: relative;
+    float: right;
+    right: -40px;
+    background-color: #f5f5f5;
+    border-radius: 18px;
+    vertical-align: middle;
+    line-height: 36px;
+    text-align: center;
+    font-size: 20px;
+    cursor: pointer;
+    color: #08c;
+}
+
+.cke_editable {
+    padding: 3px;
+}
+
+.copy_row > span, .copy_row_with_btn > span {
+    width: 300px;
+}
+
+.copy_row > span {
+    display: block;
+}
+
+.copy_row_with_btn > span {
+    float: left;
+    margin-right: 10px;
+    line-height: 22px;
+}
+
+.popover {
+    max-width: 500px;
+    font-size: 12px;
+    line-height: 14px;
+}
+
+.status_col {
+    font-size: 13px;
+}
+
+#empty-categories-alert, #zero-second-price-alert {
+    display: none;
+}
+
+/* jQuery UI Datepicker */
+#holidays-calendar table.ui-datepicker-calendar {
+    border-collapse: separate;
+}
+#holidays-calendar .ui-datepicker-calendar td {
+    border: 1px solid transparent;
+}
+#holidays-calendar .ui-datepicker-inline{
+    width:940px !important;
+}
+#holidays-calendar .ui-datepicker .ui-datepicker-calendar .ui-state-highlight a {
+	background: #0088CC none; /* a color that fits the widget theme */
+	color: white; /* a color that is readeable with the color above */
+}
+#holidays-calendar .ui-state-active{
+    background: url("images/ui-bg_glass_75_e6e6e6_1x400.png") repeat-x scroll 50% 50% #e6e6e6;
+}
+/* jQuery UI Datepicker */
+
+.no-close .ui-dialog-titlebar-close {
+    display: none;
+}
+
+#pay-amount-info, #change-phone-wrapper {
+    display: none;
+}
+
+#menu {
+    padding: 10px 15px;
+}
+
+#menu ul {
+    list-style: none;
+    margin-left: 12px;
+}
+
+#menu .active > a, #menu .active > a:hover, #menu .active > a:focus {
+    color: #FFF;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.2);
+    background-color: #08C;
+}
+
+#menu li > a {
+    display: block;
+    padding: 3px 10px;
+    margin-left: 0;
+    margin-right: -15px;
+}
+
+#menu li > a:hover, #menu li > a:focus {
+    text-decoration: none;
+    background-color: #EEE;
+}
+
+#menu li i {
+    color: #333;
+}
+
+#menu li.active i {
+    color: #fff;
+}
+
+#menu li > span {
+    color: #aaa;
+    display: block;
+    padding: 3px 10px;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+}

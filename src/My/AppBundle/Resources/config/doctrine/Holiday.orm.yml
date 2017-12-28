@@ -1,0 +1,13 @@
+My\AppBundle\Entity\Holiday:
+    type: entity
+    table: holidays
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        entry_value:
+            type: date
+        exception:
+            type: boolean

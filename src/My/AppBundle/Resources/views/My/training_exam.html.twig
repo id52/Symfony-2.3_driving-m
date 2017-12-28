@@ -1,0 +1,179 @@
+{% extends 'AppBundle::layout_new.html.twig' %}
+
+{% block start_content %}
+<div id="helper" class="modal helper">
+    <div class="title">{{ 'help_title'|trans }}</div>
+    {{ settings['question_help_btn']|raw }}
+    <div class="bottom links"><span class="link bg-green check-link btn-close">Спасибо, все понятно</span></div>
+    <span class="close"></span>
+</div>
+
+<div id="modal-max-errors" class="modal border-red">
+    <div class="notice bg-sad">
+        <div class="title">Вы не сдали</div>
+        {{ settings['training_exam_max_errors']|raw }}
+        <div class="links">
+            <a class="bg-red" href="{{ path('my_training', { id: subject.id }) }}">{{ 'exam_list'|trans({}, 'exam') }}</a>
+        </div>
+    </div>
+    <span class="close"></span>
+</div>
+
+<div id="modal-complete" class="modal border-green">
+    <div class="notice bg-prize">
+        <div class="title">Поздравляем</div>
+        {{ settings['training_exam_complete']|raw }}
+        <div class="links">
+            <a class="bg-green" href="{{ path('my_trainings') }}">{{ 'exam_back_to_trainings'|trans({}, 'exam') }}</a>
+        </div>
+    </div>
+    <span class="close"></span>
+</div>
+
+<div id="modal-quit" class="modal border-red wid2">
+    <div class="notice center">
+        <div class="title">Прервать тест</div>
+        Вы уверены что хотите прервать тест?
+        <div class="links">
+            <a class="bg-green" href="{{ path('my_training_exam_quit', { id: subject.id }) }}">Да</a>
+            <a class="bg-red" href="#">Нет</a>
+        </div>
+    </div>
+    <span class="close"></span>
+</div>
+
+<div id="modal-timeout" class="modal">
+    <div class="notice bg-time">
+        <div class="title">Время закончилось</div>
+        {{ settings['training_slice_timeout']|raw }}
+        <div class="links">
+            <a class="bg-red" href="{{ path('my_training_exam_quit', { id: subject.id }) }}">{{ 'exam_list'|trans({}, 'exam') }}</a>
+        </div>
+    </div>
+    <span class="close"></span>
+</div>
+{% endblock start_content %}
+
+{% block content %}
+<nav class="path">
+    <a href="{{ path('homepage') }}">{{ 'titles.homepage'|trans }}</a>
+    » <a href="{{ path('my_trainings') }}">{{ 'titles.trainings'|trans }}</a>
+    » <a href="{{ path('my_training', { id: subject.id }) }}">{{ subject.title }}</a>
+    » <strong>{{ 'exam_title'|trans({}, 'exam') }}</strong>
+</nav>
+
+<div class="mainContent">
+    <section id="test-content" class="test">
+        {% include 'AppBundle:My:training_exam_in.html.twig' %}
+    </section>
+</div>
+{% endblock content %}
+
+{% block js %}
+<script src="/v2/js/jquery.countdown.js"></script>
+<script>
+$(function() {
+    var modal_quit = $('#modal-quit');
+    $('.bg-red', modal_quit).click(function(e) {
+        e.preventDefault();
+        $.simplebox.close();
+    });
+
+    var modal_error = $('#modal-error');
+    $('.bg-red', modal_error).click(function(e) {
+        e.preventDefault();
+        $.simplebox.close();
+    });
+
+    var error = function(type) {
+        switch (type) {
+            case 'longtime':
+                location.assign('{{ path('my_training_exam', { id: subject.id }) }}');
+                break;
+            case 'timeout':
+                $.simplebox('#modal-timeout', { overlay: { opacity: 0.5 } });
+                break;
+            case 'max_errors':
+                $.simplebox('#modal-max-errors', { overlay: { opacity: 0.5 } });
+                break;
+            default:
+        }
+    };
+
+    var test = function() {
+        $('.answer').find('input').removeAttr('disabled');
+
+        $('.exit-link').click(function(e) {
+            e.preventDefault();
+            $.simplebox('#modal-quit', { overlay: { opacity: 0.5 } });
+        });
+
+        $('.help-link').click(function(e) {
+            e.preventDefault();
+            $.simplebox('#helper', { overlay: { opacity: 0.5 } });
+        });
+        $('#helper').find('.check-link').click(function() {
+            $.simplebox.close();
+        });
+
+        var timer = $('.timer');
+        if (timer.length) {
+            timer.countdown({
+                until: timer.data('seconds-left'),
+                layout: '{mn}{sep}{snn}',
+                onExpiry: function() {
+                    error('timeout');
+                }
+            });
+        }
+
+        var is_continue = false;
+        $('.answer-link.bg-blue').hide();
+        var form = $('form');
+        form.submit(function(e) {
+            e.preventDefault();
+
+            $('.answer-link').hide();
+            if (is_continue) {
+                $.getJSON('{{ path('my_training_exam_next_question_ajax', { id: subject.id }) }}', function(data) {
+                    if (data.refresh) {
+                        location.assign('{{ path('my_training_exam', { id: subject.id }) }}');
+                    } else if (data.error) {
+                        error(data.error);
+                    } else if (data.complete) {
+                        $.simplebox('#modal-complete', { overlay: { opacity: 0.5 } });
+                    } else {
+                        $('#test-content').html(data.content);
+                        test();
+                    }
+                });
+            } else {
+                $.post(form.attr('action'), form.serialize(), function(data) {
+                    if (data.error) {
+                        error(data.error);
+                    } else {
+                        var answer = $('#answer_' + data.c_answer).closest('.answer');
+                        if (data.correct) {
+                            answer.addClass('ok');
+                            answer.append('<div class="err-text">Верный ответ</div>');
+                        } else {
+                            answer.addClass('error');
+                            answer.append('<div class="err-text">Неверный ответ</div>');
+                            $('.errors').find('span').html(data.errors);
+                        }
+                        is_continue = true;
+                        $('.answer').find('input').attr('disabled', 'disabled');
+                        if (data.correct) {
+                            form.submit();
+                        } else {
+                            $('.answer-link.bg-blue').show();
+                        }
+                    }
+                }, 'json');
+            }
+        });
+    };
+    test();
+});
+</script>
+{% endblock js %}

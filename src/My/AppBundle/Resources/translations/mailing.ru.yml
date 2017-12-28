@@ -1,0 +1,16 @@
+mailing_name: Название рассылки
+mailing_title: Заголовок письма
+mailing_message: Сообщение
+mailing_message_help: |
+    {{ dear }} — «уважаемый/ая»<br>
+    {{ last_name }} — фамилия<br>
+    {{ first_name }} — имя<br>
+    {{ patronymic }} — отчество<br>
+    {{ sign_x }} — Подпись № X<br>
+    {{ username }} — имя пользователя<br>
+    {{ unsubscribe_link }} — ссылка для отписки от рассылок
+
+mailing_date: Дата
+mailing_filters: Фильтры
+mailing_users: Пользователи
+mailing_forceSending: Отправить даже отписавшимся

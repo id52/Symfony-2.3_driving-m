@@ -1,0 +1,93 @@
+{% extends 'AppBundle::layout_new.html.twig' %}
+
+{% block content %}
+<nav class="path">
+    <a href="{{ path('homepage') }}">{{ 'titles.homepage'|trans }}</a>
+    » <strong>{{ 'titles.payments'|trans }}</strong>
+</nav>
+
+<div class="mainContent">
+    <section class="payments">
+        <div class="title"><h1>{{ 'titles.payments'|trans }}</h1></div>
+
+        {% if paid_payments %}
+        <div class="paid">
+            <div class="bg"></div>
+            <table>
+                <tr>
+                    <th>Услуга</th>
+                    <th class="w1 center">Дата оплаты</th>
+                    <th class="w2 center">Сумма</th>
+                    <th class="w3 center">Номер платежа</th>
+                </tr>
+                {% for payment in paid_payments %}
+                    <tr>
+                        {% if payment['reverts'] %}
+                            <td{{ payment.comment['promo_key'] is defined ? ' rowspan="2"' : '' }} class="first bg-check-revert">
+                        {% else %}
+                            <td{{ payment.comment['promo_key'] is defined ? ' rowspan="2"' : '' }} class="first bg-check">
+                        {% endif %}
+                            {% for service in payment.services %}
+                                {{ service.name }}{% if not loop.last %}<br>{% endif %}
+                            {% endfor %}
+                            {% for category in payment.categories %}
+                                {{ category.name }}{% if not loop.last %}<br>{% endif %}
+                            {% endfor %}
+                        </td>
+                        <td class="w1 center">{{ payment.updated_at|localizeddate('long', 'none') }}</td>
+                        <td class="w2 center">{{ payment.sum }} руб.</td>
+                        <td class="w3 center">
+                            {% if not payment['reverts'] %}
+                                {% if payment.moderator_id is defined %}
+                                    {{ 'payment_at_the_office'|trans({}, 'payment') }} (ID - {{ payment.moderator_id }})
+                                {% else %}
+                                    {{ payment.s_id ? '#'~payment.s_id : ''}}
+                                {% endif %}
+                                {% if payment.comment['promo_key'] is defined %}
+                                    <br>Промокод:<br>{{ payment.comment['promo_key'] }}
+                                {% endif %}
+                            {% else %}
+                                <span class="text-error">Платеж отменен</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% if not loop.last %}
+                    <tr><td colspan="4" class="first"></td></tr>
+                    {% endif %}
+                {% endfor %}
+            </table>
+        </div>
+        <div class="hr"></div>
+        {% endif %}
+
+        {% for payment in payments %}
+            <figure class="to-pay"{{ payment.type == 'hidden' ? ' style="background:#f5f5f5"' : '' }}>
+                <div class="links">
+                    {% if payment.type == 'hidden' %}
+                        <button class="bg-grey pay-link">Оплатить</button>
+                    {% else %}
+                    <form action="" method="post">
+                        <input type="hidden" name="ids" value="{{ payment.services|keys|join(',') }}" />
+                        <input type="hidden" name="type" value="{{ payment.type }}" />
+                        <button class="bg-green pay-link" type="submit">Оплатить</button>
+                    </form>
+                    {% endif %}
+                </div>
+                <div class="price">{{ payment.sum }} руб.</div>
+                <div class="nofloat">
+                    <div class="cell">
+                        {% for service in payment.services %}
+                            {{ service.name }}{% if not loop.last %}<br>{% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </figure>
+        {% endfor %}
+    </section>
+</div>
+{% endblock content %}
+
+{% block js %}
+<script src="/v2/js/jquery.countdown.js"></script>
+<script src="/v2/js/jquery.countdown-ru.js"></script>
+{% endblock js %}

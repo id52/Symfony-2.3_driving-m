@@ -1,0 +1,28 @@
+{% extends 'AppBundle::layout_m.html.twig' %}
+
+{% block content %}
+<style>
+    .payment form input {
+        border: solid 1px black;
+    }
+    .wrap .text-error {
+        color: red;
+    }
+</style>
+<div class="wrap">
+    <div class="back-link r-fl"><a href="{{ path('homepage') }}"><span class="v-m arrow">«</span>Вернуться</a></div>
+    <ul class="breadcrumb">
+        <li><a title="Главная" href="{{ path('homepage') }}">Главная</a></li>
+        <li class="active"><span>Обратная связь</span></li>
+    </ul>
+    <div class="payment">
+        <div class="main-title left-bg">
+            <div class="caption">Обратная связь:</div>
+        </div>
+        {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <div class="go"><span class="btn2">Отправить <input value="" type="submit"></span></div>
+        {{ form_end(form) }}
+    </div>
+</div>
+{% endblock content %}

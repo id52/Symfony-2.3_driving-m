@@ -1,0 +1,52 @@
+promo_active: "Активна?"
+promo_name: "Название"
+promo_type: "Тип ограничения"
+promo_max_activations: "Количество активаций"
+promo_keys: "Количество ключей"
+promo_payment_type: "Тип оплаты"
+promo_used_from: "Действует с"
+promo_used_to: "Действует до"
+promo_discount: "Скидка"
+
+promo_key_count: "Ключей"
+promo_trieds_count: "Перв."
+promo_rezerv_count:	"Резерв."
+promo_active_count: "Исп"
+promo_active_company: "Активна"
+
+promo_key_perv: "Перв."
+promo_key_rezerv: "Резерв."
+promo_key_use_key: "Актив."
+
+promo_key_key: "Ключ"
+promo_key_date_create: "Дата создания"
+promo_key_actived: "Активирован"
+promo_key_count_keys: "Количество ключей"
+promo_key_count_activations: "Количество активаций"
+promo_key_date_activated: "Дата активации"
+
+promo_key_createdFrom: "Создан позже, чем"
+promo_key_createdTo: "Создан раньше, чем"
+promo_key_activatedFrom: "Исп. позже, чем"
+promo_key_activatedTo: "Исп. раньше, чем"
+
+promo_keys_search: "Найденные ключи"
+promo_key_discount: "Скидка предоставляемая по ключу"
+promo_key_active: "Активен"
+
+promo_key_discount: "Скидка"
+promo_key_active: "Активен"
+
+types:
+    keys: "по количеству одноразовых ключей"
+    users: "по количеству активаций (1 ключ)"
+
+payment_types:
+    first: "первая"
+    second: "вторая"
+
+actived:
+    'true': "Да"
+    'false': "Нет"
+
+choose_option: ' - выберите - '

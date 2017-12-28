@@ -1,0 +1,28 @@
+{% extends 'AppBundle::layout_new.html.twig' %}
+
+{% block content %}
+<nav class="path">
+    <a href="{{ path('homepage') }}">{{ 'titles.homepage'|trans }}</a>
+    » <strong>{{ 'titles.payments'|trans }}</strong>
+</nav>
+
+<section>
+    <div class="e_wrap_payment">
+        <div class="e_item_payment--img m_error"></div>
+        <div class="e_item_payment--text">
+            Платеж был отклонен.
+            <span>Вы будете автоматически перенаправлены на следующую страницу.</span>
+        </div>
+    </div>
+</section>
+{% endblock content %}
+
+{% block js %}
+<script>
+$(function() {
+    window.setTimeout(function() {
+        location.href = '{{ is_granted('ROLE_USER_PAID') ? path('my_payments') : path('homepage') }}';
+    }, 2000);
+});
+</script>
+{% endblock %}

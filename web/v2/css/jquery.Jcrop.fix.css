@@ -1,0 +1,11 @@
+.jcrop-vline, .jcrop-hline {
+  background-image: url("/v2/img/Jcrop.gif");
+}
+
+.jcrop-holder {
+    margin: 0 auto;
+}
+
+.jcrop-hline.bottom {
+    padding: 0;
+}

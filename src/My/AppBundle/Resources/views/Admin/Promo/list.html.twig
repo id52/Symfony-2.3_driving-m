@@ -1,0 +1,85 @@
+{% extends 'AppBundle::admin.html.twig' %}
+
+{% block content %}
+    <a href="{{ path(router_item_add) }}" class="btn pull-right btn-h1">
+        <i class="fa fa-plus"></i>
+        {{ ('admin.'~entity_name_s~'_add')|trans }}
+    </a>
+    <a href="{{ path(admin_promo_search_key) }} " class="btn pull-right btn-h1"><i class="fa fa-search"></i>
+        {{ ('admin.'~entity_name_s~'_key_search')|trans }}</a>
+    <h1>{{ ('admin.'~entity_name_s~'_list')|trans }}</h1>
+    <hr>
+    <hr>
+    <hr>
+    <a id="filter_link" href="#"><i class="fa fa-caret-down"></i> Фильтр</a>
+    <div id="filter">
+        {{ form_start(filter_form) }}
+        {{ form_widget(filter_form) }}
+        <div class="form-actions">
+            <button type="submit" class="btn btn-success pull-right">
+                <i class="fa fa-filter"></i>
+                <span>{{ 'buttons.filter'|trans }}</span>
+            </button>
+        </div>
+        {{ form_end(filter_form) }}
+    </div>
+    <br>
+    {% if pagerfanta.currentPageResults|length %}
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>{{ (entity_name_s~'_name')|trans({}, entity_name_s) }}</th>
+                <th class="min_col">{{ (entity_name_s~'_type')|trans({}, entity_name_s) }}</th>
+                <th>{{ (entity_name_s~'_key_count')|trans({}, entity_name_s) }}</th>
+                <th>{{ (entity_name_s~'_trieds_count')|trans({}, entity_name_s) }}</th>
+                <th>{{ (entity_name_s~'_rezerv_count')|trans({}, entity_name_s) }}</th>
+                <th>{{ (entity_name_s~'_active_count')|trans({}, entity_name_s) }}</th>
+                <th>{{ (entity_name_s~'_active_company')|trans({}, entity_name_s) }}</th>
+                <th class="min_col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for entity in pagerfanta.currentPageResults %}
+                <tr>
+                    {#<td><a href="{{ path('admin_promo_activations', { id: entity.id }) }}">{{ attribute(entity, 'name') }}</a></td>#}
+                    <td>{{ attribute(entity, 'name') }}</td>
+                    <td class="min_col">{{ ('types.'~attribute(entity, 'type'))|trans({}, entity_name_s) }}</td>
+                    <td class="min_col text-right"><a href="{{ path('admin_promo_all_keys', { id: entity.id }) }}">{{ count_keys[entity.id] }}</a></td>
+                    <td class="min_col text-right">{{ trieds[entity.id] }}</td>
+                    <td class="min_col text-right">{{ rezerv[entity.id] }}</td>
+                    <td class="min_col text-right">{{ active[entity.id] }}</td>
+                    <td class="min_col"><i class="fa {{ entity.active ? 'fa-plus' : 'fa-minus' }}"></i></td>
+                    <td class="min_col">
+                        <a href="{{ path(router_item_edit, { id: entity.id }) }}" class="nodecor text-success"><i class="fa fa-pencil-square-o"></i></a>
+                        {% if del[entity.id] %}
+                            <a href="{{ path(router_item_delete, { id: entity.id }) }}" class="nodecor text-error" onclick="return confirm('{{ 'you_sure'|trans }}')"><i class="fa fa-times"></i></a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        {{ 'no_data'|trans }}
+    {% endif %}
+    {% if pagerfanta.haveToPaginate %}
+        {{ pagerfanta(pagerfanta, 'twitter_bootstrap_translated', { prev_message: '←', next_message: '→' }) }}
+    {% endif %}
+{% endblock content %}
+
+
+
+{% block js %}
+    <script>
+        $(function() {
+            {% if app.request.queryString == '' %}
+            $('#filter').hide();
+            {% endif %}
+            $('#filter_link').click(function() {
+                $('#filter').toggle();
+                return false;
+            });
+        });
+    </script>
+{% endblock js %}
+

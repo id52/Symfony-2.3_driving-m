@@ -1,0 +1,193 @@
+* {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    color: #000;
+    background: #fff;
+    font-family: "Roboto Condensed", sans-serif;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    font-size: 100%;
+}
+
+body {
+    font-size: 10px;
+}
+
+html, body {
+    background: linear-gradient(to bottom, #def1fa 0%, #fff 112.5pt, #fff 100%) top center repeat-x;
+}
+
+.container {
+    width: 592.5pt;
+    margin: 0 auto;
+    padding: 30pt 0;
+    background: url(../images/subtle-logo-bg.png) center 112.5pt no-repeat;
+    background-size: 337.5pt auto;
+}
+
+.container:after {
+    clear: both;
+    content: '';
+    display: block;
+}
+
+.logo {
+    height: 47.25pt;
+}
+
+.phones {
+    font-weight: bold;
+    font-size: 12.75pt;
+    float: right;
+    margin-top: 7.5pt;
+    line-height: 1.3;
+}
+
+.title {
+    width: 100%;
+    margin-bottom: 7.5pt;
+}
+
+.title td {
+    text-align: center;
+    font-size: 16.5pt;
+    color: #005b90;
+    text-transform: uppercase;
+    vertical-align: middle;
+}
+
+.title td:first-child, .title td:last-child {
+    width: 50%;
+}
+
+.title td:first-child:after, .title td:last-child:after {
+    content: '';
+    display: block;
+    height: 0;
+    width: 100%;
+    border-top: solid 1pt #bdd1dd;
+}
+
+.title .title-t {
+    width: 50pt;
+    padding: 0 20pt;
+}
+
+.title-2 {
+    font-size: 27.75pt;
+    color: #00a3da;
+    text-align: center;
+}
+
+.title-3 {
+    font-size: 15pt;
+    color: #005e94;
+    text-align: center;
+    line-height: 1.1;
+    margin-bottom: 22.5pt;
+}
+
+.container-2 {
+    width: 422pt;
+    margin: 0 auto;
+}
+
+.map {
+    padding: 11.25pt;
+    border: #cfdce4 1pt solid;
+    border-radius: 3pt;
+    margin: 0 auto;
+}
+
+.map, .map-in {
+    width: 397.5pt;
+    height: 250pt;
+}
+
+.comments-title {
+    font-size: 15pt;
+    color: #005e94;
+    line-height: 1.1;
+    margin: 15pt 0 7.5pt;
+}
+
+.comment {
+    width: 418pt;
+    border: #cfdce4 1pt solid;
+    border-radius: 3pt;
+    background: #f8fbfc;
+    height: 67.5pt;
+    padding: 1pt;
+}
+
+.button {
+    font-size: 11.25pt;
+    line-height: 1;
+    padding: 7.5pt 11.25pt 7.5pt 33.75pt;
+    background: #00a2dd url(../images/icon/printer.png) 11.25pt center no-repeat;
+    border: solid 1pt #00a2dd;
+    border-radius: 3pt;
+    color: #fff;
+    text-decoration: none;
+    float: right;
+    margin-top: 12pt;
+}
+
+.office-title {
+    background: #f3f3f3;
+    padding: 6pt 7.5pt;
+    border-left: 3pt solid #afc9d2;
+    color: #005b90;
+    font-weight: 500;
+    font-size: 19.2pt;
+    line-height: 16.8pt;
+    margin: 7.2pt 0;
+}
+
+.contacts-info {
+    font-size: 12pt;
+    margin-left: 11.25pt;
+    line-height: 17.5pt;
+    margin-bottom: 11.25pt;
+}
+
+.contacts-info > div {
+    margin-top: 3.75pt;
+}
+
+.contacts-info .icon {
+    float: left;
+    margin-top: 2.25pt;
+}
+
+.contacts-info .c-info {
+    margin-left: 17.25pt;
+}
+
+@media print {
+    html, body, .container {
+        background: none;
+    }
+
+    .container {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        min-width: 300pt;
+    }
+
+    .button {
+        display: none;
+    }
+}
+
+@media print and (orientation: landscape) {
+    .map, .map-in {
+        height: 160pt;
+        overflow: hidden;
+    }
+}

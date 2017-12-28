@@ -1,0 +1,230 @@
+{% extends 'AppBundle::admin.html.twig' %}
+{% trans_default_domain 'pass_filial' %}
+
+{% block content %}
+<h3>{{ (app.request.get('_route') == 'admin_pass_filial_edit' ? 'admin.pass_filial_edit_title' : 'admin.pass_filial_add_title')|trans({}, 'messages') }}</h3>
+<hr>
+
+{{ form_start(imageForm, { action: path('admin_image_ajax') }) }}
+    <div class="control-group">
+        {{ form_label(imageForm.uploadFile, 'image_uploadFile'|trans({}, 'messages')) }}
+        <div class="controls">
+            <div id="image_view" class="clearfix"></div>
+                <span class="btn fileinput-button">
+                    <span>{{ 'image_uploadFile_btn'|trans({}, 'messages') }}</span>
+                    {{ form_widget(imageForm.uploadFile) }}
+                </span>
+            <div id="image-progress" class="progress progress-striped active">
+                <span>{{ 'uploading'|trans({}, 'messages') }}</span>
+                <div class="bar bar-success"></div>
+            </div>
+            <span class="upload-fail"></span>
+        </div>
+    </div>
+    {{ form_widget(imageForm) }}
+{{ form_end(imageForm) }}
+
+{{ form_start(form) }}
+    {{ form_row(form.image_id) }}
+    {{ form_row(form.region) }}
+    {{ form_row(form.active) }}
+    {{ form_row(form.title) }}
+    {{ form_row(form.address) }}
+    {{ form_row(form.station) }}
+    {{ form_row(form.work_time) }}
+
+    <div class="control-group">
+        <label class="control-label">{{ 'pass_filial_phones'|trans }}:</label>
+        <div class="controls">
+            <button id="add_filial_phone" type="button" style="position:absolute;margin-left:250px">+</button>
+            {% if entity.phones %}
+                {% for phone, active in entity.phones %}
+                    <div>
+                        <input name="pass_filial_phones[{{ loop.index0 }}]" value="{{ phone }}">
+                        <input name="pass_filial_phones_active[{{ loop.index0 }}]" type="checkbox"{{ active ? ' checked="checked"' : '' }}>
+                    </div>
+                {% endfor %}
+            {% else %}
+            <div>
+                <input name="pass_filial_phones[0]">
+                <input name="pass_filial_phones_active[0]" type="checkbox" checked="checked">
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">{{ 'pass_filial_emails'|trans }}:</label>
+        <div class="controls">
+            <button id="add_filial_email" type="button" style="position:absolute;margin-left:250px">+</button>
+            {% if entity.emails %}
+                {% for email, active in entity.emails %}
+                    <div>
+                        <input name="pass_filial_emails[{{ loop.index0 }}]" value="{{ email }}">
+                        <input name="pass_filial_emails_active[{{ loop.index0 }}]" type="checkbox"{{ active ? ' checked="checked"' : '' }}>
+                    </div>
+                {% endfor %}
+            {% else %}
+            <div>
+                <input name="pass_filial_emails[0]">
+                <input name="pass_filial_emails_active[0]" type="checkbox" checked="checked">
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label">{{ 'pass_filial_coords'|trans }}:</label>
+        <div class="controls">
+            <label for="pass_filial_coords_x" style="display:inline-block">X:</label>
+            <input id="pass_filial_coords_x" name="pass_filial_coords[x]" class="span1" value="{{ entity.coords['x'] ? entity.coords['x'] : 0 }}">
+            <label for="pass_filial_coords_y" style="display:inline-block">Y:</label>
+            <input id="pass_filial_coords_y" name="pass_filial_coords[y]" class="span1" value="{{ entity.coords['y'] ? entity.coords['y'] : 0 }}">
+        </div>
+    </div>
+
+    {{ form_row(form.address_geo) }}
+    {{ form_row(form.map_code) }}
+
+    <style scoped="scoped">
+        #filial_groups>div:not(:first-of-type) {
+            margin-top: 15px;
+        }
+    </style>
+    <div class="control-group">
+        <label class="control-label">{{ 'pass_filial_groups'|trans }}:</label>
+        <div class="controls" id="filial_groups">
+            <button id="add_filial_group" type="button" style="position:absolute;margin-left:250px">+</button>
+            {% if entity.groups %}
+                {% for group in entity.groups %}
+                    <div>
+                        <input name="pass_filial_groups[{{ loop.index0 }}][0]" value="{{ group['row1'] }}">
+                        <input name="pass_filial_groups_active[{{ loop.index0 }}]" type="checkbox"{{ group['active'] ? ' checked="checked"' : '' }}><br>
+                        <input name="pass_filial_groups[{{ loop.index0 }}][1]" value="{{ group['row2'] }}">
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div>
+                    <input name="pass_filial_groups[0][0]">
+                    <input name="pass_filial_groups_active[0]" type="checkbox" checked="checked"><br>
+                    <input name="pass_filial_groups[0][1]">
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-success">
+            <i class="fa fa-download"></i>
+            <span>{{ 'admin.buttons.save'|trans({}, 'messages') }}</span>
+        </button>
+        {% if app.request.get('_route') == 'admin_pass_filial_edit' %}
+            <a href="{{ path('admin_pass_filial_delete', { id: entity.id }) }}" class="btn btn-danger" onclick="return confirm('{{ 'you_sure'|trans({}, 'messages') }}')">
+                <i class="fa fa-trash-o"></i> <span>{{ 'admin.buttons.delete'|trans({}, 'messages') }}</span>
+            </a>
+        {% endif %}
+        <a class="btn pull-right" href="{{ path('admin_pass_filials') }}"><i class="fa fa-arrow-left"></i> {{ 'admin.buttons.back_to_list'|trans({}, 'messages') }}</a>
+    </div>
+{{ form_end(form) }}
+{% endblock content %}
+
+{% block js %}
+<script>
+$(function() {
+    var image_id = $('#pass_filial_image_id');
+    if (image_id.val()) {
+        $.post('{{ path('admin_image_view_ajax') }}?image_id='+image_id.val(), function(result) {
+            var image_view = $('#image_view');
+            image_view.html(result.image_view).show();
+            $('.fa-times', image_view).on('click', function() {
+                image_id.val(null);
+                $('#image_view').html('').hide();
+            });
+        });
+    }
+
+    $('#image_uploadFile').fileupload({
+        formData: function (form) {
+            var f = form.serializeArray();
+            f.push({
+                name: 'image_id',
+                value: image_id.val()
+            });
+            return f;
+        },
+        progressall: function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            $('#image-progress').find('.bar').css('width', progress + '%');
+        },
+        send: function () {
+            var cntr = $('#image_uploadFile').closest('.controls');
+            $('.btn', cntr).hide();
+            $('#image-progress').show();
+        },
+        done: function (e, data) {
+            var cntr = $('#image_uploadFile').closest('.controls');
+            $('#image-progress').hide();
+            if (data.result.image_id) {
+                $('.btn', cntr).show();
+                image_id.val(data.result.image_id);
+                var image_view = $('#image_view');
+                image_view.html(data.result.image_view).show();
+                $('.fa-times', image_view).on('click', function() {
+                    image_id.val(null);
+                    $('#image_view').html('').hide();
+                });
+            } else {
+                var errors = data.result.errors ? data.result.errors.join('<br>') : '{{ 'undefined_error'|trans({}, 'messages') }}';
+                $('.upload-fail', cntr).html(errors).show().delay(1500).hide(function () {
+                    $('.btn', cntr).show();
+                });
+            }
+        },
+        fail: function () {
+            var cntr = $('#image_uploadFile').closest('.controls');
+            $('#image-progress').hide();
+            $('.upload-fail', cntr).html('{{ 'errors.server'|trans({}, 'messages') }}').show().delay(1500).hide(function () {
+                $('.btn', cntr).show();
+            });
+        }
+    });
+
+    var add_filial_phone = $('#add_filial_phone');
+    var filial_phones = add_filial_phone.closest('.controls');
+    add_filial_phone.on('click', function() {
+        var cnt = $('>div', filial_phones).length;
+        var append = '';
+        append += '<div>';
+        append += '  <input name="pass_filial_phones['+cnt+']">';
+        append += '  <input name="pass_filial_phones_active['+cnt+']" type="checkbox" checked="checked">';
+        append += '</div>';
+        filial_phones.append(append);
+    });
+
+    var add_filial_email = $('#add_filial_email');
+    var filial_emails = add_filial_email.closest('.controls');
+    add_filial_email.on('click', function() {
+        var cnt = $('>div', filial_emails).length;
+        var append = '';
+        append += '<div>';
+        append += '  <input name="pass_filial_emails['+cnt+']">';
+        append += '  <input name="pass_filial_emails_active['+cnt+']" type="checkbox" checked="checked">';
+        append += '</div>';
+        filial_emails.append(append);
+    });
+
+    var add_filial_group = $('#add_filial_group');
+    var filial_groups = add_filial_group.closest('.controls');
+    add_filial_group.on('click', function() {
+        var cnt = $('>div', filial_groups).length;
+        var append = '';
+        append += '<div>';
+        append += '  <input name="pass_filial_groups['+cnt+'][0]">';
+        append += '  <input name="pass_filial_groups_active['+cnt+']" type="checkbox" checked="checked"><br>';
+        append += '  <input name="pass_filial_groups['+cnt+'][1]">';
+        append += '</div>';
+        filial_groups.append(append);
+    });
+});
+</script>
+{% endblock js %}

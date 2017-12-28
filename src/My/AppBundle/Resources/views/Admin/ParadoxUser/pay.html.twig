@@ -1,0 +1,42 @@
+{% extends 'AppBundle::admin.html.twig' %}
+{% trans_default_domain 'user' %}
+
+{% block content %}
+    <h3>{{ 'admin.add_simple_user_title'|trans({}, 'messages') }}</h3>
+    <hr>
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <div class="form-actions">
+        <div class="alert alert-info" role="alert" id="pay-amount-info">
+        </div>
+        <button type="submit" class="btn btn-success"><i class="fa fa-money"></i> Оплатить</button>
+    </div>
+    {{ form_end(form) }}
+{% endblock content %}
+
+{% block js %}
+<script>
+$(function() {
+    $('#user_paid').on('change', function() {
+        var pay_amount_info = $('#pay-amount-info');
+        $.ajax({
+            type: 'GET',
+            url: '{{ path('admin_calc_pay_amount_ajax') }}',
+            data: {
+                region_id: {{ user.region.id }},
+                category_id: {{ user.category.id }},
+                with_at: {{ user.regInfo['with_at'] }},
+                paid: $('#user_paid').val()
+            },
+            success: function(data) {
+                if (data.sum > 0) {
+                    pay_amount_info.html(data.sum + ' руб.').show();
+                } else {
+                    pay_amount_info.html('').hide();
+                }
+            }
+        });
+    });
+});
+</script>
+{% endblock js %}

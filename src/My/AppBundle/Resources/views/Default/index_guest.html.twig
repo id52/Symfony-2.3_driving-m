@@ -1,0 +1,497 @@
+{% extends 'AppBundle::layout_m.html.twig' %}
+
+{% block title %}{{ settings['landing_title'] }}{% endblock title %}
+{% block meta_keywords %}{{ settings['landing_keywords'] }}{% endblock meta_keywords %}
+{% block meta_description %}{{ settings['landing_description'] }}{% endblock meta_description %}
+
+{% block content %}
+<div id="how-work_modal" class="how-work_modal">
+    <div class="label">Как это работает</div>
+    {% if how_work|length > 1 %}
+    <div class="hw-controls">
+        <a href="#" class="hw-prev">Назад</a>
+        {% for hw in how_work %}
+        <a href="#" class="hw-bullet{{ loop.first ? ' selected' : '' }}"></a>
+        {% endfor %}
+        <a href="#" class="hw-next">Дальше</a>
+    </div>
+    {% endif %}
+    <div class="hw-title">{{ how_work|first.title }}</div>
+    <div class="hw-content">
+        {% for hw in how_work %}
+        <div class="rsContent">
+            {% if hw.image %}
+            <img src="{{ hw.image.webPath|imagine_filter('how_work') }}">
+            {% endif %}
+            <div class="hw-desc">{{ hw.desc|raw }}</div>
+        </div>
+        {% endfor %}
+    </div>
+    <a href="#" class="hw-close-btn">Спасибо, понятно!</a>
+    <a href="{{ path('reg') }}" class="hw-action-btn">Оформить заявку</a>
+    {% if how_work|length > 1 %}
+    <div class="hw-arrow-left"></div>
+    <div class="hw-arrow-right"></div>
+    {% endif %}
+</div>
+
+<div class="how-work">
+    <a href="#">Как это работает?</a>
+</div>
+
+<div class="section">
+    <div class="wrap l">
+        <div class="l-col1">
+            <div class="main-title text-center small-line">
+                <div class="caption"><span class="line v-m">Наши филиалы</span></div>
+            </div>
+            <div class="map-filial text-center"><a href="{{ path('branches') }}"><img src="/m/images/map-small.png" alt="" /></a></div>
+        </div>
+        <div class="l-col2">
+            <div class="main-price-category">
+                <form action="{{ path('reg') }}">
+                    <input type="hidden" name="offer" value="0">
+                    <div class="head-price l">
+                        <div class="part-1 l-col1" style="width:51%">Выберите категорию прав:</div>
+                        <div class="part-2 l-col2" style="width:49%">
+                            <select id="select_category" name="category" class="select-img">
+                                {% for category in categories %}
+                                <option value="{{ category.id }}" data-img="{{ category.image }}"{{ category.id == 4 ? ' selected="selected"' : '' }}>Категория «{{ category.name }}»</option>
+                                {% endfor %}
+                            </select>
+                            <script>
+                                $(document).ready(function() {
+                                    function format(state) {
+                                        var originalOption = state.element;
+                                        return '<div class="img-center v-m"><img class="icon" src="' + $(originalOption).data('img') + '" alt="" /></div>' + state.text;
+                                    }
+                                    $('.select-img').select2({
+                                        formatResult: format,
+                                        formatSelection: format,
+                                        minimumResultsForSearch: -1,
+                                        escapeMarkup: function(m) { return m; }
+                                    });
+                                });
+                            </script>
+                        </div>
+                    </div>
+                    <div class="main-price-desc">
+                        <ul>
+                            <li>Вы выбираете сами, учиться в классе или дистанционно: это не влияет на стоимость обучения!</li>
+                            <li>Формы обучения можно совмещать или менять в любой момент без дополнительной оплаты</li>
+                            <li><a href="#" class="main-price-desc-link">Подробнее</a></li>
+                        </ul>
+                    </div>
+                    <div class="body-price ie_css3">
+                        <ul class="table-list text-center border-left">
+                            <li>
+                                <div class="img img-center"><img src="/m/images/icon/price-1.png" alt="benefits"></div>
+                                <div class="name">Теория</div>
+                                <div class="time"><span id="category_theory">0</span> ак. часов</div>
+                            </li>
+                            <li>
+                                <div class="img img-center"><img src="/m/images/icon/price-2.png" alt="benefits"></div>
+                                <div class="name">Вождение</div>
+                                <div class="time"><span id="category_practice">0</span> астр. часов</div>
+                            </li>
+                            <li>
+                                <div class="img img-center"><img src="/m/images/icon/price-3.png" alt="benefits"></div>
+                                <div class="name">Срок обучения</div>
+                                <div class="time"><span id="category_training">0</span> месяца</div>
+                            </li>
+                            <li>
+                                <div class="img img-center">
+                                    <div class="discount-cntr">
+                                        <div class="discount">-25%</div>
+                                        <img src="/m/images/icon/price-4-discount.png" alt="benefits">
+                                    </div>
+                                </div>
+                                <div class="name">Полная стоимость</div>
+                                <div class="time"><span id="category_price">0</span> руб.</div>
+                                <div class="old-price"><span id="category_old_price">0</span> руб.</div>
+                            </li>
+                        </ul>
+                        <button class="more btn btn-blue ie_css3" style="font-size:27px;width:270px;margin-left:-135px;font-family:'Roboto Condensed',sans-serif" type="submit">Начать обучение</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if offers|length > 0 and not is_strange %}
+<div class="section">
+    <div class="wrap">
+        <div id="offer-slider" class="main-slider">
+            <div class="royalSlider rsDefaultInv">
+                {% for offer in offers %}
+                <a href="{{ path('offers') }}#{{ offer.id }}" class="rsContent">
+                    {% if offer.image %}
+                    <div class="img-slide cover-img ie_css3" style="background-image:url('{{ offer.image.webPath|imagine_filter('offer_index') }}')">
+                        <img src="{{ offer.image.webPath|imagine_filter('offer_index') }}" alt="" />
+                    </div>
+                    {% endif %}
+                    <div class="about-slide v-center ie_css3">
+                        <div class="v-m">
+                            <div class="title">{{ offer.title }}</div>
+                            {% if offer.subtitle %}
+                            <div class="sub-title">{{ offer.subtitle }}</div>
+                            {% endif %}
+                            <div class="hr"></div>
+                            <div class="text">
+                                {{ offer.desc|raw }}
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+            <a href="{{ path('offers') }}" class="more r-fl">Посмотреть все предложения</a>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<div class="section">
+    <div class="wrap">
+        <div class="benefits-b" style="margin-top:80px">
+            <div class="main-title text-center">
+                <div class="caption"><span class="line v-m">Почему мы лучшие?</span></div>
+            </div>
+            <ul class="table-list border-left">
+                <li>
+                    <div class="img img-center v-m"><img src="/m/images/icon/benefit-1.png" alt="benefits"></div>
+                    <div class="name v-m">
+                        Около 70% учеников приходят к нам <a href="{{ path('reviews') }}">по рекомендациям</a>
+                    </div>
+                </li>
+                <li>
+                    <div class="img img-center v-m"><img src="/m/images/icon/benefit-2.png" alt="benefits"></div>
+                    <div class="name v-m">
+                        Очень высокий процент <a href="{{ path('article_show', { id: 'exams' }) }}">сдачи экзамена</a> в ГИБДД с первого раза
+                    </div>
+                </li>
+                <li>
+                    <div class="img img-center v-m"><img src="/m/images/icon/benefit-3.png" alt="benefits"></div>
+                    <div class="name v-m">
+                        Удобное месторасположение автошколы, <a href="{{ path('branches') }}">большая сеть филиалов</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="section">
+    <div class="wrap">
+        <div class="contacts-info">
+            <ul class="main-contacts table-list">
+                <li class="address ie_css3">
+                    <div class="img"><img src="/m/images/icon/contact-1.png" alt="benefits"></div>
+                    <div class="info">
+                        <div class="caption">Адрес автошколы:</div>
+                        <p>г. Москва, <br />
+                            м. Марксистская,<br />
+                            Товарищеский пер, 3</p>
+                    </div>
+                </li>
+                <li class="ie_css3">
+                    <div class="img img-center v-m"><img src="/m/images/icon/contact-2.png" alt="benefits"></div>
+                    <div class="info">
+                        <div class="caption">График работы:</div>
+                        <p>
+                            Пн.—Пт.: 11:00 — 21:00<br />
+                            Сб.: 11:00 — 17:00<br />
+                            Вс.: выходной
+                        </p>
+                    </div>
+                </li>
+                <li class="ie_css3">
+                    <div class="img img-center v-m"><img src="/m/images/icon/contact-3.png" alt="benefits"></div>
+                    <div class="info">
+                        <div class="caption">Телефон и e-mail:</div>
+                        <p>
+                            +7 ({{ settings['contacts_phone1_prefix'] }}) {{ settings['contacts_phone1'] }}<br />
+                            +7 ({{ settings['contacts_phone2_prefix'] }}) {{ settings['contacts_phone2'] }}<br />
+                            <a href="mailto:{{ settings['contacts_email'] }}">{{ settings['contacts_email'] }}</a>
+                        </p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="section about-section">
+    <div class="wrap">
+        <div class="main-title small-line">
+            <div class="caption"><span class="line v-m">Об автошколе</span></div>
+        </div>
+        <div class="text-block">
+            {% if is_video %}
+            <div class="as-clip">
+                <video poster="/uploads/wysiwyg/index.png" width="500" height="335" preload="none">
+                    <source src="/uploads/wysiwyg/index.mp4" type="video/mp4;codecs=avc1.42E01E,mp4a.40.2">
+                    <source src="/uploads/wysiwyg/index.ogv" type="video/ogg;codecs=theora,vorbis">
+                    <source src="/uploads/wysiwyg/index.webm" type="video/webm;codecs=vp8,vorbis">
+                    <object data="/bundles/app/flash/flowplayer.swf" type="application/x-shockwave-flash" width="500" height="335">
+                        <param name="movie" value="/bundles/app/flash/flowplayer.swf">
+                        <param name="allowfullscreen" value="true">
+                        <param name="flashvars" value="config={'clip':{'url':'/uploads/wysiwyg/index.mp4','autoPlay':false,'autoBuffering':true,'scaling':'fit'}}">
+                    </object>
+                </video>
+                <a href="#" class="as-play"></a>
+            </div>
+            {% endif %}
+            <p>
+                Автошкола при МГТУ им.Баумана приглашает Вас на курсы подготовки водителей категории «A», «В», «С», «D», «E», а также на курс подготовки вождения квадроцикла.
+                С момента основания в 1994 году наша автошкола накопила огромный опыт подготовки водителей высокого уровня, как теоретических знаний, так и навыков вождения автомобиля. Мы не просто научим Вас водить, мы полностью ознакомим Вас с таким сложным устройством, как автомобиль, научим справляться со стрессом, который зачастую возникает у людей, только-только севших за руль, и будем сопровождать Вас  от начала и до конца в таком сложном процессе, как получение прав.
+            </p>
+            <p>
+                Теоретические занятия проходят в оборудованных классах, которые расположены в шаговой доступности от станций метро и оборудованы самыми последними технологиями с использованием передовых учебных пособий и Медиа-материалов.
+                Практическое обучение осуществляется на автомобилях автошколы - иномарках в отличном техническом состоянии. Наш автопарк постоянно обновляется новыми автомобилями и новыми моделями. Для нас важнее всего – Ваш комфорт, чтобы вы чувствовали себя за рулем нашего автомобиля удобно и уверенно.
+            </p>
+            <hr />
+            <h3>Будем рады видеть Вас в числе наших учеников, а также в рядах хорошо и грамотно подготовленных водителей!</h3>
+        </div>
+    </div>
+</div>
+
+<div class="section instructors">
+    <div class="wrap">
+        <div class="main-title text-center small-line text-center">
+            <div class="caption"><span class="line v-m">Наши инструкторы</span></div>
+        </div>
+        <ul class="instructors-b table-list">
+            <li>
+                <div class="item">
+                    <div class="img cover-img ie_css3" style="background-image: url(/m/images/temp/new-instructor-1.jpg);">
+                        <div class="line"></div>
+                        <div class="line line-2"></div>
+                        <img src="/m/images/temp/new-instructor-1.jpg" />
+                    </div>
+                    <div class="about">
+                        <div class="name">Валерий Камов</div>
+                        <div class="hr"></div>
+                        <ul>
+                            <li>Возраст: 43 года</li>
+                            <li>Стаж: 11 лет</li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="item">
+                    <div class="img cover-img ie_css3" style="background-image: url(/m/images/temp/new-instructor-2.jpg);">
+                        <div class="line"></div>
+                        <div class="line line-2"></div>
+                        <img src="/m/images/temp/new-instructor-2.jpg" />
+                    </div>
+                    <div class="about">
+                        <div class="name">Виталий Андреев</div>
+                        <div class="hr"></div>
+                        <ul>
+                            <li>Возраст: 30 лет</li>
+                            <li>Стаж: 6 лет</li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="item">
+                    <div class="img cover-img ie_css3" style="background-image: url(/m/images/temp/new-instructor-3.jpg);">
+                        <div class="line"></div>
+                        <div class="line line-2"></div>
+                        <img src="/m/images/temp/new-instructor-3.jpg" />
+                    </div>
+                    <div class="about">
+                        <div class="name">Сергей Ефимчук</div>
+                        <div class="hr"></div>
+                        <ul>
+                            <li>Возраст: 38 лет</li>
+                            <li>Стаж: 10 лет</li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="item">
+                    <div class="img cover-img ie_css3" style="background-image: url(/m/images/temp/new-instructor-4.jpg);">
+                        <div class="line"></div>
+                        <div class="line line-2"></div>
+                        <img src="/m/images/temp/new-instructor-4.jpg" />
+                    </div>
+                    <div class="about">
+                        <div class="name">Николай Авдеев</div>
+                        <div class="hr"></div>
+                        <ul>
+                            <li>Возраст: 47 лет</li>
+                            <li>Стаж: 14 лет</li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="item">
+                    <div class="img cover-img ie_css3" style="background-image: url(/m/images/temp/new-instructor-5.jpg);">
+                        <div class="line"></div>
+                        <div class="line line-2"></div>
+                        <img src="/m/images/temp/new-instructor-5.jpg" />
+                    </div>
+                    <div class="about">
+                        <div class="name">Юлия Шираухова</div>
+                        <div class="hr"></div>
+                        <ul>
+                            <li>Возраст: 36 лет</li>
+                            <li>Стаж: 5 лет</li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <a href="{{ path('article_show', { id: 'instructors' }) }}" class="btn more ie_css3">Показать всех инструкторов</a>
+    </div>
+</div>
+
+<div class="section">
+    <div class="wrap">
+        <div class="main-link l">
+            {% if not is_strange %}
+            <div class="l-col1">
+                <a href="{{ path('offers') }}" class="btn big-link ie_css3"><img style="top:-10px" class="icon v-m" src="/m/images/icon/prise.png" alt="" />Интересуют спецпредложения?</a>
+            </div>
+            <div class="l-col2">
+                <a href="{{ path('reg', { category: 4, with_at: 0, offer: 0 }) }}" class="btn big-link ie_css3"><img class="icon v-m" src="/m/images/icon/icon-reserve-big.png" alt="" />Резерв места в группе</a>
+            </div>
+            {% else %}
+            <div class="l-col1" style="margin:0 auto;float:none">
+                <a href="{{ path('reg', { category: 4, with_at: 0, offer: 0 }) }}" class="btn big-link ie_css3"><img class="icon v-m" src="/m/images/icon/icon-reserve-big.png" alt="" />Резерв места в группе</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block js %}
+<script src="/m/js/imagesloaded.pkgd.min.js"></script>
+<script>
+$(function() {
+    $('.main-price-desc-link').click(function(e) {
+        e.preventDefault();
+        var modal = $('#m_modal');
+        var overlay = $('#m_modal_overlay');
+        $('.m_modal_title span', modal).html('Свобода выбора формы обучения');
+        $('.m_modal_content', modal).html(''
+            + '<p>Главной особенностью обучения в автошколе при МГТУ им. Баумана является свобода выбора формы посещения занятий. Вы оплачиваете конечный результат – получение водительского удостоверения. Это подразумевает прохождение полной программы обучения, включающей как теоретические, так и практические занятия, все экзамены и зачеты, но право выбора формы посещения занятий остается за Вами.</p>'
+            + '<p style="margin-top:10px">Если Вам неудобно посещать теоретические занятия очно (в классе), можно пройти полный курс теории дистанционно (на сайте). При этом, на любом этапе обучения есть возможность поменять ее форму без каких-либо доплат, а также посещать занятия одновременно в очной и дистанционной форме. Главное – усвоить программу курса с максимальной эффективностью, сдать зачеты и экзамены и чувствовать себя на дороге уверенно.</p>'
+            + '<button class="btn-blue-reg m_modal_close-btn" style="display:block;margin:20px auto 0">Спасибо, понятно</button>'
+        );
+        modal.css('top', (175 + $(window).scrollTop()) + 'px');
+        modal.show();
+        overlay.show();
+
+        $('.m_modal_close, .m_modal_close-btn, #m_modal_overlay').unbind('click.m_modal').one('click.m_modal', function(e) {
+            e.preventDefault();
+            var modal = $('#m_modal');
+            var overlay = $('#m_modal_overlay');
+            modal.hide();
+            overlay.hide();
+        });
+    });
+
+    var categories = eval({{ categories|json_encode|raw }});
+    var select_category = function() {
+        var id = $('#select_category').val();
+        var category = categories[id];
+        $('#category_theory').html(category['theory']);
+        $('#category_practice').html(category['practice']);
+        $('#category_training').html(category['training']);
+        $('#category_price').html(category['price_dsc']);
+        $('#category_old_price').html(category['price']);
+    };
+    $('#select_category').on('change', select_category);
+    select_category();
+
+    $('.royalSlider').royalSlider({
+        arrowsNav: true,
+        autoHeight: true,
+        arrowsNavAutoHide: false,
+        fadeinLoadedSlide: false,
+        controlNavigationSpacing: 0,
+        controlNavigation: 'bullets',
+        controlsInside: false,
+        imageScaleMode: 'none',
+        imageAlignCenter:false,
+        blockLoop: true,
+        loop: true,
+        numImagesToPreload: 6,
+        transitionType: 'fade',
+        keyboardNavEnabled: true,
+        navigateByClick: false,
+        autoPlay: { enabled: true, delay: 3000 }
+    });
+    $('#offer-slider').imagesLoaded().done(function() {
+        $('#offer-slider').addClass('show-slider');
+    });
+
+    $('.how-work a').click(function(e) {
+        e.preventDefault();
+        var modal = $('#how-work_modal');
+        var overlay = $('#m_modal_overlay');
+        modal.css('top', (($(window).height() < modal.height() ? 60 : ($(window).height() / 2 - modal.height() / 2)) + $(window).scrollTop()) + 'px');
+        modal.show();
+        overlay.show();
+    });
+
+    var slider = $('.hw-content').royalSlider({
+        fadeinLoadedSlide: false,
+        imageScaleMode: 'none',
+        imageAlignCenter: false,
+        transitionType: 'fade',
+        navigateByClick: false,
+        loop: true,
+        controlNavigation: 'none',
+        autoPlay: { enabled: true, delay: 3000 }
+    }).data('royalSlider');
+
+    var how_work_titles = eval({{ how_work_titles|json_encode|raw }});
+
+    var hw_selected = function() {
+        var bullets = $('.hw-bullet');
+        bullets.removeClass('selected');
+        bullets.eq(slider.currSlideId).addClass('selected');
+        $('.hw-title').html(how_work_titles[slider.currSlideId]);
+    };
+
+    slider.ev.on('rsAfterSlideChange', function(event) {
+        hw_selected();
+    });
+
+    $('.hw-prev, .hw-arrow-left').click(function(e) {
+        e.preventDefault();
+        slider.prev();
+        hw_selected();
+    });
+
+    $('.hw-bullet').click(function(e) {
+        e.preventDefault();
+        slider.goTo($('.hw-bullet').index($(this)));
+        hw_selected();
+    });
+
+    $('.hw-next, .hw-arrow-right').click(function(e) {
+        e.preventDefault();
+        slider.next();
+        hw_selected();
+    });
+
+    $('.hw-close-btn, #m_modal_overlay').click(function(e) {
+        e.preventDefault();
+        var modal = $('#how-work_modal');
+        var overlay = $('#m_modal_overlay');
+        modal.hide();
+        overlay.hide();
+    });
+});
+</script>
+{% endblock js %}

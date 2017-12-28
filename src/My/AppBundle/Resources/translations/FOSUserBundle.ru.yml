@@ -1,0 +1,5 @@
+security.login.username: E-mail:
+resetting.request.username: E-mail:
+'User account is locked.': Аккаунт отключен.
+'User account is disabled.': <b>Ваш аккаунт не активирован</b> <br/><a href="%url%">Повторно выслать письмо с активацией аккаунта</a><br/><a href="%change_email_url%">Изменить E-mail</a>
+'User account has expired.': Действие аккаунта истекло.

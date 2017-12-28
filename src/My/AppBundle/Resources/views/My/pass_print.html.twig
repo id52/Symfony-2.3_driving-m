@@ -1,0 +1,149 @@
+<html>
+<head>
+    <title>Пропуск в автошколу</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="/m/css/print-pass.css" type="text/css" rel="stylesheet" />
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <img src="/m/images/print-permit/header.png"/>
+        <h1>Пропуск</h1>
+        <h2>в автошколу</h2>
+    </div>
+
+    <div class="fio">
+        <div class="qr">
+            учебные материалы:
+            <img src="/m/images/print-permit/qr.png"/>
+        </div>
+        <h1>Слушатель курса</h1>
+        <h2>{{ app.user.lastName }}<br/>{{ app.user.firstName }} {{ app.user.patronymic }}</h2>
+    </div>
+
+    <div class="address">
+        <div class="left">
+            <h1>
+                <img src="/m/images/print-permit/icon-map.png"/>
+                <span class="dark-blue">Филиал {{ filial.title }}</span><br/>
+                Адрес: {{ filial.address }}
+            </h1>
+            {% if filial.activePhones %}
+            <h1>
+                <img src="/m/images/print-permit/icon-phone.png"/>
+                {{ filial.activePhones|first }}
+            </h1>
+            {% endif %}
+            {% if filial.station %}
+            <h1>
+                <img src="/m/images/print-permit/icon-metro.png"/>
+                м. {{ filial.station }}
+            </h1>
+            {% endif %}
+        </div>
+
+        <div class="bg1"></div>
+        <div class="bg2"></div>
+
+        <div class="map" id="map"></div>
+    </div>
+
+    <img src="/m/images/print-permit/scissors.png" class="scissors"/>
+
+    <div class="div-1 clear">
+        <div class="left">
+            <h1>Поздравляем!</h1>
+            Вы активировали доступ к занятиям в автошколе при МГТУ им Баумана и можете приступить к изучению теоретического курса по адресу:
+        </div>
+        <div class="right">
+            <img src="/m/images/print-permit/icon-map.png"/>
+            Филиал {{ filial.title }}<br/>
+            Адрес: {{ filial.address }}
+        </div>
+    </div>
+
+    <div class="schedule">
+        <h1>Расписание занятий:</h1>
+        {% for group in filial.activeGroups %}
+        <h2>Группа {{ loop.index }}: </h2>
+        <h3>{{ group.row1 }}<br/>{{ group.row2 }}</h3>
+        {% endfor %}
+    </div>
+
+    <div class="div-2">
+        <div>
+            <p>
+                <b>При себе Вам необходимо иметь учебные материалы.</b>
+            </p>
+        </div>
+        <div>
+            <p>
+                <span class="h1">ВНИМАНИЕ!</span>
+            </p>
+            <ul>
+                <li>Расписать время практических занятий на автомобиле;</li>
+                <li>сдавать внутренние экзамены по теории и вождению;</li>
+                <li>оформить пакет документов для регистрации в ГИБДД;</li>
+            </ul>
+            <p>
+                Вы сможете только присутствуя лично в центральном офисе<br/>
+                <b>с 10 до 21 часов по адресу:<br/>ст. м. Марксистская, Товарищеский пер,3.</b>
+            </p>
+        </div>
+        <div>
+            <p>
+                <b class="blue">Необходимые документы для обучения и сдачи экзаменов:</b>
+            </p>
+            <ul>
+                <li>карточка прогресса;</li>
+                <li>талоны на вождение;</li>
+                <li>время занятий на тренажерах (4 занятия, расписать);</li>
+                <li>учебные материалы  ( учебники и CD диски);</li>
+                <li>талон на прохождение медкомиссии.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="div-3 clear">
+        <div class="phones">
+            +7 ({{ settings['contacts_phone1_prefix'] }}) {{ settings['contacts_phone1'] }}
+            &nbsp; &nbsp;
+            +7 ({{ settings['contacts_phone2_prefix'] }}) {{ settings['contacts_phone2'] }}
+            <div class="bg1"></div>
+            <div class="bg2"></div>
+        </div>
+        <div class="www">www.drivemaster.ru</div>
+    </div>
+
+    <a href="javascript:window.print()" class="button">Печать</a>
+</div>
+
+{% if filial.addressGeo or filial.mapCode %}
+<script src="//api-maps.yandex.ru/2.1/?lang=ru-RU"></script>
+<script>
+{% if filial.addressGeo %}
+    var init = function() {
+        ymaps.geocode('{{ filial.region~', '~filial.addressGeo }}', { results: 1 }).then(function(res) {
+            var coords = res.geoObjects.get(0).geometry.getCoordinates();
+
+            var myMap = new ymaps.Map('map', { center: coords, zoom: 16, controls: [] }, { suppressMapOpenBlock: true });
+
+            var myPlacemark = new ymaps.Placemark(coords,
+                {
+                    hintContent: '{{ filial.title }}',
+                    balloonContent: '<b>{{ filial.title }}</b><br>{{ filial.activePhones|join('<br>')|raw }}<br>г. {{ filial.region }} {{ filial.station ? (' (м. '~filial.station~')') : '' }}, {{ filial.address }}'
+                },
+                { preset: 'islands#dotIcon', iconColor: '#025C91' }
+            );
+            myMap.geoObjects.add(myPlacemark);
+        });
+    };
+    ymaps.ready(init);
+{% else %}
+    {{ filial.mapCode|raw }}
+{% endif %}
+</script>
+{% endif %}
+
+</body>
+</html>

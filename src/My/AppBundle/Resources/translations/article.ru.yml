@@ -1,0 +1,9 @@
+article_title: Название
+article_url: ЧПУ (адрес)
+article_url_help: Используется для генерации адреса. Например, если создать статью с ЧПУ videorolik, то она будет доступна по адресу http://адрес-сайта/videorolik. Можно использовать латинский алфавит, цифры, дефис и слэш.
+article_keywords: Meta keywords
+article_description: Meta description
+article_text: Текст
+article_placeholders: |
+    {{ phone1 }} — контактный/купонный телефон 1<br>
+    {{ phone2 }} — контактный/купонный телефон 2<br>

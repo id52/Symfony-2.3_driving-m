@@ -1,0 +1,9 @@
+promo_check_ajax:
+    pattern:  /check/
+    defaults: { _controller: PromoBundle:Default:checkAjax }
+promo_trieds_write_ajax:
+    pattern:  /write_trieds/
+    defaults: { _controller: PromoBundle:Default:triedsWriteAjax }
+promo_trieds_remove_ajax:
+    pattern:  /remove_trieds/
+    defaults: { _controller: PromoBundle:Default:triedsRemoveAjax }

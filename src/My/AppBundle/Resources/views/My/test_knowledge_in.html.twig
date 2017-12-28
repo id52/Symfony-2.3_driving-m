@@ -1,0 +1,55 @@
+<div class="title"><h1>{{ 'ticket_num'|trans({ '%ticket%': question.ticketNum }) }}</h1></div>
+
+<div class="errors">Ошибки: <span>{{ errors }}</span> из {{ max_errors }}</div>
+
+{% if seconds_left %}
+    <div class="timer" data-seconds-left="{{ seconds_left }}">0:00</div>
+{% endif %}
+
+<div class="steps">
+    {% for key in answers|keys %}
+        {% if num == key %}
+            <span class="now">{{ loop.index }}</span>
+        {% else %}
+            <span {{ answers[key] ? (answers[key].correct ? ' class="ok"' : ' class="err"') : '' }}>{{ loop.index }}</span>
+        {% endif %}
+    {% endfor %}
+</div>
+
+<div class="hr"></div>
+
+{% if question.image %}
+    <div class="img"><img src="{{ question.image.webPath|imagine_filter('image') }}" alt=""></div>
+{% endif %}
+
+<div class="qu">{{ question.text }}</div>
+
+<form action="" method="post">
+
+    {% for key, answer in question.answers %}
+        <div class="answer"{{ (is_granted('ROLE_TESTER_TRAINING') or _is_test) and answer.correct ? ' style="background-color:#f8ffeb"' : '' }}>
+            <input id="answer_{{ key }}" type="radio" required="required" name="answer" value="{{ key }}" />
+            <label for="answer_{{ key }}"></label>
+            {{ answer.title }}
+        </div>
+    {% endfor %}
+
+    <div class="bottom links">
+        <span class="link l bg-green answer-link">
+            {{ 'buttons.answer'|trans }}
+            <input value="" type="submit">
+        </span>
+
+        <span class="link l bg-blue answer-link">
+            {{ 'buttons.continue'|trans }}
+            <input value="" type="submit">
+        </span>
+
+        <div class="r">
+            {% if is_granted('ROLE_MOD_CONTENT') %}
+                <a target="_blank" class="edit-link" href="{{ path('admin_question_edit', { id: question.id }) }}">Редактировать вопрос</a>
+            {% endif %}
+            <a class="exit-link" href="#">{{ 'buttons.quit'|trans }}</a>
+        </div>
+    </div>
+</form>

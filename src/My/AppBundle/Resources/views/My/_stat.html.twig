@@ -1,0 +1,39 @@
+{% if themes_stat|length > 0 %}
+    {% for key, theme in themes_stat %}
+        <div class="row">
+            <div class="head{{ theme.proc >= 95 ? ' bg-green' : (theme.proc >= 80 ? '' : ' bg-red') }}">
+                <div class="cell">
+                    <strong>{{ 'stat.theme_num'|trans({ '%num%': theme.num }) }}</strong>
+                    {{ 'stat.stat'|trans({ '%proc%': theme.proc, '%correct%': theme.correct, '%all%': theme.all }) }}
+                </div>
+            </div>
+
+            <div class="scroll">
+                <div class="holder">
+                    {% for log in all_stat %}
+                        <div class="elem">
+                            <div class="cell">
+                                {{ log.started_at|date('d.m.Y H:i') }}
+                                ({{ (log.passed ? 'stat.status.passed' : (log.ended_at ? 'stat.status.not_passed' : 'stat.status.aborted'))|trans }})
+                                <br>
+                                {% if log.themes[key] is defined %}
+                                    {{ 'stat.stat'|trans({ '%proc%': log.themes[key].proc, '%correct%': log.themes[key].correct, '%all%': log.themes[key].all }) }}
+                                {% else %}
+                                    ---
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="shad"></div>
+        </div>
+    {% endfor %}
+
+    <div class="scroll-line">
+        <div class="slider">
+            <div class="scroll-slider ui-slider-handle"></div>
+        </div>
+    </div>
+{% endif %}

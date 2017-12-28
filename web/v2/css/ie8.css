@@ -1,0 +1,429 @@
+@charset "utf-8";
+
+.selectIn:after {
+		background-image: url(../img/small/select-arr.png);
+}
+
+.customCheckbox,
+.customRadio {
+		background-image: url(../img/small/checkbox.png);
+}
+
+ul li {
+		background-image: url(../img/small/check.png);
+}
+
+.to-site {
+		background-image: url(../img/small/back.png);
+}
+
+.phone .bg:before {
+		background-image: url(../img/small/phone.png);
+}
+
+.user-top .name,
+.user-top .auth-link {
+		background-image: url(../img/small/pic-user.png);
+}
+
+.path {
+		background-image: url(../img/small/path.png);
+}
+
+.video h3:before {
+		background-image: url(../img/small/video.png);
+}
+
+.video h3:after {
+		background-image: url(../img/small/title-arr.png);
+}
+
+.links .edit-link:before {
+		background-image: url(../img/small/pen.png);
+}
+
+.links .answer-link:before {
+		background-image: url(../img/small/answer.png);
+}
+
+.links .go-link:before {
+		background-image: url(../img/small/go.png);
+}
+
+.links .start-link:before {
+		background-image: url(../img/small/stud.png);
+}
+
+.links .pay-link:before {
+		background-image: url(../img/small/card-mini.png);
+}
+
+.links .user-link:before {
+		background-image: url(../img/small/user.png);
+}
+
+.links .check-link {
+		background-image: url(../img/small/check-white-big.png);
+}
+
+.links .mail-link {
+		background-image: url(../img/small/mail.png);
+}
+
+.links .exit-link {
+		background-image: url(../img/small/exit.png);
+}
+
+.links .key-link:before {
+		background-image: url(../img/small/key.png);
+}
+
+.links .reg-link:before {
+		background-image: url(../img/small/thumb-up.png);
+}
+
+.side-menu a:before,
+.side-menu span:before {
+		background-image: url(../img/small/side-menu.png);
+}
+
+.socials a {
+		background-image: url(../img/small/socials.png);
+}
+
+.themes .num:after {
+		background-image: url(../img/small/theme-arr.png);
+}
+
+.themes .done .num {
+		background-image: url(../img/small/check-white.png);
+}
+
+.arr-link:after {
+		background-image: url(../img/small/darr-link.png);
+}
+
+.exam-link:before {
+		background-image: url(../img/small/exam.png);
+}
+
+.info-block {
+		background-image: url(../img/small/info.png);
+}
+
+.profile .edit-photo:before {
+		background-image: url(../img/small/photo.png);
+}
+
+.profile .form .info.two:after {
+		background-image: url(../img/small/info-arr.png);
+}
+
+span.category-val-b:after,
+.category-val-b a:after,
+.category-val-b .selectText:after {
+		background-image: url(../img/category/small/b.png);
+}
+
+.submit-phone .bg.green {
+		background-image: url(../img/small/check-white.png);
+}
+
+.submit-phone .bg:before {
+		background-image: url(../img/small/submit-phone.png);
+}
+
+.submit-phone .form .input .submit,
+.pay .code .submit {
+		background-image: url(../img/small/check-white.png);
+}
+
+.submit-phone .form .input.error .submit {
+		background-image: url(../img/small/exclam.png);
+}
+
+.submit-phone .err-text:before {
+		background-image: url(../img/small/err-arr.png);
+}
+
+.links .file:before {
+		background-image: url(../img/small/check-white.png);
+}
+
+.edit-photo-block .close,
+.modal .close,
+.notice-main .close,
+.faq .in .close {
+		background-image: url(../img/small/close.png);
+}
+
+.themes2 .pic.bg1 {
+		background-image: url(../img/training/small/1.png);
+}
+
+.themes2 .pic.bg2 {
+		background-image: url(../img/training/small/2.png);
+}
+
+.themes2 .pic.bg3 {
+		background-image: url(../img/training/small/3.png);
+}
+
+.themes2 .pic.bg4 {
+		background-image: url(../img/training/small/4.png);
+}
+
+.themes2 .done .cover .text {
+		background-image: url(../img/small/check-white-bigest.png);
+}
+
+.modal:after {
+		background-image: url(../img/small/cone.png);
+}
+
+.test .timer:after {
+		background-image: url(../img/small/timer-small.png);
+}
+
+.test .steps .now:after {
+		background-image: url(../img/small/step-arr.png);
+}
+
+.test .answer .err-text:before {
+		background-image: url(../img/small/res-arr.png);
+}
+
+.test .answer.error .customRadio,
+.test .answer.error .customCheckbox {
+		background-image: url(../img/small/cross-red.png);
+}
+
+.notice.bg-sad:before {
+		background-image: url(../img/small/sad.png);
+}
+
+.notice.bg-prize:before {
+		background-image: url(../img/small/prizr.png);
+}
+
+.notice.bg-time:before {
+		background-image: url(../img/small/timer.png);
+}
+
+.stat2 .head:after {
+		background-image: url(../img/small/stat-arr.png);
+}
+
+.scroll-slider {
+		background-image: url(../img/small/scroll-slider.png);
+}
+
+.paid .bg-check {
+		background-image: url(../img/small/check-biggest-green.png);
+}
+
+.reg-info .congrat {
+		background-image: url(../img/small/like.png);
+}
+
+.test-info .pic {
+		background-image: url(../img/small/reg-info.png);
+}
+
+.pay .price {
+		background-image: url(../img/small/pay-arr.png);
+}
+
+.pay .price del:before,
+.pay .price strong:before {
+		background-image: url(../img/small/price-label.png);
+}
+
+.pay .total .go:before {
+		background-image: url(../img/small/card.png);
+}
+
+.type-of-training:after {
+		background-image: url(../img/small/darr-block.png);
+}
+
+.type-of-training .bg-clas {
+		background-image: url(../img/small/classic.png);
+}
+
+.type-of-training .bg-dist {
+		background-image: url(../img/small/distance.png);
+}
+
+.simple-steps li:before {
+		background-image: url(../img/small/shad-arr.png);
+}
+
+.total-time {
+		background-image: url(../img/small/time.png);
+}
+
+.start-now .bg-look {
+		background-image: url(../img/small/manual.png);
+}
+
+.start-now .bg-test {
+		background-image: url(../img/small/test.png);
+}
+
+.start-now .bg-exam {
+		background-image: url(../img/small/exam1.png);
+}
+
+.in-program .bg-doc {
+		background-image: url(../img/small/doc.png);
+}
+
+.in-program .bg-book {
+		background-image: url(../img/small/book.png);
+}
+
+.in-program .bg-check {
+		background-image: url(../img/small/blanc.png);
+}
+
+.in-program .bg-vid {
+		background-image: url(../img/small/play.png);
+}
+
+.calc .label:after {
+		background-image: url(../img/small/select-rarr.png);
+}
+
+.calc .price:before {
+		background-image: url(../img/small/price-big.png);
+}
+
+.action .timer:before {
+		background-image: url(../img/small/timer-arr.png);
+}
+
+.action .timer .num {
+		background-image: url(../img/small/timer2.png);
+}
+
+.action .timer .dots {
+		background-image: url(../img/small/timer-dots.png);
+}
+
+.half-info {
+		background-image: url(../img/small/half-blocks.png);
+}
+
+.half-info .bg-start {
+		background-image: url(../img/small/reg.png);
+}
+
+.half-info .bg-people {
+		background-image: url(../img/small/people.png);
+}
+
+.how .bg-look {
+		background-image: url(../img/small/manual.png);
+}
+
+.how .bg-qu {
+		background-image: url(../img/small/test.png);
+}
+
+.how .bg-pedal {
+		background-image: url(../img/small/pedal.png);
+}
+
+.how .bg-rep {
+		background-image: url(../img/small/repeat.png);
+}
+
+.how .bg-test {
+		background-image: url(../img/small/tickets.png);
+}
+
+.how .bg-ask {
+		background-image: url(../img/small/qu.png);
+}
+
+.warranty {
+		background-image: url(../img/small/warranty.png);
+}
+
+.where .bg-car {
+		background-image: url(../img/small/car.png);
+}
+
+.where .bg-net {
+		background-image: url(../img/small/planet.png);
+}
+
+.where .bg-pho {
+		background-image: url(../img/small/mobile.png);
+}
+
+.where .bg-tab {
+		background-image: url(../img/small/tablet.png);
+}
+
+.faq h3 {
+		background-image: url(../img/small/now.png);
+}
+
+.faq .toggle span {
+		background-image: url(../img/small/qu-small.png);
+}
+
+.faq .in:before {
+		background-image: url(../img/small/qu-pop-arr.png);
+}
+
+.demo-less {
+		background-image: url(../img/small/demo.png);
+}
+
+.demo-vid {
+		background-image: url(../img/small/vid.png);
+}
+
+.auth-modal .err-text:before {
+		background-image: url(../img/small/err-text.png);
+}
+
+.login .c:before {
+		background-image: url(../img/small/phone2.png);
+}
+
+.captcha2 .refresh {
+		background-image: url(../img/small/refresh.png);
+}
+
+.terms li {
+		background-image: url(../img/small/dot-red.png);
+}
+
+.place-info:before {
+		background-image: url(../img/small/city.png);
+}
+
+.calendar .days .done:before {
+		background-image: url(../img/small/check-white2.png);
+}
+
+.tickets2 .done:before {
+		background-image: url(../img/small/check-white22.png);
+}
+
+.notice-done:before {
+		background-image: url(../img/small/check-red.png);
+}
+
+.tickets2 .ticket .go2:before,
+.sms-pop .submit:before {
+		background-image: url(../img/small/rarr-white.png);
+}
+
+.err-pop .close:before {
+		background-image: url(../img/small/close2.png);
+}

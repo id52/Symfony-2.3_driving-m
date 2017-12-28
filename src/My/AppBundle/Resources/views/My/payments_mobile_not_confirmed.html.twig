@@ -1,0 +1,16 @@
+{% extends 'AppBundle::layout_new.html.twig' %}
+
+{% block content %}
+<nav class="path">
+    <a href="{{ path('homepage') }}">{{ 'titles.homepage'|trans }}</a>
+    » <strong>{{ 'titles.payments'|trans }}</strong>
+</nav>
+
+<div class="mainContent">
+    <div class="title"><h1>{{ settings['payments_mobile_not_confirmed_title'] }}</h1></div>
+    {{ settings['payments_mobile_not_confirmed_text']|raw }}
+    <div class="links">
+        <a class="bg-green" href="{{ path('my_profile_edit') }}">В профиль</a>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,40 @@
+My\AppBundle\Entity\SupportCategory:
+    type: entity
+    table: support_categories
+    repositoryClass: My\AppBundle\Repository\SupportCategoryRepository
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+        type:
+            type: enumsupportcategory
+        t_versions:
+            type: text
+            nullable: true
+    manyToMany:
+        moderators:
+            targetEntity: User
+            mappedBy: moderated_support_categories
+    manyToOne:
+        parent:
+            targetEntity: SupportCategory
+            inversedBy: children
+    oneToMany:
+        children:
+            targetEntity: SupportCategory
+            mappedBy: parent
+            cascade: ["persist", "remove"]
+        dialogs:
+            targetEntity: SupportDialog
+            mappedBy: category
+            cascade: ["persist", "remove"]
+    oneToOne:
+        user:
+            targetEntity: User
+            inversedBy: teacher
+            joinColumn:
+                onDelete:  "SET NULL"

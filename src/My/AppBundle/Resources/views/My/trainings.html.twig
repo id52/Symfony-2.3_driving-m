@@ -1,0 +1,137 @@
+{% extends 'AppBundle::layout_new.html.twig' %}
+
+{% block start_content %}
+<div class="modal helper" id="helper">
+    <div class="title">{{ 'help_title'|trans }}</div>
+
+    {{ settings['trainings_help_btn']|raw }}
+
+    <div class="bottom links"><span class="link bg-green check-link btn-close">Спасибо, все понятно</span></div>
+    <span class="close"></span>
+</div>
+
+{% if not is_granted('ROLE_USER_PAID3') %}
+<div id="alert_modal" class="modal border-red">
+    <div class="notice">
+        {{ 'trainings_alert_3'|trans }}
+        <div class="links">
+            <a href="{{ path('my_payments') }}" class="bg-green">{{ 'paid_notify.pay'|trans }}</a>
+            <a href="#" class="bg-red">Закрыть</a>
+        </div>
+    </div>
+    <span class="close"></span>
+</div>
+{% endif %}
+{% if app.user.closeFinalExam %}
+    <div id="alert_cfe_modal" class="modal border-red">
+        <div class="notice">
+            <div class="title">{{ settings['close_final_exam_title'] }}</div>
+
+            {{ closed_message|raw }}
+
+            <div class="links">
+                <a href="#" class="bg-red">Закрыть</a>
+            </div>
+        </div>
+        <span class="close"></span>
+    </div>
+{% endif %}
+{% endblock start_content %}
+
+{% block content %}
+<nav class="path">
+    <a href="{{ path('homepage') }}">{{ 'titles.homepage'|trans }}</a>
+    » <strong>{{ 'titles.trainings'|trans }}</strong>
+</nav>
+
+<div class="mainContent">
+    <div class="title">
+        <a class="rlink help-link simplebox" href="#helper">Помощник</a>
+        <h1>{{ 'titles.trainings'|trans }}</h1>
+    </div>
+
+    <section class="themes2">
+        {% for subject in subjects %}
+            {% set object = subject.object %}
+            {% set proc = (subject.themes_cnt ? (100 * subject.read_themes_cnt / subject.themes_cnt) : 0) %}
+            <figure{{ subject.is_passed ? ' class="done"' : '' }}>
+                <div class="l">
+                    <div class="pic" style="background-image:url('{{ (object.image ? object.image.webPath : '/uploads/images/default.jpg')|imagine_filter('image_thumb_new') }}')">
+                        <div class="cover" style="height:{{ proc }}%">
+                            <div class="text{{ proc < 15 ? ' out' : '' }}">
+                                {% if subject.is_passed %}
+                                    Экзамен<br>сдан
+                                {% else %}
+                                    <div class="cell">{{ subject.read_themes_cnt }} <strong>/ {{ subject.themes_cnt }}</strong></div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {{ object.briefDescription }}
+                </div>
+                <div class="cell">
+                    <h3><a href="{{ path('my_training', { id: object.id }) }}">{{ object.title }}</a></h3>
+                    {{ object.description|raw }}
+                </div>
+
+                {% if is_granted('ROLE_TESTER_TRAINING') %}
+                <div class="checked-subject">
+                    {% if subject.is_passed %}
+                        <a href="{{ path('my_trainings_subject_reset', { id: object.id }) }}">{{ 'reset'|trans }}</a>
+                    {% else %}
+                        <a href="{{ path('my_trainings_subject_pass',{ id: object.id }) }}">{{ 'admin_pass'|trans }}</a>
+                    {% endif %}
+                </div>
+                {% endif %}
+
+            </figure>
+        {% endfor %}
+    </section>
+
+    {% if is_passed %}
+        {% if app.user.closeFinalExam %}
+        <a class="arr-link exam-link active simplebox" href="#alert_cfe_modal">
+            <strong><span>Сдать итоговый экзамен</span></strong>
+            {{ settings['training_final_exam_description']|raw }}
+        </a>
+        {% else %}
+        <a class="arr-link exam-link {{ is_passed_full ? 'done' : 'active' }}{{ not is_granted('ROLE_USER_PAID3') ? ' simplebox' : '' }}" href="{{ is_granted('ROLE_USER_PAID3') ? path('my_training_final_exam') : '#alert_modal' }}">
+            <strong><span>{{ is_passed_full ? 'Итоговый экзамен сдан!' : 'Сдать итоговый экзамен' }}</span></strong>
+            {% if not is_passed_full %}
+            {{ settings['training_final_exam_description']|raw }}
+            {% endif %}
+        </a>
+        {% endif %}
+        {% if not is_passed_full and is_granted('ROLE_TESTER_TRAINING') %}
+            <br><br><a href="{{ path('my_training_final_exam_pass') }}">{{ 'admin_pass'|trans }}</a>
+        {% endif %}
+    {% else %}
+        <div class="arr-link exam-link">
+            <strong><span>Итоговый экзамен</span></strong>
+            <span class="ind">{{ settings['training_final_exam_description']|raw }}</span>
+            Вы можете приступить к сдаче итогового экзамена<br>только после сдачи экзаменов по всем 7-ми дисциплинам.
+        </div>
+    {% endif %}
+</div>
+{% endblock content %}
+
+{% block js %}
+<script>
+$(function() {
+    {% if not is_granted('ROLE_USER_PAID3') %}
+    var alert_modal = $('#alert_modal');
+    $('.bg-red', alert_modal).click(function(e) {
+        e.preventDefault();
+        $.simplebox.close();
+    });
+    {% endif %}
+    {% if app.user.closeFinalExam %}
+    var alert_cfe_modal = $('#alert_cfe_modal');
+    $('.bg-red', alert_cfe_modal).click(function(e) {
+        e.preventDefault();
+        $.simplebox.close();
+    });
+    {% endif %}
+});
+</script>
+{% endblock js %}

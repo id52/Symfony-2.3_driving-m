@@ -1,0 +1,23 @@
+My\SmsUslugiRuBundle\Entity\Log:
+    type: entity
+    table: sms_uslugi_ru_logs
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        text:
+            type: string
+        number:
+            type: string
+        s_id:
+            type: string
+            nullable: true
+        s_answer:
+            type: array
+        created_at:
+            type: datetime
+            gedmo:
+                timestampable:
+                    on: create

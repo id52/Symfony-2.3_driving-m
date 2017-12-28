@@ -1,0 +1,63 @@
+My\AppBundle\Entity\Theme:
+    type: entity
+    table: themes
+    repositoryClass: My\AppBundle\Repository\ThemeRepository
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        title:
+            type: string
+        text:
+            type: text
+            nullable: true
+        position:
+            type: integer
+            gedmo:
+                - sortablePosition
+    oneToOne:
+        slice:
+            targetEntity: Slice
+            mappedBy: after_theme
+    oneToMany:
+        questions:
+            targetEntity: Question
+            mappedBy: theme
+        tests_logs:
+            targetEntity: ThemeTestLog
+            mappedBy: theme
+        support_dialogs:
+            targetEntity: SupportDialog
+            mappedBy: theme
+            cascade: ['persist', 'remove']
+    manyToOne:
+        subject:
+            targetEntity: Subject
+            inversedBy: themes
+            gedmo:
+                - sortableGroup
+    manyToMany:
+        readers:
+            targetEntity: User
+            inversedBy: read_themes
+            joinTable:
+                name: themes_readers
+                joinColumns:
+                    theme_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    reader_id:
+                        referencedColumnName: id
+        versions:
+            targetEntity: TrainingVersion
+            inversedBy: themes
+            joinTable:
+                name: training_versions_themes
+                joinColumns:
+                    theme_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    version_id:
+                        referencedColumnName: id

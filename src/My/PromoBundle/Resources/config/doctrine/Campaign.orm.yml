@@ -1,0 +1,31 @@
+My\PromoBundle\Entity\Campaign:
+    type: entity
+    table: promo_campaigns
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+        type:
+            type: string
+        payment_type:
+            type: string
+        used_from:
+            type: datetime
+        used_to:
+            type: datetime
+        active:
+            type: boolean
+        discount:
+            type: integer
+        max_activations:
+            type: integer
+            nullable: true
+    oneToMany:
+        keys:
+            targetEntity: Key
+            mappedBy: campaign
+            cascade: [ persist, remove ]

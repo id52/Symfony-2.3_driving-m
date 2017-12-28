@@ -1,0 +1,54 @@
+My\AppBundle\Entity\PassFilial:
+    type: entity
+    table: pass_filials
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        title:
+            type: string
+        address:
+            type: string
+        station:
+            type: string
+            nullable: true
+        work_time:
+            type: string
+            nullable: true
+        phones:
+            type: array
+        emails:
+            type: array
+        coords:
+            type: array
+        address_geo:
+            type: string
+            nullable: true
+        map_code:
+            type: text
+            nullable: true
+        active:
+            type: boolean
+        groups:
+            type: array
+        updated_at:
+            type: datetime
+            gedmo:
+                timestampable:
+                    on: update
+        created_at:
+            type: datetime
+            gedmo:
+                timestampable:
+                    on: create
+    oneToOne:
+        image:
+            targetEntity: Image
+            mappedBy: pass_filial
+            cascade: [ all ]
+    manyToOne:
+        region:
+            targetEntity: Region
+            inversedBy: pass_filials

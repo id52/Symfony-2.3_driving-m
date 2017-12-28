@@ -1,0 +1,100 @@
+﻿﻿<table width="100%" cellspacing="0" border="0" style="background:#31528c;margin:0;padding:0">
+    <tr>
+        <td align="center" style="padding-top:20px">
+{#
+            <table width="560px" border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td align="center" valign="middle" height="50px">
+                        <span style="font-size:12px;color:#c9d3e5;font-family:Arial">Письмо отображается некорректно? <a href="" style="color:#c9d3e5;text-decoration:underline;font-family:Arial">Посмотрите</a> исходную версию на сайте!</span>
+                    </td>
+                </tr>
+            </table>
+#}
+
+            <table width="560" border="0" cellpadding="0" cellspacing="0" style="font-family:Arial,Helvetica,sans-serif;margin-top:0;background-image:url('{{ 'http://'~_host~'/m/mail-img/head.jpg' }}');background-repeat:no-repeat;background-position:0 0" bgcolor="#FFFFFF">
+                <tr>
+                    <td height="36px" valign="middle" style="color:#ffffff;font-size:13px;font-family:Arial;padding-left:37px">
+                        +7 (499) 375-70-15
+                        <span style="margin-left:17px">+7 (495) 215-05-90</span>
+                    </td>
+                </tr>
+                <tr><td height="102px"></td></tr>
+                <tr>
+                    <td height="36px" valign="top">
+                        <div style="float:left;color:#0092d6;font-size:17px;font-family:Arial;width:156px;padding-left:17px">&laquo;С нами - значит,</div>
+                        <div style="float:left;color:#fff;font-size:17px;font-family:Arial;padding-top:4px">с правами&raquo;</div>
+                    </td>
+                </tr>
+                <tr><td height="20px"></td></tr>
+
+                <tr><td height="4px"></td></tr>
+
+                <tr>
+                    <td style="color:#404040;font-size:14px;font-family:Arial;line-height:21px;padding-left:30px;padding-right:30px;text-align:justify">
+                        {{ message|raw }}
+                    </td>
+                </tr>
+
+                <tr><td height="20px"></td></tr>
+
+                <tr>
+                    <td>
+                        <table width="560px" border="0" cellpadding="0" cellspacing="0" style="background-image:url('{{ 'http://'~_host~'/m/mail-img/pict.png' }}');background-repeat:no-repeat;background-position:0 0">
+                            <tr><td colspan="2" height="44px"></td></tr>
+                            <tr>
+                                <td colspan="2" width="280px" height="43px" valign="middle" style="padding-left:125px">
+                                    <a href="{{ url('branches') }}" style="color:#005b90;font-size:13px;font-family:Arial">31 ФИЛИАЛ</a>
+                                    <br />+ <a href="{{ url('article_show', { id: 'sites' }) }}" style="color:#005b90;font-size:13px;font-family:Arial">40 ПЛОЩАДОК</a>
+                                </td>
+                                <td colspan="2" width="280px" height="43px" valign="middle" style="padding-left:95px">
+                                    <a href="{{ url('article_show', { id: 'obuchenie_online' }) }}" style="color:#005b90;font-size:13px;font-family:Arial">ОБУЧЕНИЕ ОЧНОЕ<br />И ДИСТАНЦИОННОЕ</a>
+                                </td>
+                            </tr>
+                            <tr><td colspan="2" height="32px"></td></tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr><td height="32px" bgcolor="#005b90"></td></tr>
+                <tr>
+                    <td bgcolor="#005b90" style="line-height:23px;text-align:center;text-transform:uppercase;color:#fff;font-size:11px">
+                        <a href="{{ url('article_show', { id: 'branches' }) }}" style="color:#fff">Филиалы</a>
+                        &nbsp;&nbsp;&nbsp;<a href="{{ url('article_show', { id: 'exams' }) }}" style="color:#fff">Экзамены</a>
+                        &nbsp;&nbsp;&nbsp;<a href="{{ url('article_show', { id: 'sites' }) }}" style="color:#fff">Площадки</a>
+                        &nbsp;&nbsp;&nbsp;<a href="{{ url('article_show', { id: 'instructors' }) }}" style="color:#fff">Инструкторы</a>
+                        &nbsp;&nbsp;&nbsp;<a href="{{ url('article_show', { id: 'cars' }) }}" style="color:#fff">Автопарк</a>
+                        <br /><a href="{{ url('news') }}" style="color:#fff">Новости</a>
+                        &nbsp;&nbsp;&nbsp;<a href="{{ url('article_show', { id: 'about' }) }}" style="color:#fff">Об автошколе</a>
+                        &nbsp;&nbsp;&nbsp;<a href="{{ url('article_show', { id: 'tuition-terms' }) }}" style="color:#fff">Условия и порядок обучения</a>
+                        &nbsp;&nbsp;&nbsp;<a href="{{ url('article_show', { id: 'categories' }) }}" style="color:#fff">Категории и программы обучения</a>
+                        &nbsp;&nbsp;&nbsp;<a href="{{ url('faq') }}" style="color:#fff">Вопросы и ответы</a>
+                        &nbsp;&nbsp;&nbsp;<a href="{{ url('contacts') }}" style="color:#fff">Контакты</a>
+                    </td>
+                </tr>
+                <tr><td height="32px" bgcolor="#005b90"></td></tr>
+
+                <tr><td height="12px" bgcolor="#00a2dd"></td></tr>
+
+                <tr>
+                    <td bgcolor="#00a2dd" height="38px" valign="middle"  align="center" style="color:#fff;font-size:14px;font-family:Arial;padding-bottom:14px">
+                        Вы получили это письмо, потому что зарегистрированы на портале дистанционного обучения Автошколы при МГТУ им. Баумана.
+                    </td>
+                </tr>
+
+                <tr>
+                    <td bgcolor="#ffffff" align="center" height="34px" valign="middle" style="color:#075272;font-size:13px;font-family:Arial;font-weight:bold">
+                        Данное письмо отправлено автоматически и не требует ответа.
+                    </td>
+                </tr>
+
+                <tr>
+                    <td bgcolor="#00a2dd" style="color:#fff;font-size:13px;padding-top:14px;padding-bottom:18px;line-height:18px" align="center">
+                        Все права защищены &copy; {{ 'now'|date('Y') }}
+                        <br />телефон: +7 (499) 375-70-15 +7 (495) 215-05-90,
+                        e-mail: <a href="mailto:support@drivemaster.ru" style="color:#fff">support@drivemaster.ru</a>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr><td height="100px"></td></tr>
+</table>

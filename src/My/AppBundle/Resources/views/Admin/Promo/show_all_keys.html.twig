@@ -1,0 +1,97 @@
+{% extends 'AppBundle::admin.html.twig' %}
+
+{% block content %}
+    <h3>{{ 'admin.promo_keys_list'|trans({ '%campaign%': entity.name }) }}</h3>
+    <hr>
+
+    {% if filter_form is defined %}
+    <a id="filter_link" href="#"><i class="fa fa-caret-down"></i> Фильтр</a>
+    <div id="filter">
+        {{ form_start(filter_form) }}
+        {{ form_widget(filter_form) }}
+        <div class="form-actions">
+            <button type="submit" class="btn btn-success pull-right">
+                <i class="fa fa-filter"></i>
+                <span>{{ 'buttons.filter'|trans }}</span>
+            </button>
+        </div>
+        {{ form_end(filter_form) }}
+    </div>
+    <br>
+    {% endif %}
+
+    {% if entity.keys|length %}
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>{{ ('promo_key_key')|trans({}, 'promo') }}</th>
+                    <th class="min_col">{{ ('promo_key_date_create')|trans({}, 'promo') }}</th>
+                    <th class="min_col">{{ ('promo_key_perv')|trans({}, 'promo') }}</th>
+                    <th class="min_col">{{ ('promo_key_rezerv')|trans({}, 'promo') }}</th>
+                    <th class="min_col">{{ ('promo_key_use_key')|trans({}, 'promo') }}</th>
+                    <th class="min_col">{{ ('promo_key_actived')|trans({}, 'promo') }}</th>
+                    <th class="min_col">{{ ('promo_key_date_activated')|trans({}, 'promo') }}</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            {% for key in keys %}
+                <tr>
+                    <td>{{ key.key }}</td>
+                    <td class="min_col text-right">
+                        {{ key.dateCreate|date('d.m.Y H:i') }}
+                    </td>
+                    <td class="min_col text-right">
+                        <a href="{{path('admin_promo_keys', { type: 'first', id: key.id })}}" title="Список первичных">{{ key.perv|length }}</a>
+                    </td>
+                    <td class="min_col text-right">
+                        <a href="{{path('admin_promo_keys',{ type: 'rezerv', id: key.id })}}" title="Список резервистов">{{ key.rezerv|length }}</a>
+                    </td>
+                    <td class="min_col text-right">
+                        <a href="{{path('admin_promo_keys', { type: 'use', id: key.id })}}" title="Список использовавших">{{ key.use|length }}</a>
+                    </td>
+                    <td class="min_col">
+                    {% if key.info %}
+                        <i class="fa fa-plus"></i>
+                    {% else %}
+                        <i class="fa fa-minus"></i>
+                    {% endif %}
+                    </td>
+                    <td class="min_col text-right">
+                        {% if key.dateActivate == null %}
+                            <i class="fa fa-minus"></i>
+                        {% else %}
+                            {{ key.dateActivate|date('d.m.Y H:i') }}
+                        {% endif %}
+                    </td>
+                    <td class="min_col">
+                        {% if  key.rezerv|length == 0 and  key.use|length == 0 and key.perv|length == 0 %}
+                            <a href="{{ path('admin_promo_key_delete', { id: key.id }) }}" class="nodecor text-error" onclick="return confirm('{{ 'you_sure'|trans }}')"><i class="fa fa-times"></i></a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        {{ 'no_data'|trans }}
+    {% endif %}
+
+    <div class="form-actions">
+        <a class="btn pull-right" href="{{ path('admin_promos') }}"><i class="fa fa-arrow-left"></i> {{ 'admin.buttons.back_to_list'|trans }}</a>
+    </div>
+{% endblock content %}
+
+{% block js %}
+<script>
+$(function() {
+    {% if app.request.queryString == '' %}
+    $('#filter').hide();
+    {% endif %}
+    $('#filter_link').click(function(e) {
+        e.preventDefault();
+        $('#filter').toggle();
+    });
+});
+</script>
+{% endblock js %}

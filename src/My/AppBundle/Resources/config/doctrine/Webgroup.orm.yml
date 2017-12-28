@@ -1,0 +1,15 @@
+My\AppBundle\Entity\Webgroup:
+    type: entity
+    table: webgroups
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+    oneToMany:
+        users:
+            targetEntity: User
+            mappedBy: webgroup

@@ -1,0 +1,74 @@
+{% extends 'AppBundle::admin.html.twig' %}
+
+{% block content %}
+    <h1>{{ 'admin.users'|trans }}</h1>
+    <hr>
+    <a id="filter_link" href="#"><i class="fa fa-caret-down"></i> Фильтр</a>
+    <div id="filter">
+        {{ form_start(filter_form) }}
+        {{ form_widget(filter_form) }}
+        <div class="form-actions">
+            <button type="submit" class="btn btn-success pull-right">
+                <i class="fa fa-filter"></i>
+                <span>{{ 'buttons.filter'|trans }}</span>
+            </button>
+        </div>
+        {{ form_end(filter_form) }}
+    </div>
+    <br>
+    {% if pagerfanta.currentPageResults|length %}
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th class="min_col">{{ 'user_id'|trans({}, 'user') }}</th>
+                <th>{{ 'user_email'|trans({}, 'user') }}</th>
+                <th>{{ 'user_name'|trans({}, 'user') }}</th>
+                <th>{{ 'user_u_roles'|trans({}, 'user') }}</th>
+                <th class="min_col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in pagerfanta.currentPageResults %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.lastName }} {{ user.firstName }} {{ user.patronymic }}</td>
+                    <td>
+                        {% if user.uRoles %}
+                            {%- for role in user.uRoles -%}
+                                {{ (not loop.first ? ', ' : '')~(role|trans({}, 'user')) }}
+                            {%- endfor -%}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+                    <td class="min_col">
+                        {% if user != app.user %}
+                        <a href="{{ path('admin_users_access_edit', { id: user.id }) }}" class="nodecor text-success"><i class="fa fa-pencil-square-o"></i></a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        {{ 'no_data'|trans }}
+    {% endif %}
+    {% if pagerfanta.haveToPaginate %}
+        {{ pagerfanta(pagerfanta, 'twitter_bootstrap_translated', { prev_message: '←', next_message: '→' }) }}
+    {% endif %}
+{% endblock content %}
+
+{% block js %}
+<script>
+$(function() {
+    {% if app.request.queryString == '' %}
+    $('#filter').hide();
+    {% endif %}
+    $('#filter_link').click(function() {
+        $('#filter').toggle();
+        return false;
+    });
+});
+</script>
+{% endblock js %}

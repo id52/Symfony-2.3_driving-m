@@ -1,0 +1,268 @@
+{% extends 'AppBundle:Admin:_settings.html.twig' %}
+{% trans_default_domain 'settings' %}
+
+{% block fields %}
+    <fieldset>
+        <legend>{{ 'settings_exam'|trans }}</legend>
+
+        {{ form_row(form.exam_tickets) }}
+
+        <div class="control-group">
+            {{ form_label(form.exam_questions_in_ticket) }}
+            <div class="controls">
+                {{ form_widget(form.exam_questions_in_ticket) }}
+                <span class="embedded">
+                    {{ form_widget(form.exam_not_repeat_questions_in_tickets) }}
+                    {{ form_label(form.exam_not_repeat_questions_in_tickets, null, { unpointed: true }) }}
+                    </span>
+                {{ form_errors(form.exam_questions_in_ticket) }}
+            </div>
+        </div>
+
+        {{ form_row(form.exam_shuffle) }}
+
+        {{ form_row(form.exam_max_errors_in_ticket) }}
+
+        <div class="control-group">
+            {{ form_label(form.exam_ticket_time) }}
+            <div class="controls">
+                <div class="input-append">
+                    {{ form_widget(form.exam_ticket_time) }}
+                    <span class="add-on">{{ 'minute'|trans({}, 'messages') }}</span>
+                </div>
+                {{ form_errors(form.exam_ticket_time) }}
+            </div>
+        </div>
+
+        {{ form_row(form.exam_shuffle_answers) }}
+
+        <div class="control-group">
+            {{ form_label(form.exam_retake_time) }}
+            <div class="controls">
+                <div class="input-append">
+                    {{ form_widget(form.exam_retake_time) }}
+                    <span class="add-on">{{ 'hours'|trans({}, 'messages') }}</span>
+                </div>
+                {{ form_errors(form.exam_retake_time) }}
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>{{ 'settings_training_exam_messages'|trans }}:</legend>
+        {{ form_row(form.training_exam_timeout) }}
+        {{ form_row(form.training_exam_complete) }}
+        {{ form_row(form.training_exam_long_time) }}
+        {{ form_row(form.training_exam_max_errors) }}
+        {{ form_row(form.training_exam_retake) }}
+    </fieldset>
+
+    {% for subject in subjects %}
+        <fieldset>
+            <legend>
+                {{ 'settings_after_all_slices'|trans({ '%subject%': subject.title }) }}
+                <a data-content="{{ 'settings_after_all_slices_help'|trans({ '%subject%': subject.title }) }}" href="#" data-toggle="popover"><i class="fa fa-question-circle"></i></a>
+            </legend>
+            <div class="control-group">
+                <label class="control-label" for="{{ attribute(form, 'after_all_slices_'~subject.id~'_enabled').vars.id }}">{{ 'settings_after_all_slices_enabled'|trans }}</label>
+                <div class="controls">
+                    <div class="input-append">
+                        {{ form_widget(attribute(form, 'after_all_slices_'~subject.id~'_enabled')) }}
+                    </div>
+                    {{ form_errors(attribute(form, 'after_all_slices_'~subject.id~'_enabled')) }}
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="{{ attribute(form, 'after_all_slices_'~subject.id~'_title').vars.id }}">{{ 'settings_after_all_slices_title'|trans }}</label>
+                <div class="controls">
+                    <div class="input-append">
+                        {{ form_widget(attribute(form, 'after_all_slices_'~subject.id~'_title')) }}
+                    </div>
+                    {{ form_errors(attribute(form, 'after_all_slices_'~subject.id~'_title')) }}
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="{{ attribute(form, 'after_all_slices_'~subject.id~'_text').vars.id }}">{{ 'settings_after_all_slices_text'|trans }}</label>
+                <div class="controls">
+                    <div class="input-append">
+                        {{ form_widget(attribute(form, 'after_all_slices_'~subject.id~'_text'), { attr: { class: 'ckeditor' } }) }}
+                    </div>
+                    {{ form_errors(attribute(form, 'after_all_slices_'~subject.id~'_text')) }}
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>
+                {{ 'settings_after_all_slices_email'|trans({ '%subject%': subject.title }) }}
+                <a data-content="{{ 'settings_after_all_slices_email_help'|trans({ '%subject%': subject.title }) }}" href="#" data-toggle="popover"><i class="fa fa-question-circle"></i></a>
+            </legend>
+            <div class="control-group">
+                <label class="control-label" for="{{ attribute(form, 'after_all_slices_'~subject.id~'_email_enabled').vars.id }}">{{ 'settings_after_all_slices_email_enabled'|trans }}</label>
+                <div class="controls">
+                    <div class="input-append">
+                        {{ form_widget(attribute(form, 'after_all_slices_'~subject.id~'_email_enabled')) }}
+                    </div>
+                    {{ form_errors(attribute(form, 'after_all_slices_'~subject.id~'_email_enabled')) }}
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="{{ attribute(form, 'after_all_slices_'~subject.id~'_email_title').vars.id }}">{{ 'settings_after_all_slices_email_title'|trans }}</label>
+                <div class="controls">
+                    <div class="input-append">
+                        {{ form_widget(attribute(form, 'after_all_slices_'~subject.id~'_email_title')) }}
+                    </div>
+                    {{ form_errors(attribute(form, 'after_all_slices_'~subject.id~'_email_title')) }}
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="{{ attribute(form, 'after_all_slices_'~subject.id~'_email_text').vars.id }}">{{ 'settings_after_all_slices_email_text'|trans }}</label>
+                <div class="controls">
+                    <div class="input-append">
+                        {{ form_widget(attribute(form, 'after_all_slices_'~subject.id~'_email_text'), { attr: { class: 'ckeditor' } }) }}
+                    </div>
+                    <span class="help-block">{{ 'settings_after_all_slices_email_text_help'|trans|raw }}</span>
+                    {{ form_errors(attribute(form, 'after_all_slices_'~subject.id~'_email_text')) }}
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>
+                {{ 'settings_after_fail_exam'|trans({ '%subject%': subject.title }) }}
+                <a data-content="{{ 'settings_after_fail_exam_help'|trans({ '%subject%': subject.title }) }}" href="#" data-toggle="popover"><i class="fa fa-question-circle"></i></a>
+            </legend>
+            <div class="control-group">
+                <label class="control-label" for="{{ attribute(form, 'after_fail_exam_'~subject.id~'_enabled').vars.id }}">{{ 'settings_after_fail_exam_enabled'|trans }}</label>
+                <div class="controls">
+                    <div class="input-append">
+                        {{ form_widget(attribute(form, 'after_fail_exam_'~subject.id~'_enabled')) }}
+                    </div>
+                    {{ form_errors(attribute(form, 'after_fail_exam_'~subject.id~'_enabled')) }}
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="{{ attribute(form, 'after_fail_exam_'~subject.id~'_title').vars.id }}">{{ 'settings_after_fail_exam_title'|trans }}</label>
+                <div class="controls">
+                    <div class="input-append">
+                        {{ form_widget(attribute(form, 'after_fail_exam_'~subject.id~'_title')) }}
+                    </div>
+                    {{ form_errors(attribute(form, 'after_fail_exam_'~subject.id~'_title')) }}
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="{{ attribute(form, 'after_fail_exam_'~subject.id~'_text').vars.id }}">{{ 'settings_after_fail_exam_text'|trans }}</label>
+                <div class="controls">
+                    <div class="input-append">
+                        {{ form_widget(attribute(form, 'after_fail_exam_'~subject.id~'_text'), { attr: { class: 'ckeditor' } }) }}
+                    </div>
+                    {{ form_errors(attribute(form, 'after_fail_exam_'~subject.id~'_text')) }}
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>
+                {{ 'settings_after_fail_exam_email'|trans({ '%subject%': subject.title }) }}
+                <a data-content="{{ 'settings_after_fail_exam_email_help'|trans({ '%subject%': subject.title }) }}" href="#" data-toggle="popover"><i class="fa fa-question-circle"></i></a>
+            </legend>
+            <div class="control-group">
+                <label class="control-label" for="{{ attribute(form, 'after_fail_exam_'~subject.id~'_email_enabled').vars.id }}">{{ 'settings_after_fail_exam_email_enabled'|trans }}</label>
+                <div class="controls">
+                    <div class="input-append">
+                        {{ form_widget(attribute(form, 'after_fail_exam_'~subject.id~'_email_enabled')) }}
+                    </div>
+                    {{ form_errors(attribute(form, 'after_fail_exam_'~subject.id~'_email_enabled')) }}
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="{{ attribute(form, 'after_fail_exam_'~subject.id~'_email_title').vars.id }}">{{ 'settings_after_fail_exam_email_title'|trans }}</label>
+                <div class="controls">
+                    <div class="input-append">
+                        {{ form_widget(attribute(form, 'after_fail_exam_'~subject.id~'_email_title')) }}
+                    </div>
+                    {{ form_errors(attribute(form, 'after_fail_exam_'~subject.id~'_email_title')) }}
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="{{ attribute(form, 'after_fail_exam_'~subject.id~'_email_text').vars.id }}">{{ 'settings_after_fail_exam_email_text'|trans }}</label>
+                <div class="controls">
+                    <div class="input-append">
+                        {{ form_widget(attribute(form, 'after_fail_exam_'~subject.id~'_email_text'), { attr: { class: 'ckeditor' } }) }}
+                    </div>
+                    <span class="help-block">{{ 'settings_after_fail_exam_email_text_help'|trans|raw }}</span>
+                    {{ form_errors(attribute(form, 'after_fail_exam_'~subject.id~'_email_text')) }}
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>
+                {{ 'settings_after_exam'|trans({ '%subject%': subject.title }) }}
+                <a data-content="{{ 'settings_after_exam_help'|trans({ '%subject%': subject.title }) }}" href="#" data-toggle="popover"><i class="fa fa-question-circle"></i></a>
+            </legend>
+            <div class="control-group">
+                <label class="control-label" for="{{ attribute(form, 'after_exam_'~subject.id~'_enabled').vars.id }}">{{ 'settings_after_exam_enabled'|trans }}</label>
+                <div class="controls">
+                    <div class="input-append">
+                        {{ form_widget(attribute(form, 'after_exam_'~subject.id~'_enabled')) }}
+                    </div>
+                    {{ form_errors(attribute(form, 'after_exam_'~subject.id~'_enabled')) }}
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="{{ attribute(form, 'after_exam_'~subject.id~'_title').vars.id }}">{{ 'settings_after_exam_title'|trans }}</label>
+                <div class="controls">
+                    <div class="input-append">
+                        {{ form_widget(attribute(form, 'after_exam_'~subject.id~'_title')) }}
+                    </div>
+                    {{ form_errors(attribute(form, 'after_exam_'~subject.id~'_title')) }}
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="{{ attribute(form, 'after_exam_'~subject.id~'_text').vars.id }}">{{ 'settings_after_exam_text'|trans }}</label>
+                <div class="controls">
+                    <div class="input-append">
+                        {{ form_widget(attribute(form, 'after_exam_'~subject.id~'_text'), { attr: { class: 'ckeditor' } }) }}
+                    </div>
+                    {{ form_errors(attribute(form, 'after_exam_'~subject.id~'_text')) }}
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>
+                {{ 'settings_after_exam_email'|trans({ '%subject%': subject.title }) }}
+                <a data-content="{{ 'settings_after_exam_email_help'|trans({ '%subject%': subject.title }) }}" href="#" data-toggle="popover"><i class="fa fa-question-circle"></i></a>
+            </legend>
+            <div class="control-group">
+                <label class="control-label" for="{{ attribute(form, 'after_exam_'~subject.id~'_email_enabled').vars.id }}">{{ 'settings_after_exam_email_enabled'|trans }}</label>
+                <div class="controls">
+                    <div class="input-append">
+                        {{ form_widget(attribute(form, 'after_exam_'~subject.id~'_email_enabled')) }}
+                    </div>
+                    {{ form_errors(attribute(form, 'after_exam_'~subject.id~'_email_enabled')) }}
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="{{ attribute(form, 'after_exam_'~subject.id~'_email_title').vars.id }}">{{ 'settings_after_exam_email_title'|trans }}</label>
+                <div class="controls">
+                    <div class="input-append">
+                        {{ form_widget(attribute(form, 'after_exam_'~subject.id~'_email_title')) }}
+                    </div>
+                    {{ form_errors(attribute(form, 'after_exam_'~subject.id~'_email_title')) }}
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="{{ attribute(form, 'after_exam_'~subject.id~'_email_text').vars.id }}">{{ 'settings_after_exam_email_text'|trans }}</label>
+                <div class="controls">
+                    <div class="input-append">
+                        {{ form_widget(attribute(form, 'after_exam_'~subject.id~'_email_text'), { attr: { class: 'ckeditor' } }) }}
+                    </div>
+                    <span class="help-block">{{ 'settings_after_exam_email_text_help'|trans|raw }}</span>
+                    {{ form_errors(attribute(form, 'after_exam_'~subject.id~'_email_text')) }}
+                </div>
+            </div>
+        </fieldset>
+    {% endfor %}
+{% endblock fields %}

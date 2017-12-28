@@ -1,0 +1,52 @@
+<div class="title b_title_questions" style="margin-bottom:14px">
+    <h1>Тест по билетам</h1>
+    <div class="deal_info_head">
+        {% if end_time %}
+            <div class="b_countdown" data-seconds-left="{{ seconds_left }}">0:00</div>
+        {% endif %}
+    </div>
+</div>
+
+{% set class = '' %}
+{% if all_questions|length > 20 and all_questions|length <= 25 %}
+    {% set class = 'm_count_extra_block_1' %}
+{% elseif all_questions|length > 25 and all_questions|length <= 30 %}
+    {% set class = 'm_count_extra_block_2' %}
+{% endif %}
+
+<div class="b_questions_list {{ class }}">
+    <div class="b_questions_list--blocks m_main_blocks">
+        {% for i in 0..3 %}
+            <ul class="b_question_block"><br>
+                {% for question in all_questions|slice(i * 5, 5) %}
+                    {% include 'AppBundle:My:training_final_exam_with_tiles_questions.html.twig' %}
+                {% endfor %}
+            </ul>
+        {% endfor %}
+    </div>
+    {% if all_questions|length > 20 and all_questions|length <= 25 %}
+        <div class="b_questions_list--blocks m_extra_blocks">
+            <ul class="b_question_block"><br>
+                {% for question in all_questions|slice(20, 5) %}
+                    {% include 'AppBundle:My:training_final_exam_with_tiles_questions.html.twig' %}
+                {% endfor %}
+            </ul>
+        </div>
+    {% elseif all_questions|length > 25 %}
+        <div class="b_questions_list--blocks m_extra_blocks">
+            {% for i in 4..6 %}
+                <ul class="b_question_block"><br>
+                    {% for question in all_questions|slice(i * 5, 5) %}
+                        {% include 'AppBundle:My:training_final_exam_with_tiles_questions.html.twig' %}
+                    {% endfor %}
+                </ul>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+
+<div class="bottom links">
+    <div class="r">
+        <a class="exit-link" href="#">{{ 'buttons.quit'|trans }}</a>
+    </div>
+</div>

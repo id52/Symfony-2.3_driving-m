@@ -1,0 +1,280 @@
+{% extends 'AppBundle::admin.html.twig' %}
+{% trans_default_domain 'profile' %}
+
+{% block content %}
+    <h3>{{ 'admin.precheck_user_edit_title'|trans({}, 'messages') }}</h3>
+    <hr>
+
+    {{ form_start(form) }}
+        {{ form_errors(form) }}
+
+        <fieldset>
+            <legend>{{ 'profile_registr_data'|trans }}:</legend>
+            {{ form_row(form.last_name) }}
+            {{ form_row(form.first_name) }}
+            {{ form_row(form.patronymic) }}
+        </fieldset>
+
+        <fieldset>
+            <legend>{{ 'profile_passport_data'|trans }}:</legend>
+            {{ form_row(form.foreign_passport) }}
+            {{ form_row(form.sex) }}
+            {{ form_row(form.birthday) }}
+            {{ form_row(form.foreign_passport_number) }}
+            {{ form_row(form.passport_number) }}
+            {{ form_row(form.passport_rovd) }}
+            {{ form_row(form.passport_rovd_number) }}
+            {{ form_row(form.passport_rovd_date) }}
+        </fieldset>
+
+        <fieldset>
+            <legend>{{ 'profile_birth_place'|trans }}:</legend>
+            {{ form_row(form.birth_country) }}
+            {{ form_row(form.birth_region) }}
+            {{ form_row(form.birth_city) }}
+        </fieldset>
+
+        <fieldset>
+            <legend></legend>
+            {{ form_row(form.not_registration) }}
+        </fieldset>
+
+        <fieldset id="registration_data">
+            <legend>{{ 'profile_registration_data'|trans }}:</legend>
+            {{ form_row(form.registration_country) }}
+            {{ form_row(form.registration_region) }}
+            {{ form_row(form.registration_city) }}
+            {{ form_row(form.registration_street) }}
+            {{ form_row(form.registration_house) }}
+            {{ form_row(form.registration_stroenie) }}
+            {{ form_row(form.registration_korpus) }}
+            {{ form_row(form.registration_apartament) }}
+        </fieldset>
+
+        <fieldset id="place_data">
+            <legend>{{ 'profile_place_data'|trans }}:</legend>
+            {{ form_row(form.place_country) }}
+            {{ form_row(form.place_region) }}
+            {{ form_row(form.place_city) }}
+            {{ form_row(form.place_street) }}
+            {{ form_row(form.place_house) }}
+            {{ form_row(form.place_stroenie) }}
+            {{ form_row(form.place_korpus) }}
+            {{ form_row(form.place_apartament) }}
+        </fieldset>
+
+        <fieldset id="work">
+            <legend>{{ 'profile_work'|trans }}:</legend>
+            {{ form_row(form.work_place) }}
+            {{ form_row(form.work_position) }}
+        </fieldset>
+
+        <fieldset>
+            <legend>{{ 'profile_phone_data'|trans }}:</legend>
+            <div class="control-group{% if form.phone_mobile.vars.errors|length > 0 %} error{% endif %}">
+                {{ form_label(form.phone_mobile) }}
+                <div class="controls">
+                    <div class="input-prepend">
+                        <span class="add-on">+7</span>
+                        {{ form_widget(form.phone_mobile, { attr: { class: 'span2' }}) }}
+                    </div>
+                    {% if form.phone_mobile.vars.help is defined and form.phone_mobile.vars.help %}
+                        <span class="help-inline">{{ form.phone_mobile.vars.help|trans }}</span>
+                    {% endif %}
+                    {{ form_errors(form.phone_mobile) }}
+                </div>
+            </div>
+        </fieldset>
+
+        {% if user is defined %}
+            <fieldset>
+                <legend>{{ 'profile_region_place'|trans }}:</legend>
+                <dl class="dl-horizontal">
+                    <dt>{{ 'profile_region'|trans }}:</dt>
+                    <dd>{{ user.region }}</dd>
+                </dl>
+                {{ form_row(form.region_place) }}
+            </fieldset>
+        {% else %}
+            <fieldset>
+                <legend>{{ 'profile_region'|trans }}:</legend>
+                {{ form_row(form.region) }}
+                {{ form_row(form.region_place) }}
+            </fieldset>
+        {% endif %}
+
+        <fieldset>
+            <legend>{{ 'profile_additional_info'|trans }}:</legend>
+            {{ form_row(form.category) }}
+            {{ form_row(form.close_final_exam) }}
+            {{ form_row(form.closed_subjects) }}
+        </fieldset>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-success"><i class="fa fa-download"></i> {{ 'admin.buttons.save'|trans({}, 'messages') }}</button>
+            {% if user is defined %}
+                <a class="btn pull-right" href="{{ path('admin_precheck_user_view', { id: user.id }) }}"><i class="fa fa-arrow-left"></i> {{ 'admin.buttons.back_to_view'|trans({}, 'messages') }}</a>
+            {% endif %}
+        </div>
+    {{ form_end(form) }}
+{% endblock content %}
+
+{% block js %}
+<script>
+$(function() {
+    var show_registration = function() {
+        $('#place_data').hide();
+        $('#profile_place_country').removeAttr('required');
+        $('#profile_place_region').removeAttr('required');
+        $('#profile_place_city').removeAttr('required');
+        $('#profile_place_street').removeAttr('required');
+        $('#profile_place_house').removeAttr('required');
+        $('#profile_place_apartament').removeAttr('required');
+        $('#profile_registration_country').attr('required', 'required');
+        $('#profile_registration_region').attr('required', 'required');
+        $('#profile_registration_city').attr('required', 'required');
+        $('#profile_registration_street').attr('required', 'required');
+        $('#profile_registration_house').attr('required', 'required');
+        $('#profile_registration_apartament').attr('required', 'required');
+        $('#registration_data').show();
+    };
+
+    var show_place = function() {
+        $('#registration_data').hide();
+        $('#profile_registration_country').removeAttr('required');
+        $('#profile_registration_region').removeAttr('required');
+        $('#profile_registration_city').removeAttr('required');
+        $('#profile_registration_street').removeAttr('required');
+        $('#profile_registration_house').removeAttr('required');
+        $('#profile_registration_apartament').removeAttr('required');
+        $('#profile_place_country').attr('required', 'required');
+        $('#profile_place_region').attr('required', 'required');
+        $('#profile_place_city').attr('required', 'required');
+        $('#profile_place_street').attr('required', 'required');
+        $('#profile_place_house').attr('required', 'required');
+        $('#profile_place_apartament').attr('required', 'required');
+        $('#place_data').show();
+    };
+
+    var not_registration = $('#profile_not_registration');
+
+    not_registration.change(function() {
+        if ($(this).is(':checked')) {
+            show_place();
+        } else {
+            show_registration();
+        }
+    });
+
+    if (not_registration.is(':checked')) {
+        show_place();
+    } else {
+        show_registration();
+    }
+
+    var foreign_passport = $('#profile_foreign_passport');
+    var foreign_passport_change = function() {
+        var passport_number = $('#profile_passport_number_number');
+        var foreign_passport_number = $('#profile_foreign_passport_number');
+        if (foreign_passport.is(':checked')) {
+            passport_number.closest('.control-group').hide();
+            passport_number.removeAttr('required');
+            $('#profile_passport_number_series').removeAttr('required');
+            foreign_passport_number.attr('required', 'required');
+            foreign_passport_number.closest('.control-group').show();
+        } else {
+            foreign_passport_number.closest('.control-group').hide();
+            foreign_passport_number.removeAttr('required');
+            passport_number.attr('required', 'required');
+            $('#profile_passport_number_series').attr('required', 'required');
+            passport_number.closest('.control-group').show();
+        }
+    };
+    foreign_passport.change(foreign_passport_change);
+    foreign_passport_change();
+
+    {% if user is not defined %}
+
+    var update_region_places = function() {
+        var region = $('#profile_region').val();
+        var region_places_tree = JSON.parse($('#profile_region_places_tree').val());
+        var rp_element = $('#profile_region_place');
+        rp_element.find('option:not(:first-child)').remove();
+        if (region_places_tree[region]) {
+            for (var i in region_places_tree[region]) {
+                if (region_places_tree[region].hasOwnProperty(i)) {
+                    $('<option></option>')
+                        .attr('value', i)
+                        .text(region_places_tree[region][i])
+                        .appendTo(rp_element)
+                    ;
+                }
+            }
+        }
+    };
+    $('#profile_region').change(update_region_places);
+    update_region_places();
+    {% endif %}
+
+
+    var valid_subjects = {{ validSubjects|json_encode|raw }};
+    console.log(valid_subjects);
+
+    var region_categories = eval({{ region_categories|json_encode|raw }});
+
+    {% if form.vars.valid and form_errors(form.closed_subjects) is empty %}
+    $('label.closed_subjects').closest('.control-group').hide();
+    {% endif %}
+
+    var category = $('#profile_category');
+
+    category.change(function() {
+        var with_at = $('#profile_with_at');
+        with_at.closest('.control-group').hide();
+        var category_id = $(this).val();
+        var region_id   = {{ region_id }};
+        var closed_subject_inputs = $('label.closed_subjects').find('input');
+
+        if (category_id) {
+        if (region_categories[region_id][category_id]['with_at']) {
+            with_at.closest('.control-group').show();
+        }
+
+        $('label.closed_subjects').closest('.control-group').show();
+
+        var count = 0;
+        $.each( closed_subject_inputs, function( key, input ) {
+            $(input).removeAttr('checked');
+
+            var subject_id = $(input).val();
+            if (
+                valid_subjects[region_id] !== undefined
+                && valid_subjects[region_id][category_id] !== undefined
+                && valid_subjects[region_id][category_id][subject_id] !== undefined
+            ) {
+                $(input).closest('label').show();
+            count ++;
+            } else {
+                $(input).closest('label').hide();
+            }
+
+            if (count == 0) {
+            $('label.closed_subjects').closest('.control-group').hide();
+            } else {
+            $('label.closed_subjects').closest('.control-group').show();
+            }
+        });
+
+        } else {
+            $.each( closed_subject_inputs, function( key, input ) {
+                $(input).removeAttr('checked');
+            });
+            $('label.closed_subjects').closest('.control-group').hide();
+        }
+    });
+
+    category.trigger('change');
+    $('label.closed_subjects').siblings('span.help-block').hide().first().show();
+});
+</script>
+{% endblock js %}

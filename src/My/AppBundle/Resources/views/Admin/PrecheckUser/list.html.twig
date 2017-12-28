@@ -1,0 +1,92 @@
+{% extends 'AppBundle::admin.html.twig' %}
+
+{% block content %}
+    <h1>{{ 'admin.precheck_users'|trans }}</h1>
+    <hr>
+    <a id="filter_link" href="#"><i class="fa fa-caret-down"></i> Фильтр</a>
+    <div id="filter">
+        {{ form_start(filter_form) }}
+        {{ form_widget(filter_form) }}
+        <div class="form-actions">
+            <button type="submit" class="btn btn-success pull-right">
+                <i class="fa fa-filter"></i>
+                <span>{{ 'buttons.filter'|trans }}</span>
+            </button>
+        </div>
+        {{ form_end(filter_form) }}
+    </div>
+    <div id="filter_default">По умолчанию: Регион — {{ default_region.name }}</div>
+    <br>
+    {% if pagerfanta.currentPageResults|length %}
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th class="min_col">{{ 'user_id'|trans({}, 'user') }}</th>
+                <th>{{ 'user_email'|trans({}, 'user') }}</th>
+                <th>{{ 'user_name'|trans({}, 'user') }}</th>
+                <th class="min_col">{{ 'user_category'|trans({}, 'user') }}</th>
+                <th class="min_col">{{ 'user_status'|trans({}, 'user') }}</th>
+                <th class="min_col">{{ 'user_created_at'|trans({}, 'user') }}</th>
+                <th class="min_col"></th>
+                <th class="min_col">{{ 'user_mailing_c'|trans({}, 'user') }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in pagerfanta.currentPageResults %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.lastName }} {{ user.firstName }} {{ user.patronymic }}</td>
+                    <td class="min_col">{{ user.category ? user.category.name : '--' }}</td>
+                    <td class="min_col status_col">
+                        {% if user.enabled %}<i class="fa fa-check-square-o" title="Зарегистрировался"></i>{% endif %}
+                        {% if user.phoneMobileStatus == 'confirmed' %}<i class="fa fa-phone" title="Подтвердил телефон"></i>{% endif %}
+                        {% if 'ROLE_USER_PAID2' in user.roles %}<i class="fa fa-ruble" {{ user.isPromoUsedFor2 ? (user.isSumFor2 ? 'style="color:green"' : 'style="color:blue"') : (user.isOfflinePaidFor2 ? 'style="color:violet"' : '') }} title="Первая оплата{% if user.isPromoUsedFor2 %}{% if user.isSumFor2 %}. Смешанная оплата{% else %}. Оплата промокодом{% endif %}{% endif %}{% if user.isOfflinePaidFor2 %}. Оплата в офисе{% endif %}"></i>{% endif %}
+                        {% if 'ROLE_USER_PAID3' in user.roles %}<i class="fa fa-ruble" {{ user.isPromoUsedFor3 ? (user.isSumFor3 ? 'style="color:green"' : 'style="color:blue"') : (user.isOfflinePaidFor3 ? 'style="color:violet"' : '') }} title="Вторая оплата{% if user.isPromoUsedFor3 %}{% if user.isSumFor3 %}. Смешанная оплата{% else %}. Оплата промокодом{% endif %}{% endif %}{% if user.isOfflinePaidFor3 %}. Оплата в офисе{% endif %}"></i>{% endif %}
+                        {% if user.certificate %}<i class="fa fa-bookmark" title="Сдал итоговый экзамен"></i>{% endif %}
+                        {% if user.moderated %}<i class="fa fa-exclamation-triangle" title="Проверен"></i>{% endif %}
+                        {% if user.paradoxId %}<i class="fa fa-thumbs-up" title="Занесён в парадокс"></i>{% endif %}
+                        {% if user.offline %}<i class="fa fa-user" title="Зарегистрирован оффлайн"></i>{% endif %}
+                    </td>
+                    <td class="min_col">{{ user.createdAt|localizeddate('long', 'none') }}</td>
+                    <td class="min_col">
+                        {% if user != app.user %}
+                        <a href="{{ path('admin_precheck_user_view', { id: user.id }) }}" class="nodecor text-primary"><i class="fa fa-eye"></i></a>
+                        {% endif %}
+                    </td>
+                    <td class="min_col">
+                        {% if not user.mailing %}
+                            <span id="mailing"><i class="fa fa-envelope" title="Отписан от рассылки"></i></span>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        {{ 'no_data'|trans }}
+    {% endif %}
+    Всего: {{ pagerfanta.count }}
+    {% if pagerfanta.haveToPaginate %}
+        {{ pagerfanta(pagerfanta, 'twitter_bootstrap_translated', { prev_message: '←', next_message: '→' }) }}
+    {% endif %}
+{% endblock content %}
+
+{% block js %}
+<script>
+$(function() {
+    {% if app.request.queryString == '' %}
+    $('#filter').hide();
+    {% else %}
+    $('#filter_default').hide();
+    {% endif %}
+    $('#filter_link').click(function() {
+        $('#filter').toggle();
+        {% if app.request.queryString == '' %}
+        $('#filter_default').toggle();
+        {% endif %}
+        return false;
+    });
+});
+</script>
+{% endblock js %}

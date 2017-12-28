@@ -1,0 +1,182 @@
+{% extends 'AppBundle::admin.html.twig' %}
+{% trans_default_domain 'category' %}
+
+{% block content %}
+    <h3>{{ (app.request.get('_route') == router_item_edit ? ('admin.'~entity_name_s~'_edit_title') : ('admin.'~entity_name_s~'_add_title'))|trans({}, 'messages') }}</h3>
+    <hr>
+
+    {{ form_start(imageForm, { action: path('admin_image_ajax') }) }}
+        <div class="control-group">
+            {{ form_label(imageForm.uploadFile, 'image_uploadFile'|trans({}, 'messages')) }}
+            <div class="controls">
+                <div id="image_view" class="clearfix"></div>
+                    <span class="btn fileinput-button">
+                        <span>{{ 'image_uploadFile_btn'|trans({}, 'messages') }}</span>
+                        {{ form_widget(imageForm.uploadFile) }}
+                    </span>
+                <div id="image-progress" class="progress progress-striped active">
+                    <span>{{ 'uploading'|trans({}, 'messages') }}</span>
+                    <div class="bar bar-success"></div>
+                </div>
+                <span class="upload-fail"></span>
+            </div>
+        </div>
+        {{ form_widget(imageForm) }}
+    {{ form_end(imageForm) }}
+
+    {{ form_start(form) }}
+        {{ form_row(form.name) }}
+        {{ form_row(form.with_at) }}
+
+        <div class="control-group">
+            {{ form_label(form.theory) }}
+            <div class="controls">
+                <div class="input-append">
+                    {{ form_widget(form.theory) }}
+                    <span class="add-on">ч.</span>
+                </div>
+            </div>
+        </div>
+        <div class="control-group">
+            {{ form_label(form.practice) }}
+            <div class="controls">
+                <div class="input-append">
+                    {{ form_widget(form.practice) }}
+                    <span class="add-on">ч.</span>
+                </div>
+            </div>
+        </div>
+        <div class="control-group">
+            {{ form_label(form.training) }}
+            <div class="controls">
+                <div class="input-append">
+                    {{ form_widget(form.training) }}
+                    <span class="add-on">мес.</span>
+                </div>
+            </div>
+        </div>
+
+        {% if regions %}
+        <fieldset>
+            <legend>{{ 'category_prices_in_regions'|trans }}:</legend>
+            <div class="control-group">
+                <label></label>
+                <div class="controls">
+                    <span class="span1">Обучение</span>
+                    <span class="span1">Вождение</span>
+                    <span class="span1 with_at">Автомат</span>
+                </div>
+            </div>
+            {% for region in regions %}
+                <div class="control-group">
+                    <label for="price_edu_{{ region.id }}" class="control-label">{{ region.name }}:</label>
+                    <div class="controls">
+                        <div class="input-append">
+                            <input value="{{ prices_edu[region.id] is defined ? prices_edu[region.id] : 0 }}" type="text" class="span1" name="prices_edu[{{ region.id }}]" id="price_edu_{{ region.id }}">
+                            <span class="add-on">{{ 'RUB'|trans({}, 'messages') }}</span>
+                        </div>
+                        <div style="display:inline-block">
+                            <div class="input-append">
+                                <input value="{{ prices_drv[region.id] is defined ? prices_drv[region.id] : 0 }}" type="text" class="span1" name="prices_drv[{{ region.id }}]" id="price_drv_{{ region.id }}">
+                                <span class="add-on">{{ 'RUB'|trans({}, 'messages') }}</span>
+                            </div>
+                        </div>
+                        <div class="with_at" style="display:inline-block">
+                            <div class="input-append">
+                                <input value="{{ prices_drv_at[region.id] is defined ? prices_drv_at[region.id] : 0 }}" type="text" class="span1" name="prices_drv_at[{{ region.id }}]" id="price_drv_at_{{ region.id }}">
+                                <span class="add-on">{{ 'RUB'|trans({}, 'messages') }}</span>
+                            </div>
+                        </div>
+                        <label style="display:inline-block"><input {{ prices_active[region.id] is defined ? 'checked="checked"' : '' }} name="prices_active[{{ region.id }}]" type="checkbox" /> Активна?</label>
+                    </div>
+                </div>
+            {% endfor %}
+        </fieldset>
+        {% endif %}
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-success">
+                <i class="fa fa-download"></i>
+                <span>{{ 'admin.buttons.save'|trans({}, 'messages') }}</span>
+            </button>
+            {% if app.request.get('_route') == router_item_edit %}
+                <a href="{{ path(router_item_delete, { id: entity.id }) }}" class="btn btn-danger" onclick="return confirm('{{ 'you_sure'|trans({}, 'messages') }}')">
+                    <i class="fa fa-trash-o"></i> <span>{{ 'admin.buttons.delete'|trans({}, 'messages') }}</span>
+                </a>
+            {% endif %}
+            <a class="btn pull-right" href="{{ path(router_list) }}"><i class="fa fa-arrow-left"></i> {{ 'admin.buttons.back_to_list'|trans({}, 'messages') }}</a>
+        </div>
+    {{ form_end(form) }}
+{% endblock content %}
+
+{% block js %}
+<script src="/ckeditor/ckeditor.js"></script>
+<script>
+$(function() {
+    var image = $('#category_image_id');
+    if (image.val()) {
+        $.post('{{ path('admin_image_view_ajax') }}?image_id='+image.val(), function(result) {
+            var image_view = $('#image_view');
+            image_view.html(result.image_view).show();
+            $('.fa-times', image_view).on('click', function() {
+                image.val(null);
+                $('#image_view').html('').hide();
+            });
+        });
+    }
+
+    $('#image_uploadFile').fileupload({
+        formData: function (form) {
+            var f = form.serializeArray();
+            f.push({ name: 'image_id', value: image.val() });
+            return f;
+        },
+        progressall: function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            $('#image-progress').find('.bar').css('width', progress + '%');
+        },
+        send: function () {
+            var cntr = $('#image_uploadFile').closest('.controls');
+            $('.btn', cntr).hide();
+            $('#image-progress').show();
+        },
+        done: function (e, data) {
+            var cntr = $('#image_uploadFile').closest('.controls');
+            $('#image-progress').hide();
+            if (data.result.image_id) {
+                $('.btn', cntr).show();
+                image.val(data.result.image_id);
+                var image_view = $('#image_view');
+                image_view.html(data.result.image_view).show();
+                $('.fa-times', image_view).on('click', function() {
+                    image.val(null);
+                    $('#image_view').html('').hide();
+                });
+            } else {
+                var errors = data.result.errors ? data.result.errors.join('<br>') : '{{ 'undefined_error'|trans({}, 'messages') }}';
+                $('.upload-fail', cntr).html(errors).show().delay(1500).hide(function () {
+                    $('.btn', cntr).show();
+                });
+            }
+        },
+        fail: function () {
+            var cntr = $('#image_uploadFile').closest('.controls');
+            $('#image-progress').hide();
+            $('.upload-fail', cntr).html('{{ 'errors.server'|trans({}, 'messages') }}').show().delay(1500).hide(function () {
+                $('.btn', cntr).show();
+            });
+        }
+    });
+
+    var with_at = function() {
+        if ($('#category_with_at').is(':checked')) {
+            $('.with_at').css('display', 'inline-block');
+        } else {
+            $('.with_at').hide();
+        }
+    };
+    $('#category_with_at').change(with_at);
+    with_at();
+});
+</script>
+{% endblock js %}

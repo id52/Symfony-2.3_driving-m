@@ -1,0 +1,19 @@
+{% extends "AppBundle::admin.html.twig" %}
+
+{% block content %}
+    <h1>{{ ('promo_keys_search')|trans({}, 'promo') }}</h1>
+    <hr>
+    <br>
+    <h2>{{ key.campaign.name }} &ndash; {{ key.key }}</h2>
+    <dl>
+        <dt>{{ 'promo_key_discount'|trans({}, 'promo') }}</dt>
+        <dd>{{ key.campaign.discount }} {{ 'RUB'|trans}}</dd>
+
+        <dt>{{ 'promo_key_active'|trans({}, 'promo') }}</dt>
+        <dd><i class="fa {{ key.activated ? 'fa-minus' : 'fa-plus' }}"></i></dd>
+    </dl>
+
+    <div class="form-actions">
+        <a class="btn pull-right" href="{{ path('admin_promos') }}"><i class="fa fa-arrow-left"></i> Вернуться в список промокомпаний</a>
+    </div>
+{% endblock content %}

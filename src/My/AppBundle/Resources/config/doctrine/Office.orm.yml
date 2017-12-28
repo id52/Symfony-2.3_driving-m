@@ -1,0 +1,54 @@
+My\AppBundle\Entity\Office:
+    type: entity
+    table: offices
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        title:
+            type: string
+        address:
+            type: string
+        station:
+            type: string
+            nullable: true
+        address_desc:
+            type: text
+            nullable: true
+        work_time:
+            type: string
+            nullable: true
+        phones:
+            type: array
+        emails:
+            type: array
+        address_geo:
+            type: string
+            nullable: true
+        map_code:
+            type: text
+            nullable: true
+        active:
+            type: boolean
+        position:
+            type: integer
+            gedmo:
+                - sortablePosition
+        updated_at:
+            type: datetime
+            gedmo:
+                timestampable:
+                    on: update
+        created_at:
+            type: datetime
+            gedmo:
+                timestampable:
+                    on: create
+    manyToOne:
+        region:
+            targetEntity: Region
+            inversedBy: offices
+            gedmo:
+                - sortableGroup

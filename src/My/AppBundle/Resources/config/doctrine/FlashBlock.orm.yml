@@ -1,0 +1,21 @@
+My\AppBundle\Entity\FlashBlock:
+    type: entity
+    table: flash_blocks
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        _key:
+            type: string
+            unique: true
+        title:
+            type: string
+        is_simple:
+            type: boolean
+    oneToMany:
+        items:
+            targetEntity: FlashBlockItem
+            mappedBy: block
+            cascade: [ all ]

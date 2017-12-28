@@ -1,0 +1,49 @@
+{% extends 'AppBundle::layout_new.html.twig' %}
+
+{% block content %}
+<nav class="path">
+    <a href="{{ path('homepage') }}">{{ 'titles.homepage'|trans }}</a>
+    » <strong>{{ 'titles.pass'|trans }}</strong>
+</nav>
+
+<div class="mainContent permit-container">
+    <div class="title">
+        <h1>Пропуск на занятия по теории в классе</h1>
+    </div>
+
+    <div class="permit-b-1 permit-b-1-2">
+        <p>Автошкола при МГТУ им. Баумана позволяет проходить теоретическое обучение двумя параллельными способами: дистанционно и в классе. При этом занятия онлайн и в классе можно совмещать: учитесь так, как удобно именно Вам!</p>
+        <p><span class="permit-attention">**</span> Для того, чтобы посещать занятия в классе, Вам нужно выбрать удобный филиал и создать пропуск, который будет действителен на всё время обучения.</p>
+    </div>
+
+    <div class="title-3">
+        Ваш Филиал: <span>{{ filial.title }}</span>
+        {% if can_reset %}
+        <a href="{{ path('my_pass', { reset: 1 }) }}">Изменить</a>
+        {% endif %}
+    </div>
+
+    <p>
+    {% if can_reset %}
+        Если Вы хотите сменить филиал обучения в классе, нажмите "Изменить", выберите нужный филиал и создайте новый пропуск.<br/>
+        <span class="permit-attention">ВНИМАНИЕ!</span> Сменить филиал можно не ранее, чем через <b>{{ settings.pass_time_recreating~' '~'fdays'|transchoice(settings.pass_time_recreating) }}</b> после создания предыдущего пропуска.
+    {% else %}
+        Вы создали пропуск <b>{{ app.user.passInfo['created_at']|date('d.m.Y') }} в {{ app.user.passInfo['created_at']|date('H:i') }}</b> для посещения занятий в классе на указанном филиале.<br>
+        По правилам автошколы Вы можете изменить филиал и создать новый пропуск только через <b>{{ diff_days~' '~'fdays'|transchoice(diff_days) }}</b>.
+    {% endif %}
+    </p>
+
+    <button id="filial_print_btn" class="permit-print-btn">Распечатать пропуск</button>
+</div>
+{% endblock content %}
+
+{% block js %}
+<script>
+$(function() {
+    $('#filial_print_btn').click(function() {
+        window.open('{{ path('my_pass_print') }}');
+        location.assign('{{ path('my_pass', { print: 1 }) }}');
+    });
+});
+</script>
+{% endblock js %}

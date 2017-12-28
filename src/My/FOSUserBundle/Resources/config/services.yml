@@ -1,0 +1,4 @@
+services:
+    my_fos_user.mailer:
+        class: My\FOSUserBundle\Mailer\Mailer
+        arguments: [ @app.notify ]

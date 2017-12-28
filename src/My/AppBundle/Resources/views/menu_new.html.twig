@@ -1,0 +1,75 @@
+{% set route = app.request.get('_route') %}
+
+{% if route != 'fos_user_security_login' and route != 'article_show' and route != 'my_payments_2'
+and route != 'robokassa_success' and route != 'robokassa_fail' and route != 'psb_info' %}
+    <ul class="side-menu">
+
+        <li {{ route == 'my_profile' or route == 'my_profile_edit' ? ' class="active"' : '' }}>
+            <a class="bg-prof" href="{{ path('my_profile') }}">{{ 'menu.profile'|trans }}</a>
+        </li>
+        <li {{ route == 'my_pass' ? ' class="active"' : '' }}>
+            <a class="bg-pass" href="{{ path('my_pass') }}">{{ 'menu.pass'|trans }}</a>
+        </li>
+        <li><a class="bg-web" href="http://webinar.drivemaster.ru/" target="_blank">Вебинары</a></li>
+        <li {{ route == 'my_notifies' or route == 'my_notify_read' ? ' class="active"' : '' }}>
+            <a class="bg-not" href="{{ path('my_notifies') }}">
+                {% if app.user.notifiesCnt > 0 %}
+                    <span class="new">+{{ app.user.notifiesCnt }}</span>
+                {% endif %}
+                {{ 'menu.notifies'|trans }}
+            </a>
+        </li>
+
+        <li {{ route == 'infos' or route == 'info' ? ' class="active"' : '' }}>
+            <a class="bg-not" href="{{ path('infos') }}">
+                {% if unreadedInfosCnt > 0 %}
+                    <span class="new">+{{ unreadedInfosCnt }}</span>
+                {% endif %}
+                {{ 'menu.infos'|trans([],'info') }}
+            </a>
+        </li>
+
+        <li {{ route == 'my_payments' or route == 'my_payments_2' ? ' class="active"' : '' }}>
+            <a class="bg-pay" href="{{ path('my_payments') }}">{{ 'menu.payments'|trans }}</a>
+        </li>
+        <li {{ route == 'my_trainings' or route == 'my_training' or route == 'my_training_theme'
+            or route == 'my_training_theme_test' or route == 'my_training_slice' or route == 'my_training_exam'
+            or route == 'my_training_final_exam' ? ' class="active"' : '' }}>
+                <a class="bg-stu" href="{{ path('my_trainings') }}">{{ 'menu.training'|trans }}</a>
+        </li>
+
+        {% if route == 'my_test' or route == 'my_test_knowledge' or route == 'my_stat' %}
+            <li class="active"><span class="bg-test">{{ 'menu.test_general'|trans }}</span>
+                <ul>
+                    <li {{ route == 'my_test' ? ' class="active"' : '' }}>
+                        <a class="bg-tick" href="{{ path('my_test') }}">{{ 'menu.test'|trans }}</a>
+                    </li>
+                    <li {{ route == 'my_test_knowledge' ? ' class="active"' : '' }}>
+                        <a class="bg-the" href="{{ path('my_test_knowledge') }}">{{ 'menu.test_knowledge'|trans }}</a>
+                    </li>
+                    <li {{ route == 'my_stat' ? ' class="active"' : '' }}>
+                        <a class="bg-stat" href="{{ path('my_stat') }}">{{ 'menu.stat'|trans }}</a>
+                    </li>
+                </ul>
+            </li>
+        {% else %}
+            <li><a class="bg-test" href="{{ path('my_test') }}">{{ 'menu.test_general'|trans }}</a></li>
+        {% endif %}
+            <li {{ route in ['my_support_dialogs', 'my_support_new', 'my_support_dialog_show'] ? ' class="active"' : '' }}>
+                <a class="bg-feed" href="{{ path('my_support_dialogs') }}">
+                    {% if support_unread_dialogs_count > 0 %}
+                        <span class="new">+{{ support_unread_dialogs_count }}</span>
+                    {% endif %}
+                    {{ 'feedback'|trans }}
+                </a>
+            </li>
+            <li {{ route in ['my_feedback_teacher', 'my_feedback_teacher_new', 'my_feedback_teacher_dialog_show'] ? ' class="active"' : '' }}>
+                <a class="bg-teac" href="{{ path('my_feedback_teacher') }}">
+                    {% if support_unread_teachers_dialogs_count > 0 %}
+                        <span class="new">+{{ support_unread_teachers_dialogs_count }}</span>
+                    {% endif %}
+                    {{ 'feedbackTeacher'|trans }}
+                </a>
+            </li>
+    </ul>
+{% endif %}

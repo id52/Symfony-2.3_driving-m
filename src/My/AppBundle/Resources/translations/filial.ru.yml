@@ -1,0 +1,17 @@
+filial_map_image: Карта
+filial_region: Регион
+filial_active: Активен?
+filial_title: Название
+filial_url: ЧПУ (адрес)
+filial_url_help: Можно использовать латинский алфавит, цифры и дефис.
+filial_address: Адрес
+filial_station: Станция метро
+filial_work_time: Время работы
+filial_phones: Телефоны
+filial_emails: Адреса электронной почты
+filial_coords: Координаты на карте
+filial_address_geo: Адрес для геокодирования
+filial_map_code: Код Я.Карты
+filial_counters_code: Код счётчиков
+
+choose_option:  - Выберите -

@@ -1,0 +1,92 @@
+{% extends 'AppBundle::layout_m.html.twig' %}
+
+{% block content %}
+<div class="wrap">
+    <div class="back-link r-fl"><a href="{{ path('homepage') }}"><span class="v-m arrow">«</span>Вернуться</a></div>
+    <ul class="breadcrumb">
+        <li><a title="Главная" href="{{ path('homepage') }}">Главная</a></li>
+        <li class="active"><a href="{{ path('branches') }}">Филиалы</a></li>
+    </ul>
+
+    <div class="main-title left-bg">
+        <div class="caption">Филиалы:</div>
+    </div>
+
+    <div class="w-progress"><div class="w-progressbar"></div></div>
+    <div class="w-metromap" style="padding:0;margin-top:15px;text-align:center;display:none">
+        <div style="display:inline-block;position:relative">
+            <img src="{{ map_path }}" alt="карта метро" border="0" usemap="#metromap" style="max-width:none" />
+            <style scoped="scoped">
+                #metromap a, #metromap span {
+                    position: absolute;
+                }
+            </style>
+            <div id="metromap">
+                {% for filial in filials %}
+                    {% if app.user and filial.showAuth %}
+                        {% if filial.activeAuth %}
+                        <a href="#{{ filial.url }}" style="left:{{ filial.coords['x'] }}px;top:{{ filial.coords['y'] }}px"><img src="{{ filial.image.webPath }}" alt="{{ filial.title }}"></a>
+                        {% else %}
+                        <span style="left:{{ filial.coords['x'] }}px;top:{{ filial.coords['y'] }}px;opacity:{{ 1-settings.opacity_not_active_filials/100 }}"><img src="{{ filial.image.webPath }}" alt="{{ filial.title }}"></span>
+                        {% endif %}
+                    {% elseif not app.user and filial.show %}
+                        {% if filial.active %}
+                        <a href="#{{ filial.url }}" style="left:{{ filial.coords['x'] }}px;top:{{ filial.coords['y'] }}px"><img src="{{ filial.image.webPath }}" alt="{{ filial.title }}"></a>
+                        {% else %}
+                        <span style="left:{{ filial.coords['x'] }}px;top:{{ filial.coords['y'] }}px;opacity:{{ 1-settings.opacity_not_active_filials/100 }}"><img src="{{ filial.image.webPath }}" alt="{{ filial.title }}"></span>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div id="metropopup" class="popup-maps"></div>
+</div>
+{% endblock content %}
+
+{% block js %}
+<script src="/m/js/imagesloaded.pkgd.min.js"></script>
+<script src="https://api-maps.yandex.ru/2.0/?load=package.full&amp;lang=ru-RU" type="text/javascript"></script>
+<script>
+$(function() {
+    var metropopup = function(hash) {
+        $.get('{{ path('branches') }}get-'+hash.replace('#', '')+'/', function(data) {
+            if (data) {
+                var cntr = $('#metropopup');
+                cntr.html(data).show();
+                $('.close-popup', cntr).on('click', function() {
+                    cntr.html('').hide();
+                });
+                $(location).attr('hash', hash);
+            }
+        });
+    };
+    $('#metromap').find('a').on('click', function(e) {
+        e.preventDefault();
+        metropopup($(this).attr('href'));
+    });
+    if ($(location).attr('hash').length) {
+        metropopup($(location).attr('hash'));
+    }
+
+    var container = $('.w-metromap');
+    var progress = $('.w-progress');
+    var progressbar = $('.w-progressbar');
+    var all_images = {{ filials|length + 1 }};
+    var images_cnt = 0;
+    container.hide();
+    progress.show();
+    container.imagesLoaded()
+        .done(function() {
+            progress.hide();
+            container.show();
+        })
+        .progress(function() {
+            images_cnt ++;
+            var proc = Math.round(images_cnt*100/all_images);
+            progressbar.html(proc+'%').css('width', proc+'%');
+        });
+});
+</script>
+{% endblock js %}

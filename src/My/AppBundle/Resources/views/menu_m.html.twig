@@ -1,0 +1,62 @@
+<ul class="menu-top list-line">
+    <li><a href="{{ path('article_show', { id: 'branches' }) }}">Филиалы</a></li>
+    <li><a href="{{ path('article_show', { id: 'exams' }) }}">Экзамены</a></li>
+    <li><a href="{{ path('article_show', { id: 'sites' }) }}">Площадки</a></li>
+    <li><a href="{{ path('article_show', { id: 'instructors' }) }}">Инструкторы</a></li>
+    <li><a href="{{ path('article_show', { id: 'cars' }) }}">Автопарк</a></li>
+    <li><a href="{{ path('news') }}">Новости</a></li>
+    <li>
+        <a href="{{ path('article_show', { id: 'about' }) }}">Об автошколе</a>
+        <div class="drop-b">
+            <ul class="menu-drop list-dotted text-left">
+                <li><a href="{{ path('article_show', { id: 'about/school-info' }) }}">Об автошколе</a></li>
+                <li><a href="{{ path('article_show', { id: 'about/why-us' }) }}">Почему выбирают нас</a></li>
+                <li><a href="{{ path('article_show', { id: 'dogovor-oferta' }) }}">Договор</a></li>
+                <li><a href="{{ path('article_show', { id: 'about/vacancy' }) }}">Вакансии</a></li>
+                <li><a href="{{ path('offices') }}">Офисы автошколы</a></li>
+                <li><a href="{{ path('reviews') }}">Отзывы</a></li>
+                <li><a href="{{ path('nalog') }}">Налоговый вычет</a></li>
+            </ul>
+        </div>
+    </li>
+    <li>
+        <a href="{{ path('article_show', { id: 'tuition-terms' }) }}">Условия и порядок обучения</a>
+        <div class="drop-b">
+            <ul class="menu-drop list-dotted text-left">
+                <li><a href="{{ path('article_show', { id: 'tuition-terms/stages' }) }}">Этапы обучения</a></li>
+                <li><a href="{{ path('article_show', { id: 'tuition-terms/theory' }) }}">Теория</a></li>
+                <li><a href="{{ path('article_show', { id: 'tuition-terms/driving' }) }}">Практика</a></li>
+                <li><a href="{{ path('article_show', { id: 'tuition-terms/schedule' }) }}">Графики обучения</a></li>
+                <li><a href="{{ path('article_show', { id: 'tuition-terms/tuition-fee' }) }}">Стоимость обучения</a></li>
+                {% if not is_strange %}
+                <li><a href="{{ path('offers') }}">Скидки и акции</a></li>
+                {% endif %}
+                <li><a href="{{ path('article_show', { id: 'tuition-terms/medical-exam' }) }}">Медкомиссия</a></li>
+                <li><a href="{{ path('article_show', { id: 'tuition-terms/how-to-join' }) }}">Как записаться</a></li>
+                {% if not is_strange %}
+                {{  render(controller( 'AppBundle:Default:checkStudentsOffers' )) }}
+                {% endif %}
+                <li><a href="{{ path('reg') }}">Запись на сайте</a></li>
+            </ul>
+        </div>
+    </li>
+    <li>
+        <a href="{{ path('article_show', { id: 'categories' }) }}">Категории и программы обучения</a>
+        <div class="drop-b">
+            <ul class="menu-drop list-dotted text-left">
+                <li><a href="{{ path('article_show', { id: 'categories/category-a' }) }}">Обучение на права категории «А»</a></li>
+                <li><a href="{{ path('article_show', { id: 'categories/category-b' }) }}">Обучение на права категории «B»</a></li>
+                <li><a href="{{ path('article_show', { id: 'categories/category-c' }) }}">Обучение на права категории «C»</a></li>
+                <li><a href="{{ path('article_show', { id: 'categories/category-d' }) }}">Обучение на права категории «D»</a></li>
+                <li><a href="{{ path('article_show', { id: 'categories/category-e' }) }}">Обучение на права категории «E»</a></li>
+                <li><a href="{{ path('article_show', { id: 'categories/category-a-and-b' }) }}">Одновременное получение категорий «A» и «B»</a></li>
+                <li><a href="{{ path('article_show', { id: 'categories/atv' }) }}">Квадроцикл</a></li>
+                <li><a href="{{ path('article_show', { id: 'categories/extreme-driving' }) }}">Экстремальное вождение</a></li>
+                <li><a href="{{ path('article_show', { id: 'categories/driving-skills-recovery' }) }}">Восстановление навыков вождения</a></li>
+                <li><a href="{{ path('article_show', { id: 'categories/exchange-license' }) }}">Обмен прав для СНГ</a></li>
+            </ul>
+        </div>
+    </li>
+    <li><a href="{{ path('faq') }}">Вопросы и ответы</a></li>
+    <li><a href="{{ path('contacts') }}">Контакты</a></li>
+</ul>

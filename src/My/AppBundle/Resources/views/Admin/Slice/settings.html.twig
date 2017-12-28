@@ -1,0 +1,41 @@
+{% extends 'AppBundle:Admin:_settings.html.twig' %}
+{% trans_default_domain 'settings' %}
+
+{% block fields %}
+    {{ form_row(form.slice_tickets) }}
+
+    <div class="control-group">
+        {{ form_label(form.slice_questions_in_ticket) }}
+        <div class="controls">
+            {{ form_widget(form.slice_questions_in_ticket) }}
+            <span class="embedded">
+                {{ form_widget(form.slice_not_repeat_questions_in_tickets) }}
+                {{ form_label(form.slice_not_repeat_questions_in_tickets, null, { unpointed: true }) }}
+                </span>
+            {{ form_errors(form.slice_questions_in_ticket) }}
+        </div>
+    </div>
+
+    {{ form_row(form.slice_max_errors_in_ticket) }}
+
+    <div class="control-group">
+        {{ form_label(form.slice_ticket_time) }}
+        <div class="controls">
+            <div class="input-append">
+                {{ form_widget(form.slice_ticket_time) }}
+                <span class="add-on">{{ 'minute'|trans({}, 'messages') }}</span>
+            </div>
+            {{ form_errors(form.slice_ticket_time) }}
+        </div>
+    </div>
+
+    {{ form_row(form.slice_shuffle_answers) }}
+
+    <fieldset>
+        <legend>{{ 'settings_training_slice_messages'|trans }}:</legend>
+        {{ form_row(form.training_slice_timeout) }}
+        {{ form_row(form.training_slice_complete) }}
+        {{ form_row(form.training_slice_long_time) }}
+        {{ form_row(form.training_slice_max_errors) }}
+    </fieldset>
+{% endblock fields %}

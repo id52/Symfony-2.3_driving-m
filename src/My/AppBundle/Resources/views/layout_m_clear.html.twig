@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{% block title %}{{ 'project.name'|trans }} — {{ 'project.slogan'|trans }}{% endblock %}</title>
+    <!--[if IE]>
+    <link href="/m/css/ie.css" type="text/css" rel="stylesheet">
+    <script type="text/javascript" src="/m/js/PIE.js"></script>
+    <![endif]-->
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400,300,300italic,400italic,700,700italic&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+    <link href="/m/css/select2.css" type="text/css" rel="stylesheet"/>
+    <link href="/m/css/royalslider.css" type="text/css" rel="stylesheet" />
+    <link href="/m/css/style.css" type="text/css" rel="stylesheet">
+    <!--[if lte IE 8]>
+    <link href="/m/css/ie8.css" type="text/css" rel="stylesheet">
+    <script type="text/javascript" src="/m/js/css3-mediaqueries.js"></script>
+    <script type="text/javascript" src="/m/js/html5shiv.js"></script>
+    <script type="text/javascript" src="/m/js/selectivizr.js"></script>
+    <![endif]-->
+    <style>
+        html, body { height: auto }
+    </style>
+    {% block css '' %}
+</head>
+<body class="page-404">
+<div class="wrap-page">
+    <div class="site-header">
+        <div class="wrap">
+            <div class="logo"><a href="{{ path('homepage') }}"><img src="/m/images/logo.png" alt="" /></a></div>
+            <div class="right-head text-right r-fl">
+                {% if app.user %}
+                <div style="margin-bottom:-31px">
+                    <a class="sh-user" href="{{ path('homepage') }}">{{ app.user.lastName~' '~app.user.firstName|slice(0,1)~'.' }}</a>
+                    {% if is_granted('ROLE_MOD') %}
+                        <a href="{{ path('admin') }}" class="sh-to-admin">В админку</a>
+                    {% endif %}
+                    <a href="{{ path('fos_user_security_logout') }}" class="sh-exit">Выход</a>
+                </div>
+                {% endif %}
+                {% include 'AppBundle::menu_m.html.twig' %}
+            </div>
+            <div class="slogan-text l-fl">«С нами - значит, с правами!» </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="wrap">
+            {% block content '' %}
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/m/js/jquery.js" ></script>
+<script type="text/javascript" src="/m/js/jquery.placeholder.js"></script>
+<script type="text/javascript" src="/m/js/select2.min.js"></script>
+<script type="text/javascript" src="/m/js/jquery.royalslider.min.js"></script>
+<script type="text/javascript" src="/m/js/prettyCheckboxes.js"></script>
+<script type="text/javascript" src="/m/js/main.js"></script>
+<script type="text/javascript" src="/m/js/jquery.inputmask.js"></script>
+{% block js '' %}
+
+{% if settings['counters_yandex'] is defined %}
+<script>{{ settings['counters_yandex']|raw }}</script>
+{% endif %}
+
+</body>
+</html>

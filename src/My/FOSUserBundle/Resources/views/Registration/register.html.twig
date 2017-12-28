@@ -1,0 +1,249 @@
+{% extends 'AppBundle::layout_m_clear.html.twig' %}
+{% form_theme form 'AppBundle::form_m_clear.html.twig' %}
+
+{% block css %}
+<link href="/m/css/font-awesome.min.css" type="text/css" rel="stylesheet"/>
+<style>
+    #phone_buttons {
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+    .phone_btn {
+        background: #00a;
+        border: solid 1px #00a;
+        color: #fff;
+        cursor: pointer;
+        font-size: 14px;
+        padding: 12px;
+        float: right;
+    }
+    .phone_btn[disabled] {
+        background-color: #aaa !important;
+        border-color: #aaa !important;
+        cursor: not-allowed;
+    }
+    #phone_send_btn {
+        background: #0a0;
+        border: solid 1px #0a0;
+    }
+    #phone_resend_btn {
+        background: #f93;
+        border: solid 1px #f93;
+    }
+    #phone_cancel_btn {
+        background: #a00;
+        border: solid 1px #a00;
+    }
+    .field-success {
+        color: #0a0;
+    }
+    .field-warning {
+        color: #f93;
+    }
+    .field-success, .field-warning {
+        font-size: 12px;
+    }
+    #success_phone {
+        padding: 10px 0;
+        color: #0a0;
+        font-weight: bold;
+    }
+</style>
+{% endblock css %}
+
+{% block title %}Регистрация | {{ 'project.name'|trans }}{% endblock title %}
+
+{% block content %}
+<div class="table-form register-form" style="display:block;z-index:100;float:left">
+    <div class="blue-hr"></div>
+    <div class="form-wrap">
+        <div class="caption">Регистрация</div>
+        {{ form_start(form) }}
+            <div class="hr"></div>
+            <table class="fields-table">
+                {{ form_widget(form) }}
+            </table>
+            <div class="hr"></div>
+            <button class="btn-blue-3" type="submit">Регистрация</button>
+        {{ form_end(form) }}
+        <div class="clear"></div>
+    </div>
+</div>
+{% if settings['registration_text'] is defined and settings['registration_text'] %}
+<div class="nodeleaf node-message" style="margin-left:440px">
+    {{ settings['registration_text']|raw }}
+</div>
+{% endif %}
+{% endblock content %}
+
+{% block js %}
+<script src="/m/js/jquery.inputmask.js"></script>
+<script>
+$(function() {
+    var phone_status = '{{ phone_status }}';
+
+    var phone = $('#fos_user_registration_form_phone_mobile');
+    var phone_td = phone.closest('td');
+    phone_td.css('position', 'relative');
+
+    phone_td.append('<div id="phone_buttons"></div>');
+    var phone_btns = $('#phone_buttons');
+    phone_btns.append('<button id="phone_send_btn" class="phone_btn"><i class="fa fa-check"></i></button>');
+    var phone_send_btn = $('#phone_send_btn');
+
+    var send_code_click = function(e) {
+        e.preventDefault();
+        var all_btns = $('.phone_btn');
+        all_btns.attr('disabled', 'disabled');
+        phone_td.removeClass('-error');
+        $('.field-error, .field-warning, .field-success', phone_td).remove();
+        phone_send_btn.html('<i class="fa fa-spinner fa-spin"></i>');
+        if (/^\d{4}$/.test(phone.val())) {
+            $.post('{{ path('my_user_registration_check_phone_code_ajax') }}', { code: phone.val() }, function(data) {
+                if (data.reset) {
+                    phone_status = '';
+                    init_phone();
+                } else if (data.success) {
+                    phone_status = 'confirmed';
+                    init_phone_confirmed(data.phone);
+                } else {
+                    phone_td.append('<div class="field-error">Неверный код!</div>');
+                }
+                all_btns.removeAttr('disabled');
+                phone_send_btn.html('<i class="fa fa-check"></i>');
+            });
+        } else {
+            phone_td.append('<div class="field-error">Неверный код!</div>');
+            all_btns.removeAttr('disabled');
+            phone_send_btn.html('<i class="fa fa-check"></i>');
+        }
+    };
+
+    var phone_cancel_click = function(e) {
+        e.preventDefault();
+        var all_btns = $('.phone_btn');
+        all_btns.attr('disabled', 'disabled');
+        $('#phone_cancel_btn').html('<i class="fa fa-spinner fa-spin"></i>');
+        phone_status = '';
+        init_phone();
+        all_btns.removeAttr('disabled');
+    };
+
+    var phone_resend_click = function(e) {
+        e.preventDefault();
+        phone.val('');
+        var all_btns = $('.phone_btn');
+        all_btns.attr('disabled', 'disabled');
+        phone_td.removeClass('-error');
+        $('.field-error, .field-warning, .field-success', phone_td).remove();
+        $('#phone_resend_btn').html('<i class="fa fa-spinner fa-spin"></i>');
+        $.post('{{ path('my_user_registration_check_phone_resend_ajax') }}', function(data) {
+            if (data.reset) {
+                phone_status = '';
+                init_phone();
+            } else if (data.already) {
+                phone_td.append('<div class="field-warning">' + data.message + '</div>');
+            } else if (data.message) {
+                phone_td.append('<div class="field-success">' + data.message + '</div>');
+            } else {
+                phone_td.append('<div class="field-error">Ошибка!</div>');
+            }
+            $('#phone_resend_btn').html('<i class="fa fa-rotate-left"></i>');
+            all_btns.removeAttr('disabled');
+        });
+    };
+
+    var send_phone_click = function(e) {
+        e.preventDefault();
+        phone_td.removeClass('-error');
+        $('.field-error, .field-warning, .field-success', phone_td).remove();
+        phone_send_btn.attr('disabled', 'disabled').html('<i class="fa fa-spinner fa-spin"></i>');
+        if (/^\+7\-\d{3}\-\d{3}\-\d{2}\-\d{2}$/.test(phone.val())) {
+            $.post('{{ path('my_user_registration_check_phone_ajax') }}', { phone: phone.val() }, function(data) {
+                if (data.message) {
+                    phone_status = 'sended';
+                    init_phone_sended();
+                    phone_td.append('<div class="field-success">' + data.message + '</div>');
+                } else {
+                    phone_td.append('<div class="field-error">Неверный номер телефона</div>');
+                }
+                phone_send_btn.removeAttr('disabled').html('<i class="fa fa-check"></i>');
+            });
+        } else {
+            phone_td.append('<div class="field-error">Неверный номер телефона</div>');
+            phone_send_btn.removeAttr('disabled').html('<i class="fa fa-check"></i>');
+        }
+    };
+
+    var init_phone = function(leave_errors) {
+        if (!leave_errors) {
+            phone_td.removeClass('-error');
+            $('.field-error, .field-warning, .field-success', phone_td).remove();
+        }
+        phone.val('');
+        phone.inputmask('+7-999-999-99-99', { clearMaskOnLostFocus: false });
+        phone.removeAttr('placeholder');
+        phone_send_btn.unbind('click').on('click', send_phone_click);
+        $('#phone_cancel_btn').remove();
+        $('#phone_resend_btn').remove();
+    };
+    init_phone(true);
+
+    var init_phone_sended = function() {
+        phone_send_btn.before('<button id="phone_cancel_btn" class="phone_btn"><i class="fa fa-close"></i></button>');
+        phone_send_btn.before('<button id="phone_resend_btn" class="phone_btn"><i class="fa fa-rotate-left"></i></button>');
+        phone.inputmask('remove');
+        phone.val('');
+        phone.attr('placeholder', 'Введите код');
+        phone_send_btn.unbind('click').on('click', send_code_click);
+        $('#phone_cancel_btn').unbind('click').on('click', phone_cancel_click);
+        $('#phone_resend_btn').unbind('click').on('click', phone_resend_click);
+    };
+    if (phone_status == 'sended') {
+        init_phone_sended();
+    }
+
+    var init_phone_confirmed = function(phone) {
+        phone_td.html('<div id="success_phone">' + phone + '</div>');
+    };
+    if (phone_status == 'confirmed') {
+        init_phone_confirmed('{{ phone }}');
+    }
+
+    $('.register-form form').on('submit', function() {
+        phone_td.removeClass('-error');
+        $('.field-error, .field-warning, .field-success', phone_td).remove();
+        if (phone_status != 'confirmed') {
+            phone_td.addClass('-error');
+            phone_td.append('<div class="field-error">Необходимо подтвердить номер!</div>');
+            return false;
+        }
+
+        var password_1 = $('#fos_user_registration_form_plainPassword_first');
+        var password_2 = $('#fos_user_registration_form_plainPassword_second');
+        var password_1_td = password_1.closest('td');
+        var password_2_td = password_2.closest('td');
+        password_1_td.removeClass('-error');
+        password_2_td.removeClass('-error');
+        $('.field-error', password_1_td).remove();
+        $('.field-error', password_2_td).remove();
+        if (password_1.val().length < 6) {
+            password_1_td.addClass('-error');
+            password_1_td.append('<div class="field-error">Короткий пароль!</div>');
+            return false;
+        }
+        if (password_1.val() != password_2.val()) {
+            password_1_td.addClass('-error');
+            password_2_td.addClass('-error');
+            password_2_td.append('<div class="field-error">Пароли не совпадают!</div>');
+            return false;
+        }
+
+        {% if _server_type == 'prod' %}
+        yaCounter25512893.reachGoal('REGISTRATION');
+        {% endif %}
+    });
+});
+</script>
+{% endblock js %}

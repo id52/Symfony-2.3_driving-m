@@ -1,0 +1,23 @@
+My\AppBundle\Entity\SupportMessage:
+    type: entity
+    table: support_messages
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        text:
+            type: text
+        created_at:
+            type: datetime
+            gedmo:
+                timestampable:
+                    on: create
+    manyToOne:
+        dialog:
+            targetEntity: SupportDialog
+            inversedBy: messages
+        user:
+            targetEntity: User
+            inversedBy: support_messages

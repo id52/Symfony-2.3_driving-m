@@ -1,0 +1,299 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=1300" />
+    <title>{% block title %}{{ 'project.name'|trans }} — {{ 'project.slogan'|trans }}{% endblock %}</title>
+    <meta name="keywords" content="{% block meta_keywords '' %}" />
+    <meta name="description" content="{% block meta_description '' %}" />
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400,300,300italic,400italic,700,700italic&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+    <link href="/v2/css/style.css" rel="stylesheet" type="text/css">
+    <link href="/v2/css/style-fix.css" rel="stylesheet" type="text/css">
+    <link href="/v2/css/training-test.css" rel="stylesheet" type="text/css">
+    <link href="/v2/css/header.css" rel="stylesheet" type="text/css">
+    <!--[if lte IE 8]>
+    <link href="/v2/css/ie8.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="/v2/js/PIE.js"></script>
+    <script type="text/javascript" src="/v2/js/html5support.js"></script>
+    <![endif]-->
+    <script type="text/javascript" src="/v2/js/jquery.js"></script>
+    <script type="text/javascript" src="/v2/js/jquery-ui.js"></script>
+    <script type="text/javascript" src="/v2/js/jquery.main.js"></script>
+</head>
+<body>
+
+{% include 'AppBundle::_server_label.html.twig' %}
+
+{% block start_content '' %}
+
+<div class="modal border-red reg-done" id="js_alert">
+    <div class="content"></div>
+    <div class="links"><span class="link bg-green btn-close">Закрыть</span></div>
+</div>
+
+{% if not app.user %}
+<div class="modal border-green reg-done" id="modal01">
+    <div class="title">Новый пользователь создан</div>
+    На Ваш электронный адрес<br>
+    <strong></strong><br>
+    отправлено письмо. Перейдите по ссылке из письма, для подтверждения регистрации
+    <div class="links"><span class="link bg-green btn-close">Закрыть</span></div>
+</div>
+
+<div class="modal border-green reg-done" id="modal02">
+    <div class="title">Восстановление пароля</div>
+    На Ваш электронный адрес<br>
+    <strong></strong><br>
+    отправлено письмо. Перейдите по ссылке из письма, для восстановления пароля.
+    <div class="links"><span class="link bg-green btn-close">Закрыть</span></div>
+</div>
+
+{% include 'AppBundle::_form_auth.html.twig' %}
+{% endif %}
+
+{% if before_access_time_end_after_2_payment_popup_title is defined %}
+<div class="modal border-red reg-done" id="before_access_time_end_after_2_payment_popup">
+    <div class="title">{{ before_access_time_end_after_2_payment_popup_title }}</div>
+    <div class="content">{{ before_access_time_end_after_2_payment_popup_text|raw }}</div>
+    <div class="links"><span class="link bg-green btn-close">Закрыть</span></div>
+</div>
+{% endif %}
+
+<div class="site-header">
+    <div class="sh-wrap">
+        <a href="{{ path('homepage') }}" class="sh-logo"></a>
+        <div class="sh-right">
+            <div class="sh-contact">
+                <div class="sh-phone">+7 ({{ settings['contacts_phone1_prefix'] }}) {{ settings['contacts_phone1'] }}</div>
+                <div class="sh-phone">+7 ({{ settings['contacts_phone2_prefix'] }}) {{ settings['contacts_phone2'] }}</div>
+                {% if app.user %}
+                    <a class="sh-user" href="{{ path('homepage') }}">{{ app.user.lastName~' '~app.user.firstName|slice(0,1)~'.' }}</a>
+                    {% if is_granted('ROLE_MOD') %}
+                        <a href="{{ path('admin') }}" class="sh-to-admin">В админку</a>
+                    {% endif %}
+                    <a href="{{ path('fos_user_security_logout') }}" class="sh-exit">Выход</a>
+                {% endif %}
+            </div>
+            {% include 'AppBundle::menu_m.html.twig' %}
+        </div>
+        <div class="sh-slogan">«С нами - значит, с правами!» </div>
+    </div>
+</div>
+
+<div class="wrapper">
+    <div class="container">
+
+        <div class="content">
+            {% block content '' %}
+
+            {% if app.user %}
+                <div class="aside">
+                    {% if is_granted('ROLE_USER_PAID') %}
+                        {% include 'AppBundle::menu_new.html.twig' only %}
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="footer-place"></div>
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="container">
+{#
+        {% if menu_items %}
+            <nav class="bmenu">
+                {% for menu_item in menu_items %}
+                    {% if (menu_item.bottomMenu and (app.user or not menu_item.private)) %}
+                        <a href="{{ path('article_show', { id: menu_item.url }) }}">{{ menu_item.title }}</a>
+                    {% endif %}
+                {% endfor %}
+            </nav>
+        {% endif %}
+#}
+
+        <div class="logo">
+            <img src="/v2/img/logo.png" width="824" height="230" alt="Автошкола онлайн">
+            <span>ПОРТАЛ ДИСТАНЦИОННОГО<br>ОБУЧЕНИЯ</span>
+        </div>
+
+        <div class="phone">
+            <div class="bg">
+                <a href="tel:+7{{ settings['contacts_phone1_prefix'] }}{{ settings['contacts_phone1']|replace({ '-': '' }) }}">
+                    <span>{{ settings['contacts_phone1_prefix'] }}</span>
+                    <strong>{{ settings['contacts_phone1'] }}</strong>
+                </a>
+                {#<div><a href="mailto:{{ contact_email }}">auto-online.ru</a></div>#}
+            </div>
+        </div>
+
+        <div class="socials">
+            {% if settings['socials_facebook'] is defined %}<a class="fb" href="{{ settings['socials_facebook'] }}" target="_blank">Facebook</a>{% endif %}
+            {% if settings['socials_twitter'] is defined %}<a class="tw" href="{{ settings['socials_twitter'] }}" target="_blank">Twitter</a>{% endif %}
+            {% if settings['socials_vk'] is defined %}<a class="vk" href="{{ settings['socials_vk'] }}" target="_blank">Вконтакте</a>{% endif %}
+        </div>
+
+        <div class="copy">
+            © {{ 'now'|date('Y') }} {{ 'project.name'|trans }}
+            <div class="small">Все права защищены.</div>
+        </div>
+    </div>
+</footer>
+
+{% block end_content '' %}
+
+<script>
+function js_alert(content, success) {
+    var block = $('#js_alert');
+    $('.content', block).html(content);
+    if (success) {
+        block.removeClass('border-red').addClass('border-green');
+    }
+    $.simplebox('#js_alert');
+}
+</script>
+
+{% block js '' %}
+
+<script src="/v2/js/jquery.countdown.js"></script>
+<script src="/v2/js/jquery.countdown-ru.js"></script>
+<script>
+$(function () {
+    {% if not app.user %}
+        var auth01 = $('#auth01');
+
+        $('.auth-link').click(function(e) {
+            e.preventDefault();
+            auth01.find('a.tab[href=#tab1]').click();
+            $.simplebox('#auth01');
+        });
+
+        var error = function(el, error) {
+            var input = el.closest('.input');
+            $('.err-text span', input).html(error);
+            $('input', input).addClass('error');
+            input.addClass('error');
+            $('.err-text', input).show();
+        };
+
+        $('form[action="{{ path('fos_user_security_check') }}"]', auth01).submit(function(e) {
+            e.preventDefault();
+
+            $('.input').removeClass('error');
+            $('.input input').removeClass('error');
+            $('.err-text').hide();
+
+            var username = $('#js_login_username');
+            var password = $('#js_login_password');
+
+            if (!username.val() || !password.val()) {
+                if (!username.val()) {
+                    error(username, 'Нужно указать e-mail');
+                }
+                if (!password.val()) {
+                    error(password, 'Нужно указать пароль');
+                }
+            } else {
+                $.post($(this).attr('action'), $(this).serialize(), function(data) {
+                    if (data.error) {
+                        error(username, '');
+                        error(password, data.error);
+                    } else {
+                        location.assign('{{ path('homepage') }}');
+                    }
+                });
+            }
+        });
+
+        var discount_data = eval({{ discount_data|json_encode|raw }});
+
+        var reg_region = $('#reg-region');
+        var reg_category = $('#reg-category');
+
+        for (var region_id in discount_data) {
+            if (discount_data.hasOwnProperty(region_id)) {
+                var region = discount_data[region_id];
+                reg_region.append('<option value="' + region_id + '">' + region.name + '</option>');
+            }
+        }
+        reg_region.trigger('refresh');
+
+        var change_reg_region = function() {
+            reg_category.html('');
+            var region_id = reg_region.val();
+            var region = discount_data[region_id];
+            for (var category_id in region.categories) {
+                if (region.categories.hasOwnProperty(category_id)) {
+                    var category = region.categories[category_id];
+                    reg_category.append('<option value="' + category_id + '" data-img="' + category.image + '">' + category.name + '</option>');
+                }
+            }
+            reg_category.trigger('refresh');
+        };
+        reg_region.change(change_reg_region);
+        change_reg_region();
+
+        $('form[action="{{ path('fos_user_resetting_send_email') }}"]', auth01).submit(function(e) {
+            e.preventDefault();
+
+            $('.input').removeClass('error');
+            $('.input input').removeClass('error');
+            $('.err-text').hide();
+
+            $.post($(this).attr('action'), $(this).serialize(), function(data) {
+                if (data.errors) {
+                    for(var i in data.errors) {
+                        if (data.errors.hasOwnProperty(i)) {
+                            error($('#js_reset_' + i), data.errors[i]);
+                        }
+                    }
+                } else {
+                    var email = $('#js_reset_username').val();
+                    $('#modal02').find('strong').html(email);
+                    $.simplebox('#modal02');
+                }
+            });
+        });
+
+        $('form[action="{{ path('fos_user_registration_register') }}"]', auth01).submit(function(e) {
+            e.preventDefault();
+
+            $('.input').removeClass('error');
+            $('.input input').removeClass('error');
+            $('.err-text').hide();
+
+            $.post($(this).attr('action'), $(this).serialize(), function(data) {
+                if (data.errors) {
+                    for(var i in data.errors) {
+                        if (data.errors.hasOwnProperty(i)) {
+                            error($('#js_reg_' + i), data.errors[i]);
+                        }
+                    }
+                    $('#js_reg_captcha').closest('.row').find('img').attr('src', '{{ path('innocead_captcha', {'random': '1' }) }}'+Math.round(Math.random(0)*10000000000));
+                } else {
+                    var email = $('#js_reg_email').val();
+                    $('#modal01').find('strong').html(email);
+                    $.simplebox('#modal01');
+                }
+            });
+        });
+    {% endif %}
+
+    {% if before_access_time_end_after_2_payment_popup_title is defined %}
+        $.simplebox('#before_access_time_end_after_2_payment_popup', { overlay: { closeClick: false } });
+        $('.btn-close', '#before_access_time_end_after_2_payment_popup').click(function(e) {
+            e.preventDefault();
+            $.post('{{ path('my_ajax_popup_info_paid_2') }}');
+        });
+    {% endif %}
+});
+</script>
+
+{% if settings['counters_yandex'] is defined %}
+<script>{{ settings['counters_yandex']|raw }}</script>
+{% endif %}
+
+</body>
+</html>

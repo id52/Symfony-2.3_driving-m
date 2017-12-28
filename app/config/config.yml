@@ -1,0 +1,172 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+
+framework:
+    esi:             ~
+    translator:      { fallback: "%locale%" }
+    secret:          "%secret%"
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        strict_requirements: "%kernel.debug%"
+    form:            true
+    csrf_protection: true
+    validation:      { enable_annotations: false }
+    templating:      { engines: ['twig'] }
+    default_locale:  "%locale%"
+    trusted_proxies: ~
+    session:         ~
+    fragments:       ~
+
+twig:
+    debug:            "%kernel.debug%"
+    strict_variables: "%kernel.debug%"
+    form: { resources: [ "AppBundle::form.html.twig" ] }
+    globals:
+        _is_test: %is_test%
+        _server_type: %server_type%
+        _host: %host%
+
+assetic:
+    debug:          "%kernel.debug%"
+    use_controller: false
+    bundles: [ PaymentBundle, AppBundle ]
+
+doctrine:
+    dbal:
+        connections:
+            default:
+                driver:   "%database_driver%"
+                host:     "%database_host%"
+                port:     "%database_port%"
+                dbname:   "%database_name%"
+                user:     "%database_user%"
+                password: "%database_password%"
+                charset:  UTF8
+                mapping_types:
+                    enum: string
+        types:
+            enumsex: My\AppBundle\Doctrine\DBAL\Types\EnumSexType
+            enumpromokeysource: My\AppBundle\Doctrine\DBAL\Types\EnumPromoKeySourceType
+            enumpromostatus: My\AppBundle\Doctrine\DBAL\Types\EnumPromoStatusType # we don't need this, but last time there was error because of this
+            enumpromorestricted: My\AppBundle\Doctrine\DBAL\Types\EnumPromoRestrictedType
+            enummobilestatus: My\AppBundle\Doctrine\DBAL\Types\EnumMobileStatusType
+            enumservice: My\AppBundle\Doctrine\DBAL\Types\EnumServiceType
+            enumpayment: My\PaymentBundle\Doctrine\DBAL\Types\EnumPaymentType
+            enumsupportcategory: My\AppBundle\Doctrine\DBAL\Types\EnumSupportCategoryType
+    orm:
+        dql:
+            datetime_functions:
+                month: DoctrineExtensions\Query\Mysql\Month
+                day: DoctrineExtensions\Query\Mysql\Day
+                date: DoctrineExtensions\Query\Mysql\Date
+            numeric_functions:
+                regexp: DoctrineExtensions\Query\Mysql\Regexp
+        auto_generate_proxy_classes: "%kernel.debug%"
+        auto_mapping: true
+
+swiftmailer:
+    default_mailer: mailer
+    mailers:
+        mailer:
+            transport: "%mailer_transport%"
+            host:      "%mailer_host%"
+            username:  "%mailer_user%"
+            password:  "%mailer_password%"
+            port:      "%mailer_port%"
+        directly_mailer:
+            transport: "mail"
+            host:      "127.0.0.1"
+        mail_ru:
+            host:       "smtp.mail.ru"
+            encryption: "ssl"
+            port:       "465"
+
+stof_doctrine_extensions:
+    orm:
+        default:
+            timestampable: true
+            sortable: true
+            tree: true
+
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: My\AppBundle\Entity\User
+    service:
+        mailer: my_fos_user.mailer
+    from_email:
+        address:  "%sender_email%"
+        sender_name:  "%sender_name%"
+    registration:
+        confirmation:
+            enabled: true
+        form:
+            type: app_registration
+            validation_groups: [ Default ]
+
+liip_imagine:
+    driver: imagick
+    cache_prefix: /cache
+    filter_sets:
+        photo:
+            controller_action: app.imagine.controller:photoAction
+            filters:
+                crop: {}
+                resize: { size: [ 750, 1000 ] }
+        photo_small:
+            controller_action: app.imagine.controller:photoAction
+            filters:
+                crop: {}
+                resize: { size: [ 90, 120 ] }
+        photo_small_new:
+            controller_action: app.imagine.controller:photoAction
+            filters:
+                crop: {}
+                resize: { size: [ 225, 300 ] }
+        photo_crop_preview:
+            filters:
+                upscale: { min: [ 600, 800 ] }
+                thumbnail: { size: [ 600, 800 ], mode: inset }
+        photo_crop_preview_new:
+            filters:
+                upscale: { min: [ 225, 300 ] }
+                thumbnail: { size: [ 225, 300 ], mode: inset }
+        image:
+            filters:
+                thumbnail: { size: [ 500, 250 ], mode: inset }
+        image_small:
+            filters:
+                thumbnail: { size: [ 200, 100 ], mode: inset }
+        image_thumb:
+            filters:
+                thumbnail: { size: [ 100, 100 ], mode: outset }
+        image_thumb_new:
+            filters:
+                thumbnail: { size: [ 66, 66 ], mode: outset }
+        category:
+            filters:
+                thumbnail: { size: [ 58, 19 ], mode: outset }
+        offer_index:
+            filters:
+                thumbnail: { size: [ 441, 244 ], mode: outset }
+        review_user_photo:
+            controller_action: app.imagine.controller:photoAction
+            filters:
+                crop: {}
+                upscale: { min: [ 114, 152 ] }
+                thumbnail: { size: [ 114, 152 ], mode: outset }
+        review_photo:
+            filters:
+                upscale: { min: [ 114, 152 ] }
+                thumbnail: { size: [ 114, 152 ], mode: outset }
+        how_work:
+            filters:
+                upscale: { min: [ 1060, 522 ] }
+                thumbnail: { size: [ 1060, 522 ], mode: outset }
+        no_filter:
+            filters: {}
+
+innocead_captcha:
+    width: 129
+    height: 60

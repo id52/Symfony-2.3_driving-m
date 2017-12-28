@@ -1,0 +1,53 @@
+security:
+    encoders:
+        FOS\UserBundle\Model\UserInterface: sha512
+
+    role_hierarchy:
+        ROLE_USER_PAID: ROLE_USER
+        ROLE_USER_PAID2: ROLE_USER_PAID
+        ROLE_USER_PAID3: ROLE_USER_PAID2
+        ROLE_TESTER_TRAINING: [ ROLE_USER_PAID3, ROLE_USER_FULL_PROFILE ]
+        ROLE_MOD: [ ROLE_USER_PAID3, ROLE_USER_FULL_PROFILE ]
+        ROLE_MOD_CONTENT: ROLE_MOD
+        ROLE_MOD_PRECHECK_USERS: ROLE_MOD
+        ROLE_MOD_PARADOX_USERS: ROLE_MOD
+        ROLE_MOD_ADD_USER: ROLE_MOD
+        ROLE_MOD_SUPPORT: ROLE_MOD
+        ROLE_MOD_TEACHER: ROLE_MOD
+        ROLE_MOD_FINANCE: ROLE_MOD
+        ROLE_MOD_PROMO: ROLE_MOD
+        ROLE_MOD_MAILING: ROLE_MOD
+        ROLE_MOD_ACCOUNTANT: ROLE_MOD
+        ROLE_TRANSLATOR_TJ: ROLE_MOD
+        ROLE_TRANSLATOR_UZ: ROLE_MOD
+        ROLE_TRANSLATOR_KG: ROLE_MOD
+        ROLE_ADMIN: [ ROLE_MOD_CONTENT, ROLE_MOD_PRECHECK_USERS, ROLE_MOD_PARADOX_USERS, ROLE_MOD_ADD_USER, ROLE_MOD_SUPPORT, ROLE_MOD_TEACHER, ROLE_MOD_FINANCE, ROLE_MOD_PROMO, ROLE_MOD_MAILING, ROLE_MOD_ACCOUNTANT, ROLE_TESTER_TRAINING, ROLE_TRANSLATOR_TJ, ROLE_TRANSLATOR_UZ, ROLE_TRANSLATOR_KG ]
+
+    providers:
+        fos_userbundle:
+            id: fos_user.user_provider.username_email
+
+    firewalls:
+        dev:
+            pattern:  ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        main:
+            pattern: ^/
+            form_login:
+                provider: fos_userbundle
+                csrf_provider: form.csrf_provider
+            logout: ~
+            anonymous: ~
+            remember_me:
+                name:     %remember_me.name%
+                key:      %secret%
+                lifetime: %remember_me.lifetime%
+                path:     %remember_me.path%
+                domain:   %remember_me.domain%
+            switch_user: { role: ROLE_ADMIN, parameter: _user }
+
+    access_control:
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/my/, role: ROLE_USER_PAID }
+        - { path: ^/admin/, role: ROLE_MOD }

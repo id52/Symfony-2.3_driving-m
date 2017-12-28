@@ -1,0 +1,12 @@
+{% extends 'AppBundle:Admin:_settings.html.twig' %}
+{% trans_default_domain 'settings' %}
+
+{% block fields %}
+    <fieldset>
+        <legend>
+            {{ 'settings_add_user'|trans }}
+        </legend>
+        {{ form_row(form.add_user_title) }}
+        {{ form_row(form.add_user_text, { attr: { class: 'ckeditor' }, help: 'settings_add_user_text_help' }) }}
+    </fieldset>
+{% endblock fields %}

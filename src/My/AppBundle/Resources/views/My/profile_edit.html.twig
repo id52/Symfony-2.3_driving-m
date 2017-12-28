@@ -1,0 +1,380 @@
+{% extends 'AppBundle::layout_new.html.twig' %}
+
+{% form_theme form 'AppBundle::form_new.html.twig' %}
+{% form_theme cpassForm 'AppBundle::form_new.html.twig' %}
+
+{% block start_content %}
+<div class="fader"></div>
+<div class="edit-photo-block" id="photo-edit">
+    {{ form_start(photoForm, { action: path('my_profile_photo_ajax') }) }}
+        <span class="im"><img src="/v2/img/photo_empty.png" width="225" height="300" alt=""></span>
+        <div class="links">
+            <span class="link bg-green file">
+                Выбрать фото
+                {{ form_widget(photoForm.photoFile, {'attr': {'size':'1'}}) }}
+            </span>
+        </div>
+        Вы можете загрузить изображение в<br>формате JPG, GIF или PNG.
+    {{ form_end(photoForm) }}
+    <span class="close"></span>
+</div>
+<div class="edit-photo-block" id="photo-crop">
+</div>
+{% endblock start_content %}
+
+{% block content %}
+<nav class="path">
+    <a href="{{ path('homepage') }}">{{ 'titles.homepage'|trans }}</a>
+    » <a href="{{ path('my_profile') }}">{{ 'titles.profile'|trans }}</a>
+    » <strong>{{ 'titles.profile_edit'|trans }}</strong>
+</nav>
+
+<div class="mainContent">
+    <section class="profile">
+        <div class="right">
+            <div class="photo">
+                <a href="#">
+                    <span class="im"><img src="/v2/img/photo_empty.png" width="225" height="300" alt=""></span>
+                    <span class="cover"></span>
+                    <span class="edit-photo">Изменить фото</span>
+                </a>
+            </div>
+
+            <div class="pop-form">
+                <div class="btn toggle bg-lock">Изменить пароль</div>
+                <div class="pop form">
+                    {{ form_start(cpassForm, { action: path('my_change_password') }) }}
+                        {{ form_row(cpassForm.old_password) }}
+                        {{ form_row(cpassForm.new_password) }}
+                        <div class="submit">
+                            <input class="btn green" value="Применить" type="submit">
+                        </div>
+                    {{ form_end(cpassForm) }}
+                    <span class="close"></span>
+                </div>
+            </div>
+        </div>
+
+        {{ form_start(form, { 'action': path('my_profile_edit'),  'attr': { 'class' : 'styled'}}) }}
+            <div class="left">
+                <div class="title">
+                    <h1>{{ 'titles.profile_edit'|trans }}</h1>
+                </div>
+
+                <h2>{{ 'profile_registr_data'|trans }}:</h2>
+                <div class="form">
+                    {% if app.user.category %}
+                    <div class="row">
+                        <div class="label">{{ 'profile_category'|trans }}:</div>
+                        <div class="field category">
+                            {{ app.user.category }}
+                            {% if app.user.category.image %}
+                                <img src="{{ app.user.category.image.webPath|imagine_filter('category') }}" alt="">
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endif %}
+                    <div class="row">
+                        <div class="label">{{ 'profile_email'|trans }}:</div>
+                        <div class="field">{{ app.user.email }}</div>
+                    </div>
+                    {{ form_row(form.last_name) }}
+                    {{ form_row(form.first_name) }}
+                    {{ form_row(form.patronymic) }}
+                </div>
+                <div class="hr"></div>
+
+                <h2>{{ 'profile_passport_data'|trans }}:</h2>
+                <div class="form">
+                    {{ form_row(form.foreign_passport) }}
+                    {{ form_row(form.sex) }}
+                    {{ form_row(form.birthday) }}
+                    {{ form_row(form.foreign_passport_number) }}
+                    {{ form_row(form.passport_number) }}
+                    {{ form_row(form.passport_rovd, { class: 'input w4' }) }}
+                    {{ form_row(form.passport_rovd_number, { class: 'input', style: 'width:80px' }) }}
+                    {{ form_row(form.passport_rovd_date, { 'attr': { 'class': 'birth'}}) }}
+                </div>
+                <div class="hr"></div>
+
+                <h2>{{ 'profile_birth_place'|trans }}:</h2>
+                <div class="form">
+                    {{ form_row(form.birth_country) }}
+                    {{ form_row(form.birth_region) }}
+                    {{ form_row(form.birth_city) }}
+                </div>
+                <div class="hr"></div>
+
+                <h2>{{ 'profile_registration_data'|trans }}:</h2>
+                <div class="form">
+                    <div class="row">
+                        <div class="check out">
+                            {{ form_widget(form.not_registration) }}
+                            {{ form_label(form.not_registration) }}
+                        </div>
+                    </div>
+                    <div id="registration_data">
+                        {{ form_row(form.registration_country) }}
+                        {{ form_row(form.registration_region) }}
+                        {{ form_row(form.registration_city) }}
+                        {{ form_row(form.registration_street) }}
+                        {{ form_row(form.registration_house) }}
+                        {{ form_row(form.registration_stroenie) }}
+                        {{ form_row(form.registration_korpus) }}
+                        {{ form_row(form.registration_apartament) }}
+                    </div>
+                    <div id="place_data">
+                        {{ form_row(form.place_country) }}
+                        {{ form_row(form.place_region) }}
+                        {{ form_row(form.place_city) }}
+                        {{ form_row(form.place_street) }}
+                        {{ form_row(form.place_house) }}
+                        {{ form_row(form.place_stroenie) }}
+                        {{ form_row(form.place_korpus) }}
+                        {{ form_row(form.place_apartament) }}
+                    </div>
+                </div>
+                <div class="hr"></div>
+
+                <h2>{{ 'profile_work'|trans }}:</h2>
+                <div class="form">
+                    {{ form_row(form.work_place) }}
+                    {{ form_row(form.work_position) }}
+                </div>
+                <div class="hr"></div>
+
+                <h2>{{ 'profile_phone_data'|trans }}:</h2>
+                <div class="form">
+                    <div class="row">
+                        <div class="label">{{ form_label(form.phone_mobile) }}</div>
+                        <div class="input phone-num">
+                            <span>+7</span>
+                            {{ form_widget(form.phone_mobile, { simple: true }) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="hr"></div>
+
+                <h2>{{ 'profile_region_place'|trans }}:</h2>
+                <div class="form">
+                    <div class="row">
+                        <div class="label">{{ 'profile_region'|trans }}:</div>
+                        <div class="field">{{ app.user.region }}</div>
+                    </div>
+                    {{ form_row(form.region_place) }}
+                </div>
+
+                <div class="form">
+                    <div class="links bottom">
+                        <a class="bg-red" href="{{ path('my_profile') }}">{{ 'buttons.cancel'|trans }}</a>
+                        <span class="link bg-green edit-link">
+                            Применить изменения
+                            <input value="" type="submit">
+                        </span>
+                    </div>
+                </div>
+            </div>
+        {{ form_end(form) }}
+    </section>
+</div>
+{% endblock content %}
+
+{% block js %}
+<script src="/v2/js/jquery-ui.js"></script>
+<script src="/v2/js/jquery.fileupload.js"></script>
+<script src="/v2/js/jquery.Jcrop.js"></script>
+<link href="/v2/css/jquery.Jcrop.css" type="text/css" rel="stylesheet">
+<link href="/v2/css/jquery.Jcrop.fix.css" type="text/css" rel="stylesheet">
+<script>
+$(function() {
+    var fader = $('.fader');
+    var photo_edit = $('#photo-edit');
+    var photo_crop = $('#photo-crop');
+    var right_photo = $('.right .photo');
+
+    var photo_edit_click = function() {
+        fader.show();
+        photo_edit.show();
+        $('.im', photo_edit).html($('.im', right_photo).html());
+        $('.close', photo_edit).on('click', function() {
+            photo_edit.hide();
+            fader.hide();
+            right_photo.show();
+        });
+        right_photo.hide();
+        return false;
+    };
+
+    var showCropModal = function(html) {
+        photo_crop.html(html);
+        photo_crop.show();
+        var photo_save_click = function () {
+            $.post('{{ path('my_profile_photo_update_ajax') }}', $('#photo_form').serializeArray(), function (result) {
+                photo_crop.hide();
+                if (result.errors) {
+                    js_alert(result.errors.join("\n"));
+                } else {
+                    $('.im', right_photo).html(result.photo_view);
+                }
+                fader.hide();
+                right_photo.show();
+            }, 'json');
+            return false;
+        };
+        $('input[type=button]', photo_crop).one('click', photo_save_click);
+        $('.close', photo_crop).one('click', photo_save_click);
+    };
+
+    function updatePhoto() {
+        $.post('{{ path('my_profile_photo_view_ajax') }}', function (result) {
+            var photo = $('.right .photo');
+            if (result.photo_view) {
+                $('.im', photo).html(result.photo_view);
+            }
+            $('a', photo).on('click', photo_edit_click);
+        });
+    }
+    updatePhoto();
+
+    photo_edit.fileupload({
+        send: function () {
+            photo_edit.hide();
+        },
+        done: function (e, data) {
+            if (data.result.html) {
+                showCropModal(data.result.html);
+            } else {
+                var errors = data.result.errors ? data.result.errors.join("\n") : '{{ 'undefined_error'|trans }}';
+                js_alert(errors);
+                photo_edit.show();
+            }
+        },
+        fail: function () {
+            js_alert('{{ 'errors.server'|trans }}');
+            photo_edit.show();
+        }
+    });
+
+    var show_registration = function() {
+        $('#place_data').hide();
+        $('#profile_place_country').removeAttr('required');
+        $('#profile_place_region').removeAttr('required');
+        $('#profile_place_city').removeAttr('required');
+        $('#profile_place_street').removeAttr('required');
+        $('#profile_place_house').removeAttr('required');
+        $('#profile_place_apartament').removeAttr('required');
+        $('#profile_registration_country').attr('required', 'required');
+        $('#profile_registration_region').attr('required', 'required');
+        $('#profile_registration_city').attr('required', 'required');
+        $('#profile_registration_street').attr('required', 'required');
+        $('#profile_registration_house').attr('required', 'required');
+        $('#profile_registration_apartament').attr('required', 'required');
+        $('#registration_data').show();
+    };
+
+    var show_place = function() {
+        $('#registration_data').hide();
+        $('#profile_registration_country').removeAttr('required');
+        $('#profile_registration_region').removeAttr('required');
+        $('#profile_registration_city').removeAttr('required');
+        $('#profile_registration_street').removeAttr('required');
+        $('#profile_registration_house').removeAttr('required');
+        $('#profile_registration_apartament').removeAttr('required');
+        $('#profile_place_country').attr('required', 'required');
+        $('#profile_place_region').attr('required', 'required');
+        $('#profile_place_city').attr('required', 'required');
+        $('#profile_place_street').attr('required', 'required');
+        $('#profile_place_house').attr('required', 'required');
+        $('#profile_place_apartament').attr('required', 'required');
+        $('#place_data').show();
+    };
+
+    var not_registration = $('#profile_not_registration');
+
+    not_registration.change(function() {
+        if ($(this).is(':checked')) {
+            show_place();
+        } else {
+            show_registration();
+        }
+    });
+
+    if (not_registration.is(':checked')) {
+        show_place();
+    } else {
+        show_registration();
+    }
+
+    var foreign_passport = $('#profile_foreign_passport');
+    var foreign_passport_change = function() {
+        var passport_number = $('#profile_passport_number_number');
+        var foreign_passport_number = $('#profile_foreign_passport_number');
+        if (foreign_passport.is(':checked')) {
+            passport_number.closest('.row').hide();
+            passport_number.removeAttr('required');
+            $('#profile_passport_number_series').removeAttr('required');
+            foreign_passport_number.attr('required', 'required');
+            foreign_passport_number.closest('.row').show();
+        } else {
+            foreign_passport_number.closest('.row').hide();
+            foreign_passport_number.removeAttr('required');
+            passport_number.attr('required', 'required');
+            $('#profile_passport_number_series').attr('required', 'required');
+            passport_number.closest('.row').show();
+        }
+    };
+    foreign_passport.change(foreign_passport_change);
+    foreign_passport_change();
+
+    $('form[action="{{ path('my_change_password') }}"]').submit(function(e) {
+        e.preventDefault();
+        var form = $(this);
+        var submit = $('input[type=submit]', form);
+        submit.attr('disabled', 'disabled');
+        $('.info', form).remove();
+
+        var showErrors = function(children, prefix) {
+            for (var i in children) {
+                if (children.hasOwnProperty(i)) {
+                    if (children[i]['errors']) {
+                        var id = prefix + '_' + ('new_password' == i ? (i + '_first') : i);
+                        $('#' + id, form).closest('.row').append('<div class="info red">' + children[i]['errors'].join('<br>') + '</div>');
+                    }
+                    if (children[i]['children']) {
+                        showErrors(children[i]['children'], prefix + '_' + i);
+                    }
+                }
+            }
+        };
+
+        $.post(form.attr('action'), form.serialize(), function(data) {
+            if (data.errors) {
+                if (data.errors['errors']) {
+                    form.prepend('<div class="info red">' + data.errors['errors'].join('<br>') + '</div>');
+                }
+                if (data.errors['children']) {
+                    showErrors(data.errors['children'], 'change_password');
+                }
+            } else {
+                form[0].reset();
+                form.closest('.pop').slideUp(300, function() {
+                    form.closest('.pop-form').removeClass('open');
+                });
+                js_alert('Пароль успешно изменён!', true);
+            }
+            submit.removeAttr('disabled');
+        });
+    });
+
+    var sex = $('input:radio[name="profile[sex]"]');
+    sex.removeAttr('required');
+    $('form[action="{{ path('my_profile_edit') }}"]').submit(function(e) {
+        if (!sex.is(':checked')) {
+            js_alert('Необходимо указать пол');
+            return false;
+        }
+        return true;
+    });
+});
+</script>
+{% endblock js %}

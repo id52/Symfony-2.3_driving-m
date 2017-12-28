@@ -1,0 +1,4 @@
+services:
+    promo:
+        class: My\PromoBundle\Service\Promo
+        arguments: [ @doctrine.orm.entity_manager ]

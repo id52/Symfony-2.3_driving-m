@@ -1,0 +1,106 @@
+{% extends 'AppBundle::layout_m.html.twig' %}
+
+{% block content %}
+<div class="wrap payment-online">
+    <h1>Выбранная информация</h1>
+
+    <div class="payonl-selected-options">
+        <div class="payonl-option payonl-option-1" style="background-image:url('/m/images/category/{{ app.user.category == 'A' ? 'a' : ('b'~(app.user.regInfo['with_at'] ? 'a' : 'm')) }}.png')">
+            <div class="payonl-option-caption-1">Категория</div>
+            <div class="payonl-option-caption-2">«{{ app.user.category }}»{{ app.user.category.withAt ? (' + '~(app.user.regInfo['with_at'] ? 'А' : 'М')~'КПП') : '' }}</div>
+        </div>
+        <div class="payonl-option payonl-option-2">
+            <div class="payonl-option-caption-1">Теория</div>
+            <div class="payonl-option-caption-2">{{ app.user.category.theory }} ак. часов</div>
+        </div>
+        <div class="payonl-option payonl-option-3">
+            <div class="payonl-option-caption-1">Практика</div>
+            <div class="payonl-option-caption-2">{{ app.user.category.practice }} астр. часов</div>
+        </div>
+        <div class="payonl-option payonl-option-4">
+            <div class="payonl-option-caption-1">Срок обучения</div>
+            <div class="payonl-option-caption-2">{{ app.user.category.training }} месяца</div>
+        </div>
+    </div>
+
+    <div class="payonl-desc">{{ text|raw }}</div>
+
+    <div class="payonl-total">Оплатить: <span>{{ sum|sum_format }}</span> руб.</div>
+
+    <div class="code">
+        <input type="text" value="" placeholder="Промокод">
+        <input id="promo_btn" type="button" value="Подтвердить">
+    </div>
+
+    {{ form_start(form) }}
+        <div class="payonl-confirmation">
+            <label>{{ form_widget(form.access) }} Я прочитал и согласен с <a href="{{ path('article_show', { id: 'dogovor-oferta' }) }}" target="_blank">условиями договора-оферты</a></label>
+            <label>{{ form_widget(form.privacy) }} Я прочитал и согласен с <a href="{{ path('article_show', { id: 'privacy' }) }}" target="_blank">условиями конфиденциальности</a></label>
+        </div>
+        <input id="promo_key" value="" name="promo_key" type="hidden">
+        <input type="submit" class="payonl-submit"  value="Оплатить" id="payonl-submit-id">
+    {{ form_end(form) }}
+</div>
+{% endblock content %}
+
+{% block js %}
+<script>
+$(function() {
+    var initial_sum = {{ sum }};
+    $('#promo_btn').click(function(e) {
+        e.preventDefault();
+        var key = $(this).closest('.code').find('input[type=text]').val();
+        if (key) {
+            var $this = $(this);
+            $this.attr('disabled', 'disabled');
+            $.getJSON('{{ path('promo_check_ajax') }}', { key: key, type: 'first' }, function(data) {
+                if (data['discount']) {
+                    $('#promo_key').val(key);
+                    var sum = Math.max(initial_sum - data['discount'], 0);
+                    var discount = initial_sum - sum;
+
+                    if (initial_sum >= 1000) {
+                        initial_sum = initial_sum.toString();
+                        initial_sum = initial_sum.slice(0, -3) + ' ' + initial_sum.slice(-3);
+                    }
+                    if (sum >= 1000) {
+                        sum = sum.toString();
+                        sum = sum.slice(0, -3) + ' ' + sum.slice(-3);
+                    }
+                    if (discount >= 1000) {
+                        discount = discount.toString();
+                        discount = discount.slice(0, -3) + ' ' + discount.slice(-3);
+                    }
+                    $('.payonl-total').html('Оплатить:<span class="e_old_price">' + initial_sum + ' руб.</span><span>'
+                    + sum + '</span> руб.<div class="e_info_discount">К общей сумме была применена скидка: <span>'
+                    + discount + ' руб.</span></div>'
+                    );
+                    $('#promo_btn').closest('.code').hide();
+                    $.getJSON('{{ path('promo_trieds_write_ajax') }}', { key: key, type: 'first' }, function(data) {});
+                } else {
+                    var m_modal = $('#m_modal');
+                    var m_modal_overlay = $('#m_modal_overlay');
+                    $('.m_modal_title', m_modal).hide();
+                    $('.m_modal_content', m_modal).html('Такой промокод не найден или уже был использован.' + '<br><button class="btn-blue-reg" style="display:block;margin:20px auto 0">Закрыть</button>');
+                    $('.btn-blue-reg', m_modal).click(function(e) {
+                        e.preventDefault();
+                        m_modal.hide();
+                        m_modal_overlay.hide();
+                    });
+                    m_modal_overlay.show();
+                    m_modal.css('top', (($(window).height() < m_modal.height() ? 60 : ($(window).height() / 2 - m_modal.height() / 2)) + $(window).scrollTop()) + 'px');
+                    m_modal.show();
+                }
+                $this.removeAttr('disabled');
+            });
+        }
+    });
+
+    {% if _server_type == 'prod' %}
+    $('#access_access').closest('form').on('submit', function() {
+        yaCounter25512893.reachGoal('PAY');
+    });
+    {% endif %}
+});
+</script>
+{% endblock js %}

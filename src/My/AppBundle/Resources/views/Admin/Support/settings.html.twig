@@ -1,0 +1,35 @@
+{% extends 'AppBundle:Admin:_settings.html.twig' %}
+{% trans_default_domain 'settings' %}
+
+{% block fields %}
+    <div class="control-group">
+        <label class="control-label">{{ 'settings_support_days_to_answer'|trans }}:</label>
+        <div class="controls">
+            <div class="input-append">
+                {{ form_widget(form.support_days_to_answer) }}
+                <span class="add-on">{{ 'days'|trans({}, 'messages') }}</span>
+            </div>
+            {{ form_errors(form.support_days_to_answer) }}
+        </div>
+    </div>
+
+    <fieldset>
+        <legend>
+            {{ 'settings_support_answered_email'|trans }}
+            <a data-content="{{ 'settings_support_answered_email_help'|trans }}" href="#" data-toggle="popover"><i class="fa fa-question-circle"></i></a>
+        </legend>
+        {{ form_row(form.support_answered_email_enabled) }}
+        {{ form_row(form.support_answered_email_title) }}
+        {{ form_row(form.support_answered_email_text, { attr: { class: 'ckeditor' }, help: 'settings_support_answered_email_text_help' }) }}
+    </fieldset>
+
+    <fieldset>
+        <legend>
+            {{ 'settings_support_answered_email_admin'|trans }}
+            <a data-content="{{ 'settings_support_answered_email_admin_help'|trans }}" href="#" data-toggle="popover"><i class="fa fa-question-circle"></i></a>
+        </legend>
+        {{ form_row(form.support_answered_email_admin_enabled) }}
+        {{ form_row(form.support_answered_email_admin_title) }}
+        {{ form_row(form.support_answered_email_admin_text, { attr: { class: 'ckeditor' }, help: 'settings_support_answered_email_admin_text_help' }) }}
+    </fieldset>
+{% endblock fields %}

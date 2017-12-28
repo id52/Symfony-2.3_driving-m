@@ -1,0 +1,106 @@
+{% extends 'AppBundle::admin.html.twig' %}
+{% trans_default_domain 'revert_money' %}
+
+{% block content %}
+    <h3>{{ 'admin.rever_money_user_card_title'|trans({}, 'messages') }}</h3>
+    <hr>
+    <div class="mainContent">
+        <section>
+            <h4>Данные пользователя:</h4>
+            <dl class="dl-horizontal">
+                <dt>Ф.И.О.:</dt><dd>{{ user.fullName }}</dd>
+                <dt>Email:</dt><dd>{{ user.email }}</dd>
+                {% if user.phoneMobile %}
+                <dt>Телефон:</dt><dd>{{ user.phoneMobileFormat }}</dd>
+                {% endif %}
+            </dl>
+        </section>
+
+        <section>
+            <h4>Совершенные платежи:</h4>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Назначение платежа</th>
+                    <th class="min_col">Дата оплаты</th>
+                    <th class="min_col">Сумма</th>
+                    <th class="min_col">Номер транзакции</th>
+                    <th class="min_col"></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for payment in paid_payments %}
+                    <tr>
+                        <td>
+                            {% for service in payment.services %}
+                                {{ service.name }}{% if not loop.last %}<br>{% endif %}
+                            {% endfor %}
+                            {% for category in payment.categories %}
+                                {{ category.name }}{% if not loop.last %}<br>{% endif %}
+                            {% endfor %}
+                        </td>
+                        <td class="min_col">{{ payment.updated_at|localizeddate('long', 'none') }}</td>
+                        <td class="min_col text-right">{{ payment.sum|number_format(0, '.', ' ') }} руб.</td>
+                        <td class="min_col">
+                            {% if payment.moderator_id is defined %}
+                                {{ 'payment_at_the_office'|trans({}, 'payment') }} (ID - {{ payment.moderator_id }})
+                            {% else %}
+                                {{ payment.s_id ? payment.s_id : ''}}
+                            {% endif %}
+                            {% if payment.comment['promo_key'] is defined %}
+                                Промокод:<br>{{ payment.comment['promo_key'] }}
+                            {% endif %}
+                        </td>
+                        <td class="min_col">
+                            {% if payment.s_id is not null and payment.s_type == 'psb' and payment.int_ref is not null and not payment['reverts'] %}
+                                {% if 'ROLE_USER_PAID3' in user.roles and payment['categories'][3] is not defined and payment['services']|length == 0 %}
+                                   <a href="#" class="btn btn-success" disabled="disabled"><i class="fa fa-undo"></i></a>
+                                {% else %}
+                                    <a href="{{ path('admin_revert_money_revert', { logId: payment.id }) }}"
+                                       class="btn btn-success"
+                                       onclick="return confirm('Действительно Вы хотите вернуть денежные средства?')"
+                                    ><i class="fa fa-undo"></i></a>
+                                {% endif %}
+                            {% endif %}
+                            {% if payment['reverts'] %}
+                                <span class="text-error">Отменен</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </section>
+        <hr>
+
+        {% if revert_payments|length %}
+        <section>
+            <h4>Отмененные платежи:</h4>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Отменил</th>
+                        <th class="min_col">Дата отмены</th>
+                        <th class="min_col">Номер транзакции</th>
+                        <th class="min_col">Сумма</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for revert in revert_payments %}
+                    <tr>
+                        <td>{{ revert.moderator.fullName }}</td>
+                        <td class="min_col">{{ revert.updatedAt|localizeddate('long', 'none') }}</td>
+                        <td class="min_col">{{ revert.paymentLog.sId }}</td>
+                        <td class="min_col">{{ revert.paymentLog.sum|number_format(0, '.', ' ') }} руб.</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </section>
+        {% endif %}
+    </div>
+    <hr>
+    <a href="{{ path('admin_revert_money_user_list')}}" class="btn btn-default pull-right fa fa-arrow-left"> Назад</a>
+{% endblock content %}
+
+

@@ -1,0 +1,10 @@
+#!/bin/sh
+
+CMD="phpcs -p --colors --standard=PSR2 --encoding=utf-8 --extensions=php --ignore=*/Model/* src/"
+
+if [ -z "$1" ]
+then
+    CMD="$CMD --report=summary"
+fi
+
+$CMD

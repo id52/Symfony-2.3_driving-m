@@ -1,0 +1,75 @@
+{% extends 'AppBundle::layout_new.html.twig' %}
+
+{% block content %}
+    <div class="over_qwe" id="help_modal">
+        <div class="over_center">
+            <span class="title">{{ 'help_title'|trans }}</span>
+            <span class="close" data-dismiss="modal"><img src="/img/ico_close.png" alt="" title="" /></span>
+            <div class="over_text">
+                {{ settings['question_help_btn']|raw }}
+            </div>
+        </div>
+    </div>
+    <div class="main_t">
+        <div class="breadcrumbs">
+            <div class="bread_bod">
+                <a href="{{ path('my_trainings') }}">{{ 'menu.training'|trans }}</a>
+                <span class="this">/</span>
+                <a href="{{ path('my_training', { id: slice.afterTheme.subject.id }) }}">{{ slice.afterTheme.subject.title }}</a>
+                <span class="this">/ {{ 'slice_title'|trans }}</span>
+            </div>
+            <span class="haw_qwe" data-toggle="modal" data-target="#help_modal"><img src="/img/qwestion.png" alt="" title="" /></span>
+        </div>
+        <h2>{{ 'ticket_num'|trans({ '%ticket%': ticket + 1 }) }}</h2>
+        {% if seconds_left %}
+            <div class="test_time">
+                <div class="time">
+                    <div id="note">0:00</div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+    <div id="test">
+        <div class="nav_test">
+            {% for key in answers[ticket]|keys %}
+                {% if num == key %}
+                    <span class="active">{{ loop.index }}</span>
+                {% else %}
+                    <span {{ answers[ticket][key] ? (answers[ticket][key]|last.correct ? ' class="tr"' : ' class="wr"') : '' }}>{{ loop.index }}</span>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <br />
+        <div class="form_unswer">
+            <div class="alert-error clear">
+                {{ settings['training_slice_error'] }}
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block js %}
+<script>
+$(function() {
+    {% if seconds_left %}
+    $('.test_time .time #note').countdown({
+        until: {{ seconds_left }},
+        layout: '{mn}{sep}{snn}',
+        onTick: function(periods) {
+            var seconds = $.countdown.periodsToSeconds(periods);
+            if (60 > seconds) {
+                $(this).addClass('text-error');
+            }
+            if (30 > seconds) {
+                $(this).addClass('blink');
+            }
+        }
+    });
+    {% endif %}
+
+    setTimeout(function() {
+        location.assign('{{ path('my_training_slice', { id: slice.id }) }}');
+    }, 1000);
+});
+</script>
+{% endblock js %}

@@ -1,0 +1,268 @@
+<script src="/v2/js/jquery.cookie.js"></script>
+<script src="/v2/js/jquery.countdown.js"></script>
+<script src="/v2/js/jquery.countdown-ru.js"></script>
+<script>
+$(function() {
+    var show_info = function() {
+        var m_modal = $('#m_modal');
+        var m_modal_overlay = $('#m_modal_overlay');
+        $('.m_modal_title', m_modal).hide();
+        $('.m_modal_content', m_modal).html('{{ settings['registration_info'] is defined ? settings['registration_info']|raw|e('js') : '' }}<br><button class="btn-blue-reg" style="display:block;margin:20px auto 0">Спасибо, понятно</button>');
+        $('.btn-blue-reg', m_modal).click(function(e) {
+            e.preventDefault();
+            $.cookie('registration_info', true, { expires: 365, path: '/' });
+            m_modal.hide();
+            m_modal_overlay.hide();
+        });
+        m_modal_overlay.show();
+        m_modal.show();
+    };
+    if (!$.cookie('registration_info')) {
+        show_info();
+    }
+
+    var categories_at = {{ categories_at is defined and categories_at ? categories_at|json_encode|raw : 'null' }};
+    var offer_id = {{ offerId is defined and offerId ? offerId : 'null' }};
+    var reg_category_init = function() {
+        var categories = eval({{ categories|json_encode|raw }});
+        var with_at = function() {
+            var cntnr = $('#with_at').closest('.select-hold2');
+            var cat_id = $('#category').val();
+            if (cat_id && categories[cat_id]['with_at']) {
+                if (offer_id) {
+                    $("#with_at_0").remove();
+                    $("#with_at_1").remove();
+
+                    switch(categories[cat_id]['transmissionType']) {
+                        case 'automatic&manual':
+                            $('#with_at').append('<option id="with_at_0" data-img="/m/images/payment/pic-hand.png" value="0">Механическая коробка передач</option>');
+                            $('#with_at').append('<option id="with_at_1" data-img="/m/images/payment/pic-auto.png" value="1">Автоматическая коробка передач</option>');
+                            break;
+                        case 'automatic':
+                            $('#with_at').append('<option id="with_at_1" data-img="/m/images/payment/pic-auto.png" value="1">Автоматическая коробка передач</option>');
+                            break;
+                        case 'manual':
+                            $('#with_at').append('<option id="with_at_0" data-img="/m/images/payment/pic-hand.png" value="0">Механическая коробка передач</option>');
+                    }
+                    $('#reg_category').customForm('refresh');
+                }
+                cntnr.show();
+            } else {
+                cntnr.hide();
+            }
+        };
+        $('#category').change(with_at);
+        with_at();
+
+        $('#reg_category').on('submit', function(e) {
+            e.preventDefault();
+
+            $.post($(this).attr('action'), $(this).serialize(), function(data) {
+                $('.payment').html(data.html);
+                reg_change_pay_init();
+            });
+        });
+
+        $('form').on('refresh', function () {
+            $(this).customForm('destroy');
+            $(this).customForm({
+                select: {
+                    elements: 'select.customSelect',
+                    structure: '<div class="selectArea"><div class="selectIn"><div class="selectText"></div></div></div>',
+                    text: '.selectText',
+                    btn: '.selectIn',
+                    optStructure: '<div class="selectSub"><ul></ul></div>',
+                }
+            });
+
+            $('.selectArea').css('width', 'auto');
+
+        }).customForm('refresh');
+    };
+    reg_category_init();
+
+    var reg_change_pay_init = function() {
+        var radio = $('input[type=radio][name=pay_method]', '#reg_change_pay');
+        var pay = function() {
+            if (radio.filter(':checked').val()) {
+                $('.go .btn2', '#reg_change_pay').removeClass('disabled');
+            } else {
+                $('.go .btn2', '#reg_change_pay').addClass('disabled');
+            }
+        };
+        radio.change(function() {
+            pay();
+            $('#reg_change_pay').submit();
+        });
+        pay();
+
+        $('.go-back', '#reg_change_pay').on('click', function(e) {
+            e.preventDefault();
+
+            $.get($(this).attr('href'), function(data) {
+                $('.payment').html(data.html);
+                reg_category_init();
+            });
+        });
+
+        $('#reg_change_pay').on('submit', function(e) {
+            e.preventDefault();
+
+            $.post($(this).attr('action'), $(this).serialize(), function(data) {
+                $('.payment').html(data.html);
+                if (data.online) {
+                    reg_pay_online_init();
+                } else {
+                    reg_pay_offline_init();
+                }
+            });
+        });
+
+        $('.steps .bg1.done').off('click').on('click', function() {
+            $.get($(this).data('url'), function(data) {
+                $('.payment').html(data.html);
+                reg_category_init();
+            });
+        });
+    };
+    reg_change_pay_init();
+
+    var reg_pay_offline_init = function() {
+        $('.go-back', '#reg_pay_offline').on('click', function(e) {
+            e.preventDefault();
+
+            $.get($(this).attr('href'), function(data) {
+                $('.payment').html(data.html);
+                reg_change_pay_init();
+            });
+        });
+
+        $('.btn-online', '#reg_pay_offline').on('click', function(e) {
+            e.preventDefault();
+
+            $.get($(this).attr('href'), function(data) {
+                $('.payment').html(data.html);
+                reg_pay_online_init();
+            });
+        });
+
+        $('.steps .bg1.done').off('click').on('click', function() {
+            $.get($(this).data('url'), function(data) {
+                $('.payment').html(data.html);
+                reg_category_init();
+            });
+        });
+        $('.steps .bg2.done').off('click').on('click', function() {
+            $.get($(this).data('url'), function(data) {
+                $('.payment').html(data.html);
+                reg_change_pay_init();
+            });
+        });
+    };
+    reg_pay_offline_init();
+
+    var reg_pay_online_init = function() {
+        var actions = $('>.action', '#actions');
+        var buttons = $('>a', '.pay-selection');
+
+        var reg_pay_online_choice = function() {
+            var index = parseInt($(location).attr('hash').replace('#', ''));
+            index = !isNaN(index) ? Math.max(Math.min(index - 1, 2), 0) : 0;
+
+            $('#pay_method').val(index ? ('online' + (index + 1)) : 'online');
+            buttons.removeClass('active');
+            buttons.eq(index).addClass('active');
+            switch (index) {
+                case 0:
+                    actions.eq(0).animate({ left: '0px' }, 350);
+                    actions.eq(1).animate({ left: '1180px' }, 350);
+                    actions.eq(2).animate({ left: '2360px' }, 350);
+                    break;
+                case 1:
+                    actions.eq(0).animate({ left: '-1180px' }, 350);
+                    actions.eq(1).animate({ left: '0px' }, 350);
+                    actions.eq(2).animate({ left: '1180px' }, 350);
+                    break;
+                case 2:
+                    actions.eq(0).animate({ left: '-2360px' }, 350);
+                    actions.eq(1).animate({ left: '-1180px' }, 350);
+                    actions.eq(2).animate({ left: '0px' }, 350);
+                    break;
+            }
+        };
+
+        buttons.on('click', function(e) {
+            e.preventDefault();
+            $(location).attr('hash', buttons.index(this) + 1);
+        });
+
+        $(window).on('hashchange', function() {
+            reg_pay_online_choice();
+        });
+        reg_pay_online_choice();
+
+        $('.action .action-prices-link').on('click', function(e) {
+            e.preventDefault();
+            $(this).closest('form').submit();
+        });
+
+        var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
+        var firstDate = new Date('1/1/2015');
+        var secondDate = new Date();
+        var diffDays = Math.round(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay)));
+        var period = 4;
+        var until = new Date();
+        until.setHours(0,0,0,0);
+        until.setDate(until.getDate() + (period - diffDays % period));
+        var layout = '';
+        layout += '<div class="action-timer-top">';
+        layout += '<span><b>{dnn}</b>{dl}</span>';
+        layout += '<span><b>{hnn}</b>{hl}</span>';
+        layout += '</div>';
+        layout += '<div class="action-timer-bot">';
+        layout += '<span>{mnn}</span>';
+        layout += '<b>:</b>';
+        layout += '<span>{snn}</span>';
+        layout += '</div>';
+        layout += '<div class="action-timer-top">';
+        layout += '<span>мин.</span>';
+        layout += '<span>сек.</span>';
+        layout += '</div>';
+
+        var timer = $('.action-timer');
+
+        var untilBlock = $('#until');
+        if (untilBlock.data('until')) {
+            until = untilBlock.data('until');
+        }
+
+        timer.countdown({
+            until: until,
+            layout: layout
+        });
+
+        $('.go-back', '#reg_pay_online').on('click', function(e) {
+            e.preventDefault();
+
+            $.get($(this).attr('href'), function(data) {
+                $('.payment').html(data.html);
+                reg_change_pay_init();
+            });
+        });
+
+        $('.steps .bg1.done').off('click').on('click', function() {
+            $.get($(this).data('url'), function(data) {
+                $('.payment').html(data.html);
+                reg_category_init();
+            });
+        });
+        $('.steps .bg2.done').off('click').on('click', function() {
+            $.get($(this).data('url'), function(data) {
+                $('.payment').html(data.html);
+                reg_change_pay_init();
+            });
+        });
+    };
+    reg_pay_online_init();
+});
+</script>

@@ -1,0 +1,1019 @@
+admin:
+    path:  /
+    defaults: { _controller: AppBundle:Admin:index }
+
+admin_settings_common:
+    path:  /settings-common/
+    defaults: { _controller: AppBundle:Admin/Common:settings }
+
+admin_settings_registration:
+    path:  /settings-registration/
+    defaults: { _controller: AppBundle:Admin/Registration:settings }
+
+admin_settings_payments:
+    path:  /settings-payments/
+    defaults: { _controller: AppBundle:Admin/Payments:settings }
+
+admin_regions:
+    path:  /regions/
+    defaults: { _controller: AppBundle:Admin/Region:list }
+
+admin_region_add:
+    path:  /regions/add/
+    defaults: { _controller: AppBundle:Admin/Region:item }
+
+admin_region_edit:
+    path:  /regions/edit-{id}/
+    defaults: { _controller: AppBundle:Admin/Region:item }
+    requirements:
+        id: \d+
+
+admin_region_delete:
+    path:  /regions/delete-{id}/
+    defaults: { _controller: AppBundle:Admin/Region:delete }
+    requirements:
+        id: \d+
+
+admin_region_places:
+    path:  /regions_places/
+    defaults: { _controller: AppBundle:Admin/RegionPlace:list }
+
+admin_region_place_add:
+    path:  /regions_places/add/
+    defaults: { _controller: AppBundle:Admin/RegionPlace:item }
+
+admin_region_place_edit:
+    path:  /regions_places/edit-{id}/
+    defaults: { _controller: AppBundle:Admin/RegionPlace:item }
+    requirements:
+        id: \d+
+
+admin_region_place_delete:
+    path:  /regions_places/delete-{id}/
+    defaults: { _controller: AppBundle:Admin/RegionPlace:delete }
+    requirements:
+        id: \d+
+
+admin_categories:
+    path:  /categories/
+    defaults: { _controller: AppBundle:Admin/Category:list }
+
+admin_category_add:
+    path:  /categories/add/
+    defaults: { _controller: AppBundle:Admin/Category:item }
+
+admin_category_edit:
+    path:  /categories/edit-{id}/
+    defaults: { _controller: AppBundle:Admin/Category:item }
+    requirements:
+        id: \d+
+
+admin_category_delete:
+    path:  /categories/delete-{id}/
+    defaults: { _controller: AppBundle:Admin/Category:delete }
+    requirements:
+        id: \d+
+
+admin_services:
+    path:  /services/
+    defaults: { _controller: AppBundle:Admin/Service:list }
+
+admin_service_add:
+    path:  /services/add/
+    defaults: { _controller: AppBundle:Admin/Service:item }
+
+admin_service_edit:
+    path:  /services/edit-{id}/
+    defaults: { _controller: AppBundle:Admin/Service:item }
+    requirements:
+        id: \d+
+
+admin_service_delete:
+    path:  /services/delete-{id}/
+    defaults: { _controller: AppBundle:Admin/Service:delete }
+    requirements:
+        id: \d+
+
+admin_webgroups:
+    path:  /webgroups/
+    defaults: { _controller: AppBundle:Admin/Webgroup:list }
+
+admin_webgroup_add:
+    path:  /webgroups/add/
+    defaults: { _controller: AppBundle:Admin/Webgroup:item }
+
+admin_webgroup_edit:
+    path:  /webgroups/edit-{id}/
+    defaults: { _controller: AppBundle:Admin/Webgroup:item }
+    requirements:
+        id: \d+
+
+admin_webgroup_delete:
+    path:  /webgroups/delete-{id}/
+    defaults: { _controller: AppBundle:Admin/Webgroup:delete }
+    requirements:
+        id: \d+
+
+admin_index_video:
+    path:  /index-video/
+    defaults: { _controller: AppBundle:Admin/IndexVideo:item }
+
+admin_index_settings:
+    path:  /index-settings/
+    defaults: { _controller: AppBundle:Admin/Index:settings }
+
+admin_articles:
+    path:  /articles/
+    defaults: { _controller: AppBundle:Admin/Article:list }
+
+admin_article_add:
+    path:  /articles/add/
+    defaults: { _controller: AppBundle:Admin/Article:item }
+
+admin_article_edit:
+    path:  /articles/edit-{id}/
+    defaults: { _controller: AppBundle:Admin/Article:item }
+    requirements:
+        id: \d+
+
+admin_article_delete:
+    path:  /articles/delete-{id}/
+    defaults: { _controller: AppBundle:Admin/Article:delete }
+    requirements:
+        id: \d+
+
+admin_article_up:
+    path:  /articles/up-{id}/
+    defaults: { _controller: AppBundle:Admin/Article:up }
+    requirements:
+        id: \d+
+
+admin_article_down:
+    path:  /articles/down-{id}/
+    defaults: { _controller: AppBundle:Admin/Article:down }
+    requirements:
+        id: \d+
+
+admin_articles_settings:
+    path:  /articles/settings/
+    defaults: { _controller: AppBundle:Admin/Article:settings }
+
+admin_filials_maps:
+    path:  /filials/maps/
+    defaults: { _controller: AppBundle:Admin/Filial:maps }
+
+admin_filials:
+    path:  /filials/
+    defaults: { _controller: AppBundle:Admin/Filial:list }
+
+admin_filial_add:
+    path:  /filials/add/
+    defaults: { _controller: AppBundle:Admin/Filial:item }
+
+admin_filial_edit:
+    path:  /filials/edit-{id}/
+    defaults: { _controller: AppBundle:Admin/Filial:item }
+    requirements:
+        id: \d+
+
+admin_filial_delete:
+    path:  /filials/delete-{id}/
+    defaults: { _controller: AppBundle:Admin/Filial:delete }
+    requirements:
+        id: \d+
+
+admin_filials_settings:
+    path:  /filials/settings/
+    defaults: { _controller: AppBundle:Admin/Filial:settings }
+
+admin_sites_maps:
+    path:  /sites/maps/
+    defaults: { _controller: AppBundle:Admin/Site:maps }
+
+admin_sites:
+    path:  /sites/
+    defaults: { _controller: AppBundle:Admin/Site:list }
+
+admin_site_add:
+    path:  /sites/add/
+    defaults: { _controller: AppBundle:Admin/Site:item }
+
+admin_site_edit:
+    path:  /sites/edit-{id}/
+    defaults: { _controller: AppBundle:Admin/Site:item }
+    requirements:
+        id: \d+
+
+admin_site_delete:
+    path:  /sites/delete-{id}/
+    defaults: { _controller: AppBundle:Admin/Site:delete }
+    requirements:
+        id: \d+
+
+admin_sites_settings:
+    path:  /sites/settings/
+    defaults: { _controller: AppBundle:Admin/Site:settings }
+
+admin_news:
+    path:  /news/
+    defaults: { _controller: AppBundle:Admin/News:list }
+
+admin_news_add:
+    path:  /news/add/
+    defaults: { _controller: AppBundle:Admin/News:item }
+
+admin_news_edit:
+    path:  /news/edit-{id}/
+    defaults: { _controller: AppBundle:Admin/News:item }
+    requirements:
+        id: \d+
+
+admin_news_delete:
+    path:  /news/delete-{id}/
+    defaults: { _controller: AppBundle:Admin/News:delete }
+    requirements:
+        id: \d+
+
+admin_faqs:
+    path:  /faqs/
+    defaults: { _controller: AppBundle:Admin/Faq:list }
+
+admin_faq_add:
+    path:  /faqs/add/
+    defaults: { _controller: AppBundle:Admin/Faq:item }
+
+admin_faq_edit:
+    path:  /faqs/edit-{id}/
+    defaults: { _controller: AppBundle:Admin/Faq:item }
+    requirements:
+        id: \d+
+
+admin_faq_delete:
+    path:  /faqs/delete-{id}/
+    defaults: { _controller: AppBundle:Admin/Faq:delete }
+    requirements:
+        id: \d+
+
+admin_faq_up:
+    path:  /faqs/up-{id}/
+    defaults: { _controller: AppBundle:Admin/Faq:up }
+    requirements:
+        id: \d+
+
+admin_faq_down:
+    path:  /faqs/down-{id}/
+    defaults: { _controller: AppBundle:Admin/Faq:down }
+    requirements:
+        id: \d+
+
+admin_offers:
+    path:  /offers/
+    defaults: { _controller: AppBundle:Admin/Offer:list }
+
+admin_offer_add:
+    path:  /offers/add/
+    defaults: { _controller: AppBundle:Admin/Offer:item }
+
+admin_offer_edit:
+    path:  /offers/edit-{id}/
+    defaults: { _controller: AppBundle:Admin/Offer:item }
+    requirements:
+        id: \d+
+
+admin_offer_up:
+    path:  /offers/up-{id}/
+    defaults: { _controller: AppBundle:Admin/Offer:up }
+    requirements:
+        id: \d+
+
+admin_offer_down:
+    path:  /offers/down-{id}/
+    defaults: { _controller: AppBundle:Admin/Offer:down }
+    requirements:
+        id: \d+
+
+admin_offer_delete:
+    path:  /offers/delete-{id}/
+    defaults: { _controller: AppBundle:Admin/Offer:delete }
+    requirements:
+        id: \d+
+
+admin_offer_students:
+    path:  /offers/students/
+    defaults: { _controller: AppBundle:Admin/OfferStudent:list }
+
+admin_offer_student_add:
+    path:  /offers/students/add/
+    defaults: { _controller: AppBundle:Admin/OfferStudent:item }
+
+admin_offer_student_edit:
+    path:  /offers/students/edit-{id}/
+    defaults: { _controller: AppBundle:Admin/OfferStudent:item }
+    requirements:
+        id: \d+
+
+admin_offer_student_delete:
+    path:  /offers/students/delete-{id}/
+    defaults: { _controller: AppBundle:Admin/OfferStudent:delete }
+    requirements:
+        id: \d+
+
+admin_offer_student_up:
+    path:  /offers/students/up-{id}/
+    defaults: { _controller: AppBundle:Admin/OfferStudent:up }
+    requirements:
+        id: \d+
+
+admin_offer_student_down:
+    path:  /offers/students/down-{id}/
+    defaults: { _controller: AppBundle:Admin/OfferStudent:down }
+    requirements:
+        id: \d+
+
+admin_offices:
+    path:  /offices/
+    defaults: { _controller: AppBundle:Admin/Office:list }
+
+admin_office_add:
+    path:  /offices/add/
+    defaults: { _controller: AppBundle:Admin/Office:item }
+
+admin_office_edit:
+    path:  /offices/edit-{id}/
+    defaults: { _controller: AppBundle:Admin/Office:item }
+    requirements:
+        id: \d+
+
+admin_office_delete:
+    path:  /offices/delete-{id}/
+    defaults: { _controller: AppBundle:Admin/Office:delete }
+    requirements:
+        id: \d+
+
+admin_office_up:
+    path:  /offices/up-{id}/
+    defaults: { _controller: AppBundle:Admin/Office:up }
+    requirements:
+        id: \d+
+
+admin_office_down:
+    path:  /offices/down-{id}/
+    defaults: { _controller: AppBundle:Admin/Office:down }
+    requirements:
+        id: \d+
+
+admin_reviews:
+    path: /reviews/
+    defaults: { _controller: AppBundle:Admin/Review:list }
+
+admin_review_check:
+    path: /reviews/check-{id}-{status}/
+    defaults: { _controller: AppBundle:Admin/Review:check }
+    requirements:
+        id: \d+
+        status: 1|0
+
+admin_how_work_list:
+    path:  /how_work/
+    defaults: { _controller: AppBundle:Admin/HowWork:list }
+
+admin_how_work_add:
+    path:  /how_work/add/
+    defaults: { _controller: AppBundle:Admin/HowWork:item }
+
+admin_how_work_edit:
+    path:  /how_work/edit-{id}/
+    defaults: { _controller: AppBundle:Admin/HowWork:item }
+    requirements:
+        id: \d+
+
+admin_how_work_delete:
+    path:  /how_work/delete-{id}/
+    defaults: { _controller: AppBundle:Admin/HowWork:delete }
+    requirements:
+        id: \d+
+
+admin_how_work_up:
+    path:  /how_work/up-{id}/
+    defaults: { _controller: AppBundle:Admin/HowWork:up }
+    requirements:
+        id: \d+
+
+admin_how_work_down:
+    path:  /how_work/down-{id}/
+    defaults: { _controller: AppBundle:Admin/HowWork:down }
+    requirements:
+        id: \d+
+
+admin_training_versions:
+    path:  /training_versions/
+    defaults: { _controller: AppBundle:Admin/TrainingVersion:list }
+
+admin_training_version_add:
+    path:  /training_versions/add/
+    defaults: { _controller: AppBundle:Admin/TrainingVersion:item }
+
+admin_training_version_edit:
+    path:  /training_versions/edit-{id}/
+    defaults: { _controller: AppBundle:Admin/TrainingVersion:item }
+    requirements:
+        id: \d+
+
+admin_training_version_delete:
+    path:  /training_versions/delete-{id}/
+    defaults: { _controller: AppBundle:Admin/TrainingVersion:delete }
+    requirements:
+        id: \d+
+
+admin_subjects:
+    path:  /subjects/
+    defaults: { _controller: AppBundle:Admin/Subject:list }
+
+admin_subject_add:
+    path:  /subjects/add/
+    defaults: { _controller: AppBundle:Admin/Subject:item }
+
+admin_subject_edit:
+    path:  /subjects/edit-{id}/
+    defaults: { _controller: AppBundle:Admin/Subject:item }
+    requirements:
+        id: \d+
+
+admin_subject_delete:
+    path:  /subjects/delete-{id}/
+    defaults: { _controller: AppBundle:Admin/Subject:delete }
+    requirements:
+        id: \d+
+
+admin_subjects_settings:
+    path:  /subjects/settings/
+    defaults: { _controller: AppBundle:Admin/Subject:settings }
+
+admin_themes:
+    path:  /themes/
+    defaults: { _controller: AppBundle:Admin/Theme:list }
+
+admin_theme_add:
+    path:  /themes/add/
+    defaults: { _controller: AppBundle:Admin/Theme:item }
+
+admin_theme_edit:
+    path:  /themes/edit-{id}/
+    defaults: { _controller: AppBundle:Admin/Theme:item }
+    requirements:
+        id: \d+
+
+admin_theme_delete:
+    path:  /themes/delete-{id}/
+    defaults: { _controller: AppBundle:Admin/Theme:delete }
+    requirements:
+        id: \d+
+
+admin_theme_up:
+    path:  /themes/up-{id}/
+    defaults: { _controller: AppBundle:Admin/Theme:up }
+    requirements:
+        id: \d+
+
+admin_theme_down:
+    path:  /themes/down-{id}/
+    defaults: { _controller: AppBundle:Admin/Theme:down }
+    requirements:
+        id: \d+
+
+admin_themes_settings:
+    path:  /themes/settings/
+    defaults: { _controller: AppBundle:Admin/Theme:settings }
+
+admin_flash_blocks:
+    path:  /flash-blocks/
+    defaults: { _controller: AppBundle:Admin/FlashBlock:list }
+
+admin_flash_block_add:
+    path:  /flash-blocks/add/
+    defaults: { _controller: AppBundle:Admin/FlashBlock:item }
+
+admin_flash_block_edit:
+    path:  /flash-blocks/edit-{id}/
+    defaults: { _controller: AppBundle:Admin/FlashBlock:item }
+    requirements:
+        id: \d+
+
+admin_flash_block_delete:
+    path:  /flash-blocks/delete-{id}/
+    defaults: { _controller: AppBundle:Admin/FlashBlock:delete }
+    requirements:
+        id: \d+
+
+admin_flash_block_items:
+    path:  /flash-blocks/{key}/
+    defaults: { _controller: AppBundle:Admin/FlashBlockItem:list }
+    requirements:
+        key: ^[-_A-z0-9]+$
+
+admin_flash_block_item_add:
+    path:  /flash-blocks/{key}/add/
+    defaults: { _controller: AppBundle:Admin/FlashBlockItem:item }
+    requirements:
+        key: ^[-_A-z0-9]+$
+
+admin_flash_block_item_edit:
+    path:  /flash-blocks/{key}/edit-{id}/
+    defaults: { _controller: AppBundle:Admin/FlashBlockItem:item }
+    requirements:
+        key: ^[-_A-z0-9]+$
+        id: \d+
+
+admin_flash_block_item_delete:
+    path:  /flash-blocks/{key}/delete-{id}/
+    defaults: { _controller: AppBundle:Admin/FlashBlockItem:delete }
+    requirements:
+        key: ^[-_A-z0-9]+$
+        id: \d+
+
+admin_flash_block_item_up:
+    path:  /flash-blocks/{key}/up-{id}/
+    defaults: { _controller: AppBundle:Admin/FlashBlockItem:up }
+    requirements:
+        key: ^[-_A-z0-9]+$
+        id: \d+
+
+admin_flash_block_item_down:
+    path:  /flash-blocks/{key}/down-{id}/
+    defaults: { _controller: AppBundle:Admin/FlashBlockItem:down }
+    requirements:
+        key: ^[-_A-z0-9]+$
+        id: \d+
+
+admin_flash_block_item_simple_up:
+    path:  /flash-blocks/{key}/simple-up-{id}/
+    defaults: { _controller: AppBundle:Admin/FlashBlockItem:simpleUp }
+    requirements:
+        key: ^[-_A-z0-9]+$
+        id: \d+
+
+admin_flash_block_item_simple_down:
+    path:  /flash-blocks/{key}/simple-down-{id}/
+    defaults: { _controller: AppBundle:Admin/FlashBlockItem:simpleDown }
+    requirements:
+        key: ^[-_A-z0-9]+$
+        id: \d+
+
+admin_flash_block_item_get_parent_list_ajax:
+    path:  /flash-blocks/{key}/get-parent-list-ajax/
+    defaults: { _controller: AppBundle:Admin/FlashBlockItem:getParentListAjax }
+    requirements:
+        key: ^[-_A-z0-9]+$
+
+admin_questions:
+    path:  /questions/
+    defaults: { _controller: AppBundle:Admin/Question:list }
+
+admin_question_add:
+    path:  /questions/add/
+    defaults: { _controller: AppBundle:Admin/Question:item }
+
+admin_question_edit:
+    path:  /questions/edit-{id}/
+    defaults: { _controller: AppBundle:Admin/Question:item }
+    requirements:
+        id: \d+
+
+admin_question_delete:
+    path:  /questions/delete-{id}/
+    defaults: { _controller: AppBundle:Admin/Question:delete }
+    requirements:
+        id: \d+
+
+admin_slices:
+    path:  /slices/
+    defaults: { _controller: AppBundle:Admin/Slice:list }
+
+admin_slice_add:
+    path:  /slices/add/
+    defaults: { _controller: AppBundle:Admin/Slice:item }
+
+admin_slice_edit:
+    path:  /slices/edit-{id}/
+    defaults: { _controller: AppBundle:Admin/Slice:item }
+    requirements:
+        id: \d+
+
+admin_slice_delete:
+    path:  /slices/delete-{id}/
+    defaults: { _controller: AppBundle:Admin/Slice:delete }
+    requirements:
+        id: \d+
+
+admin_slices_settings:
+    path:  /slices/settings/
+    defaults: { _controller: AppBundle:Admin/Slice:settings }
+
+admin_training_settings:
+    path:  /training-settings/
+    defaults: { _controller: AppBundle:Admin/Training:settings }
+
+admin_users_add:
+    path: /users-add/
+    defaults: { _controller: AppBundle:Admin/User:add }
+
+admin_users_add_simple:
+    path: /users-add-simple/
+    defaults: { _controller: AppBundle:Admin/User:addSimple }
+
+admin_users_access:
+    path:  /users-access/
+    defaults: { _controller: AppBundle:Admin/User:access }
+
+admin_users_with_closed_subjects:
+    path: /users-with-closed-subjects/
+    defaults: { _controller: AppBundle:Admin/User:usersWithClosedSubjects }
+
+admin_user_edit_closed_subjects:
+    path: /users-with-closed-subjects/edit-{id}/
+    defaults: { _controller: AppBundle:Admin/User:editClosedSubjects }
+    requirements:
+        id: \d+
+
+admin_users_access_edit:
+    path:  /users-access/edit-{id}/
+    defaults: { _controller: AppBundle:Admin/User:accessEdit }
+    requirements:
+        id: \d+
+
+admin_user_unsubscribe:
+    path:  /unsubscribe-{id}-{type}/
+    defaults: { _controller: AppBundle:Admin/User:unsubscribeForAll }
+    requirements:
+        id: \d+
+
+admin_profile_user_view:
+    path:  /users/profile/view-{id}/{company}
+    defaults: { _controller: AppBundle:Admin/User:profileUserView, company: null }
+    requirements:
+        id: \d+
+
+admin_precheck_users:
+    path:  /precheck-users/
+    defaults: { _controller: AppBundle:Admin/PrecheckUser:list }
+
+admin_precheck_user_view:
+    path:  /precheck-users/view-{id}/
+    defaults: { _controller: AppBundle:Admin/PrecheckUser:view }
+    requirements:
+        id: \d+
+
+admin_precheck_user_edit:
+    path:  /precheck-users/edit-{id}/
+    defaults: { _controller: AppBundle:Admin/PrecheckUser:edit }
+    requirements:
+        id: \d+
+
+admin_paradox_users:
+    path:  /users-paradox/
+    defaults: { _controller: AppBundle:Admin/ParadoxUser:list }
+
+admin_paradox_user_edit_email:
+    path:  /users-paradox/view-{id}/edit-email/
+    defaults: { _controller: AppBundle:Admin/ParadoxUser:editEmail }
+    requirements:
+        id: \d+
+admin_paradox_user_view:
+    path:  /users-paradox/view-{id}/
+    defaults: { _controller: AppBundle:Admin/ParadoxUser:view }
+    requirements:
+        id: \d+
+admin_paradox_user_prolong:
+    path:  /users-paradox/prolong-{id}/
+    defaults: { _controller: AppBundle:Admin/ParadoxUser:paradoxUserProlong }
+    requirements:
+        id: \d+
+
+admin_paradox_user_set:
+    path:  /users-paradox/set-{id}/
+    defaults: { _controller: AppBundle:Admin/ParadoxUser:set }
+    requirements:
+        id: \d+
+
+admin_paradox_to_precheck:
+    path:  /users-paradox/to-precheck-{id}/
+    defaults: { _controller: AppBundle:Admin/ParadoxUser:toPrecheck }
+    requirements:
+        id: \d+
+
+admin_paradox_user_lock:
+    path:  /users-paradox/ban-{state}-{id}/
+    defaults: { _controller: AppBundle:Admin/ParadoxUser:lock }
+    requirements:
+        id: \d+
+
+admin_paradox_pay:
+    path:  /users-paradox/pay-{id}/
+    defaults: { _controller: AppBundle:Admin/ParadoxUser:pay }
+    requirements:
+        id: \d+
+
+admin_send_email_to:
+    path: /users-send-email-to-{id}/
+    defaults: { _controller: AppBundle:Admin/User:sendEmailTo }
+    requirements:
+        id: \d+
+
+admin_users_settings:
+    path: /users-settings/
+    defaults: { _controller: AppBundle:Admin/User:settings }
+
+admin_support_dialogs:
+    path:  /support-dialogs/
+    defaults: { _controller: AppBundle:Admin/Support:dialogs }
+
+admin_support_dialog_show:
+    path:  /support-dialogs/show-{id}/
+    defaults: { _controller: AppBundle:Admin/Support:dialogShow }
+    requirements:
+        id: \d+
+
+admin_support_statistics:
+    path: /support-statistics/
+    defaults: { _controller: AppBundle:Admin/Support:statistics }
+
+admin_support_categories:
+    path:  /support-categories/
+    defaults: { _controller: AppBundle:Admin/SupportCategory:list }
+
+admin_support_category_add:
+    path:  /support-categories/add/
+    defaults: { _controller: AppBundle:Admin/SupportCategory:item }
+
+admin_support_category_edit:
+    path:  /support-categories/edit-{id}/
+    defaults: { _controller: AppBundle:Admin/SupportCategory:item }
+    requirements:
+        id: \d+
+
+admin_support_category_delete:
+    path:  /support-categories/delete-{id}/
+    defaults: { _controller: AppBundle:Admin/SupportCategory:delete }
+    requirements:
+        id: \d+
+
+admin_support_teachers:
+    path:  /support-teachers/
+    defaults: { _controller: AppBundle:Admin/Support:teachers }
+
+admin_support_teacher_add:
+    path:  /support-teachers/add/
+    defaults: { _controller: AppBundle:Admin/Support:teacherAdd }
+
+admin_support_teacher_assign_user:
+    path:  /support-teachers/assign-user-{id}/
+    defaults: { _controller: AppBundle:Admin/Support:teacherAssignUser }
+
+admin_support_teacher_edit:
+    path:  /support-teachers/edit-{id}/
+    defaults: { _controller: AppBundle:Admin/Support:teacherEdit }
+
+admin_support_teacher_remove_assigned_user:
+    path:  /support-teachers/remove-assigned-user-{id}/
+    defaults: { _controller: AppBundle:Admin/Support:teacherRemoveAssignedUser }
+
+admin_support_holidays:
+    path:  /support-holidays/
+    defaults: { _controller: AppBundle:Admin/Support:holidays }
+
+admin_support_holidays_xml:
+    path:  /support-holidays/xml/
+    defaults: { _controller: AppBundle:Admin/Support:getXmlHolidays }
+
+admin_support_settings:
+    path:  /support-settings/
+    defaults: { _controller: AppBundle:Admin/Support:settings }
+
+admin_mailing:
+    path:  /mailing/
+    defaults: { _controller: AppBundle:Admin/Mailing:list }
+
+admin_mailing_add:
+    path:  /mailing/add/
+    defaults: { _controller: AppBundle:Admin/Mailing:add }
+
+admin_mailing_create:
+    path:  /mailing/create/
+    defaults: { _controller: AppBundle:Admin/Mailing:create }
+
+admin_mailing_edit:
+    path:  /mailing/edit-{id}/
+    defaults: { _controller: AppBundle:Admin/Mailing:item }
+    requirements:
+        id: \d+
+
+admin_mailing_delete:
+    path:  /mailing/delete-{id}/
+    defaults: { _controller: AppBundle:Admin/Mailing:delete }
+    requirements:
+        id: \d+
+
+admin_test_emails:
+    path:  /test-emails/
+    defaults: { _controller: AppBundle:Admin/TestEmail:list }
+
+admin_test_email_add:
+    path:  /test-emails/add/
+    defaults: { _controller: AppBundle:Admin/TestEmail:item }
+
+admin_test_email_edit:
+    path:  /test-emails/edit-{id}/
+    defaults: { _controller: AppBundle:Admin/TestEmail:item }
+    requirements:
+        id: \d+
+
+admin_test_email_delete:
+    path:  /test-emails/delete-{id}/
+    defaults: { _controller: AppBundle:Admin/TestEmail:delete }
+    requirements:
+        id: \d+
+
+admin_automailing_promo_keys:
+    path: /automailing-promo-keys/
+    defaults: { _controller: AppBundle:Admin/Automailing:promoKeys }
+
+admin_automailing_statistics:
+    path:  /automailing-statistics/
+    defaults: { _controller: AppBundle:Admin/Automailing:statistics }
+
+admin_automailing_settings:
+    path:  /automailing-settings/
+    defaults: { _controller: AppBundle:Admin/Automailing:settings }
+
+admin_pass_filials_maps:
+    path:  /pass-filials/maps/
+    defaults: { _controller: AppBundle:Admin/PassFilial:maps }
+
+admin_pass_filials:
+    path:  /pass-filials/
+    defaults: { _controller: AppBundle:Admin/PassFilial:list }
+
+admin_pass_filial_add:
+    path:  /pass-filials/add/
+    defaults: { _controller: AppBundle:Admin/PassFilial:item }
+
+admin_pass_filial_edit:
+    path:  /pass-filials/edit-{id}/
+    defaults: { _controller: AppBundle:Admin/PassFilial:item }
+    requirements:
+        id: \d+
+
+admin_pass_filial_delete:
+    path:  /pass-filials/delete-{id}/
+    defaults: { _controller: AppBundle:Admin/PassFilial:delete }
+    requirements:
+        id: \d+
+
+admin_pass_filials_settings:
+    path:  /pass-filials/settings/
+    defaults: { _controller: AppBundle:Admin/PassFilial:settings }
+
+admin_promos:
+    path:  /promos/
+    defaults: { _controller: AppBundle:Admin/Promo:list }
+
+admin_promo_add:
+    path:  /promos/add/
+    defaults: { _controller: AppBundle:Admin/Promo:item }
+
+admin_promo_edit:
+    path:  /promos/edit-{id}/
+    defaults: { _controller: AppBundle:Admin/Promo:item }
+    requirements:
+        id: \d+
+
+admin_promo_delete:
+    path:  /promos/delete-{id}/
+    defaults: { _controller: AppBundle:Admin/Promo:delete }
+    requirements:
+        id: \d+
+
+admin_promo_activations:
+    path:  /promos/{id}-activations/
+    defaults: { _controller: AppBundle:Admin/Promo:activations }
+    requirements:
+        id: \d+
+
+admin_promo_all_keys:
+    path:  /promos/{id}-all-keys/
+    defaults: { _controller: AppBundle:Admin/Promo:allKeys }
+    requirements:
+        id: \d+
+
+admin_promo_keys:
+    path:  /promos/keys/{type}/{id}/
+    defaults: { _controller: AppBundle:Admin/Promo:promoKeys }
+    requirements:
+        id: \d+
+
+admin_promo_add_keys:
+    path:  /promos/{id}-add-keys/
+    defaults: { _controller: AppBundle:Admin/Promo:addKeys }
+    requirements:
+        id: \d+
+
+admin_promo_key_delete:
+    path:  /promos/{id}-delete-keys/
+    defaults: { _controller: AppBundle:Admin/Promo:deleteKey }
+    requirements:
+        id: \d+
+
+admin_promo_search_key:
+    path:  /promos/find-key/
+    defaults: { _controller: AppBundle:Admin/Promo:searchKey }
+    requirements:
+        id: \d+
+
+admin_promo_keys_activated:
+    path: /promo_keys_activated-{id}/
+    defaults: { _controller: AppBundle:Admin/Promo:promoKeysActivated, id:0 }
+
+admin_promo_add_activations:
+    path:  /promos/{id}-add-activations/
+    defaults: { _controller: AppBundle:Admin/Promo:addActivations }
+    requirements:
+        id: \d+
+
+admin_image_ajax:
+    path:  /image-ajax/
+    defaults: { _controller: AppBundle:Admin:imageAjax }
+
+admin_image_view_ajax:
+    path:  /image-view-ajax/
+    defaults: { _controller: AppBundle:Admin:imageViewAjax }
+
+admin_calc_pay_amount_ajax:
+    path: /pay-amount-ajax/
+    defaults: { _controller: AppBundle:Admin:calcPayAmountAjax }
+    methods:  [GET]
+
+admin_revert_money_user_list:
+    path:  /revert-money/
+    defaults: { _controller: AppBundle:Admin/RevertMoney:list }
+
+admin_revert_money_user_card:
+    path:  /revert-money/user-card-{id}/
+    defaults: { _controller: AppBundle:Admin/RevertMoney:userCard }
+    requirements:
+        id: \d+
+
+admin_revert_money_revert:
+    path:  /revert-money/revert-{logId}/
+    defaults: { _controller: AppBundle:Admin/RevertMoney:revert }
+    requirements:
+        logId: \d+
+
+admin_infos:
+    path:  /infos/
+    defaults: { _controller: AppBundle:Admin/Info:list }
+
+admin_info_add:
+    path:  /infos/add/
+    defaults: { _controller: AppBundle:Admin/Info:item }
+
+admin_info_edit:
+    path:  /infos/edit-{id}/
+    defaults: { _controller: AppBundle:Admin/Info:item }
+    requirements:
+        id: \d+
+
+admin_info_delete:
+    path:  /infos/delete-{id}/
+    defaults: { _controller: AppBundle:Admin/Info:delete }
+    requirements:
+        id: \d+
+
+admin_question_translations_tj:
+    path:  /question-translations-tj/
+    defaults: { _controller: AppBundle:Translator:questionList, locale: tj }
+
+admin_question_translation_edit_tj:
+    path:  /question-translations-tj/edit-{id}/
+    defaults: { _controller: AppBundle:Translator:questionItem, locale: tj }
+    requirements:
+        id: \d+
+
+admin_question_translations_uz:
+    path:  /question-translations-uz/
+    defaults: { _controller: AppBundle:Translator:questionList, locale: uz }
+
+admin_question_translation_edit_uz:
+    path:  /question-translations-uz/edit-{id}/
+    defaults: { _controller: AppBundle:Translator:questionItem, locale: uz }
+    requirements:
+        id: \d+
+
+admin_question_translations_kg:
+    path:  /question-translations-kg/
+    defaults: { _controller: AppBundle:Translator:questionList, locale: kg }
+
+admin_question_translation_edit_kg:
+    path:  /question-translations-kg/edit-{id}/
+    defaults: { _controller: AppBundle:Translator:questionItem, locale: kg }
+    requirements:
+        id: \d+

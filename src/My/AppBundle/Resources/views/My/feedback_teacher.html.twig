@@ -1,0 +1,48 @@
+{% extends 'AppBundle::layout_new.html.twig' %}
+
+{% block content %}
+<nav class="path">
+    <a href="{{ path('homepage') }}">{{ 'titles.homepage'|trans }}</a>
+    » <strong>{{ 'titles.feedback_teacher'|trans }}</strong>
+</nav>
+
+<div class="mainContent">
+    <div class="title">
+        <div class="links"><a href="{{ path('my_feedback_teacher_new') }}" class="bg-blue edit-link">Новое обращение</a></div>
+        <h1>{{ 'titles.feedback_teacher'|trans }}</h1>
+    </div>
+    <div class="support_dialogs">
+        {% if dialogs|length %}
+            <div class="bg"></div>
+            <table>
+                <tr>
+                    <th class="w1 center">Последнее сообщение</th>
+                    <th class="w1 center">Преподаватель</th>
+                    <th class="w1 center">Тема</th>
+                    <th class="w2 center"></th>
+                </tr>
+                {% for dialog in dialogs %}
+                    <tr{{ dialog.userRead ? '' : ' class="unread"' }}>
+                        <td class="w1 center">{{ dialog.lastMessageTime|date('d.m.Y H:i') }}</td>
+                        <td class="w1 center">
+                            {% if dialog.first_name is defined and dialog.first_name %}
+                                {{ dialog.first_name }} {{ dialog.last_name }}
+                            {% else %}
+                                {{ dialog.categoryName }}
+                            {% endif %}
+                        </td>
+                        <td class="w1 center">
+                            {% if dialog.themeTitle is defined %}
+                                {{ dialog.themeTitle }}
+                            {% endif %}
+                        </td>
+                        <td class="w2 center"><a href="{{ path('my_feedback_teacher_dialog_show', {'id':dialog.id}) }}">Показать</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p>Ещё не создано ни одного обращения.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}

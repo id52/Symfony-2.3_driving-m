@@ -1,0 +1,42 @@
+My\AppBundle\Entity\Article:
+    type: entity
+    table: articles
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        title:
+            type: string
+        url:
+            type: string
+            unique: true
+        keywords:
+            type: string
+            nullable: true
+        description:
+            type: string
+            nullable: true
+        text:
+            type: text
+        top_menu:
+            type: boolean
+        bottom_menu:
+            type: boolean
+        private:
+            type: boolean
+        position:
+            type: integer
+            gedmo:
+                - sortablePosition
+        updated_at:
+            type: datetime
+            gedmo:
+                timestampable:
+                    on: update
+        created_at:
+            type: datetime
+            gedmo:
+                timestampable:
+                    on: create

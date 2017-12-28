@@ -1,0 +1,33 @@
+{% extends 'AppBundle::layout_new.html.twig' %}
+
+{% block content %}
+<nav class="path">
+    <a href="{{ path('homepage') }}">{{ 'titles.homepage'|trans([],'info')}}</a>
+    » <strong>{{ 'titles.infos'|trans }}</strong>
+</nav>
+
+<div class="mainContent">
+    <div class="title"><h1>{{ 'titles.infos'|trans([],'info') }}</h1></div>
+
+    {% if infos|length > 0 %}
+        <section class="notices">
+            {% for info in infos %}
+                <figure{{ not info.is_readed ? ' class="new"' : '' }}>
+                    <div class="date">
+                        <div class="cell">{{ info.release_time|localizeddate('long', 'none') }}</div>
+                    </div>
+                    <div class="nofloat">
+                        <div class="cell">
+                            <a href="{{ path('info', { id: info.id }) }}">{{ info.title }}</a>
+                        </div>
+                    </div>
+
+                    {% if not info.is_readed %}
+                        <div class="cover">Новое</div>
+                    {% endif %}
+                </figure>
+            {% endfor %}
+        </section>
+    {% endif %}
+</div>
+{% endblock content %}

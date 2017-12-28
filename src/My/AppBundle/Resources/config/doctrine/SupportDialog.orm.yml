@@ -1,0 +1,44 @@
+My\AppBundle\Entity\SupportDialog:
+    type: entity
+    table: support_dialogs
+    repositoryClass: My\AppBundle\Repository\SupportDialogRepository
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        answered:
+            type: boolean
+        created_at:
+            type: datetime
+            gedmo:
+                timestampable:
+                    on: create
+        last_message_time:
+            type: datetime
+        last_message_text:
+            type: text
+        limit_answer_date:
+            type: date
+            nullable: true
+        user_read:
+            type: boolean
+    manyToOne:
+        category:
+            targetEntity: SupportCategory
+            inversedBy: dialogs
+        last_moderator:
+            targetEntity: User
+            inversedBy: last_support_dialogs
+        user:
+            targetEntity: User
+            inversedBy: support_dialogs
+        theme:
+            targetEntity: Theme
+            inversedBy: support_dialogs
+    oneToMany:
+        messages:
+            targetEntity: SupportMessage
+            mappedBy: dialog
+            cascade: ['persist', 'remove']

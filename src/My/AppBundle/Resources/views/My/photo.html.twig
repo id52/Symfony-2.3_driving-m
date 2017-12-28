@@ -1,0 +1,33 @@
+<form id="photo_form" action="" method="post">
+    <span class="im"><img id="original" src="{{ user.photoWebPath|imagine_filter('photo_crop_preview_new') }}" alt=""></span>
+    <div class="links">
+        <span class="link bg-grey">
+            Применить
+            <input value="" type="button">
+        </span>
+    </div>
+    <input id="coords_w" name="coords_w" type="hidden" />
+    <input id="coords_h" name="coords_h" type="hidden" />
+    <input id="coords_x" name="coords_x" type="hidden" />
+    <input id="coords_y" name="coords_y" type="hidden" />
+    <span class="close"></span>
+</form>
+
+<script>
+$(function() {
+    var changeCoords = function(coords) {
+        $('#coords_w').val(coords.w);
+        $('#coords_h').val(coords.h);
+        $('#coords_x').val(coords.x);
+        $('#coords_y').val(coords.y);
+    };
+
+    $('#original').Jcrop({
+        aspectRatio: 3 / 4,
+        minSize:     [30, 40],
+        setSelect:   [{{ coords.x }}, {{ coords.y }}, {{ coords.x + coords.w }}, {{ coords.y + coords.h }}],
+        allowSelect: false,
+        onChange:    changeCoords
+    });
+});
+</script>

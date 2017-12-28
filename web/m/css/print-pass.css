@@ -1,0 +1,385 @@
+@import url(https://fonts.googleapis.com/css?family=PT+Sans:400,700&subset=latin,cyrillic);
+
+body {
+    font-size: 12pt;
+    line-height: 1.2;
+}
+
+* {
+    font-size: inherit;
+    margin: 0;
+    padding: 0;
+    font-family: PT Sans, sans-serif;
+    line-height: inherit;
+    box-sizing: border-box;
+}
+
+.blue {
+    color: #1692d0;
+    font-size: inherit;
+}
+
+.dark-blue {
+    color: #0072bc;
+    font-size: inherit;
+}
+
+.container {
+    width: 538pt;
+    overflow: hidden;
+    margin: 0 auto 20pt;
+}
+
+.header img {
+    width: 100%;
+}
+
+.header h1,
+.header h2,
+.fio h1,
+.fio h2 {
+    margin-left: 22pt;
+}
+
+.header h1 {
+    margin-top: -85pt;
+    font-size: 39pt;
+    text-transform: uppercase;
+}
+
+.header h2 {
+    margin-top: 2pt;
+    margin-bottom: 30pt;
+    font-size: 14pt;
+    text-transform: uppercase;
+    color: #fff;
+}
+
+.fio .qr {
+    font-size: 8pt;
+    float: right;
+    text-align: center;
+}
+
+.fio .qr img {
+    display: block;
+    width: 88pt;
+}
+
+.fio h1 {
+    font-size: 13pt;
+    color: #1692d0;
+}
+
+.fio h2 {
+    font-size: 30pt;
+    line-height: 1;
+}
+
+.address {
+    position: relative;
+    height: 170pt;
+    margin-top: 22pt;
+}
+
+.address .bg1 {
+    width: 150pt;
+    height: 170pt;
+    background: #6dcdf5;
+    position: absolute;
+    left: 160pt;
+    top: 0;
+    -moz-transform: skewX(-20deg) skewY(0deg);
+    -webkit-transform: skewX(-20deg) skewY(0deg);
+    -o-transform: skewX(-20deg) skewY(0deg);
+    -ms-transform: skewX(-20deg) skewY(0deg);
+    transform: skewX(-20deg) skewY(0deg);
+    z-index: 2;
+}
+
+.address .bg2 {
+    width: 7pt;
+    height: 170pt;
+    background: #0072bc;
+    position: absolute;
+    left: 307pt;
+    top: 4pt;
+    -moz-transform: skewX(-20deg) skewY(50deg);
+    -webkit-transform: skewX(-20deg) skewY(50deg);
+    -o-transform: skewX(-20deg) skewY(50deg);
+    -ms-transform: skewX(-20deg) skewY(50deg);
+    transform: skewX(-20deg) skewY(50deg);
+    z-index: 2;
+}
+
+.address .left {
+    background: #6dcdf5;
+    padding: 22pt 0;
+    width: 270pt;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 3;
+    height: 170pt;
+}
+
+.address .left h1 {
+    font-size: 18pt;
+}
+
+.address .left h1 {
+    margin-left: 60pt;
+    margin-bottom: 18pt;
+}
+
+.address .left h1 img {
+    width: 27pt;
+    margin-top: -3pt;
+    margin-left: -36pt;
+    float: left;
+}
+
+.address .map {
+    height: 170pt;
+    width: 257pt;
+    position: absolute;
+    top: 9pt;
+    right: 0;
+    background: #ddd;
+}
+
+.div-1 {
+    margin-bottom: 10pt;
+}
+
+.div-1 .left {
+    padding-left: 20pt;
+    width: 281pt;
+    line-height: 1;
+    float: left;
+}
+
+.div-1 .left h1 {
+    font-size: 15pt;
+    color: #1692d0;
+}
+
+.div-1 .right {
+    font-size: 15pt;
+    font-weight: bold;
+    float: left;
+    width: 242pt;
+    margin-left: 5pt;
+}
+
+.div-1 .right {
+    padding-left: 40pt;
+    padding-top: 22pt;
+    line-height: 1;
+}
+
+.div-1 .right img {
+    width: 32pt;
+    float: left;
+    margin-left: -40pt;
+    margin-top: -5pt;
+}
+
+.schedule {
+    border: solid #6dcdf5;
+    border-width: 0 2.2pt 2.2pt 0;
+    width: 157pt;
+    float: left;
+    padding: 0 10pt 10pt 0;
+    position: relative;
+}
+
+.schedule:before {
+    content: '';
+    display: block;
+    width: 17pt;
+    position: absolute;
+    top: -0pt;
+    right: 0;
+    border-top: #6dcdf5 2.2pt solid;
+}
+
+.schedule h1 {
+    font-size: 14pt;
+    color: #1692d0;
+    margin-top: -8pt;
+    margin-bottom: 7pt;
+}
+
+.schedule h2 {
+    font-size: 13pt;
+    color: #1692d0;
+
+}
+
+.schedule h3 {
+    font-size: 11pt;
+    margin-bottom: 7pt;
+}
+
+.div-2 {
+    width: 359pt;
+    padding-right: 20pt;
+    float: right;
+}
+
+.div-2 > div {
+    margin-bottom: 5pt;
+}
+
+.div-2 .h1 {
+    display: block;
+    font-weight: bold;
+    font-size: 14pt;
+    color: #1692d0;
+}
+
+.div-2 ul {
+    list-style: none;
+}
+
+.div-2 ul li:before {
+    content: '•';
+    color: #1692d0;
+    margin-right: 3pt;
+}
+
+.div-3 {
+    color: #0072bc;
+    font-size: 16pt;
+    font-weight: bold;
+    clear: both;
+    height: 29pt;
+    line-height: 28pt;
+    margin-bottom: 10pt;
+}
+
+.div-3 .phones {
+    background: #6dcdf5;
+    height: 29pt;
+    float: left;
+    width: 339pt;
+    padding-left: 20pt;
+    position: relative;
+}
+
+.div-3 .phones .bg1 {
+    background: #6dcdf5;
+    height: 29pt;
+    width: 15pt;
+    position: absolute;
+    top: 0;
+    right: -5pt;
+    -moz-transform: skewX(-20deg) skewY(0deg);
+    -webkit-transform: skewX(-20deg) skewY(0deg);
+    -o-transform: skewX(-20deg) skewY(0deg);
+    -ms-transform: skewX(-20deg) skewY(0deg);
+    transform: skewX(-20deg) skewY(0deg);
+    z-index: 2;
+}
+
+.div-3 .phones .bg2 {
+    width: 5pt;
+    height: 29pt;
+    background: #0072bc;
+    position: absolute;
+    right: -8pt;
+    top: 3pt;
+    -moz-transform: skewX(-20deg) skewY(50deg);
+    -webkit-transform: skewX(-20deg) skewY(50deg);
+    -o-transform: skewX(-20deg) skewY(50deg);
+    -ms-transform: skewX(-20deg) skewY(50deg);
+    transform: skewX(-20deg) skewY(50deg);
+    z-index: 2;
+}
+
+.div-3 .www {
+    background: #6dcdf5;
+    height: 29pt;
+    float: right;
+    width: 197pt;
+    text-align: center;
+    margin-top: 5pt;
+}
+
+.payment-address {
+    font-size: 11pt;
+    clear: both;
+    padding-top: 5pt;
+    text-align: center;
+}
+
+.scissors {
+    width: 100%;
+    margin-top: 15pt;
+    margin-bottom: 10pt;
+}
+
+.clear:after {
+    clear: both;
+    content: '';
+    display: block;
+}
+
+.button {
+    font-size: 11.25pt;
+    line-height: 1;
+    padding: 7.5pt 11.25pt 7.5pt 33.75pt;
+    background: #00a2dd url(../images/icon/printer.png) 11.25pt center no-repeat;
+    border: solid 1pt #00a2dd;
+    border-radius: 3pt;
+    color: #fff;
+    text-decoration: none;
+    float: right;
+    margin-top: 12pt;
+}
+
+@media print {
+    .div-3 {
+        margin-bottom: 0;
+    }
+
+    .container {
+        margin: 0 auto;
+    }
+
+    .address .left,
+    .address .bg1,
+    .address .bg2,
+    .div-3 .phones .bg1,
+    .div-3 .phones .bg2,
+    .div-3 .phones,
+    .div-3 .www {
+        background: #fff;
+        border: 1pt solid #000;
+    }
+
+    .address .left {
+        border-right: none;
+    }
+
+    .div-3 .phones .bg1 {
+        top: -1pt;
+        right: -7pt;
+        border-left: none;
+        /*height: 28.5pt;*/
+    }
+
+    .div-3 .phones .bg2 {
+        top: 2pt;
+        right: -10pt;
+    }
+
+    .address .map {
+        border: 1pt solid #000;
+    }
+
+    .button {
+        display: none;
+    }
+}

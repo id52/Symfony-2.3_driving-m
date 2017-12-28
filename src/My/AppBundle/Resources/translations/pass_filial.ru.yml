@@ -1,0 +1,15 @@
+pass_filial_map_image: Карта
+pass_filial_region: Регион
+pass_filial_active: Активен?
+pass_filial_title: Название
+pass_filial_address: Адрес
+pass_filial_station: Станция метро
+pass_filial_work_time: Время работы
+pass_filial_phones: Телефоны
+pass_filial_emails: Адреса электронной почты
+pass_filial_coords: Координаты на карте
+pass_filial_address_geo: Адрес для геокодирования
+pass_filial_map_code: Код Я.Карты
+pass_filial_groups: Группы
+
+choose_option:  - Выберите -

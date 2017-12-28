@@ -1,0 +1,28 @@
+My\AppBundle\Entity\Notify:
+    type: entity
+    table: notifies
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        title:
+            type: string
+        text:
+            type: text
+        readed:
+            type: boolean
+        sended_at:
+            type: datetime
+            gedmo:
+                timestampable:
+                    on: create
+    oneToOne:
+        user_requiring:
+            targetEntity: User
+            mappedBy: required_notify
+    manyToOne:
+        user:
+            targetEntity: User
+            inversedBy: notifies

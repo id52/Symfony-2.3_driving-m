@@ -1,0 +1,240 @@
+{% extends 'AppBundle::layout_new.html.twig' %}
+
+{% block content %}
+    <div class="over_qwe" id="help_modal">
+        <div class="over_center">
+            <span class="title">{{ 'help_title'|trans }}</span>
+            <span class="close" data-dismiss="modal"><img src="/img/ico_close.png" alt="" title="" /></span>
+            <div class="over_text">
+                {{ settings['question_help_btn']|raw }}
+            </div>
+        </div>
+    </div>
+
+    <div class="main_t">
+        <div class="breadcrumbs">
+            <div class="bread_bod">
+                <a href="{{ path('my_trainings') }}">{{ 'menu.training'|trans }}</a>
+                <span class="this">/</span>
+                <a href="{{ path('my_training', { id: theme.subject.id }) }}">{{ theme.subject.title }}</a>
+                <span class="this">/</span>
+                <a href="{{ path('my_training_theme', { id: theme.id }) }}">{{ theme.title }}</a>
+                <span class="this">/ {{ 'theme_test_title'|trans }}</span>
+            </div>
+            <span class="haw_qwe" data-toggle="modal" data-target="#help_modal"><img src="/img/qwestion.png" alt="" title="" /></span>
+        </div>
+        <h2>{{ 'training.theme'|trans }}: {{ theme.title }}</h2>
+
+        {% if seconds_left %}
+            <div class="test_time">
+                <div class="time">
+                    <div id="note">0:00</div>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if is_shuffle %}
+            {% set remaining = answers|length - correct_all|last %}
+
+            <div class="testtable">
+                <div class="time-element">
+                    <p class="text-info col_total_questions">Всего</p>
+                    <div class="digit nav_test_stat_value">{{ answers|length }}</div>
+                </div>
+                <div class="time-element">
+                    <p class="text-info col_correct_answered">На этот вопрос</p>
+                    <div class="digit nav_test_stat_value">{{ correct_this }}</div>
+                </div>
+                <div class="time-element">
+                    <p class="text-info col_remain_questions">Осталось</p>
+                    <div class="digit nav_test_stat_value">{{ remaining }}</div>
+                </div>
+                {% if correct_answers > 0 %}
+                    {% for correct_row in correct_all %}
+                        <div class="time-element">
+                            <p class="text-info col_correct_answered_times">Правильно {{ 'theme_test_is_shuffle.times'|transchoice(loop.index, { '%n%': loop.index}) }}</p>
+                            <div class="digit nav_test_stat_value">{{ correct_all[loop.index] }}</div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        {% else %}
+            {% for key in answers|keys %}
+                {% if num == key %}
+                    <span class="active">{{ loop.index }}</span>
+                {% else %}
+                    <span {{ answers[key] ? (answers[key].correct ? ' class="tr"' : ' class="wr"') : '' }}>{{ loop.index }}</span>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    <div id="test">
+        <div class="need_comment">
+            <form action="{{ path('my_training_theme_test_comment', { id: theme.id }) }}">
+                <span class="text">{{ 'test_comments'|trans }}</span>
+                <input type="checkbox"{{ is_comment ? ' checked="checked"' : '' }} onClick="$(this).closest('form').submit()" />
+            </form>
+        </div>
+        <div class="go_test">
+            {% if question.image %}
+                <span class="immage"><img src="{{ question.image.webPath|imagine_filter('image') }}" alt="" title="" /></span>
+            {% endif %}
+            <span class="test_text">{{ question.text }}</span>
+        </div>
+        <div class="form_unswer">
+            <div class="alert-error clear">
+                {{ settings['training_theme_test_error'] }}
+                {% if is_comment %}
+                <br><br>
+                {{ question.description }}
+                {% endif %}
+            </div>
+            <br />
+            {% if is_comment %}
+                <input type="button" onclick="document.location.href = '{{ path('my_training_theme_test', { id: theme.id }) }}';" value="{{ 'buttons.continue'|trans }}" class="pull_right red_btn">
+            {% endif %}
+        </div>
+{#
+        <div class="nav_test">
+            {% if is_shuffle %}
+                {% set remaining = answers|length - correct_all|last %}
+                {% if correct_answers > 1 %}
+                    {% set table_width = correct_all|length * 120 %}
+                {% else %}
+                    {% set table_width = 120 %}
+                {% endif %}
+            <div class="nav_test_stat">
+                <table width="410px">
+                    <tbody>
+                        <tr class="nav_test_stat_titles">
+                            <td class="col_total_questions">Всего</td>
+                            <td class="col_correct_answered">Правильных ответов на этот вопрос</td>
+                            <td class="col_remain_questions">Осталось</td>
+                        </tr>
+                        <tr class="nav_test_stat_contents">
+                            <td class="col_total_questions">
+                                <div class="nav_test_stat_value">
+                                    {{ answers|length }}
+                                </div>
+                            </td>
+                            <td class="col_correct_answered">
+                                <div class="nav_test_stat_value">
+                                    {{ correct_this }} / {{ correct_answers }}
+                                </div>
+                            </td>
+                            <td class="col_remain_questions">
+                                <div class="nav_test_stat_value">
+                                    {{ remaining }}
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table width="{{ table_width }}px">
+                    <tbody>
+                        <tr class="nav_test_stat_titles">
+                            {% if correct_answers > 1 %}
+                                {% for correct_row in correct_all %}
+                                    <td class="col_correct_answered_times">{{ 'theme_test_is_shuffle.success_in_row_title'|transchoice(correct_all[loop.index], { '%times%': 'theme_test_is_shuffle.times'|transchoice(loop.index, { '%n%': loop.index })}) }}</td>
+                                {% endfor %}
+                            {% else %}
+                                <td>{{ 'theme_test_is_shuffle.success_in_row_title'|transchoice(correct_all[1], { '%times%': '', '%n%': correct_all[1] }) }}</td>
+                            {% endif %}
+                        </tr>
+                        <tr class="nav_test_stat_contents">
+                            {% if correct_answers > 1 %}
+                                {% for correct_row in correct_all %}
+                                    <td class="col_correct_answered_times">
+                                        <div class="nav_test_stat_value">
+                                            {{ correct_all[loop.index] }}
+                                        </div>
+                                    </td>
+                                {% endfor %}
+                            {% else %}
+                                <td>
+                                    <div class="nav_test_stat_value">
+                                        {{ correct_all[1] }}
+                                    </div>
+                                </td>
+                            {% endif %}
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+                {% if correct_answers_in_row and correct_answers > 1 %}
+                    {{ 'theme_test_is_shuffle.success_this_in_row'|trans({ '%n%': correct_this, '%n_in_row%': correct_this_in_row, '%need%': correct_answers }) }}<br>
+                {% else %}
+                    {{ 'theme_test_is_shuffle.success_this'|trans({ '%n%': correct_this, '%need%': correct_answers }) }}<br>
+                {% endif %}
+
+                {{ 'theme_test_is_shuffle.total'|transchoice(answers|length, { '%n%': answers|length }) }}<br>
+
+                {% if correct_answers > 1 %}
+                    {% for correct_row in correct_all %}
+                        {{ 'theme_test_is_shuffle.success_in_row'|transchoice(
+                                                                                correct_all[loop.index],
+                                                                                {
+                                                                                    '%times%': 'theme_test_is_shuffle.times'|transchoice(
+                                                                                                                                            loop.index,
+                                                                                                                                            {
+                                                                                                                                                '%n%': loop.index
+                                                                                                                                            }
+                                                                                                                                        )
+                                                                                               ~(correct_answers_in_row ? (' '~'theme_test_is_shuffle.in_row'|trans) : ''),
+                                                                                    '%n%': correct_all[loop.index]
+                                                                                }
+                                                                            ) }}<br>
+                    {% endfor %}
+                {% else %}
+                    {{ 'theme_test_is_shuffle.success_in_row'|transchoice(correct_all[1], { '%times%': '', '%n%': correct_all[1] }) }}<br>
+                {% endif %}
+
+                {% set remaining = answers|length - correct_all|last %}
+                {{ 'theme_test_is_shuffle.remaining'|transchoice(remaining, { '%n%': remaining }) }}
+            {% else %}
+                {% for key in answers|keys %}
+                    {% if num == key %}
+                        <span class="active">{{ loop.index }}</span>
+                    {% else %}
+                        <span {{ answers[key] ? (answers[key].correct ? ' class="tr"' : ' class="wr"') : '' }}>{{ loop.index }}</span>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </div>
+#}
+    </div>
+{% endblock content %}
+
+{% block js %}
+<script>
+$(function() {
+    {% if seconds_left %}
+    $('.test_time .time #note').countdown({
+        until: {{ seconds_left }},
+        layout: '{mn}{sep}{snn}',
+        onExpiry: function() {
+            setTimeout(function() {
+                location.assign('{{ path('my_training_theme_test', { id: theme.id }) }}');
+            }, 1000);
+        },
+        onTick: function(periods) {
+            var seconds = $.countdown.periodsToSeconds(periods);
+            if (60 > seconds) {
+                $(this).addClass('text-error');
+            }
+            if (30 > seconds) {
+                $(this).addClass('blink');
+            }
+        }
+    });
+    {% endif %}
+
+    {% if not is_comment %}
+    setTimeout(function() {
+        location.assign('{{ path('my_training_theme_test', { id: theme.id }) }}');
+    }, 1000);
+    {% endif %}
+});
+</script>
+{% endblock js %}

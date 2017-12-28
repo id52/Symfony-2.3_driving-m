@@ -1,0 +1,118 @@
+{% extends 'AppBundle:Admin:_settings.html.twig' %}
+{% trans_default_domain 'settings' %}
+
+{% block fields %}
+
+    <fieldset>
+        {{ form_row(form.ticket_test_old_style) }}
+        {{ form_row(form.final_exam_1_extra_time) }}
+    </fieldset>
+
+    <fieldset>
+        <legend>
+            {{ 'settings_final_exam_1'|trans }}
+        </legend>
+        {{ form_row(form.final_exam_1_tickets) }}
+        {{ form_row(form.final_exam_1_shuffle) }}
+        {{ form_row(form.final_exam_1_max_errors_in_ticket) }}
+        <div class="control-group">
+            {{ form_label(form.final_exam_1_ticket_time) }}
+            <div class="controls">
+                <div class="input-append">
+                    {{ form_widget(form.final_exam_1_ticket_time) }}
+                    <span class="add-on">{{ 'minute'|trans({}, 'messages') }}</span>
+                </div>
+                {{ form_errors(form.final_exam_1_ticket_time) }}
+            </div>
+        </div>
+        {{ form_row(form.final_exam_1_shuffle_answers) }}
+    </fieldset>
+
+    <fieldset>
+        <legend>
+            {{ 'settings_final_exam_2'|trans }}
+        </legend>
+        {{ form_row(form.final_exam_2_tickets) }}
+        <div class="control-group">
+            {{ form_label(form.final_exam_2_questions_in_ticket) }}
+            <div class="controls">
+                {{ form_widget(form.final_exam_2_questions_in_ticket) }}
+                <span class="embedded">
+                        {{ form_widget(form.final_exam_2_not_repeat_questions_in_tickets) }}
+                    {{ form_label(form.final_exam_2_not_repeat_questions_in_tickets, null, { unpointed: true }) }}
+                    </span>
+                {{ form_errors(form.final_exam_2_questions_in_ticket) }}
+            </div>
+        </div>
+        {{ form_row(form.final_exam_2_max_errors_in_ticket) }}
+        <div class="control-group">
+            {{ form_label(form.final_exam_2_ticket_time) }}
+            <div class="controls">
+                <div class="input-append">
+                    {{ form_widget(form.final_exam_2_ticket_time) }}
+                    <span class="add-on">{{ 'minute'|trans({}, 'messages') }}</span>
+                </div>
+                {{ form_errors(form.final_exam_2_ticket_time) }}
+            </div>
+        </div>
+        {{ form_row(form.final_exam_2_shuffle_answers) }}
+    </fieldset>
+    <fieldset>
+        <legend>{{ 'settings_training_final_exam_messages'|trans }}:</legend>
+        {{ form_row(form.training_final_exam_description) }}
+        {{ form_row(form.training_final_exam_timeout) }}
+        {{ form_row(form.training_final_exam_long_time) }}
+        {{ form_row(form.training_final_exam_max_errors) }}
+        {{ form_row(form.training_final_exam_retake) }}
+        {{ form_row(form.training_final_exam_denied) }}
+        {{ form_row(form.max_errors_ticket_text) }}
+        {{ form_row(form.ticket_test_old_style) }}
+        {{ form_row(form.max_errors_questions_text) }}
+        {{ form_row(form.max_errors_questions_block_text) }}
+        {{ form_row(form.max_errors_additional_questions_text) }}
+        {{ form_row(form.training_final_exam_complete, { attr: { class: 'ckeditor' } }) }}
+        {{ form_row(form.training_final_exam_passed, { attr: { class: 'ckeditor' } }) }}
+    </fieldset>
+
+    <fieldset>
+        <legend>
+            {{ 'settings_after_all_exams'|trans }}
+            <a data-content="{{ 'settings_after_all_exams_help'|trans }}" href="#" data-toggle="popover"><i class="fa fa-question-circle"></i></a>
+        </legend>
+        {{ form_row(form.after_all_exams_enabled) }}
+        {{ form_row(form.after_all_exams_title) }}
+        {{ form_row(form.after_all_exams_text, { attr: { class: 'ckeditor' } }) }}
+    </fieldset>
+
+    <fieldset>
+        <legend>
+            {{ 'settings_after_all_exams_email'|trans }}
+            <a data-content="{{ 'settings_after_all_exams_email_help'|trans }}" href="#" data-toggle="popover"><i class="fa fa-question-circle"></i></a>
+        </legend>
+        {{ form_row(form.after_all_exams_email_enabled) }}
+        {{ form_row(form.after_all_exams_email_title) }}
+        {{ form_row(form.after_all_exams_email_text, { attr: { class: 'ckeditor' }, help: 'settings_after_all_exams_email_text_help' }) }}
+    </fieldset>
+
+    <fieldset>
+        <legend>
+            {{ 'settings_after_final_exam'|trans }}
+            <a data-content="{{ 'settings_after_final_exam_help'|trans }}" href="#" data-toggle="popover"><i class="fa fa-question-circle"></i></a>
+        </legend>
+        {{ form_row(form.after_final_exam_enabled) }}
+        {{ form_row(form.after_final_exam_title) }}
+        {{ form_row(form.after_final_exam_text, { attr: { class: 'ckeditor' } }) }}
+    </fieldset>
+
+    <fieldset>
+        <legend>
+            {{ 'settings_after_final_exam_email'|trans }}
+            <a data-content="{{ 'settings_after_final_exam_email_help'|trans }}" href="#" data-toggle="popover"><i class="fa fa-question-circle"></i></a>
+        </legend>
+        {{ form_row(form.after_final_exam_email_enabled) }}
+        {{ form_row(form.after_final_exam_email_title) }}
+        {{ form_row(form.after_final_exam_email_text, { attr: { class: 'ckeditor' }, help: 'settings_after_final_exam_email_text_help' }) }}
+    </fieldset>
+
+
+{% endblock fields %}

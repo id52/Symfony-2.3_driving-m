@@ -1,0 +1,39 @@
+<div class="terms-widget">
+    <p class="tw-switcher"><a href="#">Алфавитный порядок</a></p>
+
+    <div class="tw-title">{{ block.title }}</div>
+    <table class="terms-logic-table">
+        <tr>
+        {% for category, cat_name in categories %}
+            <td>
+                <h2>{{ cat_name }}:</h2>
+                {% if items_cat[category] is defined %}
+                <ul>
+                {% for parent in items_cat[category] %}
+                    <li>
+                        <a href="#" data-id="{{ parent.item.id }}" class="flash_block_link">{{ parent.item.title }}</a>
+                        {% if parent.children|length > 0 %}
+                        <ul>
+                        {% for item in parent.children %}
+                            <li><a href="#" data-id="{{ item.id }}" class="flash_block_link">{{ item.title }}</a></li>
+                        {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+                </ul>
+                {% endif %}
+            </td>
+        {% endfor %}
+        </tr>
+    </table>
+
+    <div class="terms-by-alphabet" style="display: none;">
+    {% for letter, items in items_abc %}
+        <h2>{{ letter }}</h2>
+        {% for item in items %}
+        <a href="#" data-id="{{ item.id }}" class="flash_block_link">{{ item.title }}</a>
+        {% endfor %}
+    {% endfor %}
+    </div>
+</div>

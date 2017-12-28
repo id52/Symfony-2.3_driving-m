@@ -1,0 +1,24 @@
+simple_profile_registr_data: Данные регистрации
+simple_profile_email: E-mail
+simple_profile_plain_password: Пароль
+simple_profile_paid: Оплата
+simple_profile_last_name: Фамилия
+simple_profile_first_name: Имя
+simple_profile_patronymic: Отчество
+simple_profile_phone_data: Контактные телефоны
+simple_profile_phone_mobile: Мобильный телефон
+simple_profile_phone_mobile_help: Формат: +7 1234567890
+simple_profile_additional_info: Дополнительная информация
+simple_profile_region: Регион
+simple_profile_category: Категория прав
+simple_profile_with_at: Автомат?
+simple_profile_close_final_exam: Заблокировать доступ к Итоговому экзамену?
+
+choose_option:  - Выберите -
+
+paids:
+#    no_paid: Без оплат
+#    paid_1: Теория в рассрочку 50/50
+    paid_2: Оплата в рассрочку со скидкой 10%
+    paid_3: Полный курс обучения со скидкой 25%
+    paid_3_f: Полный курс обучения без скидки

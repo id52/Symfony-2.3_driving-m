@@ -1,0 +1,77 @@
+profile_registr_data: Данные регистрации
+profile_email: E-mail
+profile_last_name: Фамилия
+profile_first_name: Имя
+profile_patronymic: Отчество
+profile_region: Регион
+profile_passport_data: Паспортные данные
+profile_sex: Пол
+profile_birthday: День рождения
+profile_birth_place: Место рождения
+profile_birth_country: Страна
+profile_birth_region: Регион
+profile_birth_city: Город
+profile_foreign_passport: Паспорт другой страны?
+profile_foreign_passport_number: Номер
+profile_passport_number: Серия и номер
+profile_passport_number_ser: Серия
+profile_passport_number_num: Номер
+profile_passport_number: Серия и номер
+profile_passport_number_help: Формат: 1234 567890
+profile_passport_rovd: Кем выдан
+profile_passport_rovd_number: Код подразделения
+profile_passport_rovd_date: Дата выдачи
+profile_not_registration: Нет прописки?
+profile_registration_data: Прописка
+profile_registration_country: Страна
+profile_registration_region: Регион
+profile_registration_city: Город
+profile_registration_street: Улица
+profile_registration_house: Дом
+profile_registration_stroenie: Строение
+profile_registration_korpus: Корпус
+profile_registration_apartament: Квартира
+profile_place_data: Регистрация по месту пребывания
+profile_place_country: Страна
+profile_place_region: Регион
+profile_place_city: Город
+profile_place_street: Улица
+profile_place_house: Дом
+profile_place_stroenie: Строение
+profile_place_korpus: Корпус
+profile_place_apartament: Квартира
+profile_work: Работа
+profile_work_place: Место
+profile_work_position: Должность
+profile_phone_data: Контактные телефоны
+profile_phone_home: Домашний телефон
+profile_phone_home_help: Формат: +7 1234567890
+profile_phone_mobile: Мобильный телефон
+profile_phone_mobile_help: Формат: +7 1234567890
+profile_old_mobile_phones: Старые м.телефоны
+profile_payments: Платежи
+profile_region_place: Место вождения
+profile_exams: Экзамены
+profile_additional_info: Дополнительная информация
+profile_category: Категория прав
+profile_with_at: Автомат?
+profile_paradox_id: Paradox ID
+profile_webgroup: Веб-группа
+profile_plain_password: Пароль
+profile_moderated: Проверен?
+profile_paid: Оплата
+profile_support_dialogs: Обратная связь
+profile_close_final_exam: Заблокировать доступ к Итоговому экзамену?
+unsubscribe_done_title: Отписаться от рассылок
+unsubscribe: Пользователь "%userName%" отписан от всех рассылок
+
+choose_option:  - Выберите -
+male: Мужской
+female: Женский
+
+paids:
+#    no_paid: Без оплат
+#    paid_1: Теория в рассрочку 50/50
+    paid_2: Оплата в рассрочку со скидкой 10%
+    paid_3: Полный курс обучения со скидкой 25%
+    paid_3_f: Полный курс обучения без скидки

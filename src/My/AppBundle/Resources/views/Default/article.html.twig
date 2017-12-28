@@ -1,0 +1,40 @@
+{% extends 'AppBundle::layout_m.html.twig' %}
+
+{% block title %}{{ article.title }} | {{ 'project.name'|trans }}{% endblock title %}
+{% block meta_keywords %}{{ article.keywords }}{% endblock meta_keywords %}
+{% block meta_description %}{{ article.description }}{% endblock meta_description %}
+
+{% block css %}
+{% if settings['article_styles'] is defined %}
+<style type="text/css">
+    {{ settings['article_styles']|raw }}
+</style>
+{% endif %}
+{% endblock css %}
+
+{% block content %}
+<div class="wrap">
+    <div class="back-link r-fl"><a href="{{ path('homepage') }}"><span class="v-m arrow">«</span>Вернуться</a></div>
+    <ul class="breadcrumb">
+        <li><a title="Главная" href="{{ path('homepage') }}">Главная</a></li>
+        <li class="active"><span>{{ article.title }}</span></li>
+    </ul>
+    <div class="main-side">
+        <div class="main-title left-bg">
+            <div class="caption">{{ article.title }}:</div>
+        </div>
+        <div class="text-block">
+            {{ article.text|replace({'{{ phone1 }}': ('+7 ('~settings['contacts_phone1_prefix']~') '~settings['contacts_phone1'])})|replace({'{{ phone2 }}': ('+7 ('~settings['contacts_phone2_prefix']~') '~settings['contacts_phone2'])})|raw }}
+        </div>
+    </div>
+    {% include 'AppBundle::_right_side.html.twig' %}
+</div>
+{% endblock content %}
+
+{% block js %}
+<script>
+$(function() {
+    $('.fancybox').fancybox();
+});
+</script>
+{% endblock js %}

@@ -1,0 +1,48 @@
+{% extends "AppBundle::admin.html.twig" %}
+
+{% block content %}
+    {% if type == 'first' %}
+        <h1>Первичные пользователи</h1>
+    {% elseif type == 'rezerv' %}
+        <h1>Зарезервированные пользователи</h1>
+    {% elseif type == 'use' %}
+        <h1>Активные пользователи</h1>
+    {% endif %}
+    <hr>
+    <br>
+    <h2>{{ key.campaign.name }} &ndash; {{ key.key }}</h2>
+    <dl>
+        <dt>{{ 'promo_key_discount'|trans({}, 'promo') }}</dt>
+        <dd>{{ company.discount }} {{ 'RUB'|trans}}</dd>
+
+        <dt>{{ 'promo_key_active'|trans({}, 'promo') }}</dt>
+        <dd class="min_col"><i class="fa {{ company.active ? 'fa-plus' : 'fa-minus' }}"></i></dd>
+    </dl>
+    {% if pagerfanta.currentPageResults|length %}
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th class="min_col">Дата и время</th>
+                <th>Пользователь</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in pagerfanta.currentPageResults %}
+                {% set firstUser = user %}
+                <tr>
+                    <td class="min_col">{{ firstUser.createdAt|date('d.m.Y H:i') }}</td>
+                    <td><a href="{{ path('admin_profile_user_view', {id: firstUser.id, company: key.campaign.id}) }} ">{{ firstUser.email }}</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% if pagerfanta.haveToPaginate %}
+            {{ pagerfanta(pagerfanta, 'twitter_bootstrap_translated', { prev_message: '←', next_message: '→' }) }}
+        {% endif %}
+    {% else %}
+        {{ 'no_data'|trans }}
+    {% endif %}
+    <div class="form-actions">
+        <a class="btn pull-right" href="{{ path('admin_promo_all_keys', { id: key.campaign.id }) }}"><i class="fa fa-arrow-left"></i> Вернуться в список промоключей</a>
+    </div>
+{% endblock content %}

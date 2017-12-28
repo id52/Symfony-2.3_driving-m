@@ -1,0 +1,48 @@
+My\AppBundle\Entity\Question:
+    type: entity
+    table: questions
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        is_pdd:
+            type: boolean
+        num:
+            type: string
+            nullable: true
+        text:
+            type: text
+        description:
+            type: text
+            nullable: true
+        answers:
+            type: array
+    oneToOne:
+        image:
+            targetEntity: Image
+            mappedBy: question
+            cascade: [ all ]
+    oneToMany:
+        questions_i18n:
+            targetEntity: QuestionI18N
+            mappedBy: question
+            cascade: [ all ]
+    manyToOne:
+        theme:
+            targetEntity: Theme
+            inversedBy: questions
+    manyToMany:
+        versions:
+            targetEntity: TrainingVersion
+            inversedBy: questions
+            joinTable:
+                name: training_versions_questions
+                joinColumns:
+                    question_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    version_id:
+                        referencedColumnName: id
+

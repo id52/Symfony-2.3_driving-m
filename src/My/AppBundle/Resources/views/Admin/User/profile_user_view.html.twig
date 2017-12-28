@@ -1,0 +1,351 @@
+{% extends "AppBundle::admin.html.twig" %}
+
+{% block content %}
+    <a href="{{ path('admin_send_email_to', { type: 'first', id: user.id }) }}" class="btn btn-h1 pull-right"><i class="fa fa-envelope-o"></i> {{ 'admin.buttons.send_email'|trans }}</a>
+    <h3>{{ 'profile_user_title'|trans }}</h3>
+    <hr>
+
+    {% if user.locked %}
+        <h4>Заблокирован</h4>
+    {% endif %}
+    {% if user.photo %}
+    <dl class="dl-horizontal">
+        <dt>{{ 'photo_photoFile'|trans }}:</dt><dd><img class="img-polaroid" src="{{ user.photoWebPath|imagine_filter('photo_small_new') }}?t={{ 'now'|date('U') }}" alt="" /></dd>
+    </dl>
+    {% endif %}
+
+    <legend>{{ 'profile_registr_data'|trans }}:</legend>
+    <dl class="dl-horizontal">
+        <dt>{{ 'profile_email'|trans }}:</dt>
+        <dd>{{ user.email }}</dd>
+        <dt>{{ 'profile_last_name'|trans }}:</dt>
+        <dd class="copy_row_with_btn copy_name">
+            <span>{{ user.lastName }}</span>
+            <button id="copy_name" class="btn btn-mini btn-copy" data-content="{{ user.lastName~' '~user.firstName~' '~user.patronymic }}">
+                <i class="fa fa-copy"></i>
+                {{ 'admin.buttons.copy'|trans }}
+            </button>
+        </dd>
+        <dt>{{ 'profile_first_name'|trans }}:</dt>
+        <dd class="copy_row copy_name">
+            <span>{{ user.firstName }}</span>
+        </dd>
+        <dt>{{ 'profile_patronymic'|trans }}:</dt>
+        <dd class="copy_row copy_name">
+            <span>{{ user.patronymic }}</span>
+        </dd>
+        <dt>{{ 'profile_region'|trans }}:</dt>
+        <dd>{{ user.region }}</dd>
+    </dl>
+
+    {% if user.sex %}
+    <legend>{{ 'profile_passport_data'|trans }}:</legend>
+    <dl class="dl-horizontal">
+        <dt>{{ 'profile_sex'|trans }}:</dt>
+        <dd>{{ user.sex|trans }}</dd>
+        <dt>{{ 'profile_birthday'|trans }}:</dt>
+        <dd class="copy_row_with_btn copy_birthday">
+            <span>{{ user.birthday|date('d.m.Y') }}</span>
+            <button id="copy_birthday" class="btn btn-mini btn-copy" data-content="{{ user.birthday|date('d.m.Y') }}">
+                <i class="fa fa-copy"></i>
+                {{ 'admin.buttons.copy'|trans }}
+            </button>
+        </dd>
+        {% if user.foreignPassport %}
+        <dt>{{ 'profile_foreign_passport_number'|trans }}:</dt>
+        <dd class="copy_row_with_btn copy_foreign_passport_number">
+            <span>{{ user.foreignPassportNumber }}</span>
+            <button id="copy_foreign_passport_number" class="btn btn-mini btn-copy" data-content="{{ user.foreignPassportNumber }}">
+                <i class="fa fa-copy"></i>
+                {{ 'admin.buttons.copy'|trans }}
+            </button>
+        </dd>
+        {% else %}
+        {% set attrs = user.passportNumber|split(' ') %}
+        <dt>{{ 'profile_passport_number_ser'|trans }}:</dt>
+        <dd class="copy_row_with_btn copy_passport_number_ser">
+            <span>{{ attrs[0] }}</span>
+            <button id="copy_passport_number_ser" class="btn btn-mini btn-copy" data-content="{{ attrs[0] }}">
+                <i class="fa fa-copy"></i>
+                {{ 'admin.buttons.copy'|trans }}
+            </button>
+        </dd>
+        <dt>{{ 'profile_passport_number_num'|trans }}:</dt>
+        <dd class="copy_row_with_btn copy_passport_number_num">
+            <span>{{ attrs[1] }}</span>
+            <button id="copy_passport_number_num" class="btn btn-mini btn-copy" data-content="{{ attrs[1] }}">
+                <i class="fa fa-copy"></i>
+                {{ 'admin.buttons.copy'|trans }}
+            </button>
+        </dd>
+        {% endif %}
+        <dt>{{ 'profile_passport_rovd'|trans }}:</dt>
+        <dd class="copy_row_with_btn copy_passport_rovd">
+            <span>{{ user.passportRovd }}</span>
+            <button id="copy_passport_rovd" class="btn btn-mini btn-copy" data-content="{{ user.passportRovd }}">
+                <i class="fa fa-copy"></i>
+                {{ 'admin.buttons.copy'|trans }}
+            </button>
+        </dd>
+        <dt>{{ 'profile_passport_rovd_number'|trans }}:</dt>
+        <dd>{{ user.passportRovdNumber }}</dd>
+        <dt>{{ 'profile_passport_rovd_date'|trans }}:</dt>
+        <dd class="copy_row_with_btn copy_passport_rovd_date">
+            <span>{{ user.passportRovdDate|date('d.m.Y') }}</span>
+            <button id="copy_passport_rovd_date" class="btn btn-mini btn-copy" data-content="{{ user.passportRovdDate|date('d.m.Y') }}">
+                <i class="fa fa-copy"></i>
+                {{ 'admin.buttons.copy'|trans }}
+            </button>
+        </dd>
+    </dl>
+    {% endif %}
+
+    {% if user.birthCountry or user.birthRegion or user.birthCity %}
+    <legend>{{ 'profile_birth_place'|trans }}:</legend>
+    <dl class="dl-horizontal">
+        <dt>{{ 'profile_birth_country'|trans }}:</dt>
+        <dd class="copy_row_with_btn copy_birth_country">
+            <span>{{ (user.birthCountry ? user.birthCountry : '&ndash;')|raw }}</span>
+            {% set attrs = [] %}
+            {% for prop in ['Country', 'Region', 'City'] %}
+                {% if attribute(user, 'birth'~prop) %}
+                    {% set attrs = attrs|merge([attribute(user, 'birth'~prop)]) %}
+                {% endif %}
+            {% endfor %}
+            <button id="copy_birth_country" class="btn btn-mini btn-copy" data-content="{{ attrs|join(', ') }}">
+                <i class="fa fa-copy"></i>
+                {{ 'admin.buttons.copy'|trans }}
+            </button>
+        </dd>
+        <dt>{{ 'profile_birth_region'|trans }}:</dt>
+        <dd class="copy_row copy_birth_country">
+            <span>{{ (user.birthRegion ? user.birthRegion : '&dash;')|raw }}</span>
+        </dd>
+        <dt>{{ 'profile_birth_city'|trans }}:</dt>
+        <dd class="copy_row copy_birth_country">
+            <span>{{ (user.birthCity ? user.birthCity : '&ndash;' )|raw }}</span>
+        </dd>
+    </dl>
+    {% endif %}
+
+    {% if user.registrationCountry and not user.notRegistration %}
+    <legend>{{ 'profile_registration_data'|trans }}:</legend>
+    <dl class="dl-horizontal">
+        <dt>{{ 'profile_registration_country'|trans }}:</dt>
+        <dd class="copy_row_with_btn copy_registration_data">
+            <span>{{ user.registrationCountry }}</span>
+            {% set attrs = [] %}
+            {% for prop in ['Country', 'Region', 'City', 'Street', 'House', 'Stroenie', 'Korpus', 'Apartament'] %}
+                {% if attribute(user, 'registration'~prop) %}
+                    {% set attrs = attrs|merge([attribute(user, 'registration'~prop)]) %}
+                {% endif %}
+            {% endfor %}
+            <button id="copy_registration_data" class="btn btn-mini btn-copy" data-content="{{ attrs|join(', ') }}">
+                <i class="fa fa-copy"></i>
+                {{ 'admin.buttons.copy'|trans }}
+            </button>
+        </dd>
+        <dt>{{ 'profile_registration_region'|trans }}:</dt>
+        <dd class="copy_row copy_registration_data">
+            <span>{{ user.registrationRegion }}</span>
+        </dd>
+        <dt>{{ 'profile_registration_city'|trans }}:</dt>
+        <dd class="copy_row copy_registration_data">
+            <span>{{ user.registrationCity }}</span>
+        </dd>
+        <dt>{{ 'profile_registration_street'|trans }}:</dt>
+        <dd class="copy_row copy_registration_data">
+            <span>{{ user.registrationStreet }}</span>
+        </dd>
+        <dt>{{ 'profile_registration_house'|trans }}:</dt>
+        <dd class="copy_row copy_registration_data">
+            <span>{{ user.registrationHouse }}</span>
+        </dd>
+        {% if user.registrationStroenie %}
+        <dt>{{ 'profile_registration_stroenie'|trans }}:</dt>
+        <dd class="copy_row copy_registration_data">
+            <span>{{ user.registrationStroenie }}</span>
+        </dd>
+        {% endif %}
+        {% if user.registrationKorpus %}
+        <dt>{{ 'profile_registration_korpus'|trans }}:</dt>
+        <dd class="copy_row copy_registration_data">
+            <span>{{ user.registrationKorpus }}</span>
+        </dd>
+        {% endif %}
+        {% if user.registrationApartament %}
+        <dt>{{ 'profile_registration_apartament'|trans }}:</dt>
+        <dd class="copy_row copy_registration_data">
+            <span>{{ user.registrationApartament }}</span>
+        </dd>
+        {% endif %}
+    </dl>
+    {% endif %}
+
+    {% if user.placeCountry and user.notRegistration %}
+    <legend>{{ 'profile_place_data'|trans }}:</legend>
+    <dl class="dl-horizontal">
+        <dt>{{ 'profile_place_country'|trans }}:</dt>
+        <dd class="copy_row_with_btn copy_place_data">
+            <span>{{ user.placeCountry }}</span>
+            {% set attrs = [] %}
+            {% for prop in ['Country', 'Region', 'City', 'Street', 'House', 'Stroenie', 'Korpus', 'Apartament'] %}
+                {% if attribute(user, 'place'~prop) %}
+                    {% set attrs = attrs|merge([attribute(user, 'place'~prop)]) %}
+                {% endif %}
+            {% endfor %}
+            <button id="copy_place_data" class="btn btn-mini btn-copy" data-content="{{ attrs|join(', ') }}">
+                <i class="fa fa-copy"></i>
+                {{ 'admin.buttons.copy'|trans }}
+            </button>
+        </dd>
+        <dt>{{ 'profile_place_region'|trans }}:</dt>
+        <dd class="copy_row copy_place_data">
+            <span>{{ user.placeRegion }}</span>
+        </dd>
+        <dt>{{ 'profile_place_city'|trans }}:</dt>
+        <dd class="copy_row copy_place_data">
+            <span>{{ user.placeCity }}</span>
+        </dd>
+        <dt>{{ 'profile_place_street'|trans }}:</dt>
+        <dd class="copy_row copy_place_data">
+            <span>{{ user.placeStreet }}</span>
+        </dd>
+        <dt>{{ 'profile_place_house'|trans }}:</dt>
+        <dd class="copy_row copy_place_data">
+            <span>{{ user.placeHouse }}</span>
+        </dd>
+        {% if user.placeStroenie %}
+        <dt>{{ 'profile_place_stroenie'|trans }}:</dt>
+        <dd class="copy_row copy_place_data">
+            <span>{{ user.placeStroenie }}</span>
+        </dd>
+        {% endif %}
+        {% if user.placeKorpus %}
+        <dt>{{ 'profile_place_korpus'|trans }}:</dt>
+        <dd class="copy_row copy_place_data">
+            <span>{{ user.placeKorpus }}</span>
+        </dd>
+        {% endif %}
+        {% if user.placeApartament %}
+        <dt>{{ 'profile_place_apartament'|trans }}:</dt>
+        <dd class="copy_row copy_place_data">
+            <span>{{ user.placeApartament }}</span>
+        </dd>
+        {% endif %}
+    </dl>
+    {% endif %}
+
+    {% if user.workPlace or user.workPosition %}
+    <legend>{{ 'profile_work'|trans }}:</legend>
+    <dl class="dl-horizontal">
+        {% if user.workPlace %}
+        <dt>{{ 'profile_work_place'|trans }}:</dt>
+        <dd class="copy_row_with_btn copy_work_place">
+            <span>{{ user.workPlace }}</span>
+            <button id="copy_work_place" class="btn btn-mini btn-copy" data-content="{{ user.workPlace }}">
+                <i class="fa fa-copy"></i>
+                {{ 'admin.buttons.copy'|trans }}
+            </button>
+        </dd>
+        {% endif %}
+        {% if user.workPosition %}
+        <dt>{{ 'profile_work_position'|trans }}:</dt>
+        <dd class="copy_row_with_btn copy_work_position">
+            <span>{{ user.workPosition }}</span>
+            <button id="copy_work_position" class="btn btn-mini btn-copy" data-content="{{ user.workPosition }}">
+                <i class="fa fa-copy"></i>
+                {{ 'admin.buttons.copy'|trans }}
+            </button>
+        </dd>
+        {% endif %}
+    </dl>
+    {% endif %}
+
+    {% if user.phoneMobile %}
+    <legend>{{ 'profile_phone_data'|trans }}:</legend>
+    <dl class="dl-horizontal">
+        <dt>{{ 'profile_phone_mobile'|trans }}:</dt>
+        <dd class="copy_row_with_btn copy_phone_mobile">
+            <span>
+                +7 {{ user.phoneMobile }}
+                <span id="mobile_status">
+                    {% if 'confirmed' == user.phoneMobileStatus %}
+                    <span class="text-success">{{ 'mobile_status.confirmed'|trans }}</span>
+                    {% else %}
+                    <span class="text-error">{{ 'mobile_status.not_confirmed'|trans }}</span>
+                    {% endif %}
+                </span>
+            </span>
+            <button id="copy_phone_mobile" class="btn btn-mini btn-copy" data-content="+7 {{ user.phoneMobile }}">
+                <i class="fa fa-copy"></i>
+                {{ 'admin.buttons.copy'|trans }}
+            </button>
+        </dd>
+        {% if user.oldMobilePhones|length %}
+        <dt>{{ 'profile_old_mobile_phones'|trans }}:</dt>
+        <dd>
+            {% for phone in user.oldMobilePhones %}
+            +7 {{ phone.phone }} <span id="mobile_status"><span class="text-success">{{ 'mobile_status.confirmed'|trans }}</span></span><br>
+            {% endfor %}
+        </dd>
+        {% endif %}
+    </dl>
+    {% endif %}
+
+    {% if user.regionPlace %}
+        <legend>{{ 'profile_region_place'|trans }}:</legend>
+        <dl class="dl-horizontal">
+            <dt>{{ 'profile_region'|trans }}:</dt>
+            <dd>{{ user.region }}</dd>
+            <dt>{{ 'profile_region_place'|trans }}:</dt>
+            <dd>{{ user.regionPlace }}</dd>
+        </dl>
+    {% endif %}
+
+    <legend>{{ 'profile_additional_info'|trans }}:</legend>
+    <dl class="dl-horizontal">
+        <dt>{{ 'profile_support_dialogs'|trans }}:</dt>
+        <dd><a href="{{ path('admin_support_dialogs')~'?support_dialog[user_email]='~user.email }}">{{ user.supportDialogs|length }} шт.</a></dd>
+    </dl>
+
+    {% if user.paradoxId %}
+    <legend>{{ 'profile_additional_info'|trans }}:</legend>
+    <dl class="dl-horizontal">
+        <dt>{{ 'profile_paradox_id'|trans }}:</dt>
+        <dd>{{ user.paradoxId }}</dd>
+        <dt>{{ 'profile_webgroup'|trans }}:</dt>
+        <dd>{{ user.webgroup }}</dd>
+    </dl>
+    {% endif %}
+    {% if company != null %}
+    <div class="form-actions">
+        <a class="btn pull-right" href="{{ path('admin_promo_all_keys', { id: company }) }}"><i class="fa fa-arrow-left"></i> Вернуться в список промоключей</a>
+    </div>
+    {% endif %}
+{% endblock content %}
+
+{% block js %}
+<script>
+$(function() {
+    var copy = function(name) {
+        var spans = $('.copy_' + name + ' > span');
+        $('#copy_' + name)
+            .hover(function() {
+                spans.css('background', '#f0f0f0');
+            }, function() {
+                spans.css('background', 'transparent');
+            })
+            .on('copy', function(e) {
+                e.clipboardData.clearData();
+                e.clipboardData.setData('text/plain', $(this).data('content') + '');
+                e.preventDefault();
+            })
+        ;
+    };
+    $('.btn-copy').each(function() {
+        copy($(this).attr('id').substr(5));
+    });
+});
+</script>
+{% endblock js %}

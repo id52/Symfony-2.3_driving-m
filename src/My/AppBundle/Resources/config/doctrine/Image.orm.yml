@@ -1,0 +1,57 @@
+My\AppBundle\Entity\Image:
+    type: entity
+    table: images
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        file:
+            type: string
+            unique: true
+        updated_at:
+            type: datetime
+            gedmo:
+                timestampable:
+                    on: update
+    oneToOne:
+        question:
+            targetEntity: Question
+            inversedBy: image
+        category:
+            targetEntity: Category
+            inversedBy: image
+        subject:
+            targetEntity: Subject
+            inversedBy: image
+        offer:
+            targetEntity: Offer
+            inversedBy: image
+        offer_student:
+            targetEntity: OfferStudent
+            inversedBy: image
+        filial:
+            targetEntity: Filial
+            inversedBy: image
+        site:
+            targetEntity: Site
+            inversedBy: image
+        flash_block_item:
+            targetEntity: FlashBlockItem
+            inversedBy: image
+        review:
+            targetEntity: Review
+            inversedBy: photo
+        pass_filial:
+            targetEntity: PassFilial
+            inversedBy: image
+        how_work:
+            targetEntity: HowWork
+            inversedBy: image
+    lifecycleCallbacks:
+        prePersist: [ preUpload ]
+        preUpdate: [ preUpload ]
+        postPersist: [ upload ]
+        postUpdate: [ upload, removeUploadCache ]
+        postRemove: [ removeUpload, removeUploadCache ]

@@ -1,0 +1,13 @@
+{% extends 'AppBundle::layout_m.html.twig' %}
+
+{% block content %}
+<div class="wrap">
+    <div class="payment">
+        {{ html|raw }}
+    </div>
+</div>
+{% endblock content %}
+
+{% block js %}
+    {% include 'AppBundle:Default/Reg:_js.html.twig' %}
+{% endblock js %}

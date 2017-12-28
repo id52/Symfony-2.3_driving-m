@@ -1,0 +1,67 @@
+My\AppBundle\Entity\Offer:
+    type: entity
+    table: offers
+    repositoryClass: My\AppBundle\Repository\OfferRepository
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        title:
+            type: string
+        subtitle:
+            type: string
+            nullable: true
+        text1:
+            type: text
+            nullable: true
+        text2:
+            type: text
+            nullable: true
+        text3:
+            type: text
+            nullable: true
+        text4:
+            type: text
+            nullable: true
+        _desc:
+            type: text
+        description:
+            type: text
+        started_at:
+            type: date
+            nullable: true
+        ended_at:
+            type: date
+            nullable: true
+        is_public:
+            type: boolean
+        position:
+            type: integer
+            gedmo:
+                - sortablePosition
+        updated_at:
+            type: datetime
+            gedmo:
+                timestampable:
+                    on: update
+        created_at:
+            type: datetime
+            gedmo:
+                timestampable:
+                    on: create
+    oneToOne:
+        image:
+            targetEntity: Image
+            mappedBy: offer
+            cascade: [ all ]
+    oneToMany:
+        prices:
+            targetEntity: OfferPrice
+            mappedBy: offer
+            cascade: [ all ]
+        offers:
+            targetEntity: User
+            mappedBy: offer
+

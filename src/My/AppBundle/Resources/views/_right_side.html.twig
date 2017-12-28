@@ -1,0 +1,41 @@
+<div class="right-side">
+    <div class="right-link-b">
+        {% if 'reviews' == app.request.get('_route') %}
+        <div class="w-field">
+            <a href="#" class="link btn-blue ie_css3 review-form-link">
+                <span class="left-icon img-center v-m"><img src="/m/images/icon/quote.png" alt=""></span>
+                <span class="name v-m">Написать отзыв</span>
+            </a>
+        </div>
+        {% endif %}
+        <div class="w-field">
+            <a href="{{ path('reg', { category: 4, with_at: 0, offer: 0 }) }}" class="link btn-blue ie_css3">
+                <span class="left-icon img-center v-m"><img src="/m/images/icon/icon-reserve.png" alt="" /></span>
+                <span class="name v-m">Резерв места в группе</span>
+            </a>
+        </div>
+        {% if not is_strange %}
+        <div class="w-field">
+            <a href="{{ path('offers') }}" class="link btn-blue ie_css3">
+                <span class="left-icon img-center v-m"><img src="/m/images/icon/prise-2.png" alt="" /></span>
+                <span class="name v-m">Интересуют спецпредложения?</span>
+            </a>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="main-title text-center small-line">
+        <div class="caption"><span class="line v-m">Наши филиалы</span></div>
+    </div>
+    <div class="map-filial text-center"><a href="{{ path('branches') }}"><img src="/m/images/map-small.png" alt="" /></a></div>
+
+    <ul class="main-contacts table-list">
+        <li class="address ie_css3">
+            <div class="img"><img src="/m/images/icon/contact-1.png" alt="benefits"></div>
+            <div class="info">
+                <div class="caption">Адрес автошколы:</div>
+                <p>г. Москва,<br />м. Марксистская,<br />Товарищеский пер, 3</p>
+            </div>
+        </li>
+    </ul>
+</div>

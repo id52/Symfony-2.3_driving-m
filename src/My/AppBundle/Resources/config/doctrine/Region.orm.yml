@@ -1,0 +1,71 @@
+My\AppBundle\Entity\Region:
+    type: entity
+    table: regions
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+        discount_1_amount:
+            type: integer
+        discount_1_date_from:
+            type: date
+            nullable: true
+        discount_1_date_to:
+            type: date
+            nullable: true
+        discount_1_timer_period:
+            type: integer
+        discount_2_first_amount:
+            type: integer
+        discount_2_first_days:
+            type: integer
+        discount_2_second_amount:
+            type: integer
+        discount_2_second_days:
+            type: integer
+        discount_2_between_period_days:
+            type: integer
+    oneToMany:
+        services_prices:
+            targetEntity: ServicePrice
+            mappedBy: region
+            cascade: [ all ]
+        categories_prices:
+            targetEntity: CategoryPrice
+            mappedBy: region
+            cascade: [ all ]
+        offers_prices:
+            targetEntity: OfferPrice
+            mappedBy: region
+            cascade: [ all ]
+        offers_prices_students:
+            targetEntity: OfferPriceStudent
+            mappedBy: region
+            cascade: [ all ]
+        users:
+            targetEntity: User
+            mappedBy: region
+        places:
+            targetEntity: RegionPlace
+            mappedBy: region
+            cascade: [ all ]
+        filials:
+            targetEntity: Filial
+            mappedBy: region
+            cascade: [ all ]
+        sites:
+            targetEntity: Site
+            mappedBy: region
+            cascade: [ all ]
+        pass_filials:
+            targetEntity: PassFilial
+            mappedBy: region
+            cascade: [ all ]
+        offices:
+            targetEntity: Office
+            mappedBy: region
+            cascade: [ all ]

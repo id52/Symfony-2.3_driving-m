@@ -1,0 +1,5 @@
+{% if _server_type is defined and _server_type != 'prod' %}
+<div style="position:fixed;top:5px;z-index:10000;font-size:27px;line-height:27px;background-color:#900;padding:10px;text-transform:uppercase;font-weight:bold;color:#fff;border-radius:10px;left:10px">
+    {{ _server_type }}
+</div>
+{% endif %}

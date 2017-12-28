@@ -1,0 +1,46 @@
+My\PaymentBundle\Entity\Log:
+    type: entity
+    table: payments_logs
+    repositoryClass: My\PaymentBundle\Repository\LogRepository
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        s_type:
+            type: enumpayment
+            nullable: true
+        s_id:
+            type: string
+            nullable: true
+        int_ref:
+            type: string
+            nullable: true
+        sum:
+            type: integer
+        paid:
+            type: boolean
+        comment:
+            type: text
+        created_at:
+            type: datetime
+            gedmo:
+                timestampable:
+                    on: create
+        updated_at:
+            type: datetime
+            gedmo:
+                timestampable:
+                    on: update
+    oneToMany:
+        revert_logs:
+            targetEntity: RevertLog
+            mappedBy: payment_log
+    manyToOne:
+        user:
+            targetEntity: \My\AppBundle\Entity\User
+            inversedBy: payment_logs
+            joinColumn:
+                name: uid
+                referencedColumnName: id

@@ -1,0 +1,37 @@
+<form id="reg_change_pay" action="{{ path('reg') }}" method="post">
+    <div class="title1">
+        <h1>Обучение в автошколе</h1>
+    </div>
+
+    <ul class="steps">
+        <li class="bg1 done" data-url="{{ path('reg', { act: 'first' }) }}">
+            <span><span>1</span> Шаг:</span> Категория прав
+            <div class="small">Категория «{{ category.name }}»{{ category.withAt ? (' + '~(with_at ? 'А' : 'М')~'КПП') : '' }}</div>
+        </li>
+        <li class="bg2 active"><span><span>2</span> Шаг:</span> Вариант оплаты</li>
+        <li class="bg3"><span><span>3</span> Шаг:</span> Оплата</li>
+    </ul>
+
+    {% if settings['reginfo_2'] is defined %}
+    <div class="text-info">
+        <div class="in">{{ settings['reginfo_2']|raw }}</div>
+    </div>
+    {% endif %}
+
+    <div class="method" style="margin-bottom:10px">
+        <label>
+            <input name="pay_method" type="radio" value="online">
+            <span class="bg-card">Оплатить на сайте со скидкой</span>
+        </label>
+        <label>
+            <input name="pay_method" type="radio" value="office">
+            <span class="bg-cash">Наличными в центральном офисе</span>
+        </label>
+        <div class="or">ИЛИ</div>
+    </div>
+
+    <div class="go">
+        <span class="btn2 disabled">Продолжить <input value="" type="submit"></span>
+        <a class="go-back" href="{{ path('reg', { act: 'back' }) }}"></a>
+    </div>
+</form>

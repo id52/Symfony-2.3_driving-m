@@ -1,0 +1,184 @@
+{% extends 'AppBundle::admin.html.twig' %}
+{% trans_default_domain 'simple_profile' %}
+
+{% block content %}
+<h3>{{ 'admin.add_simple_user_title'|trans({}, 'messages') }}</h3>
+<hr>
+    {{ form_start(form) }}
+
+    {{ form_errors(form) }}
+
+    <fieldset>
+        <legend>{{ 'simple_profile_registr_data'|trans }}:</legend>
+        {{ form_row(form.email) }}
+        {{ form_row(form.paid) }}
+    </fieldset>
+
+    <fieldset>
+        <legend>{{ 'simple_profile_registr_data'|trans }}:</legend>
+        {{ form_row(form.last_name) }}
+        {{ form_row(form.first_name) }}
+        {{ form_row(form.patronymic) }}
+    </fieldset>
+
+    <fieldset>
+        <legend>{{ 'simple_profile_phone_data'|trans }}:</legend>
+        <div class="control-group{% if form.phone_mobile.vars.errors|length > 0 %} error{% endif %}">
+            {{ form_label(form.phone_mobile) }}
+            <div class="controls">
+                <div class="input-prepend">
+                    <span class="add-on">+7</span>
+                    {{ form_widget(form.phone_mobile, { attr: { class: 'span2' }}) }}
+                </div>
+                {% if form.phone_mobile.vars.help is defined and form.phone_mobile.vars.help %}
+                    <span class="help-inline">{{ form.phone_mobile.vars.help|trans }}</span>
+                {% endif %}
+                {{ form_errors(form.phone_mobile) }}
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>{{ 'simple_profile_additional_info'|trans }}:</legend>
+        {{ form_row(form.region) }}
+        {{ form_row(form.category) }}
+        {{ form_row(form.with_at) }}
+        {{ form_row(form.closed_subjects) }}
+        {{ form_row(form.close_final_exam) }}
+    </fieldset>
+
+    <div class="form-actions">
+        <div class="alert alert-info" role="alert" id="pay-amount-info">
+        </div>
+        <button type="submit" class="btn btn-success"><i class="fa fa-download"></i> {{ 'admin.buttons.create'|trans({}, 'messages') }}</button>
+        {% if user is defined %}
+            <a class="btn pull-right" href="{{ path('admin_precheck_user_view', { id: user.id }) }}"><i class="fa fa-arrow-left"></i> {{ 'admin.buttons.back_to_view'|trans({}, 'messages') }}</a>
+        {% endif %}
+    </div>
+    {{ form_end(form) }}
+{% endblock content %}
+
+{% block js %}
+<script>
+$(function() {
+    {% if user is not defined %}
+
+    var valid_subjects = eval({{ validSubjects|json_encode|raw }});
+
+    {% if form.vars.valid and form_errors(form.closed_subjects) is empty %}
+        $('label.closed_subjects').closest('.control-group').hide();
+    {% endif %}
+
+    var profile_region = $('#simple_profile_region');
+
+    var region_categories = eval({{ region_categories|json_encode|raw }});
+    var category = $('#simple_profile_category');
+
+    var update_region_categories = function() {
+        var region = profile_region.val();
+        category.find('option:not(:first-child)').remove();
+        if (region_categories[region]) {
+            for (var i in region_categories[region]) {
+                if (region_categories[region].hasOwnProperty(i)) {
+                    $('<option></option>')
+                            .attr('value', i)
+                            .text(region_categories[region][i]['name'])
+                            .appendTo(category)
+                    ;
+                }
+            }
+        }
+
+        $('#simple_profile_with_at').closest('.control-group').hide();
+
+    };
+
+    category.change(function() {
+        var with_at = $('#simple_profile_with_at');
+        with_at.closest('.control-group').hide();
+        var region = profile_region.val();
+        var category_id = $(this).val();
+        var region_id   = $('#simple_profile_region').val();
+        var closed_subject_inputs = $('label.closed_subjects').find('input');
+
+        if (category_id) {
+            if (region_categories[region][category_id]['with_at']) {
+                with_at.closest('.control-group').show();
+            }
+
+            $('label.closed_subjects').closest('.control-group').show();
+
+            var count = 0;
+            $.each( closed_subject_inputs, function( key, input ) {
+                $(input).removeAttr('checked');
+
+                var subject_id = $(input).val();
+                if (
+                       valid_subjects[region_id] !== undefined
+                    && valid_subjects[region_id][category_id] !== undefined
+                    && valid_subjects[region_id][category_id][subject_id] !== undefined
+                ) {
+                    $(input).closest('label').show();
+                    count ++;
+                } else {
+                    $(input).closest('label').hide();
+                }
+
+                if (count == 0) {
+                    $('label.closed_subjects').closest('.control-group').hide();
+                } else {
+                    $('label.closed_subjects').closest('.control-group').show();
+                }
+            });
+
+        } else {
+            $.each( closed_subject_inputs, function( key, input ) {
+                $(input).removeAttr('checked');
+            });
+            $('label.closed_subjects').closest('.control-group').hide();
+        }
+    });
+
+    profile_region.change(function() {
+        update_region_categories();
+
+        var closed_subject_inputs = $('label.closed_subjects').find('input');
+        $.each( closed_subject_inputs, function( key, value ) {
+            $(value).removeAttr('checked');
+        });
+
+        $('label.closed_subjects').closest('.control-group').hide();
+    });
+
+    category.trigger('change');
+    $('label.closed_subjects').siblings('span.help-block').hide().first().show();
+
+    $('#simple_profile_region, #simple_profile_category, #simple_profile_with_at, #simple_profile_paid').on('change', function() {
+        var region_id = profile_region.val();
+        var category_id = category.val();
+        if (region_id && category_id) {
+            var pay_amount_info = $('#pay-amount-info');
+            $.ajax({
+                type: 'GET',
+                url: '{{ path('admin_calc_pay_amount_ajax') }}',
+                data: {
+                    region_id: profile_region.val(),
+                    category_id: category.val(),
+                    with_at: $('#simple_profile_with_at').is(':checked') ? 1 : 0,
+                    paid: $('#simple_profile_paid').val()
+                },
+                success: function(data) {
+                    if (data.sum > 0) {
+                        pay_amount_info.html(data.sum + ' руб.').show();
+                    } else {
+                        pay_amount_info.html('').hide();
+                    }
+                }
+            });
+        }
+    });
+
+    {% endif %}
+});
+</script>
+{% endblock js %}

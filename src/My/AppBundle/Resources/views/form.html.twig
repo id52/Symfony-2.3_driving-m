@@ -1,0 +1,179 @@
+{% extends 'form_div_layout.html.twig' %}
+
+{% block form_label %}
+{% spaceless %}
+{% set label = (label ? label : id)|trans({}, translation_domain) %}
+{%- if not compound -%}
+    {% set label_attr = label_attr|merge({ for: id }) %}
+{%- endif -%}
+{% set label_attr = label_attr|merge({ class: (label_attr.class is defined ? label_attr.class : 'control-label') }) %}
+<label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ label }}{{ unpointed is defined or label[-1:] == '?' ? '' : ':' }}</label>
+{% endspaceless %}
+{% endblock form_label %}
+
+{% block form_errors %}
+{% spaceless %}
+{% if form.parent and errors|length > 0 %}
+<span class="help-block text-error">
+    {% for error in errors %}
+        {{ error.message }}<br />
+    {% endfor %}
+</span>
+{% endif %}
+{% endspaceless %}
+{% endblock form_errors %}
+
+{% block form_row %}
+{% spaceless %}
+<div class="control-group{% if errors|length > 0 %} error{% endif %}">
+    {{ form_label(form) }}
+    <div class="controls">
+        {{ form_widget(form) }}
+        {% if help is defined and help %}
+            <span class="help-block">{{ help|trans({}, translation_domain)|raw }}</span>
+        {% endif %}
+        {{ form_errors(form) }}
+    </div>
+</div>
+{% endspaceless %}
+{% endblock form_row %}
+
+{% block form_rows %}
+{% spaceless %}
+{% if errors|length > 0 %}
+<div class="alert alert-error">
+    <a class="close" data-dismiss="alert">×</a>
+    <ul>
+    {% for error in errors %}
+        <li>{{ error.message }}</li>
+    {% endfor %}
+    </ul>
+</div>
+{% endif %}
+{% for child in form %}
+    {{ form_row(child) }}
+{% endfor %}
+{% endspaceless %}
+{% endblock form_rows %}
+
+{% block datetime_widget %}
+{% spaceless %}
+    {% if widget == 'single_text' %}
+        {{ block('form_widget_simple') }}
+    {% else %}
+        <div {{ block('widget_container_attributes') }}>
+            {{ form_errors(form.date) }}
+            {{ form_errors(form.time) }}
+            <div style="float:left">
+            {{ form_widget(form.date) }}
+            </div>
+            <div style="float:left;margin-left:40px">
+            {{ form_widget(form.time) }}
+            </div>
+        </div>
+    {% endif %}
+{% endspaceless %}
+{% endblock datetime_widget %}
+
+{% block date_widget %}
+{% spaceless %}
+{% if widget == 'single_text' %}
+    <div class="input-append date">
+        {{ block('form_widget_simple') }}
+        <span class="add-on"><i class="fa fa-calendar"></i></span>
+    </div>
+{% else %}
+    <div {{ block('widget_container_attributes') }}>
+        {{ date_pattern|replace({
+            '{{ year }}':  form_widget(form.year, { attr: { class: 'span1', style: 'margin-left:10px' } }),
+            '{{ month }}': form_widget(form.month, { attr: { class: 'span1', style: 'margin-left:10px' } }),
+            '{{ day }}':   form_widget(form.day, { attr: { class: 'span1' } }),
+        })|raw }}
+    </div>
+{% endif %}
+{% endspaceless %}
+{% endblock date_widget %}
+
+{% block time_widget %}
+{% spaceless %}
+    {% if widget == 'single_text' %}
+        {{ block('form_widget_simple') }}
+    {% else %}
+        <div {{ block('widget_container_attributes') }}>
+            {{ form_widget(form.hour, { 'attr': { 'class': 'span1', style: 'margin-right:10px' }}) }}{% if with_minutes %}:{{ form_widget(form.minute, { 'attr': { 'class': 'span1', style: 'margin-left:10px' }}) }}{% endif %}{% if with_seconds %}:{{ form_widget(form.second, { 'attr': { 'class': 'span1', style: 'margin-left:10px' }}) }}{% endif %}
+        </div>
+    {% endif %}
+{% endspaceless %}
+{% endblock time_widget %}
+
+{% block choice_widget_expanded %}
+{% spaceless %}
+{% for child in form %}
+    <label class="checkbox{{ attr.class is defined ? ' '~attr.class : '' }}">
+        {{ form_widget(child) }}
+        {{ (child.vars.label)|trans({}, translation_domain) }}
+    </label>
+{% endfor %}
+{{ form_errors(form) }}
+{% endspaceless %}
+{% endblock choice_widget_expanded %}
+
+{% block widget_attributes %}
+{% spaceless %}
+id="{{ id }}" name="{{ full_name }}"{% if read_only %} readonly="readonly"{% endif %}{% if disabled %} disabled="disabled"{% endif %}{% if required %} required="required"{% endif %}{% if max_length %} maxlength="{{ max_length }}"{% endif %}{% if pattern %} pattern="{{ pattern }}"{% endif %}
+{% for attrname, attrvalue in attr %}{% if attrname in ['placeholder', 'title'] %} {{ attrname }}="{{ attrvalue|trans({}, translation_domain) }}"{% else %} {{ attrname }}="{{ attrvalue }}"{% endif %}{% endfor %}
+{% set field_type = block_prefixes[block_prefixes|length-2] %}
+{% if 'class' not in attr|keys and field_type not in [ 'hidden', 'checkbox', 'radio' ] %} class="span6"{% endif %}
+{% endspaceless %}
+{% endblock widget_attributes %}
+
+{% block form_start %}
+{% spaceless %}
+    {% set method = method|upper %}
+    {% set form_method = method in ['GET', 'POST'] ? method : 'POST' %}
+    <form method="{{ form_method|lower }}" action="{{ action }}"{% for attrname, attrvalue in attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}{% if 'class' not in attr|keys %} class="form-horizontal"{% endif %}{% if multipart %} enctype="multipart/form-data"{% endif %}>
+    {% if form_method != method %}
+        <input type="hidden" name="_method" value="{{ method }}" />
+    {% endif %}
+{% endspaceless %}
+{% endblock form_start %}
+
+{% block money_widget %}
+{% spaceless %}
+{% if money_pattern == '{{ widget }}' %}
+    {{ block('form_widget_simple') }}
+{% else %}
+    {% if money_pattern|slice(0, 12) == '{{ widget }}' %}
+        <div class="input-append">
+            {{ block('form_widget_simple') }}
+            <span class="add-on">{{ money_pattern|replace({ '{{ widget }} ': '' }) }}</span>
+        </div>
+    {% else %}
+        <div class="input-prepend">
+            <span class="add-on">{{ money_pattern|replace({ ' {{ widget }}': '' }) }}</span>
+            {{ block('form_widget_simple') }}
+        </div>
+    {% endif %}
+{% endif %}
+{% endspaceless %}
+{% endblock money_widget %}
+
+{% block passport_number_widget %}
+{% spaceless %}
+{{ form_widget(form.series) }} &nbsp; {{ form_widget(form.number) }}
+{% endspaceless %}
+{% endblock passport_number_widget %}
+
+{% block submit_widget -%}
+    {% if label is empty -%}
+        {% set label = name|humanize %}
+    {%- endif -%}
+    {% set attr = attr|merge({ class: (attr.class is defined ? attr.class : 'btn btn-success') }) %}
+
+    <div class="form-actions">
+        <button type="submit" {%- for attrname, attrvalue in attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+            <i class="fa fa-download"></i>
+            <span> {{ label|trans({}, translation_domain) }}</span>
+        </button>
+    </div>
+{%- endblock submit_widget %}

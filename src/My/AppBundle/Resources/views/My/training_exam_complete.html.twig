@@ -1,0 +1,24 @@
+{% extends 'AppBundle::layout_new.html.twig' %}
+
+{% block content %}
+    <div class="main_t">
+        <div class="breadcrumbs">
+            <div class="bread_bod">
+                <a href="{{ path('my_trainings') }}">{{ 'menu.training'|trans }}</a>
+                <span class="this">/</span>
+                <a href="{{ path('my_training', { id: subject.id }) }}">{{ subject.title }}</a>
+                <span class="this">/ {{ 'exam_title'|trans({}, 'exam') }}</span>
+            </div>
+        </div>
+        <h2>{{ 'exam_complete'|trans({}, 'exam') }}</h2>
+    </div>
+    <div id="test">
+        <div class="form_unswer">
+            <div class="alert-success clear">
+                {{ settings['training_exam_complete']|raw }}
+            </div>
+            <br />
+            <input type="button" onclick="document.location.href = '{{ path('my_trainings') }}';" value="{{ 'exam_back_to_trainings'|trans({}, 'exam') }}" class="pull_left green_btn">
+        </div>
+    </div>
+{% endblock content %}

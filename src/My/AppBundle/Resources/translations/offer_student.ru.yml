@@ -1,0 +1,9 @@
+offer_student_is_public: Отображать пользователям?
+offer_student_is_student: Для студентов
+offer_student_title: Заголовок
+offer_student_subtitle: Подзаголовок
+offer_student_desc: Краткое описание
+offer_student_description: Полное описание
+offer_student_started_at: Начало
+offer_student_ended_at: Конец
+offer_student_prices: Стоимость обучения по спецпредложению (в админке)

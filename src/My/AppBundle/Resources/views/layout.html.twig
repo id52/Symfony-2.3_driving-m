@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+<head>
+    <title>{% block title %}{{ 'project.name'|trans }} — {{ 'project.slogan'|trans }}{% endblock %}</title>
+    <meta charset="{{ _charset }}">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="icon" href="/favicon.ico">
+    <link href="/bundles/app/css/main.css" rel="stylesheet">
+    {% block css '' %}
+</head>
+<body>
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="brand" href="{{ path('homepage') }}">
+                <i class="fa fa-road"></i>
+                {{ 'project.name'|trans }}
+            </a>
+            <div class="pull-right auth">
+                {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                    {{ app.user.fullName }}
+                    {% if is_granted('ROLE_MOD') %}
+                    | <a href="{{ path('admin') }}">{{ 'in_admin'|trans }}</a>
+                    {% endif %}
+                    | <a href="{{ path('fos_user_security_logout') }}">{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    {% if is_granted('ROLE_USER_PAID') %}
+    <div class="row">
+        <div class="span2">
+            {% include 'AppBundle::menu.html.twig' only %}
+        </div>
+        <div class="span10">
+    {% endif %}
+
+    {% for key, messages in app.session.flashbag.all() %}
+        {% for message in messages %}
+            <div class="alert alert-{{ key }}">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                {{ message|trans }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+    {% block content '' %}
+
+    {% if is_granted('ROLE_USER_PAID') %}
+        </div>
+    </div>
+    {% endif %}
+    <hr>
+    <footer>
+        © {{ 'project.name'|trans }} {{ 'now'|date('Y') }}
+    </footer>
+</div>
+
+<script src="/bundles/app/js/main.js"></script>
+<!--[if lt IE 9]>
+<script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+</body>
+</html>

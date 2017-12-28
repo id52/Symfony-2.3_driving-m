@@ -1,0 +1,24 @@
+{% extends 'AppBundle::layout_new.html.twig' %}
+
+{% block content %}
+    <div class="main_t">
+        <div class="breadcrumbs">
+            <div class="bread_bod">
+                <a href="{{ path('my_trainings') }}">{{ 'menu.training'|trans }}</a>
+                <span class="this">/</span>
+                <a href="{{ path('my_training', { id: slice.afterTheme.subject.id }) }}">{{ slice.afterTheme.subject.title }}</a>
+                <span class="this">/ {{ 'slice_title'|trans }}</span>
+            </div>
+        </div>
+        <h2>{{ 'slice_complete'|trans }}</h2>
+    </div>
+    <div id="test">
+        <div class="form_unswer">
+            <div class="alert-success clear">
+                {{ settings['training_slice_complete']|raw }}
+            </div>
+            <br />
+            <input type="button" onclick="document.location.href = '{{ path('my_training', { id: slice.afterTheme.subject.id }) }}';" value="{{ 'slice_list'|trans }}" class="pull_right green_btn">
+        </div>
+    </div>
+{% endblock content %}

@@ -1,0 +1,30 @@
+{% extends 'FOSUserBundle::layout.html.twig' %}
+
+{% block fos_user_content %}
+    <div class="table-form confirm-form" style="display:block;z-index:100">
+        <div class="blue-hr"></div>
+        <div class="form-wrap">
+            <div class="caption">Авторизация пользователя:</div>
+            {{ form_start(form) }}
+                <div class="hr"></div>
+                <table class="fields-table">
+                    <tr>
+                        <th>Email:</th>
+                        <td>
+                            {{ form_widget(form.email, { attr: { class: 'field ie_css3' }}) }}
+                            <div class="field-error">{{ form_errors(form.email) }}</div>
+                        </td>
+                    </tr>
+                </table>
+
+                <div class="conform-desc">Подтвердите ваш e-mail или введите новый, на который будет отправлено письмо. Перейдите по ссылке из письма для подтверждения регистрации.</div>
+
+                <div class="hr"></div>
+
+                <button class="btn-blue-4" type="submit">Отправить</button>
+                {{ form_errors(form) }}
+            {{ form_end(form) }}
+            <div class="clear"></div>
+        </div>
+    </div>
+{% endblock fos_user_content %}

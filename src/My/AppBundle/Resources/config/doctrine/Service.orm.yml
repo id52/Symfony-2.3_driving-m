@@ -1,0 +1,19 @@
+My\AppBundle\Entity\Service:
+    type: entity
+    table: services
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+        type:
+            type: enumservice
+            nullable: true
+    oneToMany:
+        regions_prices:
+            targetEntity: ServicePrice
+            mappedBy: service
+            cascade: [ all ]

@@ -1,0 +1,22 @@
+My\AppBundle\Entity\HowWork:
+    type: entity
+    table: how_work
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        title:
+            type: string
+        _desc:
+            type: text
+        position:
+            type: integer
+            gedmo:
+                - sortablePosition
+    oneToOne:
+        image:
+            targetEntity: Image
+            mappedBy: how_work
+            cascade: [ all ]

@@ -1,0 +1,4 @@
+services:
+    sms_uslugi_ru:
+        class: My\SmsUslugiRuBundle\Service\SmsUslugiRu
+        arguments: [ @doctrine.orm.entity_manager, %sms_uslugi_login%, %sms_uslugi_pass%, %sms_uslugi_url% ]

@@ -1,0 +1,25 @@
+My\PaymentBundle\Entity\RevertLog:
+    type: entity
+    table: payments_revert_logs
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+    fields:
+        paid:
+            type: boolean
+        info:
+            type: array
+        created_at:
+            type: datetime
+            gedmo: { timestampable: { on: create } }
+        updated_at:
+            type: datetime
+            gedmo: { timestampable: { on: update } }
+    manyToOne:
+        payment_log:
+            targetEntity: Log
+            inversedBy: revert_logs
+        moderator:
+            targetEntity: My\AppBundle\Entity\User
+            inversedBy: payment_revert_logs

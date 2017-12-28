@@ -1,0 +1,59 @@
+{% if settings['ticket_test_old_style'] %}
+    <div class="title b_title_questions">
+        <h1>{{ 'ticket_num'|trans({ '%ticket%': question.ticketNum }) }}</h1>
+        <div class="deal_info_head">
+            {% if end_time %}
+                <div class="timer" data-seconds-left="{{ seconds_left }}">0:00</div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="steps">
+        {% for key in answers|keys %}
+            {% if num == key %}
+                <span class="now">{{ loop.index }}</span>
+            {% else %}
+                <span {{ answers[key] ? (answers[key].correct ? ' class="ok"' : ' class="err"') : '' }}>{{ loop.index }}</span>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <div class="hr"></div>
+{% else %}
+    <div class="title">
+        <h1>{{ 'ticket_num'|trans({ '%ticket%': question.ticketNum }) }}</h1>
+        <div class="errors">Ошибки: <span>{{ errors }}</span> из 2</div>
+    </div>
+{% endif %}
+
+{% if question.image %}
+    <div class="img"><img src="{{ question.image.webPath|imagine_filter('image') }}" alt=""></div>
+{% endif %}
+
+<div class="qu">{{ question.text }}</div>
+
+<form action="" method="post">
+
+    {% for key, answer in question.answers %}
+        <div class="answer"{{ (is_granted('ROLE_TESTER_TRAINING') or _is_test) and answer.correct ? ' style="background-color:#f8ffeb"' : '' }}>
+            <input id="answer_{{ key }}" type="radio" name="answer" value="{{ key }}"/>
+            <label for="answer_{{ key }}"></label>
+            {{ answer.title }}
+        </div>
+    {% endfor %}
+
+    <div class="bottom links">
+        <span class="link l bg-green answer-link">{{ 'buttons.answer'|trans }}<input value="" type="submit"></span>
+        {% if settings['ticket_test_old_style'] %}
+            <span class="link l bg-red answer-link">{{ 'buttons.continue'|trans }} <input value="" type="submit"></span>
+        {% else %}
+            <span id="choose_another" class="link l bg-red answer-link">{{ 'buttons.continue'|trans }}</span>
+        {% endif %}
+        <div class="r">
+            {% if is_granted('ROLE_MOD_CONTENT') %}
+                <a target="_blank" class="edit-link" href="{{ path('admin_question_edit', { id: question.id }) }}">Редактировать
+                    вопрос</a>
+            {% endif %}
+            <a class="exit-link" href="#">{{ 'buttons.quit'|trans }}</a>
+        </div>
+    </div>
+</form>

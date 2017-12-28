@@ -1,0 +1,1011 @@
+@charset "UTF-8";
+
+.payment {
+		font: normal 16px/26px Arial, Helvetica, sans-serif;
+		color: #4b4b4b;
+		margin: 40px -10px 0 -10px;
+		zoom: 1;
+		position: relative;
+}
+
+.payment .title1 {
+		zoom: 1;
+		position: relative;
+		text-align: center;
+		font: normal 32px/32px "Roboto Condensed", "Arial Narrow", Arial, Helvetica, sans-serif;
+		color: #005b90;
+		text-transform: uppercase;
+		margin: 0 0 1px 0;
+}
+
+.payment .title1 h1 {
+		display: inline-block;
+		margin: 0 0 20px;
+		vertical-align: top;
+		font: inherit;
+		color: inherit;
+		padding: 0 39px;
+		background: #fff;
+		position: relative;
+}
+
+.payment .title1:before {
+		content: '';
+		position: absolute;
+		top: 50%;
+		height: 1px;
+		background: #b5c9d5;
+		left: 0;
+		right: 0;
+}
+
+.payment .subtitle {
+		color: #4b4b4b;
+		font: normal 20px/24px "Roboto Condensed", "Arial Narrow", Arial, Helvetica, sans-serif;
+		text-align: center;
+		margin: 0 0 22px 0;
+}
+
+.payment .subtitle a {
+		color: inherit;
+}
+
+.payment .steps {
+		list-style: none;
+		margin: 0 0 22px 0;
+		padding: 0;
+		zoom: 1;
+		position: relative;
+		overflow: hidden;
+}
+
+.payment .steps li {
+		float: left;
+		margin: 0;
+		border: 1px solid #b5c9d5;
+		color: #005b90;
+		font: normal 23px/89px "Roboto Condensed", "Arial Narrow", Arial, Helvetica, sans-serif;
+		padding: 0 0 0 56px;
+		background: #fcfcfc;
+		position: relative;
+}
+
+.payment .steps li:before {
+		content: '';
+		position: absolute;
+		top: -1px;
+		bottom: -1px;
+		left: -4px;
+		width: 24px;
+		background: url(../images/payment/steps-bg.png) no-repeat;
+		z-index: 20;
+}
+
+.payment .steps li > span {
+		color: #02a6dd;
+		display: inline-block;
+		position: relative;
+}
+
+.payment .steps li > span > span {
+		position: absolute;
+		right: 100%;
+		margin: 0 8px 0 0;
+}
+
+.payment .steps .bg1 {
+		border-radius: 3px 0 0 3px;
+		-webkit-border-radius: 3px 0 0 3px;
+		border-right: 0;
+		padding-left: 44px;
+		width: 402px;
+}
+
+.payment .steps .bg1:before {
+		display: none;
+}
+
+.payment .steps .bg2 {
+		border-left: 0;
+		border-right: 0;
+		width: 396px;
+}
+
+.payment .steps .bg3 {
+		border-radius: 0 3px 3px 0;
+		-webkit-border-radius: 0 3px 3px 0;
+		border-left: 0;
+		width: 382px;
+}
+
+.payment .steps li.active {
+		color: #fff;
+		border-color: #02a6dd;
+		background: #02a6dd;
+}
+
+.payment .steps li.done {
+		color: #fff;
+		border-color: #005b90;
+		background: #005b90;
+}
+
+.payment .steps li.active > span,
+.payment .steps li.done > span {
+		color: #bfefff;
+}
+
+.payment .steps li.active + li:before {
+		background-position: 0 -91px;
+}
+
+.payment .steps li.bg2.active:before,
+.payment .steps li.bg3.active:before {
+		background-position: 0 -273px;
+}
+
+.payment .steps li.done + li.bg2.active:before,
+.payment .steps li.done + li.bg3.active:before {
+		background-position: 0 -182px;
+}
+
+.payment .steps li.done + li.bg2.done:before,
+.payment .steps li.done + li.bg3.done:before {
+		background-position: 0 -273px;
+}
+
+.payment .steps .small {
+		position: absolute;
+		top: 58px;
+		font-size: 16px;
+		line-height: 20px;
+}
+
+.payment .text-info {
+		zoom: 1;
+		position: relative;
+		margin: 0 0 40px 0;
+		font-size: 15px;
+		line-height: 22px;
+		padding: 0 0 27px 0;
+		border-bottom: 1px solid #b5c9d5;
+}
+
+.payment .text-info:before {
+		content: '';
+		position: absolute;
+		bottom: -1px;
+		left: 61px;
+		background: url(../images/payment/info-arr.png) no-repeat;
+		width: 41px;
+		height: 11px;
+}
+
+.payment .text-info .in {
+		padding: 0 0 0 19px;
+		zoom: 1;
+		position: relative;
+}
+
+.payment .text-info .in:before {
+		content: '';
+		position: absolute;
+		top: 3px;
+		bottom: 2px;
+		width: 4px;
+		left: 0;
+		background: #02a6dd;
+}
+
+.customSelect {
+		text-align: left;
+		font: normal 19px/42px "Roboto Condensed", "Arial Narrow", Arial, Helvetica, sans-serif;
+		color: #2f759d;
+		width: 100%;
+}
+
+.customSelect img {
+		height: 42px;
+		width: auto;
+		float: left;
+		margin: 0 14px 0 0;
+}
+
+.outtaHere {
+		position: absolute!important;
+		left: -10000px!important;
+}
+
+.selectIn,
+.selectSub ul {
+		position: relative;
+		zoom: 1;
+		border: 1px solid #4290bd;
+		background: #f6fdff;
+		border-radius: 2px;
+		-webkit-border-radius: 2px;
+		box-shadow: 0 3px 0 #2f7eab;
+		-webkit-box-shadow: 0 3px 0 #2f7eab;
+}
+
+.selectIn:after {
+		content: '';
+		position: absolute;
+		top: -1px;
+		bottom: -1px;
+		right: -1px;
+		width: 32px;
+		border-radius: 2px;
+		-webkit-border-radius: 2px;
+		box-shadow: 0 3px 0 #2f7eab;
+		-webkit-box-shadow: 0 3px 0 #2f7eab;
+		background: #4290bd url(../images/payment/select-arr.png) no-repeat 50% 50%;
+}
+
+.selectIn {
+		cursor: pointer;
+		text-decoration: underline;
+		padding: 4px 31px 4px 14px;
+}
+
+.selectText {
+		width: 100%;
+		position: relative;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+}
+
+.selectSub {
+		position: absolute;
+		z-index: 1100;
+}
+
+.selectSub ul {
+		list-style: none;
+		margin: 3px 0 0 0;
+		padding: 0;
+		max-height: 300px;
+		overflow-y: auto!important;
+}
+
+.selectSub li {
+		margin: 0;
+		padding: 0;
+}
+
+.selectSub a {
+		display: block;
+		padding: 0 14px;
+		overflow: hidden;
+		color: inherit;
+}
+
+.selectSub a:hover {
+		text-decoration: none;
+}
+
+.select-view2 {
+		font-size: 21px;
+		line-height: 48px;
+		color: #02a6dd;
+}
+
+.select-view2 img {
+		height: 48px;
+		margin: 0 18px 0 0;
+}
+
+.select-view2 .selectIn,
+.select-view2.selectSub a {
+		padding-left: 49px;
+}
+
+.select-view2 .selectIn {
+		padding-top: 14px;
+		padding-bottom: 14px;
+}
+
+.select-view2 .selectIn,
+.select-view2.selectSub ul {
+		border-color: #02a6dd;
+		box-shadow: 0 3px 0 #02a6dd;
+		-webkit-box-shadow: 0 3px 0 #02a6dd;
+}
+
+.select-view2 .selectIn:after {
+		background-color: #02a6dd;
+}
+
+.select-view2 .selectIn:before {
+		content: '';
+		position: absolute;
+		top: -1px;
+		right: 100%;
+		background: url(../images/payment/select-bg.png) no-repeat;
+		width: 22px;
+		height: 81px;
+}
+
+.payment .selection {
+		zoom: 1;
+		position: relative;
+}
+
+.payment .selection:after {
+		content: ' ';
+		clear: both;
+		display: block;
+		width: 0;
+		height: 0;
+		overflow: hidden;
+		font-size: 0;
+}
+
+.payment .selection .img {
+		float: left;
+		border: 10px solid #f1f1f1;
+		width: 524px;
+}
+
+.payment .selection .img img {
+		width: 100%;
+		height: auto;
+}
+
+.payment .selection .text {
+		float: right;
+		width: 591px;
+		position: relative;
+		text-align: justify;
+}
+
+.payment .selection h2 {
+		color: #4b4b4b;
+		font: normal 26px/30px "Roboto Condensed", "Arial Narrow", Arial, Helvetica, sans-serif;
+		margin: 11px 0 17px 0;
+}
+
+.payment .selection .select-hold {
+		zoom: 1;
+		position: relative;
+		margin: 0 0 17px -46px;
+}
+
+.payment .selection .select-hold2 {
+		zoom: 1;
+		position: relative;
+		margin: 0 0 26px 0;
+}
+
+.payment .selection .select-hold2 .arr {
+		position: absolute;
+		top: 14px;
+		left: -31px;
+		background: url(../images/payment/select-darr.png) no-repeat;
+		width: 20px;
+		height: 24px;
+}
+
+.payment .go {
+		margin: 48px 0 0 0;
+		border-top: 1px solid #b5c9d5;
+		padding: 15px 0 0 0;
+		zoom: 1;
+		position: relative;
+		overflow: hidden;
+}
+
+.payment .btn2 {
+		display: inline-block;
+		vertical-align: top;
+		position: relative;
+		white-space: nowrap;
+		text-align: center;
+		color: #fff;
+		text-decoration: underline;
+		padding: 1px 45px 1px 34px;
+		border-radius: 1px;
+		-webkit-border-radius: 1px;
+		background: #02a6dd;
+		font: normal 23px/60px "Roboto Condensed", "Arial Narrow", Arial, Helvetica, sans-serif;
+		height: 62px;
+		cursor: pointer;
+		float: left;
+		margin: 0 3px 0 0;
+}
+
+.payment .btn2:before,
+.payment .go-back:before {
+		content: '';
+		position: absolute;
+		right: 18px;
+		top: 50%;
+		margin: -6px 0 0 0;
+		background: url(../images/payment/go.png) no-repeat;
+		width: 9px;
+		height: 12px;
+}
+
+.payment .btn2.green {
+		background: #4db13d;
+		padding-left: 17px;
+}
+
+.payment .btn2.green:before {
+		background-position: -9px 0;
+}
+
+.payment .btn2.white {
+		border: 1px solid #d1d1d1;
+		background: #fff;
+		padding: 0 30px;
+		color: #005b90;
+}
+
+.payment .btn2.white:before {
+		display: none;
+}
+
+.payment .btn2 input {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		margin: 0;
+		padding: 0;
+		border: 0;
+		background: none;
+		cursor: pointer;
+}
+
+.payment .btn2.disabled {
+		cursor: default;
+		text-decoration: none;
+		background: #d1d1d1;
+}
+
+.payment .btn2.disabled:before {
+		background-position: 0 -12px;
+}
+
+.payment .btn2.disabled input {
+		left: -10000px;
+}
+
+.payment .go-back {
+		position: relative;
+		float: left;
+		margin: 0 3px 0 0;
+		height: 62px;
+		width: 24px;
+		background: #005b90;
+}
+
+.payment .go-back:before {
+		background-position: -9px -12px;
+		margin-left: -4.5px;
+		left: 50%;
+		right: auto;
+}
+
+.payment .method {
+		zoom: 1;
+		position: relative;
+		overflow: hidden;
+		margin: 0 0 191px 0;
+}
+
+.payment .method label {
+		cursor: pointer;
+		display: inline;
+}
+
+.payment .method input {
+		position: absolute;
+		left: -10000px;
+}
+
+.payment .method label > span {
+		color: #474747;
+		font: normal 24px/28px "Roboto Condensed", "Arial Narrow", Arial, Helvetica, sans-serif;
+		padding: 166px 0 23px 0;
+		text-align: center;
+		width: 552px;
+		border: 1px solid #b5c9d5;
+		border-radius: 3px;
+		-webkit-border-radius: 3px;
+		position: relative;
+}
+
+.payment .method label > input:checked + span {
+		color: #005b90;
+		background: #f1fbff;
+		border-color: #005b90;
+		box-shadow: inset 0 0 0 1px #005b90;
+		-webkit-box-shadow: inset 0 0 0 1px #005b90;
+}
+
+.payment .method label > span:before {
+		content: '';
+		position: absolute;
+		left: 50%;
+		background-repeat: no-repeat;
+}
+
+.payment .method .bg-card {
+		float: left;
+}
+
+.payment .method .bg-card:before {
+		top: 55px;
+		background: url(../images/payment/card.png) no-repeat;
+		width: 96px;
+		height: 73px;
+		margin: 0 0 0 -48px;
+}
+
+.payment .method input:checked + .bg-card:before {
+		background-position: 0 -75px;
+}
+
+.payment .method .bg-cash {
+		float: right;
+}
+
+.payment .method .bg-cash:before {
+		top: 33px;
+		background: url(../images/payment/cash.png) no-repeat;
+		width: 103px;
+		height: 112px;
+		margin: 0 0 0 -50px;
+}
+
+.payment .method input:checked + .bg-cash:before {
+		background-position: 0 -114px;
+}
+
+.payment .method .or {
+		overflow: hidden;
+		text-align: center;
+		padding: 93px 0 0 0;
+		text-transform: uppercase;
+		font: 300 21px/24px "Roboto Condensed", "Arial Narrow", Arial, Helvetica, sans-serif;
+		color: #6e6e6e;
+}
+
+.payment .pay-selection {
+		zoom: 1;
+		position: relative;
+		margin: 0 0 15px 0;
+}
+
+.payment .pay-selection:after {
+		content: ' ';
+		clear: both;
+		display: block;
+		width: 0;
+		height: 0;
+		overflow: hidden;
+		font-size: 0;
+}
+
+.payment .pay-selection h2,
+.payment .contacts h2 {
+		font: normal 30px/34px "Roboto Condensed", "Arial Narrow", Arial, Helvetica, sans-serif;
+		text-align: center;
+		color: #116697;
+		margin: -11px 0 35px 0;
+}
+
+.payment .pay-selection a {
+		position: relative;
+		margin: 0 0 0 8px;
+		float: left;
+		text-decoration: none;
+		border: 1px solid #b5c9d5;
+		background: #fcfcfc;
+		color: #5a8197;
+		font: normal 15px/18px "Roboto Condensed", "Arial Narrow", Arial, Helvetica, sans-serif;
+}
+
+.payment .pay-selection a:after {
+		content: '';
+		position: absolute;
+		top: 100%;
+		left: -10000px;
+		width: 16px;
+		height: 8px;
+		margin: 0 0 0 -8px;
+		background: url(../images/payment/active-arr.png) no-repeat;
+}
+
+.payment .pay-selection a:first-child,
+.payment .pay-selection h2 + a {
+		margin-left: 0;
+}
+
+.payment .pay-selection a,
+.payment .pay-selection a .cell {
+		width: 586px;
+		height: 98px;
+}
+
+.cell {
+		display: table-cell;
+		text-align: center;
+		vertical-align: middle;
+}
+
+.payment .pay-selection .big {
+		display: block;
+		font-size: 24px;
+		line-height: 21px;
+		margin: 0 0 8px 0;
+		color: #116697;
+}
+
+.payment .pay-selection .active {
+		cursor: default;
+		color: #bfefff;
+		background: #005b90;
+		border-color: #005b90;
+}
+
+.payment .pay-selection .active:after {
+		left: 50%;
+}
+
+.payment .pay-selection .active .big {
+		color: #fff;
+}
+
+.payment .action {
+		zoom: 1;
+		position: relative;
+		margin: 0 0 -2px 0;
+		border: 2px solid #02a6dd;
+		background: #02a6dd;
+		box-shadow: 0 1px 0 #bce7f6;
+		-webkit-box-shadow: 0 1px 0 #bce7f6;
+		color: #fff;
+		font: normal 17px/18px "Roboto Condensed", "Arial Narrow", Arial, Helvetica, sans-serif;
+        border-radius: 3px;
+}
+
+.payment .action:after {
+		content: ' ';
+		clear: both;
+		display: block;
+		width: 0;
+		height: 0;
+		overflow: hidden;
+		font-size: 0;
+}
+
+.payment .action .big {
+		font-weight: bold;
+		font-size: 22px;
+		line-height: 24px;
+		text-transform: uppercase;
+		margin: 0 0 4px 0;
+}
+
+.payment .action .color {
+		color: #bfefff;
+		line-height: 16px;
+		padding: 1px 0;
+		min-height: 32px;
+}
+
+.payment .action .sep {
+		height: 1px;
+		margin: 9px 0 10px 0;
+		background: #53c3e8;
+}
+
+.payment .action .timer {
+		float: left;
+		background: #fff;
+		position: relative;
+		color: #005b90;
+		padding: 23px 0 0 31px;
+		height: 189px;
+		width: 461px;
+		margin: 0 50px 0 0;
+}
+
+.payment .action .img {
+		float: left;
+		margin: 0 28px 0 0;
+}
+
+.payment .action .img img {
+		vertical-align: top;
+		display: block;
+		height: 189px;
+		width: auto;
+}
+
+.payment .action .timer:after {
+		content: '';
+		position: absolute;
+		top: 50%;
+		left: 100%;
+		background: url(../images/payment/timer-bg.png) no-repeat;
+		width: 24px;
+		height: 193px;
+		margin: -96.5px 0 0 0;
+}
+
+.payment .action .timer .big {
+		font-weight: normal;
+		font-size: 21px;
+		margin: 0 0 9px 0;
+		text-transform: none;
+}
+
+.payment .action .timer .nums {
+		float: left;
+		font-size: 11px;
+		width: 90px;
+		text-align: center;
+		text-transform: uppercase;
+		line-height: 14px;
+}
+
+.payment .action .timer .nums strong {
+		font-weight: 300;
+		display: block;
+		font-size: 57px;
+		line-height: 82px;
+		height: 89px;
+		border: 1px solid #dcdcdc;
+		border-radius: 3px;
+		-webkit-border-radius: 3px;
+		margin: 0 0 1px 0;
+}
+
+.payment .action .timer .nums.sec {
+		color: #02a6dd;
+}
+
+.payment .action .timer .nums.sec strong {
+		border-color: #02a6dd;
+		box-shadow: 0 0 0 1px #02a6dd;
+		-webkit-box-shadow: 0 0 0 1px #02a6dd;
+		color: #005b90;
+}
+
+.payment .action .timer .dots {
+		float: left;
+		width: 7px;
+		height: 89px;
+		background: url(../images/payment/dots.png) no-repeat 50% 50%;
+}
+
+.payment .action .select {
+		cursor: pointer;
+		display: inline;
+}
+
+.payment .action .select > .bg {
+		float: right;
+		width: 192px;
+		height: 193px;
+		margin: -2px -2px -2px 25px;
+		font-size: 21px;
+		line-height: 26px;
+		text-align: center;
+		color: #fff;
+		background: #005b90;
+		padding: 36px 0 0 0;
+}
+
+.payment .action .select input {
+		position: absolute;
+		left: -10000px;
+}
+
+.payment .action .select strong {
+		display: block;
+		padding: 35px 8px 0 0;
+		background: url(../images/payment/purse.png) no-repeat 100% 0;
+		width: 70px;
+		text-align: center;
+		height: 75px;
+		margin: 0 auto 7px auto;
+		line-height: 36px;
+}
+
+.payment .action .select > .bg span {
+		text-decoration: underline;
+}
+
+.payment .action .select:hover > .bg span {
+		text-decoration: none;
+}
+
+.payment .action .select span.small {
+		display: block;
+		text-decoration: none;
+		font-size: 15px;
+		line-height: 18px;
+		color: #d0f3ff;
+		margin: 1px 0 0 0;
+}
+
+.payment .action .text {
+		overflow: hidden;
+		height: 100%;
+		padding: 22px 0 0 0;
+}
+
+.payment .action .price {
+		font-size: 22px;
+		line-height: 25px;
+		margin: 0 0 7px 0;
+}
+
+.payment .action .price del {
+		font-weight: 300;
+		color: #bfefff;
+		margin: 0 16px 0 0;
+}
+
+.payment .action .price strong {
+		display: inline-block;
+		padding: 0 0 0 30px;
+		background: url(../images/payment/price-label.png) no-repeat 0 4px;
+}
+
+.payment .action .cell {
+		text-align: left;
+		height: 36px;
+}
+
+.payment .action .credit {
+		float: left;
+		margin: 0 28px 0 0;
+		height: 189px;
+		width: 483px;
+		text-align: center;
+		padding: 26px 0 0 0;
+		text-transform: uppercase;
+		font-weight: bold;
+		font-size: 16px;
+		color: #82d4ef;
+		line-height: 20px;
+		background: #00689d url(../images/payment/credit.jpg) no-repeat;
+}
+
+.payment .action .credit strong {
+		display: block;
+		text-align: left;
+		text-indent: -10000px;
+		background: url(../images/payment/50x50.png) no-repeat;
+		width: 276px;
+		height: 112px;
+		margin: 5px auto -20px auto;
+}
+
+.payment .contacts {
+		zoom: 1;
+		position: relative;
+		margin: 0 0 23px 0;
+}
+
+.payment .contacts:after {
+		content: ' ';
+		clear: both;
+		display: block;
+		width: 0;
+		height: 0;
+		overflow: hidden;
+		font-size: 0;
+}
+
+.payment .contacts .elem {
+		float: left;
+		margin: 0 0 0 15px;
+		border-radius: 5px;
+		-webkit-border-radius: 5px;
+		position: relative;
+		color: #fff;
+		font: normal 14px/24px "Open Sans", Arial, Helvetica, sans-serif;
+		padding: 98px 31px 0 31px;
+		width: 278px;
+		height: 214px;
+		background: #02a6dd;
+}
+
+.payment .contacts .elem a {
+		color: inherit;
+}
+
+.payment .contacts .elem a:hover {
+		text-decoration: none;
+}
+
+.payment .contacts .elem:before {
+		content: '';
+		position: absolute;
+		top: 50%;
+		left: 0;
+		background: url(../images/payment/contacts-arr.png) no-repeat;
+		width: 10px;
+		height: 19px;
+		margin: -9.5px 0 0 0;
+}
+
+.payment .contacts .elem:after {
+		content: '';
+		position: absolute;
+		left: 31px;
+}
+
+.payment .contacts .elem.bg-addr {
+		margin-left: 0;
+		width: 592px;
+		background: #005b90 url(../images/payment/contacts-img.jpg) no-repeat 100% 0;
+}
+
+.payment .contacts .elem.bg-addr a {
+		color: #c0efff;
+}
+
+.payment .contacts .elem.bg-addr:after {
+		background: url(../images/payment/place.png) no-repeat;
+		width: 52px;
+		height: 55px;
+		top: 20px;
+}
+
+.payment .contacts .elem.bg-time:after {
+		background: url(../images/payment/time.png) no-repeat;
+		width: 74px;
+		height: 51px;
+		top: 22px;
+}
+
+.payment .contacts .elem.bg-cont:after {
+		background: url(../images/payment/contacts.png) no-repeat;
+		width: 58px;
+		height: 51px;
+		top: 25px;
+}
+
+.payment .contacts .elem .big {
+		font: normal 21px/28px "Roboto Condensed", "Arial Narrow", Arial, Helvetica, sans-serif;
+}
+
+.payment .exclam {
+		color: #333;
+		font: 300 25px/32px "Roboto Condensed", "Arial Narrow", Arial, Helvetica, sans-serif;
+		border: 1px solid #d1d1d1;
+		margin: 0 0 -11px 0;
+		text-align: center;
+		padding: 21px;
+}
+
+.payment .exclam:before,
+.payment .exclam:after {
+		content: '';
+		display: inline-block;
+		vertical-align: middle;
+		background: url(../images/payment/exclam.png) no-repeat;
+		width: 32px;
+		height: 32px;
+		position: relative;
+		top: -1px;
+		margin: 0 9px;
+}
+
+.payment .exclam:after {
+		background: none;
+}
+
+.payment .go .btn2, .payment .go .go-back {
+	float: right;
+}

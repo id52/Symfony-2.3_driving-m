@@ -1,0 +1,29 @@
+{% extends 'AppBundle::layout_m.html.twig' %}
+
+{% block content %}
+<div class="wrap">
+    <div class="back-link r-fl"><a href="{{ path('homepage') }}"><span class="v-m arrow">«</span>Вернуться</a></div>
+    <ul class="breadcrumb">
+        <li><a title="Главная" href="{{ path('homepage') }}">Главная</a></li>
+        <li class="active"><a href="{{ path('faq') }}">Вопросы и ответы</a></li>
+    </ul>
+    <div class="main-side">
+        <div class="main-title left-bg">
+            <div class="caption">Вопросы и ответы:</div>
+        </div>
+        <ul class="ask-list">
+            {% for faq in faqs %}
+                {% if faq.status %}
+                    <li class="js-parent-slide">
+                        <a href="#" class="js-child-slide fs16 ie_css3">{{ faq.question }}<span class="left-plus"></span></a>
+                        <div class="js-body-slide">
+                            <div class="text-block">{{ faq.answer|raw }}</div>
+                        </div>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+    {% include 'AppBundle::_right_side.html.twig' %}
+</div>
+{% endblock content %}

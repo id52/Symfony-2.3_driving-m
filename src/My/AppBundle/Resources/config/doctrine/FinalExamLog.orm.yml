@@ -1,0 +1,25 @@
+My\AppBundle\Entity\FinalExamLog:
+    type: entity
+    table: final_exams_logs
+    repositoryClass: My\AppBundle\Repository\FinalExamLogRepository
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        started_at:
+            type: datetime
+        ended_at:
+            type: datetime
+            nullable: true
+        questions:
+            type: array
+        answers:
+            type: array
+        passed:
+            type: boolean
+    manyToOne:
+        user:
+            targetEntity: User
+            inversedBy: final_exams_logs

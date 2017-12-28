@@ -1,0 +1,11 @@
+My\AppBundle\Entity\TestEmail:
+    type: entity
+    table: test_emails
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        email:
+            type: string

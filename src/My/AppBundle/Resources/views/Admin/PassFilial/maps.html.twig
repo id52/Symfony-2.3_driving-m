@@ -1,0 +1,28 @@
+{% extends 'AppBundle::admin.html.twig' %}
+
+{% block content %}
+<h3>{{ 'admin.pass_filials_map'|trans }}</h3>
+<hr>
+
+{% if form_region is defined %}
+{{ form_start(form_region) }}
+    {{ form_widget(form_region) }}
+{{ form_end(form_region) }}
+{% endif %}
+
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+{{ form_end(form) }}
+{% endblock content %}
+
+{% block js %}
+<script>
+$(function() {
+    {% if form_region is defined %}
+    $('#form_region').on('change', function() {
+        $(this).closest('form').submit();
+    });
+    {% endif %}
+});
+</script>
+{% endblock js %}

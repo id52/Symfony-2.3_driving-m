@@ -1,0 +1,64 @@
+{% extends 'AppBundle::layout_m.html.twig' %}
+
+{% block content %}
+<div class="wrap">
+    <div class="back-link r-fl"><a href="{{ path('news') }}"><span class="v-m arrow">«</span>Вернуться</a></div>
+    <ul class="breadcrumb">
+        <li>
+            <a title="Главная" href="{{ path('homepage') }}">Главная</a>
+        </li>
+        <li><a href="{{ path('news') }}">Новости</a></li>
+        <li class="active"><a href="{{ path('news_show', { id: news.id }) }}">{{ news.title }}</a></li>
+    </ul>
+    <div class="main-side">
+        <div class="news-one news-b media">
+            <div class="date btn-blue-2 text-center l-fl">
+                {{ news.createdAt|date('j') }}<br />{{ news.createdAt|localizeddate('none', 'none', null, null, 'MMM') }}
+            </div>
+            <div class="media-body">
+                <div class="news-title">{{ news.title }}</div>
+            </div>
+        </div>
+        <div class="hr"></div>
+        <div class="text-block">
+            {{ news.text|raw }}
+        </div>
+{#
+        <div class="social-bottom">
+            <a href="{{ path('news') }}" class="back btn ie_css3">Вернутся</a>
+            <div class="r-fl">
+                <ul class="social-likes list-line" data-counters="no">
+                    <li class="vkontakte" title="Share link on VK">Вконтакте</li>
+                    <li class="facebook" title="Share link on Facebook">Facebook</li>
+                    <li class="twitter" title="Share link on Twitter">Twitter</li>
+                    <li class="tube"><a href="#">YouTube</a></li>
+                    <li class="rss"><a href="#">rss</a></li>
+                </ul>
+                <script type="text/javascript" src="/m/js/social-likes.min.js"></script>
+            </div>
+        </div>
+#}
+        <br />
+        <div class="main-title left-bg">
+            <div class="caption">Другие новости:</div>
+        </div>
+        <ul class="news-b top-news">
+            {% for other in other_news %}
+            <li class="media">
+                <div class="date btn-blue-2 text-center l-fl">
+                    {{ other.createdAt|date('j') }}<br />{{ other.createdAt|localizeddate('none', 'none', null, null, 'MMM') }}
+                </div>
+                <div class="media-body">
+                    <div class="caption v-center">
+                        <a href="{{ path('news_show', { id: other.id }) }}" class="v-m">
+                            {{ other.title }}
+                        </a>
+                    </div>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% include 'AppBundle::_right_side.html.twig' %}
+</div>
+{% endblock content %}

@@ -1,0 +1,118 @@
+{% extends 'AppBundle::admin.html.twig' %}
+
+{% block content %}
+    <div class="pull-right">
+        <span id="upload-btn" class="btn btn-default btn-h1 fileinput-button">
+            <i class="fa fa-calendar"></i><span> Импортировать XML</span>
+            <input id="fileupload" type="file" name="files[]" data-url="{{ path('admin_support_holidays_xml') }}">
+        </span>
+        <div id="image-progress" class="progress">
+            <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar">
+                <span>{{ 'uploading'|trans({}, 'messages') }}</span>
+            </div>
+        </div>
+        <span class="upload-fail"></span>
+        <span class="text-success"></span>
+    </div>
+
+    <h1>{{ 'admin.support_holidays'|trans }}</h1>
+    <hr>
+    <div id="holidays-calendar" style="width:970px"></div>
+{% endblock content %}
+
+{% block js %}
+<script>
+$(function() {
+    var now = new Date();
+    var minDate = new Date(now.getFullYear()-1, 0, 1);
+    var maxDate = new Date(now.getFullYear()+1, 11, 31);
+    var today = new Date();
+    var y = today.getFullYear();
+    var calendar = $('#holidays-calendar');
+    calendar.multiDatesPicker({
+        numberOfMonths: [1,3],
+        altField: '#altField',
+        minDate: minDate,
+        maxDate: maxDate,
+        firstDay: 1, //start week with monday
+        dateFormat: 'dd-mm-yy',
+        monthNames: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
+        dayNamesMin: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
+        onSelect: function(dateText) {
+            var date = dateText.split('-');
+            var savingBox = $('<div><div class="progressBar"></div></div>');
+            savingBox.dialog({
+                modal: true,
+                closeOnEscape: false,
+                dialogClass: 'no-close',
+                title: 'Сохраняется',
+                open: function() {
+                    $(this).find('.progressBar').progressbar({value: false});
+                }
+            });
+            $.post('{{ path('admin_support_holidays') }}', { entryValue: dateText }, function(response) {
+                if (response !== null && response.success) {
+                    savingBox.dialog('destroy');
+                    return;
+                }
+                $('<div>Не удалось изменить состояние для '+date[0]+'.'+date[1]+'</div>').dialog({
+                    modal: true,
+                    title: 'Ошибка',
+                    dialogClass: 'no-close',
+                    buttons: [{ text:'OK', click: function() { $(this).dialog('close'); }}]
+                });
+                calendar.multiDatesPicker('toggleDate', new Date(date[2], date[1]-1, date[0]));
+                savingBox.dialog('destroy');
+            });
+        }
+    });
+    //add holidays and exceptions
+    var exceptions = [{% for holiday in holidays if holiday.exception %}'{{ holiday.entryValue|date('j-m-Y') }}',{% endfor %}];
+    //mark all weekend days except exceptions
+    var tempDate = new Date(now.getFullYear()-1, 0, 1);
+    var tempDateStr = '';
+    var datesToAdd = [{% for holiday in holidays if not holiday.exception %}'{{ holiday.entryValue|date('j-m-Y') }}',{% endfor %}];
+    while (tempDate <= maxDate) {
+        tempDateStr = tempDate.getDate()+'-'+(tempDate.getMonth()+1)+'-'+tempDate.getFullYear();
+        if ((tempDate.getDay() === 0 || tempDate.getDay() === 6) && ($.inArray(tempDateStr, exceptions) === -1)) {
+            datesToAdd.push(tempDateStr);
+        }
+        tempDate.setDate(tempDate.getDate()+1);
+    }
+    if (datesToAdd.length) {
+        calendar.multiDatesPicker('addDates', datesToAdd);
+    }
+
+    $('#fileupload').fileupload({
+        progressall: function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            $('#image-progress').find('.progress-bar').css('width', progress + '%');
+        },
+        send: function () {
+            $('#upload-btn').hide();
+            $('#image-progress').show();
+        },
+
+        done: function (e, data) {
+            $('#image-progress').hide();
+            if (data.result.success) {
+                $('.text-success').html(data.result.message).show().delay(1500).hide(function () {
+                    $('.btn').show();
+                    location.reload();
+                });
+            } else {
+                $('.upload-fail').html(data.result.message).show().delay(1500).hide(function () {
+                    $('.btn').show();
+                });
+            }
+        },
+        fail: function () {
+            $('#image-progress').hide();
+            $('.upload-fail').html('Ошибка загрузки на сервер').show().delay(1500).hide(function () {
+                $('.btn').show();
+            });
+        }
+    });
+});
+</script>
+{% endblock %}

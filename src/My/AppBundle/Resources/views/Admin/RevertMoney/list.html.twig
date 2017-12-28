@@ -1,0 +1,67 @@
+{% extends 'AppBundle::admin.html.twig' %}
+
+{% block content %}
+    <h1>Возврат средств</h1>
+    <hr>
+    <a id="filter_link" href="#"><i class="fa fa-caret-down"></i> Фильтр</a>
+    <div id="filter">
+        {{ form_start(filter_form) }}
+        {{ form_widget(filter_form) }}
+        <div class="form-actions">
+            <button type="submit" class="btn btn-success pull-right">
+                <i class="fa fa-filter"></i>
+                <span>{{ 'buttons.filter'|trans }}</span>
+            </button>
+        </div>
+        {{ form_end(filter_form) }}
+    </div>
+    <br>
+    {% if pagerfanta.currentPageResults|length %}
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>{{ 'user_email'|trans({}, 'user') }}</th>
+                <th>{{ 'user_name'|trans({}, 'user') }}</th>
+                <th class="min_col">{{ 'user_phone_mobile'|trans({}, 'user') }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in pagerfanta.currentPageResults %}
+                <tr>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.lastName }} {{ user.firstName }} {{ user.patronymic }}</td>
+                    <td class="min_col">{{ user.phoneMobileFormat }}</td>
+                    <td class="min_col">
+                        <a href="{{ path('admin_revert_money_user_card', { id: user.id }) }}"><i class="fa fa-ruble"></i></a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        Всего: {{ pagerfanta.count }}
+        {% if pagerfanta.haveToPaginate %}
+            {{ pagerfanta(pagerfanta, 'twitter_bootstrap_translated', { prev_message: '←', next_message: '→' }) }}
+        {% endif %}
+    {% else %}
+        {{ 'no_data'|trans }}
+    {% endif %}
+{% endblock content %}
+
+{% block js %}
+<script>
+$(function() {
+    {% if app.request.queryString == '' %}
+    $('#filter').hide();
+    {% else %}
+    $('#filter_default').hide();
+    {% endif %}
+    $('#filter_link').click(function() {
+        $('#filter').toggle();
+        {% if app.request.queryString == '' %}
+        $('#filter_default').toggle();
+        {% endif %}
+        return false;
+    });
+});
+</script>
+{% endblock js %}

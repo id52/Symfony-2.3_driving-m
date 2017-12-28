@@ -1,0 +1,48 @@
+services:
+    intl.twig.extension:
+        class: Twig_Extensions_Extension_Intl
+        tags: [{ name: twig.extension }]
+    app.registration.form.type:
+        class: My\AppBundle\Form\Type\RegistrationFormType
+        arguments: [ %fos_user.model.user.class% ]
+        tags: [{ name: form.type, alias: app_registration }]
+    app.form.type.change_password:
+        class: My\AppBundle\Form\Type\ChangePasswordFormType
+        arguments: [ @security.context, @security.encoder_factory]
+        tags: [{name: form.type, alias: change_password}]
+    app.form.type.passport_number:
+        class: My\AppBundle\Form\Type\PassportNumberType
+        tags: [{ name: form.type, alias: passport_number }]
+    app.form.extension.help_message:
+        class: My\AppBundle\Form\Extension\HelpMessageTypeExtension
+        tags: [{ name: form.type_extension, alias: form }]
+    app.imagine.controller:
+        class: My\AppBundle\Controller\ImagineController
+        arguments: [ @liip_imagine.data.manager, @liip_imagine.filter.manager, @liip_imagine.cache.manager, @doctrine.orm.entity_manager ]
+    app.listeners.init_controller:
+        class: My\AppBundle\EventListener\InitControllerListener
+        arguments: [ @service_container ]
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
+            - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
+            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
+    app.notify:
+        class: My\AppBundle\Service\Notify
+        arguments: [ @doctrine.orm.entity_manager, @mailer, @router, @templating, %sender_name%, %sender_email% ]
+    app.pdf_generator:
+        class: My\AppBundle\Service\PdfGenerator
+        arguments: [ @doctrine.orm.entity_manager, @kernel ]
+    app.user_helper:
+        class: My\AppBundle\Service\UserHelper
+        arguments: [ @doctrine.orm.entity_manager, @sms_uslugi_ru, @router, @app.notify, @fos_user.user_manager, %host% ]
+    app.registration.form.handler:
+        class: My\AppBundle\Form\Handler\RegistrationHandler
+        arguments: [ @fos_user.registration.form, @request, @fos_user.user_manager, @fos_user.mailer, @fos_user.util.token_generator ]
+        scope: request
+    app.listeners.white_ips:
+        class: My\AppBundle\EventListener\WhiteIpsListener
+        arguments: [ @security.context, @router, %remember_me.name%, %remember_me.path%, %remember_me.domain% ]
+        tags: [{ name: kernel.event_listener, event: kernel.request, method: onKernelRequest }]
+    app.twig.app_extension:
+        class: My\AppBundle\Twig\Extension\App
+        tags: [ { name: twig.extension } ]

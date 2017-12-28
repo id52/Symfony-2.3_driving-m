@@ -1,0 +1,33 @@
+{% extends 'AppBundle::layout_new.html.twig' %}
+
+{% block content %}
+<nav class="path">
+    <a href="{{ path('homepage') }}">{{ 'titles.homepage'|trans }}</a>
+    » <strong>{{ 'titles.payments'|trans }}</strong>
+</nav>
+
+<section>
+    <div class="e_wrap_payment">
+        <div class="e_item_payment--img m_success"></div>
+        <div class="e_item_payment--text">
+            Платеж был успешно завершен.
+            <span>Вы будете автоматически перенаправлены на следующую страницу.</span>
+        </div>
+    </div>
+</section>
+
+{% endblock content %}
+
+{% block js %}
+<script>
+$(function() {
+    setInterval(function() {
+        $.getJSON('{{ path('robokassa_is_paid') }}', function(data) {
+            if (data.is_paid) {
+                window.location = data.redirect_url;
+            }
+        });
+    }, 3000);
+});
+</script>
+{% endblock %}

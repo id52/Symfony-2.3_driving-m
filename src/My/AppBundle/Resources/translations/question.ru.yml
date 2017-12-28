@@ -1,0 +1,14 @@
+question_theme: Тема
+question_num: Номер
+question_subject: Предмет
+question_text: Вопрос
+question_description: Описание
+question_answers: Ответы
+question_is_pdd: ПДД?
+question_version: Версия
+question_versions: Версии
+
+choose_option:  - Выберите -
+
+form_text: Перевод вопроса
+form_description: Перевод описания

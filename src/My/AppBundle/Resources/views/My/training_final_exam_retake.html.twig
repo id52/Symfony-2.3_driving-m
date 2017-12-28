@@ -1,0 +1,17 @@
+{% extends 'AppBundle::layout_new.html.twig' %}
+
+{% block content %}
+<nav class="path">
+    <a href="{{ path('homepage') }}">{{ 'titles.homepage'|trans }}</a>
+    » <a href="{{ path('my_trainings') }}">{{ 'titles.trainings'|trans }}</a>
+    » <strong>{{ 'final_exam'|trans }}</strong>
+</nav>
+
+<div class="mainContent">
+    <div class="title"><h1>{{ 'training.final_exam.retake'|trans }}</h1></div>
+    {{ settings['training_final_exam_retake']|raw }}
+    <div class="links">
+        <a class="bg-red" href="{{ path('my_trainings') }}">{{ 'training.final_exam.back_to_list'|trans }}</a>
+    </div>
+</div>
+{% endblock content %}
